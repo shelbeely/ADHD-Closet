@@ -144,16 +144,26 @@ model ItemTag {
 }
 
 model Outfit {
-  id          String       @id @default(uuid())
-  title       String?
-  notes       String?
-  rating      OutfitRating @default(neutral)
+  id               String       @id @default(uuid())
+  title            String?
+  notes            String?
+  rating           OutfitRating @default(neutral)
   
-  items       OutfitItem[]
-  aiJobs      AIJob[]
+  // Generation constraints
+  weather          String?      // hot, warm, cool, cold, rain, snow
+  vibe             String?      // dysphoria_safe, confidence_boost, dopamine, neutral
+  occasion         String?
+  timeAvailable    String?      @map("time_available") // quick, normal
   
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
+  // AI-generated fields
+  explanation      String?      @db.Text
+  swapSuggestions  String?      @map("swap_suggestions") @db.Text
+  
+  items            OutfitItem[]
+  aiJobs           AIJob[]
+  
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
 
   @@map("outfits")
 }
