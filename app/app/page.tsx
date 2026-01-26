@@ -227,6 +227,26 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* 3D Closet Rail Link */}
+          <button
+            onClick={() => window.location.href = '/closet-rail'}
+            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            title="View your closet in 3D"
+          >
+            <span>🪝</span>
+            <span>3D Rail</span>
+          </button>
+
+          {/* Outfit Generator Link */}
+          <button
+            onClick={() => window.location.href = '/outfits/generate'}
+            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            title="Generate outfits"
+          >
+            <span>✨</span>
+            <span>Outfits</span>
+          </button>
+
           {/* View Toggle */}
           <div className="flex bg-surface-variant rounded-full p-1">
             <button
