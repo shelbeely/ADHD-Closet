@@ -34,6 +34,7 @@ Visit [http://localhost:3000](http://localhost:3000)
 ## Architecture
 
 - **Frontend**: Next.js 16 (App Router) + React + TypeScript + Tailwind CSS
+- **Design System**: Material Design 3 Expressive with ADHD-optimized patterns
 - **3D Visualization**: Three.js for closet rail view
 - **Backend/API**: Next.js Route Handlers
 - **Database**: Postgres (via Prisma ORM)
@@ -41,6 +42,27 @@ Visit [http://localhost:3000](http://localhost:3000)
 - **AI**: OpenRouter (vision + text + image generation)
 - **Image Processing**: Sharp for server-side thumbnails
 - **Runtime**: Bun.js (with npm fallback)
+
+## Design Principles
+
+### Material Design 3 Expressive
+- Dynamic color system with surface tinting
+- Rounded, expressive shapes (16-28px radius)
+- Elevation-based depth hierarchy
+- Material You typography scale
+- Smooth transitions and motion (200-300ms)
+- Touch-friendly targets (48x48dp minimum)
+
+### ADHD-Optimized UX
+- **Minimal Friction**: Auto-save, no forced completion, reduce steps
+- **Decision Paralysis Reducers**: Limit choices (3-5 max), progressive disclosure, guided workflows
+- **Visual Clarity**: High contrast, obvious CTAs, consistent patterns
+- **Time Blindness Support**: Show time estimates (~30 sec), progress indicators, status visibility
+- **Reduced Cognitive Load**: One thing at a time, category-first navigation, chunked information
+- **Memory Support**: Recent items, prominent search, breadcrumbs, state preservation
+- **Immediate Feedback**: Instant responses (<100ms), success confirmation, optimistic UI
+
+See [SPEC.md](SPEC.md) for complete design system guidelines.
 
 ## Key Features
 
