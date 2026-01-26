@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
     }
 
     // For normal generation, queue an AI job
-    const job = await aiJobQueue.add('generate-outfit', {
+    const job = await aiJobQueue.add('generate_outfit', {
       constraints: {
         weather: validated.weather,
         vibe: validated.vibe,
