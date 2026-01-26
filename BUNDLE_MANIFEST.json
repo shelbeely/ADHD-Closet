@@ -1,0 +1,22 @@
+{
+  "bundle": "wardrobe-ai-closet-handoff",
+  "version": "v3",
+  "generated_at": "2026-01-26T04:22:40.053915Z",
+  "contents": [
+    "HANDOFF_PROMPT.md",
+    "SPEC.md",
+    "README.md",
+    "DEFINITION_OF_DONE.md",
+    "TASK_BOARD.md",
+    "API_CONTRACT.md",
+    "KEYBOARD_SHORTCUTS.md",
+    "SECURITY_PRIVACY.md",
+    "PERFORMANCE.md",
+    ".env.example",
+    "BUNDLE_MANIFEST.json",
+    "openrouter/schemas/infer_item.schema.json",
+    "openrouter/schemas/generate_outfits.schema.json",
+    "openrouter/requests/structured_output_with_response_healing.ts",
+    "openrouter/validation/validation_notes.md"
+  ]
+}
