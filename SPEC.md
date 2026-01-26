@@ -32,8 +32,17 @@ Build a single-user, self-hosted wardrobe organizer that:
 ### 3.1 Inventory
 - Add item via camera/gallery
 - Attach multiple photos per item:
-  - main, back, details
-  - label photos (brand + care/size)
+  - **Front (main)**: Primary photo showing the front of the garment
+  - **Back**: Photo showing the back view of the garment (essential for clothing items)
+  - **Details**: Close-up photos of specific features (embroidery, buttons, texture)
+  - **Label photos**:
+    - Brand label photo (for brand/size/material extraction)
+    - Care label photo (for care instructions)
+- **Image workflow (ADHD-optimized)**:
+  - Step 1: Upload front photo (required, minimal friction)
+  - Step 2: Optionally add back photo (progressive disclosure, clearly prompted)
+  - Step 3: Optionally add label/detail photos (progressive disclosure, skippable)
+  - All photos can be added/edited later from item detail page
 - AI assigns category from preset enum, user can override
 - Filters/search by:
   - category, size, color, material, neckline, sleeve length, rise, inseam, heel height, tags, state
@@ -41,15 +50,22 @@ Build a single-user, self-hosted wardrobe organizer that:
   - available, laundry, unavailable, donate
 
 ### 3.2 AI image generation (catalog images)
-- For each item, generate a catalog image from the best original photo
-- Output must:
-  - be square (1024x1024 recommended)
-  - center the garment with consistent padding
-  - use neutral background
-  - preserve colors and graphic details
-  - include no text or watermark
-- Store generated image locally as `ImageAsset(kind=ai_catalog)`
-- Generate a thumbnail `ImageAsset(kind=thumbnail)` for fast grids and 3D
+- For each item, generate catalog images from original photos
+- **Generate from front photo** (primary catalog image):
+  - Input: `ImageAsset(kind=original_main)`
+  - Output: `ImageAsset(kind=ai_catalog)` with front view
+- **Generate from back photo** (optional secondary catalog image):
+  - Input: `ImageAsset(kind=original_back)`
+  - Output: `ImageAsset(kind=ai_catalog)` with back view
+  - Helpful for items with interesting back designs or full context
+- Output requirements for all catalog images:
+  - Square format (1024x1024 recommended)
+  - Center the garment with consistent padding
+  - Use neutral background (white or light gray)
+  - Preserve colors and graphic details
+  - Include no text or watermark
+- Store generated images locally as `ImageAsset(kind=ai_catalog)`
+- Generate thumbnails `ImageAsset(kind=thumbnail)` for fast grids and 3D (512px WebP)
 
 ### 3.3 AI inference
 - Inference job produces structured JSON:

@@ -16,28 +16,39 @@ const CATEGORIES = [
 
 export default function AddItemPage() {
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const frontFileInputRef = useRef<HTMLInputElement>(null);
+  const backFileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'photo' | 'details'>('photo');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [selectedFrontFile, setSelectedFrontFile] = useState<File | null>(null);
+  const [frontPreviewUrl, setFrontPreviewUrl] = useState<string>('');
+  const [selectedBackFile, setSelectedBackFile] = useState<File | null>(null);
+  const [backPreviewUrl, setBackPreviewUrl] = useState<string>('');
   
   // ADHD: Auto-save draft to localStorage
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrontFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setSelectedFrontFile(file);
+      setFrontPreviewUrl(URL.createObjectURL(file));
       setStep('details');
     }
   };
 
+  const handleBackFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedBackFile(file);
+      setBackPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async () => {
-    if (!selectedFile) return;
+    if (!selectedFrontFile) return;
 
     try {
       setLoading(true);
@@ -59,18 +70,33 @@ export default function AddItemPage() {
 
       const { id } = await itemResponse.json();
 
-      // Upload image
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('kind', 'original_main');
+      // Upload front image
+      const frontFormData = new FormData();
+      frontFormData.append('file', selectedFrontFile);
+      frontFormData.append('kind', 'original_main');
 
-      const uploadResponse = await fetch(`/api/items/${id}/images`, {
+      const frontUploadResponse = await fetch(`/api/items/${id}/images`, {
         method: 'POST',
-        body: formData,
+        body: frontFormData,
       });
 
-      if (!uploadResponse.ok) {
-        throw new Error('Failed to upload image');
+      if (!frontUploadResponse.ok) {
+        throw new Error('Failed to upload front image');
+      }
+
+      // Upload back image if provided (non-blocking)
+      if (selectedBackFile) {
+        const backFormData = new FormData();
+        backFormData.append('file', selectedBackFile);
+        backFormData.append('kind', 'original_back');
+
+        fetch(`/api/items/${id}/images`, {
+          method: 'POST',
+          body: backFormData,
+        }).catch((error) => {
+          console.error('Failed to upload back image:', error);
+          // Don't block navigation for back image failure
+        });
       }
 
       // ADHD: Navigate immediately, AI processing happens in background
@@ -85,7 +111,7 @@ export default function AddItemPage() {
 
   // ADHD: Skip button to save with minimal info
   const handleQuickSave = async () => {
-    if (!selectedFile) return;
+    if (!selectedFrontFile) return;
     setTitle('');
     setCategory('');
     setBrand('');
@@ -128,18 +154,18 @@ export default function AddItemPage() {
             </p>
             
             <input
-              ref={fileInputRef}
+              ref={frontFileInputRef}
               type="file"
               accept="image/*"
               capture="environment"
-              onChange={handleFileSelect}
+              onChange={handleFrontFileSelect}
               className="hidden"
             />
             
             <div className="space-y-4">
               {/* ADHD: Large, obvious primary action */}
               <button
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => frontFileInputRef.current?.click()}
                 className="w-full py-4 px-6 bg-primary text-on-primary rounded-full text-label-large font-medium shadow-elevation-2 hover:shadow-elevation-3 active:scale-98 transition-all"
               >
                 <span className="flex items-center justify-center gap-2">
@@ -202,18 +228,82 @@ export default function AddItemPage() {
       </header>
 
       <main className="flex-1 overflow-y-auto pb-6">
-        {/* Photo Preview */}
-        {previewUrl && (
-          <div className="p-6">
-            <div className="aspect-square w-full max-w-sm mx-auto bg-surface-container-low rounded-3xl overflow-hidden shadow-elevation-1">
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="w-full h-full object-cover"
-              />
+        {/* Photo Previews */}
+        <div className="p-6">
+          {/* Front photo preview */}
+          {frontPreviewUrl && (
+            <div className="space-y-3 max-w-sm mx-auto mb-6">
+              <label className="block text-label-medium text-on-surface-variant">
+                Front View
+              </label>
+              <div className="aspect-square w-full bg-surface-container-low rounded-3xl overflow-hidden shadow-elevation-1">
+                <img
+                  src={frontPreviewUrl}
+                  alt="Front preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+
+          {/* Add back photo option (Progressive Disclosure) */}
+          {frontPreviewUrl && !backPreviewUrl && (
+            <div className="max-w-sm mx-auto mb-6">
+              <input
+                ref={backFileInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handleBackFileSelect}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => backFileInputRef.current?.click()}
+                className="w-full py-3 px-4 bg-surface-container-high border-2 border-dashed border-outline rounded-2xl hover:bg-surface-container transition-colors"
+              >
+                <span className="flex items-center justify-center gap-2 text-primary">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="text-label-large font-medium">Add Back View Photo (Optional)</span>
+                </span>
+                <p className="text-body-small text-on-surface-variant mt-1">
+                  Helpful for items with designs on the back
+                </p>
+              </button>
+            </div>
+          )}
+
+          {/* Back photo preview */}
+          {backPreviewUrl && (
+            <div className="space-y-3 max-w-sm mx-auto">
+              <div className="flex items-center justify-between">
+                <label className="block text-label-medium text-on-surface-variant">
+                  Back View
+                </label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedBackFile(null);
+                    setBackPreviewUrl('');
+                    if (backPreviewUrl) URL.revokeObjectURL(backPreviewUrl);
+                  }}
+                  className="text-label-small text-error hover:underline"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="aspect-square w-full bg-surface-container-low rounded-3xl overflow-hidden shadow-elevation-1">
+                <img
+                  src={backPreviewUrl}
+                  alt="Back preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Optional Details Section */}
         <div className="px-6 space-y-6 max-w-sm mx-auto">
