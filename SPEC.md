@@ -342,16 +342,102 @@ All design decisions must prioritize ADHD users' needs:
 - 3D closet view accessible as a tab/lens
 - All mobile patterns work on desktop (responsive)
 
-## 8. Acceptance tests (manual)
+## 8. Progressive Web App (PWA) & Notifications
+
+### 8.1 PWA Features
+- **Installable**: Users can add app to home screen on mobile and desktop
+- **Offline capable**: Service worker caches critical resources
+- **App-like**: Runs in standalone mode with custom theme colors
+- **Fast**: Caching strategy optimizes load times
+- **Manifest**:
+  - Name: "Wardrobe AI Closet"
+  - Short name: "My Closet"
+  - Icons: 192x192 and 512x512 PNG with maskable support
+  - Theme color: #6750a4 (Material Design 3 primary)
+  - Background color: #ffffff
+  - Display: standalone
+  - Orientation: portrait-primary (mobile-first)
+  - Shortcuts: "Add Item" and "Generate Outfit" for quick access
+
+### 8.2 Service Worker Caching Strategy
+- **Google Fonts**: CacheFirst (1 year expiration)
+- **OpenRouter API**: NetworkFirst with 10s timeout (24h cache fallback)
+- **Wardrobe Images** (/api/images): CacheFirst (1 week expiration, 200 entries)
+- **API Routes**: NetworkFirst with 10s timeout (24h cache fallback, 100 entries)
+- **Static Assets**: Automatic caching by next-pwa
+
+### 8.3 Push Notifications (ADHD-Optimized)
+**Philosophy**: Helpful, non-intrusive, opt-in notifications that reduce anxiety and support memory
+
+**Permission Request**:
+- Progressive disclosure: Show prompt after 10 seconds of first use
+- Clear value proposition: List specific benefits before asking
+- Easy to dismiss: "Not now" button permanently dismisses
+- Never ask again after dismissed: Respects user choice
+
+**Notification Types** (all non-blocking, gentle):
+1. **AI Catalog Ready** (✨)
+   - "Your catalog photo is ready!"
+   - When: AI finishes processing item photo
+   - Tag: ai-catalog-ready
+   - Non-urgent, tapable to view
+
+2. **AI Inference Complete** (🔍)
+   - "Item details detected"
+   - When: AI extracts category, colors, tags
+   - Tag: ai-inference-complete
+   - Non-urgent, helpful
+
+3. **Outfit Ready** (👔)
+   - "Your outfits are ready!"
+   - When: Outfit generation completes
+   - Tag: outfit-ready
+   - Tapable to view suggestions
+
+4. **Laundry Reminder** (🧺)
+   - "You have N items in laundry state"
+   - Optional, gentle reminder
+   - Tag: laundry-reminder
+   - Silent notification (non-intrusive)
+
+5. **Export/Import Complete** (📦/✅)
+   - Status updates for backup operations
+   - Non-urgent, informational
+
+**Design Principles**:
+- Gentle vibration pattern (200ms, 100ms pause, 200ms)
+- Never require interaction (requireInteraction: false)
+- Silent option for reminders (no sound, just notification)
+- Clear, emoji-based icons for quick recognition
+- Dismissible by default
+- Tag-based grouping prevents spam
+
+### 8.4 Installation Prompts
+- Automatic browser install prompt (Chrome, Edge, Safari)
+- Custom in-app install button (Material Design 3 styled)
+- iOS-specific instructions (Safari > Share > Add to Home Screen)
+- Desktop install support (Chrome, Edge)
+
+### 8.5 ADHD Benefits
+- **Memory support**: Notifications remind about pending tasks
+- **Time blindness**: Updates on long-running AI operations
+- **Reduced anxiety**: Clear completion confirmations
+- **Non-intrusive**: All notifications are gentle, optional, dismissible
+- **Progressive disclosure**: Permission asked after user sees value
+- **Forgiving**: Can always re-enable in browser settings
+
+## 9. Acceptance tests (manual)
 - Add item -> AI catalog image generated -> item categorized -> user edits -> persists
 - Bulk edit 20 items on desktop
 - Generate outfits with constraints; save; rate; next generation reflects ratings
 - 3D closet loads and remains responsive
 - Export ZIP -> wipe DB -> import ZIP -> full restore
+- **PWA**: Install app, use offline, receive notifications for AI jobs
 
-## 9. Implementation plan
+## 10. Implementation plan
 Phase 1: CRUD + image storage + mobile browse
 Phase 2: job queue + catalog image gen + inference + review UI
 Phase 3: outfit generation + feedback loop + desktop power tools
 Phase 4: Three.js closet rail + perf pass
 Phase 5: export/import + polish
+**Phase 6 (NEW)**: PWA support + push notifications + offline capabilities
