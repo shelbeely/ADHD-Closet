@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "InferItemResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category",
+    "tags",
+    "colors",
+    "color_palette",
+    "attributes",
+    "confidence"
+  ],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "tops",
+        "bottoms",
+        "dresses",
+        "outerwear",
+        "shoes",
+        "accessories",
+        "underwear_bras",
+        "jewelry"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 25
+    },
+    "colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 6
+    },
+    "color_palette": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      },
+      "minItems": 1,
+      "maxItems": 6
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "colors",
+        "attributes",
+        "overall"
+      ],
+      "properties": {
+        "category": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "colors": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "attributes": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "overall": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  }
+}
