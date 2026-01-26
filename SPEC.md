@@ -44,11 +44,14 @@ Build a single-user, self-hosted wardrobe organizer that:
   - Step 3: Optionally add label/detail photos (progressive disclosure, skippable)
   - All photos can be added/edited later from item detail page
 - **Display logic for items with multiple views**:
-  - Items with **both front and back** photos: Display as flippable card with flip icon indicator
-  - Items with **front only**: Display front image normally (no flip indicator)
-  - Items with **back only**: Display back image normally (no flip indicator)
-  - Flip animation on click/tap to see alternate view (ADHD: immediate visual feedback)
-  - Flip icon badge shows "2 sides" to indicate flippable content
+  - Items with **both front and back** photos: Display **side-by-side split view** showing both simultaneously
+    - Left half: Front photo with "Front" label at bottom
+    - Right half: Back photo with "Back" label at bottom
+    - Vertical divider line between photos for clear separation
+    - ADHD-optimized: See both views at once, no interaction needed, complete context immediately
+  - Items with **front only**: Display front image normally
+  - Items with **back only**: Display back image normally
+  - No flip interaction needed - both views visible simultaneously when both exist
 - AI assigns category from preset enum, user can override
 - Filters/search by:
   - category, size, color, material, neckline, sleeve length, rise, inseam, heel height, tags, state

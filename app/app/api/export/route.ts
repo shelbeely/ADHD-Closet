@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     ];
 
     for (const item of items) {
-      const tagNames = item.tags.map(t => t.tag.name).join('; ');
+      const tagNames = item.tags.map((t: { tag: { name: string } }) => t.tag.name).join('; ');
       const colors = item.colorPalette ? JSON.stringify(item.colorPalette) : '';
       csvRows.push([
         item.id,
