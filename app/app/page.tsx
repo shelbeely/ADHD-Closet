@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import CategoryTabs from './components/CategoryTabs';
 import ItemGrid from './components/ItemGrid';
 import AddItemButton from './components/AddItemButton';
@@ -29,13 +30,14 @@ interface Item {
  * Design Decisions (M3 + ADHD-optimized):
  * - Mobile (<1024px): Category tabs + grid view (Phase 2 implementation)
  * - Desktop (≥1024px): Filter panel + table view (Phase 4 implementation)
- * - Breakpoint at 1024px aligns with M3 responsive guidelines
+ * Breakpoint at 1024px aligns with M3 responsive guidelines
  * - Desktop adds power tools without removing mobile simplicity
  * - View toggle allows users to choose preferred mode on desktop
  * - Filter panel is always visible on desktop (no hidden sidebar)
  * - Table view enables bulk operations (reduce repetitive actions)
  */
 export default function Home() {
+  const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -229,7 +231,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           {/* 3D Closet Rail Link */}
           <button
-            onClick={() => window.location.href = '/closet-rail'}
+            onClick={() => router.push('/closet-rail')}
             className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
             title="View your closet in 3D"
           >
@@ -239,7 +241,7 @@ export default function Home() {
 
           {/* Outfit Generator Link */}
           <button
-            onClick={() => window.location.href = '/outfits/generate'}
+            onClick={() => router.push('/outfits/generate')}
             className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
             title="Generate outfits"
           >
@@ -249,7 +251,7 @@ export default function Home() {
 
           {/* Settings Link */}
           <button
-            onClick={() => window.location.href = '/settings'}
+            onClick={() => router.push('/settings')}
             className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
             title="Export & Import"
           >
@@ -282,7 +284,7 @@ export default function Home() {
           </div>
 
           <button
-            onClick={() => window.location.href = '/items/new'}
+            onClick={() => router.push('/items/new')}
             className="px-5 py-2.5 bg-primary text-on-primary rounded-full text-label-large font-medium shadow-elevation-1 hover:shadow-elevation-2 transition-all"
           >
             Add Item

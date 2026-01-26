@@ -86,7 +86,7 @@ export default function SettingsPage() {
       
       // Reload page after successful import
       setTimeout(() => {
-        window.location.href = '/';
+        router.push('/');
       }, 3000);
     } catch (err: any) {
       setError(err.message || 'Failed to import backup. Please check the file and try again.');
