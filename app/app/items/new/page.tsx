@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const CATEGORIES = [
@@ -30,9 +30,25 @@ export default function AddItemPage() {
   const [category, setCategory] = useState('');
   const [brand, setBrand] = useState('');
 
+  // Cleanup object URLs on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (frontPreviewUrl) {
+        URL.revokeObjectURL(frontPreviewUrl);
+      }
+      if (backPreviewUrl) {
+        URL.revokeObjectURL(backPreviewUrl);
+      }
+    };
+  }, [frontPreviewUrl, backPreviewUrl]);
+
   const handleFrontFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Revoke previous URL to prevent memory leak
+      if (frontPreviewUrl) {
+        URL.revokeObjectURL(frontPreviewUrl);
+      }
       setSelectedFrontFile(file);
       setFrontPreviewUrl(URL.createObjectURL(file));
       setStep('details');
@@ -42,6 +58,10 @@ export default function AddItemPage() {
   const handleBackFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Revoke previous URL to prevent memory leak
+      if (backPreviewUrl) {
+        URL.revokeObjectURL(backPreviewUrl);
+      }
       setSelectedBackFile(file);
       setBackPreviewUrl(URL.createObjectURL(file));
     }
