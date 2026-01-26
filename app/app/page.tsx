@@ -247,6 +247,16 @@ export default function Home() {
             <span>Outfits</span>
           </button>
 
+          {/* Settings Link */}
+          <button
+            onClick={() => window.location.href = '/settings'}
+            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            title="Export & Import"
+          >
+            <span>⚙️</span>
+            <span>Settings</span>
+          </button>
+
           {/* View Toggle */}
           <div className="flex bg-surface-variant rounded-full p-1">
             <button
