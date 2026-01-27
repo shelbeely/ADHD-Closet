@@ -1,0 +1,217 @@
+// Wardrobe AI Closet - Prisma Schema
+// Single-user, self-hosted wardrobe organizer
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum Category {
+  tops
+  bottoms
+  dresses
+  outerwear
+  shoes
+  accessories
+  underwear_bras
+  jewelry
+}
+
+enum ItemState {
+  available
+  laundry
+  unavailable
+  donate
+}
+
+enum ImageKind {
+  original_main
+  original_back
+  label_brand
+  label_care
+  detail
+  ai_catalog
+  thumbnail
+}
+
+enum OutfitRole {
+  top
+  bottom
+  dress
+  outerwear
+  shoes
+  accessory
+  underwear_bras
+  jewelry
+}
+
+enum OutfitRating {
+  up
+  down
+  neutral
+}
+
+enum AIJobType {
+  generate_catalog_image
+  infer_item
+  extract_label
+  generate_outfit
+}
+
+enum AIJobStatus {
+  queued
+  running
+  succeeded
+  failed
+  needs_review
+}
+
+// ============================================================================
+// MODELS
+// ============================================================================
+
+model Item {
+  id            String     @id @default(uuid())
+  title         String?
+  category      Category?
+  state         ItemState  @default(available)
+  
+  // Label/brand info (may come from AI OCR)
+  brand         String?
+  sizeText      String?    @map("size_text")
+  materials     String?    // JSON string or plain text
+  
+  // AI-inferred attributes
+  colorPalette  Json?      @map("color_palette") // ["#FF0000", "#000000"]
+  attributes    Json?      // { "neckline": "crew", "sleeve_length": "short", ... }
+  
+  // Relationships
+  images        ImageAsset[]
+  tags          ItemTag[]
+  outfitItems   OutfitItem[]
+  aiJobs        AIJob[]
+  
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+
+  @@map("items")
+}
+
+model ImageAsset {
+  id          String     @id @default(uuid())
+  itemId      String     @map("item_id")
+  item        Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  
+  kind        ImageKind
+  filePath    String     @map("file_path") // relative to DATA_DIR
+  width       Int?
+  height      Int?
+  mimeType    String?    @map("mime_type")
+  
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@index([itemId])
+  @@index([kind])
+  @@map("image_assets")
+}
+
+model Tag {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  itemTags    ItemTag[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@map("tags")
+}
+
+model ItemTag {
+  itemId      String     @map("item_id")
+  tagId       String     @map("tag_id")
+  item        Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  tag         Tag        @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([itemId, tagId])
+  @@index([itemId])
+  @@index([tagId])
+  @@map("item_tags")
+}
+
+model Outfit {
+  id               String       @id @default(uuid())
+  title            String?
+  notes            String?
+  rating           OutfitRating @default(neutral)
+  
+  // Generation constraints
+  weather          String?      // hot, warm, cool, cold, rain, snow
+  vibe             String?      // dysphoria_safe, confidence_boost, dopamine, neutral
+  occasion         String?
+  timeAvailable    String?      @map("time_available") // quick, normal
+  
+  // AI-generated fields
+  explanation      String?      @db.Text
+  swapSuggestions  String?      @map("swap_suggestions") @db.Text
+  
+  items            OutfitItem[]
+  aiJobs           AIJob[]
+  
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  @@map("outfits")
+}
+
+model OutfitItem {
+  outfitId    String      @map("outfit_id")
+  itemId      String      @map("item_id")
+  role        OutfitRole
+  
+  outfit      Outfit      @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  item        Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@id([outfitId, itemId])
+  @@index([outfitId])
+  @@index([itemId])
+  @@map("outfit_items")
+}
+
+model AIJob {
+  id              String       @id @default(uuid())
+  type            AIJobType
+  status          AIJobStatus  @default(queued)
+  
+  // References
+  itemId          String?      @map("item_id")
+  item            Item?        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  outfitId        String?      @map("outfit_id")
+  outfit          Outfit?      @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  
+  // Job data
+  inputRefs       Json?        @map("input_refs")      // Input parameters/references
+  outputJson      Json?        @map("output_json")     // Parsed AI response
+  confidenceJson  Json?        @map("confidence_json") // Confidence scores
+  modelName       String?      @map("model_name")      // e.g., "gpt-4-vision-preview"
+  rawResponse     String?      @map("raw_response")    // Full API response for debugging
+  error           String?
+  
+  // Job metadata
+  attempts        Int          @default(0)
+  maxAttempts     Int          @default(3) @map("max_attempts")
+  
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+  completedAt     DateTime?    @map("completed_at")
+
+  @@index([itemId])
+  @@index([outfitId])
+  @@index([status])
+  @@index([type])
+  @@map("ai_jobs")
+}

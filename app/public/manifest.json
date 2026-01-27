@@ -1,0 +1,65 @@
+{
+  "name": "Wardrobe AI Closet",
+  "short_name": "My Closet",
+  "description": "Single-user, self-hosted wardrobe organizer powered by AI with ADHD-optimized design",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6750a4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Add Item",
+      "short_name": "Add",
+      "description": "Add a new wardrobe item",
+      "url": "/items/new",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Generate Outfit",
+      "short_name": "Outfit",
+      "description": "Generate outfit suggestions",
+      "url": "/outfits/generate",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "type": "image/png",
+      "sizes": "390x844",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "form_factor": "wide"
+    }
+  ]
+}
