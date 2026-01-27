@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/app/lib/theme';
 
 /**
- * Settings Page - Export/Import
+ * Settings Page - Export/Import, Dark Mode, Reminders
  * 
  * Design Decisions (M3 + ADHD-optimized):
  * - One primary action per section (export/import clearly separated)
@@ -17,12 +18,49 @@ import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const [exporting, setExporting] = useState(false);
   const [importing, setImporting] = useState(false);
   const [importMode, setImportMode] = useState<'merge' | 'replace'>('merge');
   const [importFile, setImportFile] = useState<File | null>(null);
   const [importResult, setImportResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [laundryReminderDays, setLaundryReminderDays] = useState(3);
+  const [laundryStatus, setLaundryStatus] = useState<any>(null);
+
+  useEffect(() => {
+    // Load laundry reminder settings
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('laundryReminderDays');
+      if (stored) {
+        setLaundryReminderDays(parseInt(stored));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // Load laundry status when reminderDays changes
+    if (laundryReminderDays > 0) {
+      checkLaundryStatus();
+    }
+  }, [laundryReminderDays]);
+
+  const checkLaundryStatus = async () => {
+    try {
+      const response = await fetch(`/api/reminders?daysThreshold=${laundryReminderDays}`);
+      const data = await response.json();
+      setLaundryStatus(data);
+    } catch (error) {
+      console.error('Error checking laundry:', error);
+    }
+  };
+
+  const saveLaundryReminderDays = (days: number) => {
+    setLaundryReminderDays(days);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('laundryReminderDays', days.toString());
+    }
+  };
 
   async function handleExport() {
     try {
@@ -148,6 +186,100 @@ export default function SettingsPage() {
             </div>
           </div>
         )}
+
+        {/* Dark Mode Section */}
+        <div className="bg-surface-container rounded-2xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-tertiary-container rounded-full flex items-center justify-center text-2xl flex-shrink-0">
+              🌙
+            </div>
+            <div className="flex-1">
+              <h2 className="text-title-large text-on-surface mb-2">Dark Mode</h2>
+              <p className="text-body-medium text-on-surface-variant mb-4">
+                Choose your preferred color scheme
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setTheme('light')}
+                  className={`px-6 py-3 rounded-full font-medium transition-all ${
+                    theme === 'light'
+                      ? 'bg-primary text-on-primary shadow-elevation-2'
+                      : 'bg-surface-variant text-on-surface-variant hover:bg-surface-container-high'
+                  }`}
+                >
+                  ☀️ Light
+                </button>
+                <button
+                  onClick={() => setTheme('dark')}
+                  className={`px-6 py-3 rounded-full font-medium transition-all ${
+                    theme === 'dark'
+                      ? 'bg-primary text-on-primary shadow-elevation-2'
+                      : 'bg-surface-variant text-on-surface-variant hover:bg-surface-container-high'
+                  }`}
+                >
+                  🌙 Dark
+                </button>
+                <button
+                  onClick={() => setTheme('auto')}
+                  className={`px-6 py-3 rounded-full font-medium transition-all ${
+                    theme === 'auto'
+                      ? 'bg-primary text-on-primary shadow-elevation-2'
+                      : 'bg-surface-variant text-on-surface-variant hover:bg-surface-container-high'
+                  }`}
+                >
+                  🔄 Auto
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Laundry Reminder Section */}
+        <div className="bg-surface-container rounded-2xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center text-2xl flex-shrink-0">
+              🧺
+            </div>
+            <div className="flex-1">
+              <h2 className="text-title-large text-on-surface mb-2">Laundry Reminders</h2>
+              <p className="text-body-medium text-on-surface-variant mb-4">
+                Get notified when items have been in laundry too long
+              </p>
+              <div className="mb-4">
+                <label className="block text-label-large text-on-surface mb-2">
+                  Remind me after (days):
+                </label>
+                <div className="flex gap-3">
+                  {[1, 3, 5, 7].map(days => (
+                    <button
+                      key={days}
+                      onClick={() => saveLaundryReminderDays(days)}
+                      className={`px-6 py-3 rounded-full font-medium transition-all ${
+                        laundryReminderDays === days
+                          ? 'bg-primary text-on-primary shadow-elevation-2'
+                          : 'bg-surface-variant text-on-surface-variant hover:bg-surface-container-high'
+                      }`}
+                    >
+                      {days} {days === 1 ? 'day' : 'days'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {laundryStatus && (
+                <div className="mt-4 p-4 bg-surface rounded-xl">
+                  <p className="text-body-medium text-on-surface mb-2">
+                    <strong>{laundryStatus.total}</strong> items in laundry
+                  </p>
+                  {laundryStatus.overdue > 0 && (
+                    <p className="text-body-medium text-error">
+                      <strong>{laundryStatus.overdue}</strong> items overdue (&gt;{laundryStatus.threshold} days)
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Export Section */}
         <div className="bg-surface-container rounded-2xl p-6">

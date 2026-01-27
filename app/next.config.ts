@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // PWA configuration applied conditionally in production
+  turbopack: {},  // Empty turbopack config to silence warnings
 };
 
 // Conditionally apply PWA plugin only in production

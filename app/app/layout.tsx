@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import NotificationPrompt from "./components/NotificationPrompt";
+import { ThemeProvider } from "./lib/theme";
 
 export const metadata: Metadata = {
   title: "Wardrobe AI Closet",
@@ -45,8 +46,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
       <body className="antialiased">
-        {children}
-        <NotificationPrompt />
+        <ThemeProvider>
+          {children}
+          <NotificationPrompt />
+        </ThemeProvider>
       </body>
     </html>
   );
