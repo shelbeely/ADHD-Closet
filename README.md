@@ -87,6 +87,7 @@ This bundle includes:
 - `PERFORMANCE.md` — Performance budget
 - `app/README.md` — Development guide
 - `app/BUN_SETUP.md` — Bun.js setup and troubleshooting
+- `.github/humanizer/` — Writing guidelines to maintain clear, natural documentation
 
 ## Notes
 
