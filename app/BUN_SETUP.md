@@ -27,7 +27,7 @@ powershell -c "irm bun.sh/install.ps1 | iex"
 
 ```bash
 bun --version
-# Should show: 1.3.3 or higher
+# Should show: 1.3.6 or higher
 ```
 
 ## Usage
@@ -77,14 +77,14 @@ Bun v1.3.x may crash in certain virtualized environments with errors like:
    npm run dev
    ```
 
-2. **Option B**: Try Bun 1.3.3 (more stable)
+2. **Option B**: Try Bun 1.3.6 (latest stable)
    ```bash
-   curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.3"
+   curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.6"
    ```
 
 3. **Option C**: Use Bun baseline build
    ```bash
-   curl -fsSL https://github.com/oven-sh/bun/releases/download/bun-v1.3.3/bun-linux-x64-baseline.zip -o bun-baseline.zip
+   curl -fsSL https://github.com/oven-sh/bun/releases/download/bun-v1.3.6/bun-linux-x64-baseline.zip -o bun-baseline.zip
    unzip bun-baseline.zip
    mv bun-linux-x64-baseline/bun ~/.bun/bin/bun
    ```
@@ -119,7 +119,7 @@ npm start
 
 ## Package Manager Detection
 
-The project specifies `"packageManager": "bun@1.3.3"` in package.json, which will:
+The project specifies `"packageManager": "bun@1.3.6"` in package.json, which will:
 - Prompt users to install Bun if not present
 - Ensure version consistency across environments
 - Work with Corepack for automatic package manager selection
