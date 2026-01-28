@@ -106,7 +106,7 @@ Visit [http://localhost:3000](http://localhost:3000) 🎉
 - **Database**: PostgreSQL 16 with Prisma ORM
 - **Background Jobs**: BullMQ + Redis for async AI processing
 - **AI Provider**: OpenRouter with multiple Gemini models:
-  - **Image Generation**: Gemini 3 Pro Image Preview (Nano Banana Pro)
+  - **Image Generation**: Gemini 3 Pro Image Preview (nicknamed "Nano Banana Pro")
   - **Vision/OCR**: Gemini 3 Pro (highest quality for item inference)
   - **Text**: Gemini 3 Flash (fast outfit generation)
 - **Image Processing**: Sharp for server-side thumbnails and optimization
