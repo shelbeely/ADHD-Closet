@@ -15,6 +15,8 @@ export default function OutfitGeneratorPage() {
   const [vibe, setVibe] = useState<Vibe | undefined>();
   const [occasion, setOccasion] = useState('');
   const [timeAvailable, setTimeAvailable] = useState<TimeAvailable>('normal');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [fitPrinciples, setFitPrinciples] = useState<string[]>([]);
 
   const handlePanicPick = async () => {
     setPanicMode(true);
@@ -60,6 +62,7 @@ export default function OutfitGeneratorPage() {
           vibe,
           occasion: occasion || undefined,
           timeAvailable,
+          fitPrinciples: fitPrinciples.length > 0 ? fitPrinciples : undefined,
           count: 3
         })
       });
@@ -222,7 +225,7 @@ export default function OutfitGeneratorPage() {
         </div>
 
         {/* Occasion (Optional) */}
-        <div className="mb-8">
+        <div className="mb-6">
           <label htmlFor="occasion" className="block text-title-medium text-on-surface mb-3">
             Occasion
             <span className="text-body-small text-on-surface-variant ml-2">(optional)</span>
@@ -235,6 +238,69 @@ export default function OutfitGeneratorPage() {
             placeholder="e.g., work, date, errands, staying home"
             className="w-full px-4 py-3 bg-surface-variant text-on-surface rounded-2xl text-body-large placeholder-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
           />
+        </div>
+
+        {/* Fit Principles (Advanced/Optional) */}
+        <div className="mb-8">
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="flex items-center justify-between w-full py-3 px-4 bg-surface-container rounded-2xl hover:bg-surface-container-high transition-colors mb-3"
+          >
+            <span className="text-title-medium text-on-surface">
+              ✨ Fit & Proportion Principles
+              <span className="text-body-small text-on-surface-variant ml-2">(optional)</span>
+            </span>
+            <svg
+              className={`w-5 h-5 text-on-surface-variant transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {showAdvanced && (
+            <div className="p-4 bg-surface-container rounded-2xl space-y-3">
+              <p className="text-body-small text-on-surface-variant mb-4">
+                Apply fashion fit principles to generate more harmonious outfits
+              </p>
+
+              {[
+                { id: 'balanced-visual-weight', label: 'Balanced Visual Weight', description: 'Even distribution of attention-grabbing elements' },
+                { id: 'proportional-silhouette', label: 'Proportional Silhouette', description: 'Complementary volume and shape relationships' },
+                { id: 'harmonious-necklines', label: 'Harmonious Necklines', description: 'Necklines that complement your shape' },
+                { id: 'minimal-segmentation', label: 'Minimal Horizontal Segmentation', description: 'Avoid awkward body divisions from hemlines' },
+              ].map(principle => (
+                <label
+                  key={principle.id}
+                  className="flex items-start gap-3 cursor-pointer group p-3 rounded-xl hover:bg-surface-container-high transition-colors"
+                >
+                  <input
+                    type="checkbox"
+                    checked={fitPrinciples.includes(principle.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFitPrinciples([...fitPrinciples, principle.id]);
+                      } else {
+                        setFitPrinciples(fitPrinciples.filter(p => p !== principle.id));
+                      }
+                    }}
+                    className="mt-1 w-5 h-5 rounded border-2 border-outline checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary/50 transition-all"
+                  />
+                  <div className="flex-1">
+                    <p className="text-body-large text-on-surface font-medium group-hover:text-primary transition-colors">
+                      {principle.label}
+                    </p>
+                    <p className="text-body-small text-on-surface-variant mt-1">
+                      {principle.description}
+                    </p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Generate Button */}
