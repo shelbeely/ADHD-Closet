@@ -174,11 +174,13 @@ Must be documented and used:
 - `REDIS_URL`
 - `OPENROUTER_API_KEY`
 - `OPENROUTER_BASE_URL` (default https://openrouter.ai/api/v1)
-- `OPENROUTER_IMAGE_MODEL` (model id for Nano Banana or equivalent)
-- `OPENROUTER_VISION_MODEL` (for inference + OCR)
-- `OPENROUTER_TEXT_MODEL` (for outfit generation + structured JSON)
+- `OPENROUTER_IMAGE_MODEL` (default: `google/gemini-3-pro-image-preview` - Nano Banana Pro)
+- `OPENROUTER_VISION_MODEL` (default: `google/gemini-3-pro-preview` - Gemini 3 Pro)
+- `OPENROUTER_TEXT_MODEL` (default: `google/gemini-3-flash-preview` - Gemini 3 Flash)
 - `DATA_DIR`
 - `PUBLIC_BASE_URL` (for building absolute URLs where needed)
+
+**Note**: Uses all 3 Gemini models optimally - Image Preview for generation, Pro for vision, Flash for text.
 
 ## Acceptance criteria
 - User can add an item from phone: upload photo -> item appears immediately -> AI job runs -> generated catalog image appears -> category auto-set -> user can edit fields.

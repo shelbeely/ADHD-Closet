@@ -14,7 +14,7 @@ const connection = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', 
 
 export interface AIJobData {
   jobId: string;
-  type: 'generate_catalog_image' | 'infer_item' | 'extract_label' | 'generate_outfit';
+  type: 'generate_catalog_image' | 'infer_item' | 'extract_label' | 'generate_outfit' | 'generate_outfit_visualization';
   itemId?: string;
   outfitId?: string;
   inputRefs?: any;
@@ -56,6 +56,10 @@ const aiWorker = new Worker<AIJobData>(
 
         case 'generate_outfit':
           result = await processOutfitGeneration(outfitId!, openrouter, inputRefs);
+          break;
+
+        case 'generate_outfit_visualization':
+          result = await processOutfitVisualization(outfitId!, openrouter, inputRefs);
           break;
 
         default:
@@ -135,7 +139,7 @@ async function processCatalogImageGeneration(itemId: string, openrouter: any) {
   return {
     output: { generatedImageUrl },
     confidence: { overall: 0.9 },
-    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'black-forest-labs/flux-pro',
+    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
     rawResponse: { generatedImageUrl },
   };
 }
@@ -221,7 +225,7 @@ async function processItemInference(itemId: string, openrouter: any, inputRefs?:
   return {
     output: inferredData,
     confidence: inferredData.confidence || {},
-    modelName: process.env.OPENROUTER_VISION_MODEL || 'anthropic/claude-3.5-sonnet',
+    modelName: process.env.OPENROUTER_VISION_MODEL || 'google/gemini-3-pro-preview',
     rawResponse: inferredData,
   };
 }
@@ -269,8 +273,159 @@ async function processOutfitGeneration(outfitId: string, openrouter: any, inputR
   return {
     output: generatedOutfits,
     confidence: { overall: 0.85 },
-    modelName: process.env.OPENROUTER_TEXT_MODEL || 'anthropic/claude-3.5-sonnet',
+    modelName: process.env.OPENROUTER_TEXT_MODEL || 'google/gemini-3-flash-preview',
     rawResponse: generatedOutfits,
+  };
+}
+
+// Process outfit visualization
+async function processOutfitVisualization(outfitId: string, openrouter: any, inputRefs?: any) {
+  const { writeFile, mkdir } = await import('fs/promises');
+  const { createHash } = await import('crypto');
+  
+  const outfit = await prisma.outfit.findUnique({
+    where: { id: outfitId },
+    include: {
+      items: {
+        include: {
+          item: {
+            include: {
+              images: {
+                where: {
+                  kind: {
+                    in: ['ai_catalog', 'original_main'],
+                  },
+                },
+                take: 1,
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!outfit) {
+    throw new Error('Outfit not found');
+  }
+
+  if (outfit.items.length === 0) {
+    throw new Error('Outfit has no items');
+  }
+
+  const visualizationType = inputRefs?.visualizationType || 'outfit_board';
+
+  // Load item images
+  const itemImagesBase64: Array<{ id: string; base64: string; category: string }> = [];
+  
+  for (const outfitItem of outfit.items) {
+    const item = outfitItem.item;
+    const image = item.images[0];
+    
+    if (image) {
+      const imagePath = join(DATA_DIR, image.filePath);
+      const imageBuffer = await readFile(imagePath);
+      const imageBase64 = imageBuffer.toString('base64');
+      
+      itemImagesBase64.push({
+        id: item.id,
+        base64: imageBase64,
+        category: item.category || 'unknown',
+      });
+    }
+  }
+
+  if (itemImagesBase64.length === 0) {
+    throw new Error('No images found for outfit items');
+  }
+
+  // Generate visualization
+  const generatedImageUrl = await openrouter.generateOutfitVisualization(
+    itemImagesBase64,
+    visualizationType,
+    {
+      weather: outfit.weather || undefined,
+      vibe: outfit.vibe || undefined,
+      occasion: outfit.occasion || undefined,
+      explanation: outfit.explanation || undefined,
+    }
+  );
+
+  // Download and save the generated image
+  let savedFilePath: string;
+  
+  if (generatedImageUrl.startsWith('data:')) {
+    // Base64 encoded image
+    const matches = generatedImageUrl.match(/^data:image\/([a-zA-Z]+);base64,(.+)$/);
+    if (!matches) {
+      throw new Error('Invalid base64 image format');
+    }
+    
+    const imageType = matches[1];
+    const base64Data = matches[2];
+    const imageBuffer = Buffer.from(base64Data, 'base64');
+    
+    // Generate unique filename
+    const hash = createHash('md5').update(imageBuffer).digest('hex').substring(0, 8);
+    const timestamp = Date.now();
+    const filename = `${visualizationType}_${timestamp}_${hash}.${imageType}`;
+    
+    // Create outfit images directory
+    const outfitImagesDir = join(DATA_DIR, 'images', 'outfits', outfitId);
+    await mkdir(outfitImagesDir, { recursive: true });
+    
+    const filePath = join(outfitImagesDir, filename);
+    await writeFile(filePath, imageBuffer);
+    
+    // Store relative path
+    savedFilePath = `images/outfits/${outfitId}/${filename}`;
+  } else {
+    // URL - need to download
+    const response = await fetch(generatedImageUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to download image: ${response.statusText}`);
+    }
+    
+    const imageBuffer = Buffer.from(await response.arrayBuffer());
+    const contentType = response.headers.get('content-type') || 'image/png';
+    const imageType = contentType.split('/')[1] || 'png';
+    
+    // Generate unique filename
+    const hash = createHash('md5').update(imageBuffer).digest('hex').substring(0, 8);
+    const timestamp = Date.now();
+    const filename = `${visualizationType}_${timestamp}_${hash}.${imageType}`;
+    
+    // Create outfit images directory
+    const outfitImagesDir = join(DATA_DIR, 'images', 'outfits', outfitId);
+    await mkdir(outfitImagesDir, { recursive: true });
+    
+    const filePath = join(outfitImagesDir, filename);
+    await writeFile(filePath, imageBuffer);
+    
+    // Store relative path
+    savedFilePath = `images/outfits/${outfitId}/${filename}`;
+  }
+
+  // Save image metadata to database
+  const outfitImage = await prisma.outfitImage.create({
+    data: {
+      outfitId,
+      kind: visualizationType,
+      filePath: savedFilePath,
+      mimeType: visualizationType === 'outfit_board' ? 'image/png' : 'image/jpeg',
+    },
+  });
+
+  return {
+    output: { 
+      generatedImageUrl,
+      savedFilePath,
+      imageId: outfitImage.id,
+      visualizationType,
+    },
+    confidence: { overall: 0.9 },
+    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
+    rawResponse: { generatedImageUrl },
   };
 }
 

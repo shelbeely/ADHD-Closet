@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 const updateOutfitSchema = z.object({
   title: z.string().optional(),
+  notes: z.string().optional(),
   rating: z.enum(['up', 'down', 'neutral']).optional(),
   weather: z.enum(['hot', 'warm', 'cool', 'cold', 'rain', 'snow']).optional(),
   vibe: z.enum(['dysphoria_safe', 'confidence_boost', 'dopamine', 'neutral']).optional(),
@@ -35,6 +36,15 @@ export async function GET(
                 }
               }
             }
+          }
+        },
+        images: true,
+        aiJobs: {
+          where: {
+            type: 'generate_outfit_visualization'
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
         }
       }

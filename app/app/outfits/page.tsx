@@ -243,8 +243,11 @@ export default function OutfitsPage() {
                 key={outfit.id}
                 className="bg-surface-container rounded-3xl shadow-elevation-1 overflow-hidden hover:shadow-elevation-3 transition-shadow"
               >
-                {/* Outfit Items Thumbnails */}
-                <div className="grid grid-cols-3 gap-1 p-4 bg-surface-variant">
+                {/* Outfit Items Thumbnails - Clickable */}
+                <div 
+                  className="grid grid-cols-3 gap-1 p-4 bg-surface-variant cursor-pointer"
+                  onClick={() => router.push(`/outfits/${outfit.id}`)}
+                >
                   {outfit.items.slice(0, 6).map((outfitItem, idx) => (
                     <div key={idx} className="aspect-square bg-surface rounded-xl overflow-hidden">
                       {getThumbnailUrl(outfitItem.item) ? (
@@ -279,7 +282,10 @@ export default function OutfitsPage() {
                       className="w-full px-3 py-2 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20"
                     />
                   ) : (
-                    <h3 className="font-semibold text-lg">
+                    <h3 
+                      className="font-semibold text-lg cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => router.push(`/outfits/${outfit.id}`)}
+                    >
                       {outfit.title || `Outfit ${new Date(outfit.createdAt).toLocaleDateString()}`}
                     </h3>
                   )}

@@ -39,7 +39,7 @@ Visit [http://localhost:3000](http://localhost:3000)
 - **Backend/API**: Next.js Route Handlers
 - **Database**: Postgres (via Prisma ORM)
 - **Background Jobs**: BullMQ + Redis
-- **AI**: OpenRouter (vision + text + image generation)
+- **AI**: OpenRouter with 3 Gemini models (Image Preview for generation, Pro for vision, Flash for text)
 - **Image Processing**: Sharp for server-side thumbnails
 - **Runtime**: Bun.js (with npm fallback)
 
