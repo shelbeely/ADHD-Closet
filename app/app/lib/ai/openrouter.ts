@@ -258,6 +258,96 @@ Return ONLY valid JSON, no additional text.`;
     const content = response.choices[0].message.content;
     return JSON.parse(content);
   }
+
+  async generateOutfitVisualization(
+    itemImagesBase64: Array<{ id: string; base64: string; category: string }>,
+    visualizationType: 'outfit_board' | 'person_wearing',
+    outfitContext?: {
+      weather?: string;
+      vibe?: string;
+      occasion?: string;
+      explanation?: string;
+    }
+  ): Promise<string> {
+    const contextDescription = outfitContext ? `
+Context for this outfit:
+${outfitContext.weather ? `- Weather: ${outfitContext.weather}` : ''}
+${outfitContext.vibe ? `- Vibe: ${outfitContext.vibe}` : ''}
+${outfitContext.occasion ? `- Occasion: ${outfitContext.occasion}` : ''}
+${outfitContext.explanation ? `- Why it works: ${outfitContext.explanation}` : ''}
+` : '';
+
+    let prompt: string;
+    if (visualizationType === 'outfit_board') {
+      prompt = `Create a professional outfit board / flat lay showing these clothing items arranged aesthetically:
+
+${itemImagesBase64.map((item, idx) => `${idx + 1}. ${item.category}`).join('\n')}
+${contextDescription}
+
+Style guidelines:
+- Arrange items in a visually pleasing flat lay composition
+- Use a clean, neutral background (white or light gray)
+- Maintain consistent lighting and perspective
+- Items should be neatly arranged and clearly visible
+- Create a cohesive, magazine-quality aesthetic
+- Preserve the colors and details of each item exactly as shown
+- The layout should feel balanced and intentional`;
+    } else {
+      prompt = `Create a realistic visualization of a person wearing this complete outfit:
+
+${itemImagesBase64.map((item, idx) => `${idx + 1}. ${item.category}`).join('\n')}
+${contextDescription}
+
+Style guidelines:
+- Show a full-body view of a person wearing all these items together
+- Use natural, flattering lighting
+- Maintain outfit consistency with the provided items
+- Preserve colors, patterns, and details exactly as shown in the reference images
+- The person should have a neutral expression and pose
+- Background should be simple and not distract from the outfit
+- Create a realistic, fashion catalog quality image
+- Ensure all items are visible and styled appropriately`;
+    }
+
+    // Build content array with prompt and all item images
+    const contentArray: any[] = [{ type: 'text', text: prompt }];
+    
+    for (const item of itemImagesBase64) {
+      contentArray.push({
+        type: 'image_url',
+        image_url: { url: `data:image/jpeg;base64,${item.base64}` },
+      });
+    }
+
+    // Use Gemini or compatible image generation model via OpenRouter
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: contentArray,
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.5,
+      max_tokens: 1000,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
+    });
+
+    // Extract generated image from response
+    const message = response.choices[0].message;
+    
+    // Check for images array (newer format)
+    if (message.images && message.images.length > 0) {
+      return message.images[0]; // URL or base64
+    }
+    
+    // Fallback to content parsing
+    return message.content;
+  }
 }
 
 // Singleton instance

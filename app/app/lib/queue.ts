@@ -27,10 +27,11 @@ export const aiJobQueue = new Queue('ai-jobs', {
 // Job Types
 export type AIJobData = {
   jobId: string;
-  type: 'generate_catalog_image' | 'infer_item' | 'extract_label' | 'generate_outfit';
+  type: 'generate_catalog_image' | 'infer_item' | 'extract_label' | 'generate_outfit' | 'generate_outfit_visualization';
   itemId?: string;
   outfitId?: string;
   inputRefs?: any;
+  visualizationType?: 'outfit_board' | 'person_wearing';
 };
 
 // Export for type safety

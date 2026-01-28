@@ -39,6 +39,8 @@ enum ImageKind {
   detail
   ai_catalog
   thumbnail
+  outfit_board
+  outfit_person_wearing
 }
 
 enum OutfitRole {
@@ -63,6 +65,7 @@ enum AIJobType {
   infer_item
   extract_label
   generate_outfit
+  generate_outfit_visualization
 }
 
 enum AIJobStatus {
@@ -160,6 +163,7 @@ model Outfit {
   swapSuggestions  String?      @map("swap_suggestions") @db.Text
   
   items            OutfitItem[]
+  images           OutfitImage[]
   aiJobs           AIJob[]
   
   createdAt        DateTime     @default(now()) @map("created_at")
@@ -180,6 +184,24 @@ model OutfitItem {
   @@index([outfitId])
   @@index([itemId])
   @@map("outfit_items")
+}
+
+model OutfitImage {
+  id          String     @id @default(uuid())
+  outfitId    String     @map("outfit_id")
+  outfit      Outfit     @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  
+  kind        ImageKind  // outfit_board or outfit_person_wearing
+  filePath    String     @map("file_path") // relative to DATA_DIR
+  width       Int?
+  height      Int?
+  mimeType    String?    @map("mime_type")
+  
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@index([outfitId])
+  @@index([kind])
+  @@map("outfit_images")
 }
 
 model AIJob {
