@@ -162,11 +162,16 @@ See `.env.example` for all available configuration options.
 
 Configure AI models in `.env`:
 
-- `OPENROUTER_IMAGE_MODEL` - For catalog image generation and outfit visualization (default: `google/gemini-3-pro-image-preview`)
-- `OPENROUTER_VISION_MODEL` - For item inference and OCR (e.g., Claude 3.5 Sonnet)
-- `OPENROUTER_TEXT_MODEL` - For outfit generation (e.g., Claude 3.5 Sonnet)
+- `OPENROUTER_IMAGE_MODEL` - For catalog image generation and outfit visualization
+- `OPENROUTER_VISION_MODEL` - For item inference and OCR
+- `OPENROUTER_TEXT_MODEL` - For outfit generation
 
-**Recommended Image Model**: Nano Banana Pro (`google/gemini-3-pro-image-preview`) offers the best multi-image consistency for outfit visualizations.
+**Optimal 3-Model Configuration**:
+- **Image**: `google/gemini-3-pro-image-preview` (Nano Banana Pro) - Only model that generates images
+- **Vision**: `google/gemini-3-pro-preview` (Gemini 3 Pro) - Highest quality for accurate item analysis
+- **Text**: `google/gemini-3-flash-preview` (Gemini 3 Flash) - Fast, cost-effective outfit generation
+
+This configuration uses all three Gemini models optimally, balancing quality and cost across different tasks.
 
 See [OpenRouter Models](https://openrouter.ai/models) for available options and pricing.
 

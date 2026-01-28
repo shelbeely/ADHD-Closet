@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
       data: {
         type: 'generate_outfit',
         status: 'queued',
-        modelName: process.env.OPENROUTER_TEXT_MODEL || 'anthropic/claude-3.5-sonnet',
+        modelName: process.env.OPENROUTER_TEXT_MODEL || 'google/gemini-3-flash-preview',
         inputRefs: {
           weather: validated.weather,
           vibe: validated.vibe,

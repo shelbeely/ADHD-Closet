@@ -225,7 +225,7 @@ async function processItemInference(itemId: string, openrouter: any, inputRefs?:
   return {
     output: inferredData,
     confidence: inferredData.confidence || {},
-    modelName: process.env.OPENROUTER_VISION_MODEL || 'anthropic/claude-3.5-sonnet',
+    modelName: process.env.OPENROUTER_VISION_MODEL || 'google/gemini-3-pro-preview',
     rawResponse: inferredData,
   };
 }
@@ -273,7 +273,7 @@ async function processOutfitGeneration(outfitId: string, openrouter: any, inputR
   return {
     output: generatedOutfits,
     confidence: { overall: 0.85 },
-    modelName: process.env.OPENROUTER_TEXT_MODEL || 'anthropic/claude-3.5-sonnet',
+    modelName: process.env.OPENROUTER_TEXT_MODEL || 'google/gemini-3-flash-preview',
     rawResponse: generatedOutfits,
   };
 }

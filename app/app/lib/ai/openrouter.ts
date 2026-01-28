@@ -62,8 +62,8 @@ class OpenRouterClient {
       apiKey: config.apiKey,
       baseUrl: config.baseUrl || 'https://openrouter.ai/api/v1',
       imageModel: config.imageModel || 'google/gemini-3-pro-image-preview',
-      visionModel: config.visionModel || 'anthropic/claude-3.5-sonnet',
-      textModel: config.textModel || 'anthropic/claude-3.5-sonnet',
+      visionModel: config.visionModel || 'google/gemini-3-pro-preview',
+      textModel: config.textModel || 'google/gemini-3-flash-preview',
     };
   }
 
