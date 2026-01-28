@@ -55,7 +55,7 @@ export async function POST(
     }
 
     // Check if items have images
-    const itemsWithImages = outfit.items.filter(oi => oi.item.images.length > 0);
+    const itemsWithImages = outfit.items.filter((oi: any) => oi.item.images.length > 0);
     if (itemsWithImages.length === 0) {
       return NextResponse.json(
         { error: 'No images found for outfit items' },
