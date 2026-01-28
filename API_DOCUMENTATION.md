@@ -253,6 +253,37 @@ Update an outfit.
 #### `DELETE /api/outfits/[id]`
 Delete an outfit.
 
+#### `POST /api/outfits/[id]/visualize`
+Generate AI-powered visualization for an outfit.
+
+**Request Body**:
+```json
+{
+  "visualizationType": "outfit_board" // or "person_wearing"
+}
+```
+
+**Response** (202 Accepted):
+```json
+{
+  "jobId": "uuid",
+  "aiJobId": "uuid",
+  "status": "queued",
+  "message": "Generating outfit board visualization. This may take 30-60 seconds."
+}
+```
+
+**Description**:
+- `outfit_board`: Creates a flat-lay style arrangement of all outfit items
+- `person_wearing`: Shows a person wearing the complete outfit
+
+The visualization is generated using AI (Gemini or compatible model via OpenRouter) and maintains outfit consistency across all items. Poll the AI jobs endpoint to check completion status.
+
+#### `GET /api/outfit-images/[imageId]`
+Stream an outfit visualization image file.
+
+**Response**: Image file with appropriate `Content-Type` header
+
 ---
 
 ### Tags
@@ -292,6 +323,8 @@ Get all AI jobs.
 
 **Query Parameters**:
 - `itemId` (string, optional): Filter by item
+- `outfitId` (string, optional): Filter by outfit
+- `type` (string, optional): Filter by type (`generate_catalog_image`, `infer_item`, `extract_label`, `generate_outfit`, `generate_outfit_visualization`)
 - `status` (string, optional): Filter by status (`queued`, `running`, `succeeded`, `failed`, `needs_review`)
 
 **Response** (200 OK):
@@ -303,6 +336,7 @@ Get all AI jobs.
       "type": "generate_catalog_image",
       "status": "succeeded",
       "itemId": "uuid",
+      "outfitId": null,
       "modelName": "anthropic/claude-3-opus",
       "outputJson": { ... },
       "createdAt": "2024-01-27T12:00:00Z",
@@ -311,6 +345,13 @@ Get all AI jobs.
   ]
 }
 ```
+
+**AI Job Types**:
+- `generate_catalog_image`: Generate clean catalog-style image from original photo
+- `infer_item`: Analyze item and extract category, colors, attributes, tags
+- `extract_label`: Extract brand, size, and material info from label photos
+- `generate_outfit`: Generate outfit combinations based on constraints
+- `generate_outfit_visualization`: Create outfit board or person-wearing visualization
 
 #### `POST /api/ai/jobs`
 Create a new AI job (enqueue for processing).
