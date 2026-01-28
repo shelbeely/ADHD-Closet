@@ -102,9 +102,10 @@ This implementation adds AI-powered outfit visualization capabilities to the ADH
 ### 6. Configuration
 
 **Updated `.env.example`** (`app/.env.example`)
-- Added Gemini model reference in comments
-- Example: `google/gemini-2.0-flash-exp` for Gemini support
-- Maintains backward compatibility with existing models
+- Set to use Nano Banana Pro (Gemini 3 Pro Image Preview) by default
+- Model ID: `google/gemini-3-pro-image-preview`
+- Optimized for multi-image outfit consistency
+- Maintains backward compatibility with other models
 
 ### 7. Documentation
 
@@ -190,9 +191,18 @@ UI displays generated visualization
 ## API Compatibility
 
 The implementation uses OpenRouter's standardized API, which means it works with:
-- Gemini models (`google/gemini-2.0-flash-exp`)
+- **Nano Banana Pro** (`google/gemini-3-pro-image-preview`) - **Recommended** for outfit visualization
 - Flux models (`black-forest-labs/flux-pro`)
 - Any OpenRouter model supporting image generation with multi-modal input
+
+### Why Nano Banana Pro?
+
+Nano Banana Pro (Gemini 3 Pro Image Preview) is the recommended model because it offers:
+- **Multi-image consistency**: Maintains outfit coherence across all items
+- **High-fidelity synthesis**: Professional-grade output quality
+- **Context-rich generation**: Uses outfit context (weather, vibe, occasion) effectively
+- **Accurate preservation**: Maintains colors and details from original items
+- **Flexible output**: Supports various aspect ratios and resolutions
 
 ## Testing Checklist
 
@@ -204,7 +214,7 @@ To test the complete implementation:
 
 2. **Configuration**
    - [ ] Set OPENROUTER_API_KEY
-   - [ ] Configure OPENROUTER_IMAGE_MODEL
+   - [ ] Configure OPENROUTER_IMAGE_MODEL (default: `google/gemini-3-pro-image-preview`)
    - [ ] Ensure Redis is running
    - [ ] Ensure Postgres is running
 

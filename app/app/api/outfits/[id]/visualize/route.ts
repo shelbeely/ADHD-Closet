@@ -75,7 +75,7 @@ export async function POST(
         type: 'generate_outfit_visualization',
         status: 'queued',
         outfitId,
-        modelName: process.env.OPENROUTER_IMAGE_MODEL || 'black-forest-labs/flux-pro',
+        modelName: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
         inputRefs: {
           visualizationType: validated.visualizationType,
         },

@@ -139,7 +139,7 @@ async function processCatalogImageGeneration(itemId: string, openrouter: any) {
   return {
     output: { generatedImageUrl },
     confidence: { overall: 0.9 },
-    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'black-forest-labs/flux-pro',
+    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
     rawResponse: { generatedImageUrl },
   };
 }
@@ -424,7 +424,7 @@ async function processOutfitVisualization(outfitId: string, openrouter: any, inp
       visualizationType,
     },
     confidence: { overall: 0.9 },
-    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'black-forest-labs/flux-pro',
+    modelName: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
     rawResponse: { generatedImageUrl },
   };
 }

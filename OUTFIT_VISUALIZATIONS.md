@@ -1,6 +1,8 @@
 # AI-Generated Outfit Visualizations
 
-This feature allows you to generate AI-powered visualizations of your outfits using Gemini or compatible models via OpenRouter.
+This feature allows you to generate AI-powered visualizations of your outfits using **Nano Banana Pro** (Gemini 3 Pro Image Preview) via OpenRouter.
+
+> 📖 **See [NANO_BANANA_PRO.md](NANO_BANANA_PRO.md) for detailed information about the AI model.**
 
 ## Overview
 
@@ -12,11 +14,12 @@ The outfit visualization feature creates two types of images:
 
 ## Features
 
-- **Consistent Styling**: AI maintains outfit consistency across all items
+- **Consistent Styling**: Nano Banana Pro maintains outfit consistency across all items
 - **Multiple Visualizations**: Generate multiple versions with different styles
-- **High Quality**: 1024x1024 resolution images
+- **High Quality**: 1024x1024 resolution images (supports up to 4K)
 - **Automatic Generation**: Items are automatically arranged based on their category and role
 - **Context-Aware**: Takes into account weather, vibe, and occasion when generating
+- **Identity Preservation**: Maintains colors, patterns, and details from your actual items
 
 ## How to Use
 
@@ -58,10 +61,19 @@ curl http://localhost:3000/api/ai/jobs?outfitId={outfit-id}&type=generate_outfit
 The visualization feature uses the image generation model configured in your `.env` file:
 
 ```env
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-pro"
-# or for Gemini support:
-OPENROUTER_IMAGE_MODEL="google/gemini-2.0-flash-exp"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 ```
+
+### About Nano Banana Pro (Gemini 3 Pro Image Preview)
+
+This is Google's most advanced image-generation and editing model, built on Gemini 3 Pro. Key features:
+
+- **Multi-image consistency**: Perfect for outfit visualizations with multiple items
+- **Industry-leading text rendering**: High-quality text in generated images
+- **Consistent blending**: Maintains outfit coherence across all items
+- **High-fidelity output**: Supports 2K/4K resolution
+- **Context-aware**: Uses weather, vibe, and occasion for relevant generations
+- **Accurate preservation**: Maintains colors and details from source images
 
 ### Supported Models
 
@@ -71,7 +83,7 @@ Any OpenRouter model that supports:
 - Modalities: `['image', 'text']`
 
 Recommended models:
-- `google/gemini-2.0-flash-exp` - Gemini 2.0 with excellent outfit consistency
+- `google/gemini-3-pro-image-preview` - **Nano Banana Pro** (recommended) - Best outfit consistency
 - `black-forest-labs/flux-pro` - High-quality image generation
 - Any model with image generation capabilities via OpenRouter
 

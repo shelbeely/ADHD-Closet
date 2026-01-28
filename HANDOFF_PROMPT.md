@@ -174,7 +174,7 @@ Must be documented and used:
 - `REDIS_URL`
 - `OPENROUTER_API_KEY`
 - `OPENROUTER_BASE_URL` (default https://openrouter.ai/api/v1)
-- `OPENROUTER_IMAGE_MODEL` (model id for Nano Banana or equivalent)
+- `OPENROUTER_IMAGE_MODEL` (default: `google/gemini-3-pro-image-preview` - Nano Banana Pro for outfit visualization)
 - `OPENROUTER_VISION_MODEL` (for inference + OCR)
 - `OPENROUTER_TEXT_MODEL` (for outfit generation + structured JSON)
 - `DATA_DIR`
