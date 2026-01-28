@@ -162,10 +162,13 @@ Required fields:
 - colorPalette: array of hex codes for dominant colors
 - pattern: description (e.g., "solid", "striped", "floral", "graphic print")
 - attributes: object with relevant attributes:
-  - For tops: neckline, sleeveLength
-  - For bottoms: rise, inseam, fit
-  - For shoes: heelHeight, style
-  - For accessories: type, material
+  - For tops: neckline (crew, v-neck, scoop, boat, square, halter, off-shoulder, turtleneck), sleeveLength (sleeveless, short, 3/4, long), sleeveFit (fitted, loose, puff, bell), visualWeight (minimal, moderate, heavy, complex), silhouette (fitted, loose, oversized, boxy)
+  - For bottoms: rise (low, mid, high), inseam, fit (skinny, slim, straight, wide, bootcut, flare), hemline (raw, cuffed, distressed), visualWeight (minimal, moderate, heavy), pocketStyle (description)
+  - For dresses: neckline, sleeveLength, waistline (natural, empire, dropped, none), hemline, silhouette (fitted, A-line, shift, bodycon, flowy)
+  - For outerwear: silhouette, length (cropped, hip, mid-thigh, knee, long), visualWeight
+  - For shoes: heelHeight, heelThickness (none, slim, chunky, wedge), toeboxShape (rounded, almond, pointed, square), visualWeight (minimal, moderate, heavy)
+  - For accessories: type, material, visualWeight
+- fitNotes: brief description of how the item fits and its proportions (e.g., "Oversized fit creates volume contrast", "High neckline flattens bust area", "Low rise may segment torso")
 - tags: array of style tags relevant to emo/goth/alt fashion
 - confidence: object with confidence scores (0-1) for each field
 
@@ -213,31 +216,41 @@ Return ONLY valid JSON, no additional text.`;
   }
 
   async generateOutfits(
-    items: Array<{ id: string; category: string; tags: string[]; colors: string[] }>,
+    items: Array<{ id: string; category: string; tags: string[]; colors: string[]; attributes?: any }>,
     constraints: {
       weather?: string;
       timeBudget?: 'quick' | 'normal';
       vibe?: 'dysphoria-safe' | 'confidence-boost' | 'dopamine' | 'neutral';
       occasion?: string;
+      fitPrinciples?: string | string[]; // e.g., "balanced visual weight", "proportional silhouette"
     }
   ): Promise<any> {
     const systemPrompt = `You are a personal stylist specializing in emo/goth/alt fashion for ADHD users.
 Generate outfit combinations that respect emotional constraints and style preferences.
-Consider dysphoria-safe options, dopamine-boosting combinations, and confidence-building looks.`;
+Consider dysphoria-safe options, dopamine-boosting combinations, and confidence-building looks.
+Apply fit and proportion principles: visual weight balance, harmonious necklines, proportional silhouettes, and minimal awkward horizontal segmentation.`;
 
     const userPrompt = `Generate 1-5 outfit combinations from these available items:
 
-${items.map(item => `- ${item.id}: ${item.category} (${item.colors.join(', ')}) [${item.tags.join(', ')}]`).join('\n')}
+${items.map(item => `- ${item.id}: ${item.category} (${item.colors.join(', ')}) [${item.tags.join(', ')}] ${item.attributes ? `{${Object.entries(item.attributes).map(([k,v]) => `${k}:${v}`).join(', ')}}` : ''}`).join('\n')}
 
 Constraints:
 ${constraints.weather ? `- Weather: ${constraints.weather}` : ''}
 ${constraints.timeBudget ? `- Time: ${constraints.timeBudget === 'quick' ? 'Quick to put on' : 'Normal'}` : ''}
 ${constraints.vibe ? `- Vibe: ${constraints.vibe}` : ''}
 ${constraints.occasion ? `- Occasion: ${constraints.occasion}` : ''}
+${constraints.fitPrinciples ? `- Fit Principles: ${Array.isArray(constraints.fitPrinciples) ? constraints.fitPrinciples.join(', ') : constraints.fitPrinciples}` : ''}
 
 Return JSON array with 1-5 outfits, each containing:
 - items: array of {itemId, role} where role is the garment's function in outfit
 - explanation: short 1-2 sentence explanation of why this outfit works
+- fitAnalysis: object with:
+  - visualWeightBalance: brief assessment of how visual weight is distributed
+  - proportionHarmony: assessment of how proportions work together
+  - silhouetteDefinition: how the silhouette is defined
+  - horizontalLines: note on body segmentation (good or awkward)
+  - score: 0-1 score for overall fit harmony
+- fitTips: array of 1-2 brief tips for improving fit or understanding what works
 - swaps: optional array of {itemId, reason} for alternative pieces
 - confidence: 0-1 score for how well this matches constraints
 

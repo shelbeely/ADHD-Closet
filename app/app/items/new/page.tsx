@@ -18,12 +18,18 @@ export default function AddItemPage() {
   const router = useRouter();
   const frontFileInputRef = useRef<HTMLInputElement>(null);
   const backFileInputRef = useRef<HTMLInputElement>(null);
+  const brandLabelFileInputRef = useRef<HTMLInputElement>(null);
+  const careLabelFileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'photo' | 'details'>('photo');
   const [selectedFrontFile, setSelectedFrontFile] = useState<File | null>(null);
   const [frontPreviewUrl, setFrontPreviewUrl] = useState<string>('');
   const [selectedBackFile, setSelectedBackFile] = useState<File | null>(null);
   const [backPreviewUrl, setBackPreviewUrl] = useState<string>('');
+  const [selectedBrandLabelFile, setSelectedBrandLabelFile] = useState<File | null>(null);
+  const [brandLabelPreviewUrl, setBrandLabelPreviewUrl] = useState<string>('');
+  const [selectedCareLabelFile, setSelectedCareLabelFile] = useState<File | null>(null);
+  const [careLabelPreviewUrl, setCareLabelPreviewUrl] = useState<string>('');
   
   // ADHD: Auto-save draft to localStorage
   const [title, setTitle] = useState('');
@@ -39,8 +45,14 @@ export default function AddItemPage() {
       if (backPreviewUrl) {
         URL.revokeObjectURL(backPreviewUrl);
       }
+      if (brandLabelPreviewUrl) {
+        URL.revokeObjectURL(brandLabelPreviewUrl);
+      }
+      if (careLabelPreviewUrl) {
+        URL.revokeObjectURL(careLabelPreviewUrl);
+      }
     };
-  }, [frontPreviewUrl, backPreviewUrl]);
+  }, [frontPreviewUrl, backPreviewUrl, brandLabelPreviewUrl, careLabelPreviewUrl]);
 
   const handleFrontFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -64,6 +76,30 @@ export default function AddItemPage() {
       }
       setSelectedBackFile(file);
       setBackPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleBrandLabelFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Revoke previous URL to prevent memory leak
+      if (brandLabelPreviewUrl) {
+        URL.revokeObjectURL(brandLabelPreviewUrl);
+      }
+      setSelectedBrandLabelFile(file);
+      setBrandLabelPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleCareLabelFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Revoke previous URL to prevent memory leak
+      if (careLabelPreviewUrl) {
+        URL.revokeObjectURL(careLabelPreviewUrl);
+      }
+      setSelectedCareLabelFile(file);
+      setCareLabelPreviewUrl(URL.createObjectURL(file));
     }
   };
 
@@ -116,6 +152,34 @@ export default function AddItemPage() {
         }).catch((error) => {
           console.error('Failed to upload back image:', error);
           // Don't block navigation for back image failure
+        });
+      }
+
+      // Upload brand label image if provided (non-blocking)
+      if (selectedBrandLabelFile) {
+        const brandLabelFormData = new FormData();
+        brandLabelFormData.append('file', selectedBrandLabelFile);
+        brandLabelFormData.append('kind', 'label_brand');
+
+        fetch(`/api/items/${id}/images`, {
+          method: 'POST',
+          body: brandLabelFormData,
+        }).catch((error) => {
+          console.error('Failed to upload brand label image:', error);
+        });
+      }
+
+      // Upload care label image if provided (non-blocking)
+      if (selectedCareLabelFile) {
+        const careLabelFormData = new FormData();
+        careLabelFormData.append('file', selectedCareLabelFile);
+        careLabelFormData.append('kind', 'label_care');
+
+        fetch(`/api/items/${id}/images`, {
+          method: 'POST',
+          body: careLabelFormData,
+        }).catch((error) => {
+          console.error('Failed to upload care label image:', error);
         });
       }
 
@@ -297,7 +361,7 @@ export default function AddItemPage() {
 
           {/* Back photo preview */}
           {backPreviewUrl && (
-            <div className="space-y-3 max-w-sm mx-auto">
+            <div className="space-y-3 max-w-sm mx-auto mb-6">
               <div className="flex items-center justify-between">
                 <label className="block text-label-medium text-on-surface-variant">
                   Back View
@@ -320,6 +384,128 @@ export default function AddItemPage() {
                   alt="Back preview"
                   className="w-full h-full object-cover"
                 />
+              </div>
+            </div>
+          )}
+
+          {/* Add label photos section - Progressive Disclosure */}
+          {frontPreviewUrl && (
+            <div className="max-w-sm mx-auto mb-6 space-y-4">
+              <div className="border-t border-outline-variant pt-4">
+                <h3 className="text-title-small text-on-surface mb-2">Label Photos (Optional)</h3>
+                <p className="text-body-small text-on-surface-variant mb-4">
+                  Help AI extract brand, size, and care info automatically
+                </p>
+
+                {/* Brand label photo */}
+                {!brandLabelPreviewUrl ? (
+                  <>
+                    <input
+                      ref={brandLabelFileInputRef}
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={handleBrandLabelFileSelect}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => brandLabelFileInputRef.current?.click()}
+                      className="w-full py-3 px-4 bg-surface-container-high border-2 border-dashed border-outline rounded-2xl hover:bg-surface-container transition-colors mb-3"
+                    >
+                      <span className="flex items-center justify-center gap-2 text-primary">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                        <span className="text-label-large font-medium">Add Brand Label Photo</span>
+                      </span>
+                      <p className="text-body-small text-on-surface-variant mt-1">
+                        Photo of brand/size tag
+                      </p>
+                    </button>
+                  </>
+                ) : (
+                  <div className="space-y-2 mb-3">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-label-medium text-on-surface-variant">
+                        Brand Label
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedBrandLabelFile(null);
+                          setBrandLabelPreviewUrl('');
+                          if (brandLabelPreviewUrl) URL.revokeObjectURL(brandLabelPreviewUrl);
+                        }}
+                        className="text-label-small text-error hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="aspect-square w-full bg-surface-container-low rounded-2xl overflow-hidden shadow-elevation-1">
+                      <img
+                        src={brandLabelPreviewUrl}
+                        alt="Brand label preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Care label photo */}
+                {!careLabelPreviewUrl ? (
+                  <>
+                    <input
+                      ref={careLabelFileInputRef}
+                      type="file"
+                      accept="image/*"
+                      capture="environment"
+                      onChange={handleCareLabelFileSelect}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => careLabelFileInputRef.current?.click()}
+                      className="w-full py-3 px-4 bg-surface-container-high border-2 border-dashed border-outline rounded-2xl hover:bg-surface-container transition-colors"
+                    >
+                      <span className="flex items-center justify-center gap-2 text-primary">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span className="text-label-large font-medium">Add Care Label Photo</span>
+                      </span>
+                      <p className="text-body-small text-on-surface-variant mt-1">
+                        Photo of care instructions tag
+                      </p>
+                    </button>
+                  </>
+                ) : (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-label-medium text-on-surface-variant">
+                        Care Label
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCareLabelFile(null);
+                          setCareLabelPreviewUrl('');
+                          if (careLabelPreviewUrl) URL.revokeObjectURL(careLabelPreviewUrl);
+                        }}
+                        className="text-label-small text-error hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="aspect-square w-full bg-surface-container-low rounded-2xl overflow-hidden shadow-elevation-1">
+                      <img
+                        src={careLabelPreviewUrl}
+                        alt="Care label preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
