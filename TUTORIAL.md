@@ -12,7 +12,7 @@ Welcome to your personal wardrobe organizer! This tutorial will walk you through
 
 ## Your First Item
 
-Adding items to your closet is fast and friction-free—designed with ADHD in mind!
+Adding items is fast and easy—just a few taps to get started.
 
 ### Step 1: Take a Photo
 1. From the home screen, tap the **+ Add Item** button (the big purple floating button)

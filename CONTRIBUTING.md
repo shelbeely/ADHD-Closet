@@ -450,11 +450,51 @@ For every UX change, ask:
 
 ---
 
+## Documentation Standards
+
+When writing or updating documentation:
+
+### Use Natural, Clear Language
+
+Follow the humanizer guidelines in `.github/humanizer/README.md` to avoid AI-generated writing patterns:
+- Use direct, simple language
+- Replace "serves as" with "is", "boasts" with "has"
+- Avoid AI vocabulary: "crucial", "pivotal", "testament", "landscape" (abstract), "showcase"
+- Be specific instead of vague: cite actual sources, use concrete examples
+- Skip promotional language: "nestled", "vibrant", "stunning"
+
+### Good Example
+```markdown
+## Authentication
+
+The app uses JWT tokens stored in localStorage. Tokens expire after 24 hours.
+```
+
+### Bad Example
+```markdown
+## Authentication
+
+The authentication system serves as a crucial component that showcases 
+industry-leading security practices, leveraging JWT tokens to foster a 
+robust and secure user experience.
+```
+
+### Quick Check
+
+Before submitting documentation changes:
+```bash
+# Check for AI vocabulary patterns
+grep -i "crucial\|pivotal\|testament\|showcase\|serves as\|boasts" your-file.md
+```
+
+---
+
 ## Questions?
 
 - **Design questions**: Reference `SPEC.md` sections 7.1-7.1.11
 - **Architecture questions**: See `ARCHITECTURE.md`
 - **Technical issues**: Check `TROUBLESHOOTING.md`
+- **Documentation guidelines**: See `.github/humanizer/README.md`
 - **Need help?**: Open a GitHub Discussion
 
 Thank you for contributing! 💜

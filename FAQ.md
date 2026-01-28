@@ -5,7 +5,7 @@ Common questions about Wardrobe AI Closet.
 ## General Questions
 
 ### What is Wardrobe AI Closet?
-A self-hosted, single-user wardrobe organizer powered by AI. It helps you catalog your clothes, generate outfit suggestions, and reduce decision paralysis—especially designed for people with ADHD.
+A self-hosted, single-user wardrobe organizer powered by AI. It helps you catalog your clothes, generate outfit suggestions, and reduce decision paralysis. Built with ADHD users in mind.
 
 ### Who is this for?
 Anyone who:
