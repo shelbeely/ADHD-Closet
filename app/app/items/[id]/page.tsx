@@ -35,8 +35,8 @@ interface Item {
   materials?: string;
   colorPalette?: string[];
   attributes?: Record<string, any>;
-  cleanStatus?: string;
-  wearsBeforeWash?: number;
+  cleanStatus: string;
+  wearsBeforeWash: number;
   currentWears: number;
   createdAt: string;
   updatedAt: string;
@@ -129,7 +129,11 @@ export default function ItemDetailPage() {
     }
   };
 
-  const saveChanges = async () => {
+  const saveChanges = async (overrides?: Partial<{
+    cleanStatus: string;
+    wearsBeforeWash: number;
+    currentWears: number;
+  }>) => {
     setSaving(true);
     try {
       const response = await fetch(`/api/items/${params.id}`, {
@@ -141,9 +145,9 @@ export default function ItemDetailPage() {
           brand,
           state,
           tags: tags.map(t => t.name),
-          cleanStatus,
-          wearsBeforeWash,
-          currentWears,
+          cleanStatus: overrides?.cleanStatus ?? cleanStatus,
+          wearsBeforeWash: overrides?.wearsBeforeWash ?? wearsBeforeWash,
+          currentWears: overrides?.currentWears ?? currentWears,
         }),
       });
 
@@ -178,22 +182,36 @@ export default function ItemDetailPage() {
 
   const handleWear = async () => {
     const newWearCount = currentWears + 1;
-    setCurrentWears(newWearCount);
+    let newCleanStatus = cleanStatus;
     
-    // Auto-update clean status based on wear count
+    // Update status based on wear count
     if (newWearCount >= wearsBeforeWash) {
-      setCleanStatus('needs_wash');
-    } else if (cleanStatus === 'clean') {
-      setCleanStatus('dirty');
+      newCleanStatus = 'needs_wash';
+    } else if (newWearCount > 0) {
+      newCleanStatus = 'dirty';
     }
     
-    await saveChanges();
+    // Update local state
+    setCurrentWears(newWearCount);
+    setCleanStatus(newCleanStatus);
+    
+    // Save with new values
+    await saveChanges({
+      currentWears: newWearCount,
+      cleanStatus: newCleanStatus,
+    });
   };
 
   const handleWash = async () => {
+    // Update local state
     setCurrentWears(0);
     setCleanStatus('clean');
-    await saveChanges();
+    
+    // Save with new values
+    await saveChanges({
+      currentWears: 0,
+      cleanStatus: 'clean',
+    });
   };
 
   const addTag = async () => {
@@ -346,7 +364,7 @@ export default function ItemDetailPage() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              onBlur={saveChanges}
+              onBlur={() => saveChanges()}
               placeholder="e.g., Black Band T-shirt"
               className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             />
@@ -379,7 +397,7 @@ export default function ItemDetailPage() {
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              onBlur={saveChanges}
+              onBlur={() => saveChanges()}
               placeholder="e.g., Killstar"
               className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             />
@@ -423,7 +441,7 @@ export default function ItemDetailPage() {
                     key={cs.value}
                     onClick={() => {
                       setCleanStatus(cs.value);
-                      saveChanges();
+                      saveChanges({ cleanStatus: cs.value });
                     }}
                     className={`px-3 py-2 rounded-xl font-medium transition-all text-sm ${
                       cleanStatus === cs.value
@@ -483,8 +501,15 @@ export default function ItemDetailPage() {
                 type="number"
                 min="1"
                 value={wearsBeforeWash}
-                onChange={(e) => setWearsBeforeWash(parseInt(e.target.value) || 1)}
-                onBlur={saveChanges}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 1;
+                  setWearsBeforeWash(Math.max(1, value));
+                }}
+                onBlur={() => {
+                  const validValue = Math.max(1, wearsBeforeWash);
+                  setWearsBeforeWash(validValue);
+                  saveChanges({ wearsBeforeWash: validValue });
+                }}
                 className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
               />
               <p className="text-xs text-on-surface-variant mt-2">

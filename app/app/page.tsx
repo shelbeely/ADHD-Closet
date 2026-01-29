@@ -14,6 +14,9 @@ interface Item {
   category?: string;
   brand?: string;
   state: string;
+  cleanStatus: string;
+  currentWears: number;
+  wearsBeforeWash: number;
   images: Array<{
     id: string;
     kind: string;

@@ -102,9 +102,9 @@ model Item {
   attributes    Json?      // { "neckline": "crew", "sleeve_length": "short", ... }
   
   // Clean/wear tracking
-  cleanStatus      CleanStatus? @map("clean_status") @default(clean)
-  wearsBeforeWash  Int?         @map("wears_before_wash") @default(1) // How many wears before washing
-  currentWears     Int          @map("current_wears") @default(0)     // Current wear count
+  cleanStatus      CleanStatus @map("clean_status") @default(clean)
+  wearsBeforeWash  Int         @map("wears_before_wash") @default(1) // How many wears before washing
+  currentWears     Int         @map("current_wears") @default(0)     // Current wear count
   
   // Relationships
   images        ImageAsset[]
