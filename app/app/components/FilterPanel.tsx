@@ -24,6 +24,12 @@ const STATES = [
   { value: 'donate', label: 'To Donate' },
 ];
 
+const CLEAN_STATUSES = [
+  { value: 'clean', label: 'Clean', icon: '✨' },
+  { value: 'dirty', label: 'Dirty', icon: '🧺' },
+  { value: 'needs_wash', label: 'Needs Wash', icon: '🚿' },
+];
+
 /**
  * Desktop Filter Panel
  * 
@@ -38,6 +44,7 @@ const STATES = [
 export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
+  const [selectedCleanStatuses, setSelectedCleanStatuses] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const toggleCategory = (category: string) => {
@@ -46,7 +53,12 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       : [...selectedCategories, category];
     
     setSelectedCategories(newCategories);
-    onFilterChange({ categories: newCategories, states: selectedStates, search: searchQuery });
+    onFilterChange({ 
+      categories: newCategories, 
+      states: selectedStates, 
+      cleanStatuses: selectedCleanStatuses,
+      search: searchQuery 
+    });
   };
 
   const toggleState = (state: string) => {
@@ -55,17 +67,37 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       : [...selectedStates, state];
     
     setSelectedStates(newStates);
-    onFilterChange({ categories: selectedCategories, states: newStates, search: searchQuery });
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: newStates, 
+      cleanStatuses: selectedCleanStatuses,
+      search: searchQuery 
+    });
+  };
+
+  const toggleCleanStatus = (status: string) => {
+    const newStatuses = selectedCleanStatuses.includes(status)
+      ? selectedCleanStatuses.filter(s => s !== status)
+      : [...selectedCleanStatuses, status];
+    
+    setSelectedCleanStatuses(newStatuses);
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: selectedStates, 
+      cleanStatuses: newStatuses,
+      search: searchQuery 
+    });
   };
 
   const clearFilters = () => {
     setSelectedCategories([]);
     setSelectedStates([]);
+    setSelectedCleanStatuses([]);
     setSearchQuery('');
-    onFilterChange({ categories: [], states: [], search: '' });
+    onFilterChange({ categories: [], states: [], cleanStatuses: [], search: '' });
   };
 
-  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || searchQuery;
+  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || selectedCleanStatuses.length > 0 || searchQuery;
 
   return (
     <aside className="w-60 h-full bg-surface-container-low border-r border-outline flex flex-col">
@@ -159,6 +191,36 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
               >
                 <span className="text-body-medium">{state.label}</span>
                 {selectedStates.includes(state.value) && (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Clean Status Filters */}
+        <div>
+          <h3 className="text-label-large text-on-surface mb-3">Cleanliness</h3>
+          <div className="space-y-2">
+            {CLEAN_STATUSES.map((status) => (
+              <button
+                key={status.value}
+                onClick={() => toggleCleanStatus(status.value)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${
+                  selectedCleanStatuses.includes(status.value)
+                    ? 'bg-tertiary-container text-on-tertiary-container'
+                    : 'hover:bg-surface-variant text-on-surface'
+                }`}
+              >
+                <span className="text-xl">{status.icon}</span>
+                <span className="text-body-medium flex-1">{status.label}</span>
+                {selectedCleanStatuses.includes(status.value) && (
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"

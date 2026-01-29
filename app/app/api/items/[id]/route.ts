@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/app/lib/prisma';
-import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
 // Validation schema for updating items
@@ -23,6 +22,14 @@ const updateItemSchema = z.object({
   colorPalette: z.array(z.string()).optional(),
   attributes: z.record(z.string(), z.any()).optional(),
   tags: z.array(z.string()).optional(),
+  cleanStatus: z.enum(['clean', 'dirty', 'needs_wash']).optional(),
+  wearsBeforeWash: z.number().int().min(1).optional(),
+  currentWears: z.number().int().min(0).optional(),
+  lastWornDate: z.string().datetime().optional(),
+  lastWashedDate: z.string().datetime().optional(),
+  storageType: z.enum(['hanging', 'folded', 'drawer', 'shelf', 'box', 'other']).optional(),
+  locationInCloset: z.string().optional(),
+  sortOrder: z.number().int().optional(),
 });
 
 // GET /api/items/[id] - Get single item with full details

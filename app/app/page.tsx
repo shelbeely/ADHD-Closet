@@ -14,6 +14,9 @@ interface Item {
   category?: string;
   brand?: string;
   state: string;
+  cleanStatus: string;
+  currentWears: number;
+  wearsBeforeWash: number;
   images: Array<{
     id: string;
     kind: string;
@@ -81,6 +84,9 @@ export default function Home() {
         }
         if (filters.states && filters.states.length > 0) {
           filters.states.forEach((state: string) => params.append('state', state));
+        }
+        if (filters.cleanStatuses && filters.cleanStatuses.length > 0) {
+          filters.cleanStatuses.forEach((status: string) => params.append('cleanStatus', status));
         }
         if (filters.search) {
           params.append('search', filters.search);

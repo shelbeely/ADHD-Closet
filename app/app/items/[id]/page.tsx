@@ -35,6 +35,14 @@ interface Item {
   materials?: string;
   colorPalette?: string[];
   attributes?: Record<string, any>;
+  cleanStatus: string;
+  wearsBeforeWash: number;
+  currentWears: number;
+  lastWornDate?: string;
+  lastWashedDate?: string;
+  storageType?: string;
+  locationInCloset?: string;
+  sortOrder?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -55,6 +63,21 @@ const STATES = [
   { value: 'laundry', label: 'Laundry', color: 'bg-blue-100 text-blue-800' },
   { value: 'unavailable', label: 'Unavailable', color: 'bg-gray-100 text-gray-800' },
   { value: 'donate', label: 'Donate', color: 'bg-yellow-100 text-yellow-800' },
+];
+
+const CLEAN_STATUSES = [
+  { value: 'clean', label: 'Clean', color: 'bg-green-100 text-green-800', icon: '✨' },
+  { value: 'dirty', label: 'Dirty', color: 'bg-orange-100 text-orange-800', icon: '🧺' },
+  { value: 'needs_wash', label: 'Needs Wash', color: 'bg-red-100 text-red-800', icon: '🚿' },
+];
+
+const STORAGE_TYPES = [
+  { value: 'hanging', label: 'Hanging', icon: '👔' },
+  { value: 'folded', label: 'Folded', icon: '📚' },
+  { value: 'drawer', label: 'Drawer', icon: '🗄️' },
+  { value: 'shelf', label: 'Shelf', icon: '📦' },
+  { value: 'box', label: 'Box', icon: '📦' },
+  { value: 'other', label: 'Other', icon: '📍' },
 ];
 
 /**
@@ -86,6 +109,12 @@ export default function ItemDetailPage() {
   const [brand, setBrand] = useState('');
   const [state, setState] = useState('available');
   const [newTag, setNewTag] = useState('');
+  const [cleanStatus, setCleanStatus] = useState('clean');
+  const [wearsBeforeWash, setWearsBeforeWash] = useState(1);
+  const [currentWears, setCurrentWears] = useState(0);
+  const [storageType, setStorageType] = useState('');
+  const [locationInCloset, setLocationInCloset] = useState('');
+  const [sortOrder, setSortOrder] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     loadItem();
@@ -107,6 +136,12 @@ export default function ItemDetailPage() {
       setCategory(data.item.category || '');
       setBrand(data.item.brand || '');
       setState(data.item.state || 'available');
+      setCleanStatus(data.item.cleanStatus || 'clean');
+      setWearsBeforeWash(data.item.wearsBeforeWash || 1);
+      setCurrentWears(data.item.currentWears || 0);
+      setStorageType(data.item.storageType || '');
+      setLocationInCloset(data.item.locationInCloset || '');
+      setSortOrder(data.item.sortOrder);
     } catch (error) {
       console.error('Error loading item:', error);
     } finally {
@@ -114,7 +149,13 @@ export default function ItemDetailPage() {
     }
   };
 
-  const saveChanges = async () => {
+  const saveChanges = async (overrides?: Partial<{
+    cleanStatus: string;
+    wearsBeforeWash: number;
+    currentWears: number;
+    lastWornDate: string;
+    lastWashedDate: string;
+  }>) => {
     setSaving(true);
     try {
       const response = await fetch(`/api/items/${params.id}`, {
@@ -126,6 +167,14 @@ export default function ItemDetailPage() {
           brand,
           state,
           tags: tags.map(t => t.name),
+          cleanStatus: overrides?.cleanStatus ?? cleanStatus,
+          wearsBeforeWash: overrides?.wearsBeforeWash ?? wearsBeforeWash,
+          currentWears: overrides?.currentWears ?? currentWears,
+          lastWornDate: overrides?.lastWornDate,
+          lastWashedDate: overrides?.lastWashedDate,
+          storageType: storageType || undefined,
+          locationInCloset: locationInCloset || undefined,
+          sortOrder: sortOrder,
         }),
       });
 
@@ -156,6 +205,45 @@ export default function ItemDetailPage() {
       console.error('Error deleting item:', error);
       alert('Failed to delete item. Please try again.');
     }
+  };
+
+  const handleWear = async () => {
+    const newWearCount = currentWears + 1;
+    let newCleanStatus = cleanStatus;
+    const now = new Date().toISOString();
+    
+    // Update status based on wear count
+    if (newWearCount >= wearsBeforeWash) {
+      newCleanStatus = 'needs_wash';
+    } else if (newWearCount > 0) {
+      newCleanStatus = 'dirty';
+    }
+    
+    // Update local state
+    setCurrentWears(newWearCount);
+    setCleanStatus(newCleanStatus);
+    
+    // Save with new values including timestamp
+    await saveChanges({
+      currentWears: newWearCount,
+      cleanStatus: newCleanStatus,
+      lastWornDate: now,
+    });
+  };
+
+  const handleWash = async () => {
+    const now = new Date().toISOString();
+    
+    // Update local state
+    setCurrentWears(0);
+    setCleanStatus('clean');
+    
+    // Save with new values including timestamp
+    await saveChanges({
+      currentWears: 0,
+      cleanStatus: 'clean',
+      lastWashedDate: now,
+    });
   };
 
   const addTag = async () => {
@@ -308,7 +396,7 @@ export default function ItemDetailPage() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              onBlur={saveChanges}
+              onBlur={() => saveChanges()}
               placeholder="e.g., Black Band T-shirt"
               className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             />
@@ -341,7 +429,7 @@ export default function ItemDetailPage() {
               type="text"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              onBlur={saveChanges}
+              onBlur={() => saveChanges()}
               placeholder="e.g., Killstar"
               className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             />
@@ -367,6 +455,178 @@ export default function ItemDetailPage() {
                   {s.label}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Clean Status & Wear Tracking */}
+          <div className="space-y-4 p-4 bg-surface-variant rounded-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Cleanliness & Wear Tracking</h3>
+            </div>
+            
+            {/* Clean Status */}
+            <div>
+              <label className="block text-sm font-medium mb-2">Status</label>
+              <div className="grid grid-cols-3 gap-3">
+                {CLEAN_STATUSES.map(cs => (
+                  <button
+                    key={cs.value}
+                    onClick={() => {
+                      setCleanStatus(cs.value);
+                      saveChanges({ cleanStatus: cs.value });
+                    }}
+                    className={`px-3 py-2 rounded-xl font-medium transition-all text-sm ${
+                      cleanStatus === cs.value
+                        ? cs.color + ' ring-2 ring-offset-2 ring-primary'
+                        : 'bg-surface text-on-surface hover:bg-surface-container-high'
+                    }`}
+                  >
+                    <div className="text-lg mb-1">{cs.icon}</div>
+                    {cs.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Wear Counter */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Wears: {currentWears} / {wearsBeforeWash}
+              </label>
+              <div className="mb-3">
+                <div className="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-300 ${
+                      currentWears >= wearsBeforeWash
+                        ? 'bg-error'
+                        : currentWears > 0
+                        ? 'bg-tertiary'
+                        : 'bg-primary'
+                    }`}
+                    style={{ width: `${Math.min((currentWears / wearsBeforeWash) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={handleWear}
+                  className="flex-1 px-4 py-3 bg-tertiary text-on-tertiary rounded-xl font-medium hover:shadow-elevation-2 transition-all"
+                >
+                  👕 Wore It
+                </button>
+                <button
+                  onClick={handleWash}
+                  className="flex-1 px-4 py-3 bg-primary text-on-primary rounded-xl font-medium hover:shadow-elevation-2 transition-all"
+                >
+                  🧼 Washed
+                </button>
+              </div>
+              
+              {/* Timestamps */}
+              <div className="mt-3 text-xs text-on-surface-variant space-y-1">
+                {item?.lastWornDate && (
+                  <div>
+                    🕐 Last worn: {new Date(item.lastWornDate).toLocaleDateString()} at {new Date(item.lastWornDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                )}
+                {item?.lastWashedDate && (
+                  <div>
+                    🧼 Last washed: {new Date(item.lastWashedDate).toLocaleDateString()} at {new Date(item.lastWashedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Wears Before Wash Setting */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Wears Before Wash (e.g., denim = 5-10, shirts = 1-2)
+              </label>
+              <input
+                type="number"
+                min="1"
+                value={wearsBeforeWash}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 1;
+                  setWearsBeforeWash(Math.max(1, value));
+                }}
+                onBlur={() => {
+                  const validValue = Math.max(1, wearsBeforeWash);
+                  setWearsBeforeWash(validValue);
+                  saveChanges({ wearsBeforeWash: validValue });
+                }}
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Denim: 5-10 wears, Shirts: 1-2 wears, Outerwear: 5+ wears
+              </p>
+            </div>
+          </div>
+
+          {/* Physical Location in Closet */}
+          <div className="space-y-4 p-4 bg-surface-variant rounded-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">📍 Closet Location</h3>
+            </div>
+            
+            {/* Storage Type */}
+            <div>
+              <label className="block text-sm font-medium mb-2">Storage Type</label>
+              <select
+                value={storageType}
+                onChange={(e) => {
+                  setStorageType(e.target.value);
+                  saveChanges();
+                }}
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              >
+                <option value="">Not set</option>
+                {STORAGE_TYPES.map(st => (
+                  <option key={st.value} value={st.value}>
+                    {st.icon} {st.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Location Description */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Specific Location
+              </label>
+              <input
+                type="text"
+                value={locationInCloset}
+                onChange={(e) => setLocationInCloset(e.target.value)}
+                onBlur={() => saveChanges()}
+                placeholder="e.g., Left side of closet, Top drawer, Shelf 2"
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Be specific to find items faster: "Back left corner", "2nd drawer from top"
+              </p>
+            </div>
+
+            {/* Sort Order (Optional) */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Sort Order (Optional)
+              </label>
+              <input
+                type="number"
+                value={sortOrder ?? ''}
+                onChange={(e) => {
+                  const value = e.target.value ? parseInt(e.target.value) : undefined;
+                  setSortOrder(value);
+                }}
+                onBlur={() => saveChanges()}
+                placeholder="e.g., 1, 2, 3..."
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Use numbers to maintain a specific order (e.g., 1, 2, 3... for left to right on a rod)
+              </p>
             </div>
           </div>
 

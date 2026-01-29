@@ -31,6 +31,21 @@ enum ItemState {
   donate
 }
 
+enum CleanStatus {
+  clean
+  dirty
+  needs_wash
+}
+
+enum StorageType {
+  hanging
+  folded
+  drawer
+  shelf
+  box
+  other
+}
+
 enum ImageKind {
   original_main
   original_back
@@ -94,6 +109,18 @@ model Item {
   // AI-inferred attributes
   colorPalette  Json?      @map("color_palette") // ["#FF0000", "#000000"]
   attributes    Json?      // { "neckline": "crew", "sleeve_length": "short", ... }
+  
+  // Clean/wear tracking
+  cleanStatus      CleanStatus @map("clean_status") @default(clean)
+  wearsBeforeWash  Int         @map("wears_before_wash") @default(1) // How many wears before washing
+  currentWears     Int         @map("current_wears") @default(0)     // Current wear count
+  lastWornDate     DateTime?   @map("last_worn_date")                // When item was last worn
+  lastWashedDate   DateTime?   @map("last_washed_date")              // When item was last washed
+  
+  // Physical location in closet
+  storageType      StorageType? @map("storage_type")                  // How item is stored (hanging, folded, etc.)
+  locationInCloset String?      @map("location_in_closet")            // Description: "Left side", "Top drawer", etc.
+  sortOrder        Int?         @map("sort_order")                    // Optional order for organizing items
   
   // Relationships
   images        ImageAsset[]
