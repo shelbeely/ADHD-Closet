@@ -262,8 +262,13 @@ export const AppUtils = {
   addStateChangeListener(callback: (state: { isActive: boolean }) => void) {
     if (!isPluginAvailable('App')) return () => {};
 
-    const listener = App.addListener('appStateChange', callback);
-    return () => listener.remove();
+    App.addListener('appStateChange', callback).then((listener) => {
+      // Store the listener handle for removal
+    });
+    
+    return () => {
+      App.removeAllListeners();
+    };
   },
 
   /**

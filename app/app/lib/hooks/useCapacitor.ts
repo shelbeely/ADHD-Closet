@@ -15,7 +15,7 @@ import {
   ShareUtils,
   HapticsUtils,
   AppUtils,
-} from './capacitor';
+} from '../capacitor';
 
 /**
  * Hook to detect if running as a native app
@@ -143,7 +143,7 @@ export function useAppState() {
   useEffect(() => {
     if (!AppUtils.isAvailable()) return;
 
-    const removeListener = AppUtils.addStateChangeListener((state) => {
+    const removeListener = AppUtils.addStateChangeListener((state: { isActive: boolean }) => {
       setIsActive(state.isActive);
     });
 
