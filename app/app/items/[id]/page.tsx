@@ -38,6 +38,9 @@ interface Item {
   cleanStatus: string;
   wearsBeforeWash: number;
   currentWears: number;
+  storageType?: string;
+  locationInCloset?: string;
+  sortOrder?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -64,6 +67,15 @@ const CLEAN_STATUSES = [
   { value: 'clean', label: 'Clean', color: 'bg-green-100 text-green-800', icon: '✨' },
   { value: 'dirty', label: 'Dirty', color: 'bg-orange-100 text-orange-800', icon: '🧺' },
   { value: 'needs_wash', label: 'Needs Wash', color: 'bg-red-100 text-red-800', icon: '🚿' },
+];
+
+const STORAGE_TYPES = [
+  { value: 'hanging', label: 'Hanging', icon: '👔' },
+  { value: 'folded', label: 'Folded', icon: '📚' },
+  { value: 'drawer', label: 'Drawer', icon: '🗄️' },
+  { value: 'shelf', label: 'Shelf', icon: '📦' },
+  { value: 'box', label: 'Box', icon: '📦' },
+  { value: 'other', label: 'Other', icon: '📍' },
 ];
 
 /**
@@ -98,6 +110,9 @@ export default function ItemDetailPage() {
   const [cleanStatus, setCleanStatus] = useState('clean');
   const [wearsBeforeWash, setWearsBeforeWash] = useState(1);
   const [currentWears, setCurrentWears] = useState(0);
+  const [storageType, setStorageType] = useState('');
+  const [locationInCloset, setLocationInCloset] = useState('');
+  const [sortOrder, setSortOrder] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     loadItem();
@@ -122,6 +137,9 @@ export default function ItemDetailPage() {
       setCleanStatus(data.item.cleanStatus || 'clean');
       setWearsBeforeWash(data.item.wearsBeforeWash || 1);
       setCurrentWears(data.item.currentWears || 0);
+      setStorageType(data.item.storageType || '');
+      setLocationInCloset(data.item.locationInCloset || '');
+      setSortOrder(data.item.sortOrder);
     } catch (error) {
       console.error('Error loading item:', error);
     } finally {
@@ -148,6 +166,9 @@ export default function ItemDetailPage() {
           cleanStatus: overrides?.cleanStatus ?? cleanStatus,
           wearsBeforeWash: overrides?.wearsBeforeWash ?? wearsBeforeWash,
           currentWears: overrides?.currentWears ?? currentWears,
+          storageType: storageType || undefined,
+          locationInCloset: locationInCloset || undefined,
+          sortOrder: sortOrder,
         }),
       });
 
@@ -514,6 +535,72 @@ export default function ItemDetailPage() {
               />
               <p className="text-xs text-on-surface-variant mt-2">
                 💡 Denim: 5-10 wears, Shirts: 1-2 wears, Outerwear: 5+ wears
+              </p>
+            </div>
+          </div>
+
+          {/* Physical Location in Closet */}
+          <div className="space-y-4 p-4 bg-surface-variant rounded-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">📍 Closet Location</h3>
+            </div>
+            
+            {/* Storage Type */}
+            <div>
+              <label className="block text-sm font-medium mb-2">Storage Type</label>
+              <select
+                value={storageType}
+                onChange={(e) => {
+                  setStorageType(e.target.value);
+                  saveChanges();
+                }}
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              >
+                <option value="">Not set</option>
+                {STORAGE_TYPES.map(st => (
+                  <option key={st.value} value={st.value}>
+                    {st.icon} {st.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Location Description */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Specific Location
+              </label>
+              <input
+                type="text"
+                value={locationInCloset}
+                onChange={(e) => setLocationInCloset(e.target.value)}
+                onBlur={() => saveChanges()}
+                placeholder="e.g., Left side of closet, Top drawer, Shelf 2"
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Be specific to find items faster: "Back left corner", "2nd drawer from top"
+              </p>
+            </div>
+
+            {/* Sort Order (Optional) */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Sort Order (Optional)
+              </label>
+              <input
+                type="number"
+                value={sortOrder ?? ''}
+                onChange={(e) => {
+                  const value = e.target.value ? parseInt(e.target.value) : undefined;
+                  setSortOrder(value);
+                }}
+                onBlur={() => saveChanges()}
+                placeholder="e.g., 1, 2, 3..."
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Use numbers to maintain a specific order (e.g., 1, 2, 3... for left to right on a rod)
               </p>
             </div>
           </div>

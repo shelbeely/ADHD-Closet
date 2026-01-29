@@ -37,6 +37,15 @@ enum CleanStatus {
   needs_wash
 }
 
+enum StorageType {
+  hanging
+  folded
+  drawer
+  shelf
+  box
+  other
+}
+
 enum ImageKind {
   original_main
   original_back
@@ -105,6 +114,11 @@ model Item {
   cleanStatus      CleanStatus @map("clean_status") @default(clean)
   wearsBeforeWash  Int         @map("wears_before_wash") @default(1) // How many wears before washing
   currentWears     Int         @map("current_wears") @default(0)     // Current wear count
+  
+  // Physical location in closet
+  storageType      StorageType? @map("storage_type")                  // How item is stored (hanging, folded, etc.)
+  locationInCloset String?      @map("location_in_closet")            // Description: "Left side", "Top drawer", etc.
+  sortOrder        Int?         @map("sort_order")                    // Optional order for organizing items
   
   // Relationships
   images        ImageAsset[]
