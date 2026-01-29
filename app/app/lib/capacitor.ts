@@ -386,40 +386,66 @@ export const SplashScreenUtils = {
 
 /**
  * NFC utilities for reading and writing NFC tags
+ * Supports both Capacitor NFC plugin (native apps) and Web NFC API (web browsers)
  */
 export const NFCUtils = {
+  /**
+   * Check if Web NFC API is available
+   */
+  isWebNFCAvailable(): boolean {
+    return typeof window !== 'undefined' && 'NDEFReader' in window;
+  },
+
   /**
    * Check if NFC is available on the device
    */
   async isAvailable(): Promise<boolean> {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      return false;
+    // Check Capacitor NFC plugin first (native apps)
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        const result = await CapacitorNfc.isAvailable();
+        return result.available;
+      } catch (error) {
+        console.error('Error checking Capacitor NFC availability:', error);
+      }
     }
 
-    try {
-      const result = await CapacitorNfc.isAvailable();
-      return result.available;
-    } catch (error) {
-      console.error('Error checking NFC availability:', error);
-      return false;
+    // Fallback to Web NFC API (web browsers)
+    if (this.isWebNFCAvailable()) {
+      try {
+        // Web NFC requires HTTPS (except localhost)
+        const isSecure = window.location.protocol === 'https:' || 
+                        window.location.hostname === 'localhost';
+        return isSecure;
+      } catch (error) {
+        console.error('Error checking Web NFC availability:', error);
+      }
     }
+
+    return false;
   },
 
   /**
    * Check if NFC is enabled on the device
    */
   async isEnabled(): Promise<boolean> {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      return false;
+    // For Capacitor NFC plugin
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        const result = await CapacitorNfc.isEnabled();
+        return result.enabled;
+      } catch (error) {
+        console.error('Error checking NFC enabled status:', error);
+      }
     }
 
-    try {
-      const result = await CapacitorNfc.isEnabled();
-      return result.enabled;
-    } catch (error) {
-      console.error('Error checking NFC enabled status:', error);
-      return false;
+    // For Web NFC API, we assume it's enabled if available
+    // The API will throw an error when attempting to scan if NFC is disabled
+    if (this.isWebNFCAvailable()) {
+      return true;
     }
+
+    return false;
   },
 
   /**
@@ -427,117 +453,239 @@ export const NFCUtils = {
    * Returns the tag ID when a tag is detected
    */
   async startScanning(): Promise<string | null> {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      console.warn('NFC plugin not available');
-      return null;
+    // Try Capacitor NFC plugin first (native apps)
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        const tag = await CapacitorNfc.scanTag();
+        if (tag && tag.id) {
+          return tag.id;
+        }
+        return null;
+      } catch (error) {
+        console.error('Error scanning NFC tag with Capacitor:', error);
+        return null;
+      }
     }
 
-    try {
-      // Start listening for NFC tags
-      const tag = await CapacitorNfc.scanTag();
-      
-      // Extract the tag ID (UID)
-      if (tag && tag.id) {
-        return tag.id;
+    // Fallback to Web NFC API (web browsers)
+    if (this.isWebNFCAvailable()) {
+      try {
+        const ndef = new (window as any).NDEFReader();
+        await ndef.scan();
+        
+        return new Promise<string | null>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            resolve(null);
+          }, 30000); // 30 second timeout
+
+          ndef.addEventListener('reading', ({ message, serialNumber }: any) => {
+            clearTimeout(timeout);
+            // Web NFC provides serial number as hex string
+            resolve(serialNumber);
+          });
+
+          ndef.addEventListener('readingerror', (event: any) => {
+            clearTimeout(timeout);
+            console.error('Web NFC read error:', event);
+            reject(new Error('Failed to read NFC tag'));
+          });
+        });
+      } catch (error: any) {
+        console.error('Error scanning with Web NFC:', error);
+        if (error.name === 'NotAllowedError') {
+          console.error('NFC permission denied. User must grant permission.');
+        }
+        return null;
       }
-      
-      return null;
-    } catch (error) {
-      console.error('Error scanning NFC tag:', error);
-      return null;
     }
+
+    console.warn('NFC not available');
+    return null;
   },
 
   /**
    * Stop scanning for NFC tags
    */
   async stopScanning(): Promise<void> {
-    if (!isPluginAvailable('CapacitorNfc')) return;
-
-    try {
-      await CapacitorNfc.stopScan();
-    } catch (error) {
-      console.error('Error stopping NFC scan:', error);
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        await CapacitorNfc.stopScan();
+      } catch (error) {
+        console.error('Error stopping NFC scan:', error);
+      }
     }
+    
+    // Web NFC API doesn't require explicit stop - scans are one-time
   },
 
   /**
    * Write text data to an NFC tag
    */
   async writeTag(text: string): Promise<boolean> {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      console.warn('NFC plugin not available');
-      return false;
+    // Try Capacitor NFC plugin first
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        await CapacitorNfc.writeTag({ text });
+        return true;
+      } catch (error) {
+        console.error('Error writing NFC tag with Capacitor:', error);
+        return false;
+      }
     }
 
-    try {
-      await CapacitorNfc.writeTag({ text });
-      return true;
-    } catch (error) {
-      console.error('Error writing NFC tag:', error);
-      return false;
+    // Fallback to Web NFC API
+    if (this.isWebNFCAvailable()) {
+      try {
+        const ndef = new (window as any).NDEFReader();
+        await ndef.write({
+          records: [{ recordType: 'text', data: text }]
+        });
+        return true;
+      } catch (error: any) {
+        console.error('Error writing with Web NFC:', error);
+        if (error.name === 'NotAllowedError') {
+          console.error('NFC write permission denied.');
+        }
+        return false;
+      }
     }
+
+    console.warn('NFC plugin not available');
+    return false;
   },
 
   /**
    * Read data from an NFC tag
    */
   async readTag(): Promise<{ id: string; text?: string } | null> {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      console.warn('NFC plugin not available');
-      return null;
+    // Try Capacitor NFC plugin first
+    if (isPluginAvailable('CapacitorNfc')) {
+      try {
+        const tag = await CapacitorNfc.scanTag();
+        if (tag && tag.id) {
+          return {
+            id: tag.id,
+            text: tag.message || undefined,
+          };
+        }
+        return null;
+      } catch (error) {
+        console.error('Error reading NFC tag with Capacitor:', error);
+        return null;
+      }
     }
 
-    try {
-      const tag = await CapacitorNfc.scanTag();
-      
-      if (tag && tag.id) {
-        return {
-          id: tag.id,
-          text: tag.message || undefined,
-        };
+    // Fallback to Web NFC API
+    if (this.isWebNFCAvailable()) {
+      try {
+        const ndef = new (window as any).NDEFReader();
+        await ndef.scan();
+        
+        return new Promise<{ id: string; text?: string } | null>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            resolve(null);
+          }, 30000);
+
+          ndef.addEventListener('reading', ({ message, serialNumber }: any) => {
+            clearTimeout(timeout);
+            
+            let textData: string | undefined;
+            
+            // Try to extract text from NDEF records
+            if (message && message.records) {
+              for (const record of message.records) {
+                if (record.recordType === 'text') {
+                  const textDecoder = new TextDecoder(record.encoding || 'utf-8');
+                  textData = textDecoder.decode(record.data);
+                  break;
+                }
+              }
+            }
+            
+            resolve({
+              id: serialNumber,
+              text: textData,
+            });
+          });
+
+          ndef.addEventListener('readingerror', (event: any) => {
+            clearTimeout(timeout);
+            console.error('Web NFC read error:', event);
+            reject(new Error('Failed to read NFC tag'));
+          });
+        });
+      } catch (error: any) {
+        console.error('Error reading with Web NFC:', error);
+        if (error.name === 'NotAllowedError') {
+          console.error('NFC permission denied.');
+        }
+        return null;
       }
-      
-      return null;
-    } catch (error) {
-      console.error('Error reading NFC tag:', error);
-      return null;
     }
+
+    console.warn('NFC plugin not available');
+    return null;
   },
 
   /**
    * Add a listener for NFC tag detection
+   * Note: Web NFC API doesn't support continuous listening like Capacitor
    */
   addTagDetectionListener(callback: (tagId: string) => void) {
-    if (!isPluginAvailable('CapacitorNfc')) {
-      return () => {};
+    // For Capacitor NFC plugin
+    if (isPluginAvailable('CapacitorNfc')) {
+      let cleanupFn: (() => void) | null = null;
+      
+      (async () => {
+        const listener = await CapacitorNfc.addListener('nfcTagScanned', (tag: any) => {
+          if (tag && tag.id) {
+            callback(tag.id);
+          }
+        });
+        cleanupFn = () => listener.remove();
+      })();
+      
+      return () => {
+        if (cleanupFn) {
+          cleanupFn();
+        }
+      };
     }
 
-    let cleanupFn: (() => void) | null = null;
-    
-    // Use async IIFE to properly handle the promise
-    (async () => {
-      const listener = await CapacitorNfc.addListener('nfcTagScanned', (tag: any) => {
-        if (tag && tag.id) {
-          callback(tag.id);
+    // For Web NFC API - set up continuous scanning
+    if (this.isWebNFCAvailable()) {
+      let abortController: AbortController | null = null;
+      
+      (async () => {
+        try {
+          const ndef = new (window as any).NDEFReader();
+          abortController = new AbortController();
+          
+          await ndef.scan({ signal: abortController.signal });
+          
+          ndef.addEventListener('reading', ({ serialNumber }: any) => {
+            callback(serialNumber);
+          }, { signal: abortController.signal });
+        } catch (error) {
+          console.error('Error setting up Web NFC listener:', error);
         }
-      });
-      cleanupFn = () => listener.remove();
-    })();
-    
-    // Return a cleanup function that checks if cleanupFn is set
-    return () => {
-      if (cleanupFn) {
-        cleanupFn();
-      }
-    };
+      })();
+      
+      return () => {
+        if (abortController) {
+          abortController.abort();
+        }
+      };
+    }
+
+    return () => {};
   },
 
   /**
-   * Check if device supports NFC
+   * Check if device supports NFC (either via plugin or Web NFC API)
    */
   isSupported(): boolean {
-    return isPluginAvailable('CapacitorNfc');
+    return isPluginAvailable('CapacitorNfc') || this.isWebNFCAvailable();
   },
 };
 

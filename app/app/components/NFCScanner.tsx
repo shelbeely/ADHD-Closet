@@ -169,8 +169,11 @@ export default function NFCScanner({
     return (
       <div className="bg-surface-container rounded-lg p-6 text-center">
         <div className="text-4xl mb-2">📱</div>
-        <p className="text-on-surface-variant">
-          NFC is not supported on this device
+        <p className="text-on-surface-variant mb-2">
+          NFC is not supported on this device or browser
+        </p>
+        <p className="text-xs text-on-surface-variant">
+          For web NFC: Use Chrome/Edge 89+ on Android
         </p>
       </div>
     );
@@ -182,6 +185,9 @@ export default function NFCScanner({
         <div className="text-4xl mb-2">📶</div>
         <p className="text-on-surface-variant mb-4">
           NFC is disabled. Please enable it in your device settings.
+        </p>
+        <p className="text-xs text-on-surface-variant">
+          Android: Settings → Connected devices → NFC
         </p>
       </div>
     );

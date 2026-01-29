@@ -139,7 +139,7 @@ export default function NFCAssign({
     return (
       <div className="bg-surface-container rounded-lg p-4">
         <p className="text-sm text-on-surface-variant">
-          NFC is not supported on this device
+          NFC is not supported on this device or browser. For web NFC, use Chrome/Edge 89+ on Android.
         </p>
       </div>
     );

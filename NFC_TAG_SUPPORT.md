@@ -11,6 +11,43 @@ The NFC feature allows you to:
 - Track item usage patterns and current location
 - Automatically update item state based on NFC scans
 
+**NFC works in:**
+- ✅ Native iOS app (iPhone 7+, iOS 11+)
+- ✅ Native Android app (Android 4.0+)
+- ✅ **Web browsers** - Chrome/Edge on Android (89+) via Web NFC API
+- ❌ iOS Safari (Web NFC not supported)
+- ❌ Desktop browsers (Web NFC not supported)
+
+## Web NFC API Support
+
+This app now supports the **Web NFC API**, which enables NFC functionality directly in web browsers on Android without requiring a native app build!
+
+### Browser Compatibility
+
+| Browser | Platform | Support | Version |
+|---------|----------|---------|---------|
+| Chrome | Android | ✅ Yes | 89+ |
+| Edge | Android | ✅ Yes | 89+ |
+| Safari | iOS | ❌ No | - |
+| Firefox | Android | ❌ No | - |
+| Desktop | Any | ❌ No | - |
+
+### Requirements for Web NFC
+
+1. **HTTPS Connection**: Web NFC requires a secure context (HTTPS), except for `localhost`
+2. **Android Device**: Must have NFC hardware
+3. **NFC Enabled**: NFC must be enabled in device settings
+4. **Browser Permissions**: User must grant NFC permission when prompted
+
+### How It Works
+
+The app automatically detects the best NFC method available:
+1. **Native Apps**: Uses Capacitor NFC plugin (iOS/Android)
+2. **Web Browser**: Falls back to Web NFC API (Chrome/Edge on Android)
+3. **Not Available**: Shows friendly message if NFC not supported
+
+No code changes needed - the app handles the fallback automatically!
+
 ## Database Schema
 
 ### NFCTag Model
@@ -42,9 +79,19 @@ npx prisma migrate dev --name add_nfc_support
 npx prisma generate
 ```
 
-### 2. Native App Setup (iOS/Android)
+### 2. Using Web NFC (Chrome/Edge on Android)
 
-NFC functionality requires a native app build. See [PWA_NATIVE_BRIDGE.md](./PWA_NATIVE_BRIDGE.md) for building instructions.
+**No setup required!** Just:
+1. Open the app in Chrome or Edge on your Android device
+2. Make sure you're using HTTPS (or localhost for testing)
+3. Enable NFC in your Android device settings
+4. Grant NFC permission when prompted by the browser
+
+The app will automatically use the Web NFC API.
+
+### 3. Native App Setup (Optional - iOS/Android)
+
+For iOS support or enhanced Android experience, you can build a native app. See [PWA_NATIVE_BRIDGE.md](./PWA_NATIVE_BRIDGE.md) for building instructions.
 
 #### iOS Permissions
 
@@ -265,14 +312,21 @@ import NFCAssign from '@/app/components/NFCAssign';
 
 ### NFC Not Working
 
-1. **Check device compatibility:**
-   - iPhone 7 or later (iOS 11+)
-   - Most Android phones (Android 4.0+)
-   - NFC must be enabled in Settings
+1. **Check device and browser compatibility:**
+   - **Web (Chrome/Edge on Android):**
+     - Chrome 89+ or Edge 89+ on Android
+     - HTTPS connection required (or localhost)
+     - NFC enabled in Android settings
+     - Grant NFC permission when prompted
+   - **Native Apps:**
+     - iPhone 7 or later (iOS 11+)
+     - Most Android phones (Android 4.0+)
+     - NFC must be enabled in Settings
 
 2. **Check app permissions:**
-   - iOS: Settings > Your App > NFC
-   - Android: Settings > Apps > Your App > Permissions
+   - **Web (Chrome/Edge):** Grant NFC permission when browser prompts
+   - **iOS Native:** Settings > Your App > NFC
+   - **Android Native:** Settings > Apps > Your App > Permissions
 
 3. **Tag positioning:**
    - Hold phone flat against tag (back of phone)
@@ -288,15 +342,38 @@ import NFCAssign from '@/app/components/NFCAssign';
 
 **"NFC is not available on this device"**
 - Device doesn't have NFC hardware
-- Use web app features instead
+- Or browser doesn't support Web NFC API
+- Try Chrome/Edge on Android for web support
 
 **"Please enable NFC in your device settings"**
 - Go to device settings and enable NFC
-- On iOS: Settings > Control Center > Add NFC Tag Reader
+- On Android: Settings > Connected devices > Connection preferences > NFC
+- On iOS: Settings > Control Center > Add NFC Tag Reader (native app only)
+
+**"NotAllowedError" in browser**
+- User denied NFC permission
+- Reload page and grant permission when prompted
+- Check that site is using HTTPS
 
 **"NFC tag is already assigned to another item"**
 - Unassign the tag from the other item first
 - Or use a different NFC tag
+
+### Web NFC Specific Issues
+
+**"NDEFReader is not defined"**
+- Browser doesn't support Web NFC API
+- Use Chrome 89+ or Edge 89+ on Android
+- Or build a native app for iOS support
+
+**HTTPS Required Error**
+- Web NFC requires HTTPS (except localhost)
+- Use a secure connection or test on localhost
+
+**Permission Denied**
+- Grant NFC permission when browser prompts
+- Check browser site settings for NFC permission
+- Try refreshing the page
 
 ## Best Practices
 
@@ -322,6 +399,8 @@ Potential future features:
 
 ## Resources
 
+- [Web NFC API](https://developer.chrome.com/docs/capabilities/nfc) - Chrome documentation for Web NFC
+- [Web NFC Specification](https://w3c.github.io/web-nfc/) - W3C Web NFC standard
 - [NFC Forum](https://nfc-forum.org/) - NFC standards
-- [Capacitor NFC Plugin](https://github.com/capgo/capacitor-nfc) - Plugin documentation
+- [Capacitor NFC Plugin](https://github.com/capgo/capacitor-nfc) - Plugin documentation for native apps
 - [NFC Tags Guide](https://www.shopnfc.com/en/content/6-nfc-tags-guide) - Tag types and uses
