@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/app/lib/prisma';
-import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 
 // Validation schema for updating items
