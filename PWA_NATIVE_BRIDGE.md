@@ -124,10 +124,18 @@ await HapticsUtils.medium();
 
 #### Haptics
 
-- `HapticsUtils.light()` - Light haptic feedback
-- `HapticsUtils.medium()` - Medium haptic feedback
-- `HapticsUtils.heavy()` - Heavy haptic feedback
+Supports both Capacitor Haptics (native apps) and Web Vibration API (web browsers).
+
+- `HapticsUtils.light()` - Light haptic feedback (10ms vibration on web)
+- `HapticsUtils.medium()` - Medium haptic feedback (20ms vibration on web)
+- `HapticsUtils.heavy()` - Heavy haptic feedback (30ms vibration on web)
 - `HapticsUtils.isAvailable()` - Check if haptics is available
+- `HapticsUtils.isWebVibrationAvailable()` - Check if Web Vibration API is available
+
+**Browser Support:**
+- ✅ Most Android browsers (Chrome, Firefox, Edge)
+- ✅ Safari on iOS (requires user interaction)
+- ✅ Most modern mobile browsers
 
 #### App
 

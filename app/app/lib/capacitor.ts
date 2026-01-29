@@ -188,18 +188,37 @@ export const ShareUtils = {
 
 /**
  * Haptics utilities
+ * Supports both Capacitor Haptics (native apps) and Web Vibration API (web browsers)
  */
 export const HapticsUtils = {
+  /**
+   * Check if Web Vibration API is available
+   */
+  isWebVibrationAvailable(): boolean {
+    return typeof window !== 'undefined' && 'vibrate' in navigator;
+  },
+
   /**
    * Trigger light haptic feedback
    */
   async light(): Promise<void> {
-    if (!isPluginAvailable('Haptics')) return;
+    // Try Capacitor Haptics first (native apps)
+    if (isPluginAvailable('Haptics')) {
+      try {
+        await Haptics.impact({ style: ImpactStyle.Light });
+        return;
+      } catch (error) {
+        console.error('Error with Capacitor haptics:', error);
+      }
+    }
     
-    try {
-      await Haptics.impact({ style: ImpactStyle.Light });
-    } catch (error) {
-      console.error('Error with haptics:', error);
+    // Fallback to Web Vibration API (web browsers)
+    if (this.isWebVibrationAvailable()) {
+      try {
+        navigator.vibrate(10); // Light: 10ms vibration
+      } catch (error) {
+        console.error('Error with web vibration:', error);
+      }
     }
   },
 
@@ -207,12 +226,23 @@ export const HapticsUtils = {
    * Trigger medium haptic feedback
    */
   async medium(): Promise<void> {
-    if (!isPluginAvailable('Haptics')) return;
+    // Try Capacitor Haptics first (native apps)
+    if (isPluginAvailable('Haptics')) {
+      try {
+        await Haptics.impact({ style: ImpactStyle.Medium });
+        return;
+      } catch (error) {
+        console.error('Error with Capacitor haptics:', error);
+      }
+    }
     
-    try {
-      await Haptics.impact({ style: ImpactStyle.Medium });
-    } catch (error) {
-      console.error('Error with haptics:', error);
+    // Fallback to Web Vibration API (web browsers)
+    if (this.isWebVibrationAvailable()) {
+      try {
+        navigator.vibrate(20); // Medium: 20ms vibration
+      } catch (error) {
+        console.error('Error with web vibration:', error);
+      }
     }
   },
 
@@ -220,20 +250,31 @@ export const HapticsUtils = {
    * Trigger heavy haptic feedback
    */
   async heavy(): Promise<void> {
-    if (!isPluginAvailable('Haptics')) return;
+    // Try Capacitor Haptics first (native apps)
+    if (isPluginAvailable('Haptics')) {
+      try {
+        await Haptics.impact({ style: ImpactStyle.Heavy });
+        return;
+      } catch (error) {
+        console.error('Error with Capacitor haptics:', error);
+      }
+    }
     
-    try {
-      await Haptics.impact({ style: ImpactStyle.Heavy });
-    } catch (error) {
-      console.error('Error with haptics:', error);
+    // Fallback to Web Vibration API (web browsers)
+    if (this.isWebVibrationAvailable()) {
+      try {
+        navigator.vibrate(30); // Heavy: 30ms vibration
+      } catch (error) {
+        console.error('Error with web vibration:', error);
+      }
     }
   },
 
   /**
-   * Check if haptics is available
+   * Check if haptics is available (either via plugin or Web Vibration API)
    */
   isAvailable(): boolean {
-    return isPluginAvailable('Haptics');
+    return isPluginAvailable('Haptics') || this.isWebVibrationAvailable();
   },
 };
 

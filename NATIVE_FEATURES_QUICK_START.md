@@ -85,30 +85,32 @@ function ShareButton() {
 
 ### Haptics (Tactile Feedback)
 
+Works on both native apps and modern web browsers via the Vibration API.
+
 ```typescript
 import { useHaptics } from '@/app/lib/hooks/useCapacitor';
 
 function InteractiveButton() {
-  const { light, medium, heavy } = useHaptics();
+  const { light, medium, heavy, isAvailable } = useHaptics();
   
   return (
     <>
       <button onClick={async () => {
-        await light(); // Light tap
+        await light(); // Light tap (10ms vibration on web)
         // Do action
       }}>
         Light Action
       </button>
       
       <button onClick={async () => {
-        await medium(); // Medium tap
+        await medium(); // Medium tap (20ms vibration on web)
         // Do action
       }}>
         Medium Action
       </button>
       
       <button onClick={async () => {
-        await heavy(); // Strong tap
+        await heavy(); // Strong tap (30ms vibration on web)
         // Do important action
       }}>
         Important Action
@@ -181,7 +183,8 @@ All features automatically degrade when not available:
 
 - **Camera**: Returns `null` if not available (you can fall back to `<input type="file">`)
 - **Share**: Uses Web Share API on web, native share on mobile
-- **Haptics**: Silently does nothing on web
+- **Haptics**: Uses Web Vibration API on web browsers, native haptics on mobile apps
+- **NFC**: Uses Web NFC API on Chrome/Edge Android, native on iOS/Android apps
 - **Other features**: Check `isAvailable()` before using
 
 ## Example: Enhanced Add Item Button
