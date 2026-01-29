@@ -26,6 +26,8 @@ const createItemSchema = z.object({
   cleanStatus: z.enum(['clean', 'dirty', 'needs_wash']).optional(),
   wearsBeforeWash: z.number().int().min(1).optional(),
   currentWears: z.number().int().min(0).optional(),
+  lastWornDate: z.string().datetime().optional(),
+  lastWashedDate: z.string().datetime().optional(),
   storageType: z.enum(['hanging', 'folded', 'drawer', 'shelf', 'box', 'other']).optional(),
   locationInCloset: z.string().optional(),
   sortOrder: z.number().int().optional(),
@@ -41,6 +43,7 @@ export async function GET(request: NextRequest) {
     const pageSize = parseInt(searchParams.get('pageSize') || '30');
     const category = searchParams.get('category');
     const state = searchParams.get('state');
+    const cleanStatus = searchParams.get('cleanStatus');
     const tag = searchParams.get('tag');
     const q = searchParams.get('q'); // search query
 
@@ -53,6 +56,10 @@ export async function GET(request: NextRequest) {
     
     if (state) {
       where.state = state;
+    }
+    
+    if (cleanStatus) {
+      where.cleanStatus = cleanStatus;
     }
     
     if (tag) {

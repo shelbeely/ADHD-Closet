@@ -114,6 +114,8 @@ model Item {
   cleanStatus      CleanStatus @map("clean_status") @default(clean)
   wearsBeforeWash  Int         @map("wears_before_wash") @default(1) // How many wears before washing
   currentWears     Int         @map("current_wears") @default(0)     // Current wear count
+  lastWornDate     DateTime?   @map("last_worn_date")                // When item was last worn
+  lastWashedDate   DateTime?   @map("last_washed_date")              // When item was last washed
   
   // Physical location in closet
   storageType      StorageType? @map("storage_type")                  // How item is stored (hanging, folded, etc.)

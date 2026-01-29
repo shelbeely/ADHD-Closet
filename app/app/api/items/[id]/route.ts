@@ -25,6 +25,8 @@ const updateItemSchema = z.object({
   cleanStatus: z.enum(['clean', 'dirty', 'needs_wash']).optional(),
   wearsBeforeWash: z.number().int().min(1).optional(),
   currentWears: z.number().int().min(0).optional(),
+  lastWornDate: z.string().datetime().optional(),
+  lastWashedDate: z.string().datetime().optional(),
   storageType: z.enum(['hanging', 'folded', 'drawer', 'shelf', 'box', 'other']).optional(),
   locationInCloset: z.string().optional(),
   sortOrder: z.number().int().optional(),

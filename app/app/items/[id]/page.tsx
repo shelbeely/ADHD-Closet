@@ -38,6 +38,8 @@ interface Item {
   cleanStatus: string;
   wearsBeforeWash: number;
   currentWears: number;
+  lastWornDate?: string;
+  lastWashedDate?: string;
   storageType?: string;
   locationInCloset?: string;
   sortOrder?: number;
@@ -151,6 +153,8 @@ export default function ItemDetailPage() {
     cleanStatus: string;
     wearsBeforeWash: number;
     currentWears: number;
+    lastWornDate: string;
+    lastWashedDate: string;
   }>) => {
     setSaving(true);
     try {
@@ -166,6 +170,8 @@ export default function ItemDetailPage() {
           cleanStatus: overrides?.cleanStatus ?? cleanStatus,
           wearsBeforeWash: overrides?.wearsBeforeWash ?? wearsBeforeWash,
           currentWears: overrides?.currentWears ?? currentWears,
+          lastWornDate: overrides?.lastWornDate,
+          lastWashedDate: overrides?.lastWashedDate,
           storageType: storageType || undefined,
           locationInCloset: locationInCloset || undefined,
           sortOrder: sortOrder,
@@ -204,6 +210,7 @@ export default function ItemDetailPage() {
   const handleWear = async () => {
     const newWearCount = currentWears + 1;
     let newCleanStatus = cleanStatus;
+    const now = new Date().toISOString();
     
     // Update status based on wear count
     if (newWearCount >= wearsBeforeWash) {
@@ -216,22 +223,26 @@ export default function ItemDetailPage() {
     setCurrentWears(newWearCount);
     setCleanStatus(newCleanStatus);
     
-    // Save with new values
+    // Save with new values including timestamp
     await saveChanges({
       currentWears: newWearCount,
       cleanStatus: newCleanStatus,
+      lastWornDate: now,
     });
   };
 
   const handleWash = async () => {
+    const now = new Date().toISOString();
+    
     // Update local state
     setCurrentWears(0);
     setCleanStatus('clean');
     
-    // Save with new values
+    // Save with new values including timestamp
     await saveChanges({
       currentWears: 0,
       cleanStatus: 'clean',
+      lastWashedDate: now,
     });
   };
 
@@ -510,6 +521,20 @@ export default function ItemDetailPage() {
                 >
                   🧼 Washed
                 </button>
+              </div>
+              
+              {/* Timestamps */}
+              <div className="mt-3 text-xs text-on-surface-variant space-y-1">
+                {item?.lastWornDate && (
+                  <div>
+                    🕐 Last worn: {new Date(item.lastWornDate).toLocaleDateString()} at {new Date(item.lastWornDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                )}
+                {item?.lastWashedDate && (
+                  <div>
+                    🧼 Last washed: {new Date(item.lastWashedDate).toLocaleDateString()} at {new Date(item.lastWashedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                )}
               </div>
             </div>
 
