@@ -8,7 +8,7 @@ const config: CapacitorConfig = {
     // For production builds, this will be overridden
     // In development, you can point to your local server
     url: process.env.CAPACITOR_SERVER_URL,
-    cleartext: true,
+    cleartext: process.env.NODE_ENV === 'development', // Only allow cleartext in development
     androidScheme: 'https',
     iosScheme: 'capacitor',
   },

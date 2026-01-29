@@ -12,10 +12,23 @@ import { initializeCapacitor } from '../lib/capacitor';
 
 export default function CapacitorInit() {
   useEffect(() => {
+    let cleanup: (() => void) | undefined;
+
     // Initialize Capacitor when the component mounts
-    initializeCapacitor().catch((error) => {
-      console.error('Error initializing Capacitor:', error);
-    });
+    initializeCapacitor()
+      .then((cleanupFn) => {
+        cleanup = cleanupFn;
+      })
+      .catch((error) => {
+        console.error('Error initializing Capacitor:', error);
+      });
+
+    // Cleanup on unmount
+    return () => {
+      if (cleanup) {
+        cleanup();
+      }
+    };
   }, []);
 
   // This component doesn't render anything

@@ -262,13 +262,13 @@ export const AppUtils = {
   addStateChangeListener(callback: (state: { isActive: boolean }) => void) {
     if (!isPluginAvailable('App')) return () => {};
 
+    let cleanupFn = () => {};
+    
     App.addListener('appStateChange', callback).then((listener) => {
-      // Store the listener handle for removal
+      cleanupFn = () => listener.remove();
     });
     
-    return () => {
-      App.removeAllListeners();
-    };
+    return () => cleanupFn();
   },
 
   /**
@@ -386,20 +386,25 @@ export const SplashScreenUtils = {
 /**
  * Initialize native features when app loads
  */
-export async function initializeCapacitor(): Promise<void> {
+export async function initializeCapacitor(): Promise<() => void> {
   if (!isNative()) {
     console.log('Running in web mode, native features disabled');
-    return;
+    return () => {};
   }
 
   console.log(`Running on ${getPlatform()}`);
 
-  // Hide splash screen after a delay
-  setTimeout(async () => {
-    await SplashScreenUtils.hide();
-  }, 1000);
-
   // Set initial status bar style
   await StatusBarUtils.setStyle('dark');
   await StatusBarUtils.setBackgroundColor('#6750a4');
+
+  // Hide splash screen after a delay
+  const timeoutId = setTimeout(async () => {
+    await SplashScreenUtils.hide();
+  }, 1000);
+
+  // Return cleanup function
+  return () => {
+    clearTimeout(timeoutId);
+  };
 }

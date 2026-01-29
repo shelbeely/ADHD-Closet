@@ -47,7 +47,11 @@ export function usePlatform() {
  * Hook for camera functionality
  */
 export function useCamera() {
-  const isAvailable = CameraUtils.isAvailable();
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  useEffect(() => {
+    setIsAvailable(CameraUtils.isAvailable());
+  }, []);
 
   const takePhoto = useCallback(async () => {
     if (!isAvailable) {
@@ -76,13 +80,20 @@ export function useCamera() {
  * Hook for share functionality
  */
 export function useShare() {
-  const isAvailable = ShareUtils.isAvailable();
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  useEffect(() => {
+    const checkAvailability = () => {
+      return ShareUtils.isAvailable() || (typeof window !== 'undefined' && 'share' in navigator);
+    };
+    setIsAvailable(checkAvailability());
+  }, []);
 
   const share = useCallback(
     async (title: string, text: string, url?: string) => {
-      if (!isAvailable) {
+      if (!ShareUtils.isAvailable()) {
         // Fallback to Web Share API if available
-        if (navigator.share) {
+        if (typeof window !== 'undefined' && navigator.share) {
           try {
             await navigator.share({ title, text, url });
             return true;
@@ -96,11 +107,11 @@ export function useShare() {
       }
       return await ShareUtils.share(title, text, url);
     },
-    [isAvailable]
+    []
   );
 
   return {
-    isAvailable: isAvailable || ('share' in navigator),
+    isAvailable,
     share,
   };
 }
@@ -109,7 +120,11 @@ export function useShare() {
  * Hook for haptic feedback
  */
 export function useHaptics() {
-  const isAvailable = HapticsUtils.isAvailable();
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  useEffect(() => {
+    setIsAvailable(HapticsUtils.isAvailable());
+  }, []);
 
   const light = useCallback(async () => {
     if (!isAvailable) return;
