@@ -13,6 +13,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { CapacitorNfc, NfcTag, NfcUtils } from '@capgo/capacitor-nfc';
 
 /**
  * Check if the app is running as a native app (iOS or Android)
@@ -380,6 +381,156 @@ export const SplashScreenUtils = {
    */
   isAvailable(): boolean {
     return isPluginAvailable('SplashScreen');
+  },
+};
+
+/**
+ * NFC utilities for reading and writing NFC tags
+ */
+export const NFCUtils = {
+  /**
+   * Check if NFC is available on the device
+   */
+  async isAvailable(): Promise<boolean> {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      return false;
+    }
+
+    try {
+      const result = await CapacitorNfc.isAvailable();
+      return result.available;
+    } catch (error) {
+      console.error('Error checking NFC availability:', error);
+      return false;
+    }
+  },
+
+  /**
+   * Check if NFC is enabled on the device
+   */
+  async isEnabled(): Promise<boolean> {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      return false;
+    }
+
+    try {
+      const result = await CapacitorNfc.isEnabled();
+      return result.enabled;
+    } catch (error) {
+      console.error('Error checking NFC enabled status:', error);
+      return false;
+    }
+  },
+
+  /**
+   * Start scanning for NFC tags
+   * Returns the tag ID when a tag is detected
+   */
+  async startScanning(): Promise<string | null> {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      console.warn('NFC plugin not available');
+      return null;
+    }
+
+    try {
+      // Start listening for NFC tags
+      const tag = await CapacitorNfc.scanTag();
+      
+      // Extract the tag ID (UID)
+      if (tag && tag.id) {
+        return tag.id;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error scanning NFC tag:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Stop scanning for NFC tags
+   */
+  async stopScanning(): Promise<void> {
+    if (!isPluginAvailable('CapacitorNfc')) return;
+
+    try {
+      await CapacitorNfc.stopScan();
+    } catch (error) {
+      console.error('Error stopping NFC scan:', error);
+    }
+  },
+
+  /**
+   * Write text data to an NFC tag
+   */
+  async writeTag(text: string): Promise<boolean> {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      console.warn('NFC plugin not available');
+      return false;
+    }
+
+    try {
+      await CapacitorNfc.writeTag({ text });
+      return true;
+    } catch (error) {
+      console.error('Error writing NFC tag:', error);
+      return false;
+    }
+  },
+
+  /**
+   * Read data from an NFC tag
+   */
+  async readTag(): Promise<{ id: string; text?: string } | null> {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      console.warn('NFC plugin not available');
+      return null;
+    }
+
+    try {
+      const tag = await CapacitorNfc.scanTag();
+      
+      if (tag && tag.id) {
+        return {
+          id: tag.id,
+          text: tag.message || undefined,
+        };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error reading NFC tag:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Add a listener for NFC tag detection
+   */
+  addTagDetectionListener(callback: (tagId: string) => void) {
+    if (!isPluginAvailable('CapacitorNfc')) {
+      return () => {};
+    }
+
+    let cleanupFn = () => {};
+    
+    CapacitorNfc.addListener('nfcTagScanned', (tag: any) => {
+      if (tag && tag.id) {
+        callback(tag.id);
+      }
+    }).then((listener) => {
+      cleanupFn = () => listener.remove();
+    });
+    
+    return () => cleanupFn();
+  },
+
+  /**
+   * Check if device supports NFC
+   */
+  isSupported(): boolean {
+    return isPluginAvailable('CapacitorNfc');
   },
 };
 

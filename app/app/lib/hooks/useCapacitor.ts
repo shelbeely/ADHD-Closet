@@ -15,6 +15,7 @@ import {
   ShareUtils,
   HapticsUtils,
   AppUtils,
+  NFCUtils,
 } from '../capacitor';
 
 /**
@@ -191,4 +192,94 @@ export function useAppInfo() {
   }, []);
 
   return appInfo;
+}
+
+/**
+ * Hook for NFC functionality
+ */
+export function useNFC() {
+  const [isAvailable, setIsAvailable] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
+
+  useEffect(() => {
+    async function checkNFC() {
+      const available = await NFCUtils.isAvailable();
+      const enabled = await NFCUtils.isEnabled();
+      setIsAvailable(available);
+      setIsEnabled(enabled);
+    }
+
+    checkNFC();
+  }, []);
+
+  const startScanning = useCallback(async () => {
+    if (!isAvailable || !isEnabled) {
+      console.warn('NFC not available or not enabled');
+      return null;
+    }
+
+    setIsScanning(true);
+    try {
+      const tagId = await NFCUtils.startScanning();
+      return tagId;
+    } finally {
+      setIsScanning(false);
+    }
+  }, [isAvailable, isEnabled]);
+
+  const stopScanning = useCallback(async () => {
+    await NFCUtils.stopScanning();
+    setIsScanning(false);
+  }, []);
+
+  const readTag = useCallback(async () => {
+    if (!isAvailable || !isEnabled) {
+      console.warn('NFC not available or not enabled');
+      return null;
+    }
+
+    setIsScanning(true);
+    try {
+      const tag = await NFCUtils.readTag();
+      return tag;
+    } finally {
+      setIsScanning(false);
+    }
+  }, [isAvailable, isEnabled]);
+
+  const writeTag = useCallback(
+    async (text: string) => {
+      if (!isAvailable || !isEnabled) {
+        console.warn('NFC not available or not enabled');
+        return false;
+      }
+
+      return await NFCUtils.writeTag(text);
+    },
+    [isAvailable, isEnabled]
+  );
+
+  const addTagListener = useCallback(
+    (callback: (tagId: string) => void) => {
+      if (!isAvailable || !isEnabled) {
+        return () => {};
+      }
+
+      return NFCUtils.addTagDetectionListener(callback);
+    },
+    [isAvailable, isEnabled]
+  );
+
+  return {
+    isAvailable,
+    isEnabled,
+    isScanning,
+    isSupported: NFCUtils.isSupported(),
+    startScanning,
+    stopScanning,
+    readTag,
+    writeTag,
+    addTagListener,
+  };
 }
