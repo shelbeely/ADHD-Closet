@@ -45,6 +45,7 @@ The application uses [Capacitor](https://capacitorjs.com/) to provide native cap
 - `@capacitor/app` - App lifecycle management
 - `@capacitor/status-bar` - Status bar customization
 - `@capacitor/splash-screen` - Splash screen management
+- `@capgo/capacitor-nfc` - NFC tag reading and writing
 
 ### Usage in Code
 
@@ -147,6 +148,19 @@ await HapticsUtils.medium();
 - `SplashScreenUtils.hide()` - Hide splash screen
 - `SplashScreenUtils.show()` - Show splash screen
 - `SplashScreenUtils.isAvailable()` - Check if splash screen is available
+
+#### NFC
+
+- `NFCUtils.isAvailable()` - Check if NFC hardware is available
+- `NFCUtils.isEnabled()` - Check if NFC is enabled
+- `NFCUtils.startScanning()` - Start scanning for NFC tags
+- `NFCUtils.stopScanning()` - Stop scanning
+- `NFCUtils.readTag()` - Read data from NFC tag
+- `NFCUtils.writeTag(text)` - Write text to NFC tag
+- `NFCUtils.addTagDetectionListener(callback)` - Listen for tag detection
+- `NFCUtils.isSupported()` - Check if NFC is supported
+
+See [NFC_TAG_SUPPORT.md](./NFC_TAG_SUPPORT.md) for detailed NFC documentation.
 
 ## Building for Mobile
 

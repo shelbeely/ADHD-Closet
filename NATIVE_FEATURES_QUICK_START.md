@@ -118,12 +118,42 @@ function InteractiveButton() {
 }
 ```
 
+### NFC (Tag Scanning)
+
+```typescript
+import { useNFC } from '@/app/lib/hooks/useCapacitor';
+
+function NFCScanButton() {
+  const { startScanning, isAvailable, isEnabled } = useNFC();
+  
+  const handleScan = async () => {
+    if (!isAvailable || !isEnabled) {
+      alert('NFC is not available or enabled');
+      return;
+    }
+    
+    const tagId = await startScanning();
+    if (tagId) {
+      console.log('Scanned NFC tag:', tagId);
+      // Look up item associated with this tag
+      // Record removal/return event
+    }
+  };
+  
+  return (
+    <button onClick={handleScan} disabled={!isEnabled}>
+      {isEnabled ? 'Scan NFC Tag' : 'Enable NFC in Settings'}
+    </button>
+  );
+}
+```
+
 ## Direct API Usage (Without Hooks)
 
 If you need to use native features outside of React components:
 
 ```typescript
-import { CameraUtils, ShareUtils, HapticsUtils } from '@/app/lib/capacitor';
+import { CameraUtils, ShareUtils, HapticsUtils, NFCUtils } from '@/app/lib/capacitor';
 
 // Camera
 const photo = await CameraUtils.takePhoto();
@@ -133,6 +163,11 @@ await ShareUtils.share('Title', 'Message', 'https://url');
 
 // Haptics
 await HapticsUtils.medium();
+
+// NFC
+const tagId = await NFCUtils.startScanning();
+const tag = await NFCUtils.readTag(); // { id, text }
+await NFCUtils.writeTag('Hello NFC!');
 
 // Check availability
 if (CameraUtils.isAvailable()) {
@@ -209,5 +244,7 @@ export default function EnhancedAddItem() {
 ## See Also
 
 - [Full Documentation](../PWA_NATIVE_BRIDGE.md)
+- [NFC Tag Support](../NFC_TAG_SUPPORT.md)
 - [Demo Component](./app/components/NativeFeaturesDemo.tsx)
 - [Capacitor Docs](https://capacitorjs.com/docs)
+

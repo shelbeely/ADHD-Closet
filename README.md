@@ -24,6 +24,7 @@ Wardrobe AI Closet helps you organize your clothing with AI-powered tools design
 - **💻 Desktop Power Tools**: Bulk editing, keyboard shortcuts, advanced filtering
 - **📱 Mobile-First**: Optimized category-based navigation on mobile
 - **📲 PWA + Native Support**: Install as a Progressive Web App or build as a native iOS/Android app with Capacitor
+- **📡 NFC Tag Support**: Scan NFC tags on hangers to track items removed from/returned to closet
 - **💾 Export/Import**: Full data backup via ZIP files
 
 ## 📸 Screenshots
@@ -133,8 +134,11 @@ When running as a native app, additional device features are available:
 - **Haptic Feedback** - Tactile feedback for interactions
 - **Status Bar** - Customizable status bar styling
 - **Splash Screen** - Native splash screen on app launch
+- **NFC Tags** - Scan NFC tags to track clothing items (requires native app)
 
 For detailed instructions on building native apps, see [PWA_NATIVE_BRIDGE.md](PWA_NATIVE_BRIDGE.md).
+
+For NFC tag functionality, see [NFC_TAG_SUPPORT.md](NFC_TAG_SUPPORT.md).
 
 ## 🎨 Design Principles
 
