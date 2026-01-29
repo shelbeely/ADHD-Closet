@@ -23,6 +23,9 @@ const createItemSchema = z.object({
   colorPalette: z.array(z.string()).optional(),
   attributes: z.record(z.string(), z.any()).optional(),
   tags: z.array(z.string()).optional(),
+  cleanStatus: z.enum(['clean', 'dirty', 'needs_wash']).optional(),
+  wearsBeforeWash: z.number().int().min(1).optional(),
+  currentWears: z.number().int().min(0).optional(),
 });
 
 // GET /api/items - List items with filtering and pagination

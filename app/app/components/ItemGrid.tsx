@@ -8,6 +8,9 @@ interface Item {
   category?: string;
   brand?: string;
   state: string;
+  cleanStatus?: string;
+  currentWears?: number;
+  wearsBeforeWash?: number;
   images: Array<{
     id: string;
     kind: string;
@@ -115,6 +118,17 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
               {item.state !== 'available' && (
                 <div className="absolute top-3 right-3 px-3 py-1.5 bg-secondary-container text-on-secondary-container text-label-small rounded-full shadow-elevation-1">
                   {item.state}
+                </div>
+              )}
+              
+              {/* Clean status badge */}
+              {item.cleanStatus && item.cleanStatus !== 'clean' && (
+                <div className={`absolute top-3 ${item.state !== 'available' ? 'right-[90px]' : 'right-3'} px-2 py-1 text-label-small rounded-full shadow-elevation-1 font-medium ${
+                  item.cleanStatus === 'needs_wash' 
+                    ? 'bg-error-container text-on-error-container' 
+                    : 'bg-tertiary-container text-on-tertiary-container'
+                }`}>
+                  {item.cleanStatus === 'needs_wash' ? '🚿' : '🧺'}
                 </div>
               )}
               

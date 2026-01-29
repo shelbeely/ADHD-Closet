@@ -35,6 +35,9 @@ interface Item {
   materials?: string;
   colorPalette?: string[];
   attributes?: Record<string, any>;
+  cleanStatus?: string;
+  wearsBeforeWash?: number;
+  currentWears: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -55,6 +58,12 @@ const STATES = [
   { value: 'laundry', label: 'Laundry', color: 'bg-blue-100 text-blue-800' },
   { value: 'unavailable', label: 'Unavailable', color: 'bg-gray-100 text-gray-800' },
   { value: 'donate', label: 'Donate', color: 'bg-yellow-100 text-yellow-800' },
+];
+
+const CLEAN_STATUSES = [
+  { value: 'clean', label: 'Clean', color: 'bg-green-100 text-green-800', icon: '✨' },
+  { value: 'dirty', label: 'Dirty', color: 'bg-orange-100 text-orange-800', icon: '🧺' },
+  { value: 'needs_wash', label: 'Needs Wash', color: 'bg-red-100 text-red-800', icon: '🚿' },
 ];
 
 /**
@@ -86,6 +95,9 @@ export default function ItemDetailPage() {
   const [brand, setBrand] = useState('');
   const [state, setState] = useState('available');
   const [newTag, setNewTag] = useState('');
+  const [cleanStatus, setCleanStatus] = useState('clean');
+  const [wearsBeforeWash, setWearsBeforeWash] = useState(1);
+  const [currentWears, setCurrentWears] = useState(0);
 
   useEffect(() => {
     loadItem();
@@ -107,6 +119,9 @@ export default function ItemDetailPage() {
       setCategory(data.item.category || '');
       setBrand(data.item.brand || '');
       setState(data.item.state || 'available');
+      setCleanStatus(data.item.cleanStatus || 'clean');
+      setWearsBeforeWash(data.item.wearsBeforeWash || 1);
+      setCurrentWears(data.item.currentWears || 0);
     } catch (error) {
       console.error('Error loading item:', error);
     } finally {
@@ -126,6 +141,9 @@ export default function ItemDetailPage() {
           brand,
           state,
           tags: tags.map(t => t.name),
+          cleanStatus,
+          wearsBeforeWash,
+          currentWears,
         }),
       });
 
@@ -156,6 +174,26 @@ export default function ItemDetailPage() {
       console.error('Error deleting item:', error);
       alert('Failed to delete item. Please try again.');
     }
+  };
+
+  const handleWear = async () => {
+    const newWearCount = currentWears + 1;
+    setCurrentWears(newWearCount);
+    
+    // Auto-update clean status based on wear count
+    if (newWearCount >= wearsBeforeWash) {
+      setCleanStatus('needs_wash');
+    } else if (cleanStatus === 'clean') {
+      setCleanStatus('dirty');
+    }
+    
+    await saveChanges();
+  };
+
+  const handleWash = async () => {
+    setCurrentWears(0);
+    setCleanStatus('clean');
+    await saveChanges();
   };
 
   const addTag = async () => {
@@ -367,6 +405,91 @@ export default function ItemDetailPage() {
                   {s.label}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Clean Status & Wear Tracking */}
+          <div className="space-y-4 p-4 bg-surface-variant rounded-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Cleanliness & Wear Tracking</h3>
+            </div>
+            
+            {/* Clean Status */}
+            <div>
+              <label className="block text-sm font-medium mb-2">Status</label>
+              <div className="grid grid-cols-3 gap-3">
+                {CLEAN_STATUSES.map(cs => (
+                  <button
+                    key={cs.value}
+                    onClick={() => {
+                      setCleanStatus(cs.value);
+                      saveChanges();
+                    }}
+                    className={`px-3 py-2 rounded-xl font-medium transition-all text-sm ${
+                      cleanStatus === cs.value
+                        ? cs.color + ' ring-2 ring-offset-2 ring-primary'
+                        : 'bg-surface text-on-surface hover:bg-surface-container-high'
+                    }`}
+                  >
+                    <div className="text-lg mb-1">{cs.icon}</div>
+                    {cs.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Wear Counter */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Wears: {currentWears} / {wearsBeforeWash}
+              </label>
+              <div className="mb-3">
+                <div className="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-300 ${
+                      currentWears >= wearsBeforeWash
+                        ? 'bg-error'
+                        : currentWears > 0
+                        ? 'bg-tertiary'
+                        : 'bg-primary'
+                    }`}
+                    style={{ width: `${Math.min((currentWears / wearsBeforeWash) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={handleWear}
+                  className="flex-1 px-4 py-3 bg-tertiary text-on-tertiary rounded-xl font-medium hover:shadow-elevation-2 transition-all"
+                >
+                  👕 Wore It
+                </button>
+                <button
+                  onClick={handleWash}
+                  className="flex-1 px-4 py-3 bg-primary text-on-primary rounded-xl font-medium hover:shadow-elevation-2 transition-all"
+                >
+                  🧼 Washed
+                </button>
+              </div>
+            </div>
+
+            {/* Wears Before Wash Setting */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Wears Before Wash (e.g., denim = 5-10, shirts = 1-2)
+              </label>
+              <input
+                type="number"
+                min="1"
+                value={wearsBeforeWash}
+                onChange={(e) => setWearsBeforeWash(parseInt(e.target.value) || 1)}
+                onBlur={saveChanges}
+                className="w-full px-4 py-3 rounded-xl bg-surface border border-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              />
+              <p className="text-xs text-on-surface-variant mt-2">
+                💡 Denim: 5-10 wears, Shirts: 1-2 wears, Outerwear: 5+ wears
+              </p>
             </div>
           </div>
 
