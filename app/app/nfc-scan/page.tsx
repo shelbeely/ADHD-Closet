@@ -11,9 +11,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NFCScanner from '../components/NFCScanner';
 
+interface ScanHistoryItem {
+  tagId: string;
+  item: {
+    id: string;
+    title?: string;
+    category?: string;
+    images?: Array<{
+      filePath: string;
+    }>;
+  };
+  timestamp: string;
+}
+
 export default function NFCScanPage() {
   const router = useRouter();
-  const [scanHistory, setScanHistory] = useState<any[]>([]);
+  const [scanHistory, setScanHistory] = useState<ScanHistoryItem[]>([]);
 
   const handleTagScanned = (tagId: string, itemInfo?: any) => {
     console.log('Tag scanned:', tagId, itemInfo);

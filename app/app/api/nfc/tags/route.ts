@@ -9,6 +9,7 @@ import prisma from '@/app/lib/prisma';
 
 export async function GET(request: NextRequest) {
   try {
+    // Fetch all tags with their items and recent events in a single query
     const tags = await prisma.nFCTag.findMany({
       include: {
         item: {
@@ -31,21 +32,35 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Get recent events for each tag
-    const tagsWithEvents = await Promise.all(
-      tags.map(async (tag) => {
-        const recentEvents = await prisma.nFCEvent.findMany({
-          where: { tagId: tag.tagId },
-          orderBy: { createdAt: 'desc' },
-          take: 5,
-        });
+    // Fetch all recent events for all tags in a single query
+    const allEvents = await prisma.nFCEvent.findMany({
+      where: {
+        tagId: {
+          in: tags.map(tag => tag.tagId),
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: tags.length * 5, // Up to 5 events per tag
+    });
 
-        return {
-          ...tag,
-          recentEvents,
-        };
-      })
-    );
+    // Group events by tagId
+    const eventsByTagId = allEvents.reduce((acc: any, event: any) => {
+      if (!acc[event.tagId]) {
+        acc[event.tagId] = [];
+      }
+      if (acc[event.tagId].length < 5) {
+        acc[event.tagId].push(event);
+      }
+      return acc;
+    }, {});
+
+    // Combine tags with their events
+    const tagsWithEvents = tags.map(tag => ({
+      ...tag,
+      recentEvents: eventsByTagId[tag.tagId] || [],
+    }));
 
     return NextResponse.json({
       tags: tagsWithEvents,

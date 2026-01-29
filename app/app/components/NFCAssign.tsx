@@ -9,17 +9,21 @@
 import { useState } from 'react';
 import { useNFC, useHaptics } from '../lib/hooks/useCapacitor';
 
+interface NFCTag {
+  id: string;
+  tagId: string;
+  label?: string;
+}
+
 interface NFCAssignProps {
   itemId: string;
-  itemTitle: string;
-  currentTag?: { id: string; tagId: string; label?: string } | null;
-  onAssigned?: (tag: any) => void;
+  currentTag?: NFCTag | null;
+  onAssigned?: (tag: NFCTag) => void;
   onRemoved?: () => void;
 }
 
 export default function NFCAssign({
   itemId,
-  itemTitle,
   currentTag,
   onAssigned,
   onRemoved,

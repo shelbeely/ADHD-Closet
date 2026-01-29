@@ -513,17 +513,24 @@ export const NFCUtils = {
       return () => {};
     }
 
-    let cleanupFn = () => {};
+    let cleanupFn: (() => void) | null = null;
     
-    CapacitorNfc.addListener('nfcTagScanned', (tag: any) => {
-      if (tag && tag.id) {
-        callback(tag.id);
-      }
-    }).then((listener) => {
+    // Use async IIFE to properly handle the promise
+    (async () => {
+      const listener = await CapacitorNfc.addListener('nfcTagScanned', (tag: any) => {
+        if (tag && tag.id) {
+          callback(tag.id);
+        }
+      });
       cleanupFn = () => listener.remove();
-    });
+    })();
     
-    return () => cleanupFn();
+    // Return a cleanup function that checks if cleanupFn is set
+    return () => {
+      if (cleanupFn) {
+        cleanupFn();
+      }
+    };
   },
 
   /**

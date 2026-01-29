@@ -636,7 +636,6 @@ export default function ItemDetailPage() {
           {/* NFC Tag Assignment */}
           <NFCAssign
             itemId={item.id}
-            itemTitle={item.title || 'Untitled Item'}
             currentTag={nfcTag}
             onAssigned={(tag) => {
               setNfcTag(tag);

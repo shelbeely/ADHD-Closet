@@ -69,12 +69,12 @@ export async function POST(request: NextRequest) {
       updateData.lastWornDate = new Date();
       
       // Increment wear count
-      if (nfcTag.item.currentWears !== undefined) {
-        updateData.currentWears = nfcTag.item.currentWears + 1;
-      }
+      const currentWears = nfcTag.item.currentWears ?? 0;
+      const wearsBeforeWash = nfcTag.item.wearsBeforeWash ?? 1;
+      updateData.currentWears = currentWears + 1;
       
       // Check if needs wash
-      if (nfcTag.item.currentWears + 1 >= nfcTag.item.wearsBeforeWash) {
+      if (currentWears + 1 >= wearsBeforeWash) {
         updateData.cleanStatus = 'needs_wash';
       }
     } else if (action === 'returned') {
