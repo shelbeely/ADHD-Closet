@@ -237,6 +237,20 @@ body {
   border-radius: 4px;
 }
 
+/* ADHD-Optimized: Celebratory animations for task completion */
+@keyframes bounce-once {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-once {
+  animation: bounce-once 0.5s ease-in-out;
+}
+
 /* ADHD-Optimized: Reduce motion for those who prefer it */
 @media (prefers-reduced-motion: reduce) {
   *,

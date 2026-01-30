@@ -7,6 +7,7 @@ import ItemGrid from './components/ItemGrid';
 import AddItemButton from './components/AddItemButton';
 import FilterPanel from './components/FilterPanel';
 import BulkEditTable from './components/BulkEditTable';
+import QuickStatsWidget from './components/QuickStatsWidget';
 
 interface Item {
   id: string;
@@ -239,6 +240,13 @@ export default function Home() {
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
         />
+
+        {/* Quick Stats Widget - ADHD-optimized: actionable overview */}
+        {!selectedCategory && (
+          <div className="px-4 pt-4">
+            <QuickStatsWidget />
+          </div>
+        )}
 
         {/* Main Content */}
         <main className="pb-24">
