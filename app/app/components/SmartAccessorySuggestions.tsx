@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { findBestColorHarmony } from '@/app/lib/colorHarmony';
+import { getSeasonalScore, getCurrentSeason } from '@/app/lib/seasonalIntelligence';
+import { getPersonalizationBoost, recordStyleChoice } from '@/app/lib/styleProfile';
+import { SeasonalBadge } from './SeasonalBanner';
+import { StyleMatchBadge } from './StyleProfileWidget';
 
 interface AccessorySuggestion {
   id: string;
@@ -101,7 +106,17 @@ export default function SmartAccessorySuggestions({
     return null;
   }
 
-  const displaySuggestions = expanded ? suggestions : suggestions.slice(0, 3);
+  const handleAddAccessory = (accessory: AccessorySuggestion) => {
+    // Record style choice for learning
+    recordStyleChoice(
+      accessory.id,
+      accessory.category,
+      outfitItems.flatMap(item => item.colorPalette || []),
+      []
+    );
+    
+    onAddAccessory(accessory.id);
+  };
 
   return (
     <div className={`bg-surface-container-low rounded-2xl p-4 ${className}`}>
@@ -123,11 +138,18 @@ export default function SmartAccessorySuggestions({
 
       {/* Suggestion cards - Progressive disclosure */}
       <div className="grid grid-cols-1 gap-3">
-        {displaySuggestions.map((suggestion) => (
+        {displaySuggestions.map((suggestion) => {
+          // Calculate enhanced scores
+          const itemColors = []; // Would come from suggestion if available
+          const colorHarmony = findBestColorHarmony(itemColors, outfitColors);
+          const seasonalScore = getSeasonalScore(suggestion.category, suggestion.subType);
+          const styleBoost = getPersonalizationBoost(suggestion.category, itemColors, []);
+          
+          return (
           <button
             key={suggestion.id}
             className="w-full text-left bg-surface-container rounded-xl p-3 hover:bg-surface-container-high transition-colors duration-200 cursor-pointer group"
-            onClick={() => onAddAccessory(suggestion.id)}
+            onClick={() => handleAddAccessory(suggestion)}
             aria-label={`Add ${suggestion.title || suggestion.category} to outfit - ${suggestion.reason}`}
           >
             <div className="flex gap-3 items-start">
@@ -159,13 +181,19 @@ export default function SmartAccessorySuggestions({
                   <div className="flex flex-col gap-1 items-end flex-shrink-0">
                     {suggestion.colorMatch && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 bg-tertiary/10 text-tertiary rounded-full text-label-small">
-                        🎨 Match
+                        {colorHarmony.emoji} {colorHarmony.type === 'exact' ? 'Match' : 'Harmony'}
                       </span>
                     )}
                     {suggestion.confidenceScore > 0.8 && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 bg-secondary/10 text-secondary rounded-full text-label-small">
                         ⭐ Top pick
                       </span>
+                    )}
+                    {styleBoost > 1.1 && (
+                      <StyleMatchBadge score={styleBoost - 0.8} size="small" />
+                    )}
+                    {seasonalScore.score > 0.9 && (
+                      <SeasonalBadge score={seasonalScore.score} reason={seasonalScore.reason} size="small" />
                     )}
                   </div>
                 </div>
@@ -175,7 +203,7 @@ export default function SmartAccessorySuggestions({
                   className="mt-2 px-3 py-1.5 bg-primary text-on-primary rounded-full text-label-small font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onAddAccessory(suggestion.id);
+                    handleAddAccessory(suggestion);
                   }}
                 >
                   + Add to outfit
@@ -183,7 +211,8 @@ export default function SmartAccessorySuggestions({
               </div>
             </div>
           </button>
-        ))}
+        );
+        })}
       </div>
 
       {/* Progressive disclosure - show more button */}
