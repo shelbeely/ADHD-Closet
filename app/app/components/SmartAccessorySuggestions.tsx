@@ -28,6 +28,7 @@ export default function SmartAccessorySuggestions({
   const [suggestions, setSuggestions] = useState<AccessorySuggestion[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch smart suggestions based on current outfit items
@@ -53,9 +54,17 @@ export default function SmartAccessorySuggestions({
         if (response.ok) {
           const data = await response.json();
           setSuggestions(data.suggestions || []);
+          setError(null);
+        } else {
+          setError('Unable to load suggestions');
         }
-      } catch (error) {
-        console.error('Failed to fetch accessory suggestions:', error);
+      } catch (error: any) {
+        console.error('Failed to fetch accessory suggestions:', {
+          message: error?.message,
+          stack: error?.stack,
+          error
+        });
+        setError('Unable to load suggestions');
       } finally {
         setLoading(false);
       }
@@ -72,6 +81,18 @@ export default function SmartAccessorySuggestions({
           <h3 className="text-label-large font-medium text-on-surface">Complete the Look</h3>
         </div>
         <p className="text-body-small text-on-surface-variant">Finding perfect accessories...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`bg-surface-container-low rounded-2xl p-4 ${className}`}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-2xl">✨</span>
+          <h3 className="text-label-large font-medium text-on-surface">Complete the Look</h3>
+        </div>
+        <p className="text-body-small text-error">{error}</p>
       </div>
     );
   }
@@ -103,10 +124,11 @@ export default function SmartAccessorySuggestions({
       {/* Suggestion cards - Progressive disclosure */}
       <div className="grid grid-cols-1 gap-3">
         {displaySuggestions.map((suggestion) => (
-          <div
+          <button
             key={suggestion.id}
-            className="bg-surface-container rounded-xl p-3 hover:bg-surface-container-high transition-colors duration-200 cursor-pointer group"
+            className="w-full text-left bg-surface-container rounded-xl p-3 hover:bg-surface-container-high transition-colors duration-200 cursor-pointer group"
             onClick={() => onAddAccessory(suggestion.id)}
+            aria-label={`Add ${suggestion.title || suggestion.category} to outfit - ${suggestion.reason}`}
           >
             <div className="flex gap-3 items-start">
               {/* Thumbnail */}
@@ -160,7 +182,7 @@ export default function SmartAccessorySuggestions({
                 </button>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -169,6 +191,7 @@ export default function SmartAccessorySuggestions({
         <button
           onClick={() => setExpanded(!expanded)}
           className="w-full mt-3 py-2 text-primary text-label-large font-medium hover:bg-primary/10 rounded-lg transition-colors duration-200"
+          aria-label={expanded ? 'Show fewer accessory suggestions' : `Show ${suggestions.length - 3} more accessory suggestions`}
         >
           {expanded ? 'Show less' : `Show ${suggestions.length - 3} more`}
         </button>

@@ -13,8 +13,38 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { outfitItems } = body as { outfitItems: OutfitItem[] };
 
-    if (!outfitItems || outfitItems.length === 0) {
+    // Input validation
+    if (!outfitItems || !Array.isArray(outfitItems)) {
+      return NextResponse.json(
+        { error: 'Invalid request: outfitItems must be an array' },
+        { status: 400 }
+      );
+    }
+
+    if (outfitItems.length === 0) {
       return NextResponse.json({ suggestions: [] });
+    }
+
+    // Validate each outfit item
+    for (const item of outfitItems) {
+      if (!item.id || typeof item.id !== 'string') {
+        return NextResponse.json(
+          { error: 'Invalid request: each item must have a valid id' },
+          { status: 400 }
+        );
+      }
+      if (!item.category || typeof item.category !== 'string') {
+        return NextResponse.json(
+          { error: 'Invalid request: each item must have a valid category' },
+          { status: 400 }
+        );
+      }
+      if (item.colorPalette && !Array.isArray(item.colorPalette)) {
+        return NextResponse.json(
+          { error: 'Invalid request: colorPalette must be an array if provided' },
+          { status: 400 }
+        );
+      }
     }
 
     // Extract outfit characteristics
@@ -171,8 +201,12 @@ export async function POST(request: NextRequest) {
       suggestions: suggestions.slice(0, 5)
     });
 
-  } catch (error) {
-    console.error('Error generating accessory suggestions:', error);
+  } catch (error: any) {
+    console.error('Error generating accessory suggestions:', {
+      message: error?.message,
+      stack: error?.stack,
+      error
+    });
     return NextResponse.json(
       { error: 'Failed to generate suggestions' },
       { status: 500 }

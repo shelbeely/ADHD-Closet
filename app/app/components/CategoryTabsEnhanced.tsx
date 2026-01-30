@@ -37,19 +37,19 @@ const SUB_CATEGORIES = {
   ],
 } as const;
 
-interface CategoryTabsProps {
+interface CategoryTabsEnhancedProps {
   selectedCategory: string | null;
   onCategoryChange: (category: string | null) => void;
   selectedSubCategory?: string | null;
   onSubCategoryChange?: (subCategory: string | null) => void;
 }
 
-export default function CategoryTabs({
+export default function CategoryTabsEnhanced({
   selectedCategory,
   onCategoryChange,
   selectedSubCategory,
   onSubCategoryChange,
-}: CategoryTabsProps) {
+}: CategoryTabsEnhancedProps) {
   const [showSubCategories, setShowSubCategories] = useState(false);
 
   // Determine if current category has sub-categories
@@ -84,6 +84,7 @@ export default function CategoryTabs({
                 ? 'bg-primary text-on-primary shadow-elevation-2'
                 : 'bg-surface-variant text-on-surface-variant hover:shadow-elevation-1'
             }`}
+            aria-label="Show all items from all categories"
           >
             All Items
           </button>
@@ -96,8 +97,9 @@ export default function CategoryTabs({
                   ? 'bg-primary text-on-primary shadow-elevation-2'
                   : 'bg-surface-variant text-on-surface-variant hover:shadow-elevation-1'
               }`}
+              aria-label={`Filter by ${category.label} category`}
             >
-              <span className="text-xl">{category.icon}</span>
+              <span className="text-xl" aria-hidden="true">{category.icon}</span>
               <span>{category.label}</span>
             </button>
           ))}
@@ -116,6 +118,7 @@ export default function CategoryTabs({
                     ? 'bg-secondary text-on-secondary shadow-elevation-1'
                     : 'bg-surface-variant/50 text-on-surface-variant hover:bg-surface-variant'
                 }`}
+                aria-label={`Show all ${selectedCategory}`}
               >
                 All {selectedCategory}
               </button>
