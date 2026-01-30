@@ -52,3 +52,11 @@ prisma/migrations/*.sql
 # bun
 .bun
 bun.lockb
+
+# capacitor
+/ios
+/android
+*.xcworkspace
+*.xcodeproj
+.gradle
+local.properties

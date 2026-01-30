@@ -53,6 +53,7 @@ export async function GET(
             tag: true,
           },
         },
+        nfcTag: true,
         aiJobs: {
           where: {
             status: {
@@ -82,6 +83,7 @@ export async function GET(
       },
       images: item.images,
       tags: item.tags.map((t: any) => t.tag),
+      nfcTag: item.nfcTag,
       ai: {
         latestJobs: item.aiJobs,
       },

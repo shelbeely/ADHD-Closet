@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import NFCAssign from '@/app/components/NFCAssign';
 
 interface ImageAsset {
   id: string;
@@ -98,6 +99,7 @@ export default function ItemDetailPage() {
   const [images, setImages] = useState<ImageAsset[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [aiJobs, setAiJobs] = useState<AIJob[]>([]);
+  const [nfcTag, setNfcTag] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -130,6 +132,7 @@ export default function ItemDetailPage() {
       setImages(data.images || []);
       setTags(data.tags || []);
       setAiJobs(data.ai?.latestJobs || []);
+      setNfcTag(data.nfcTag || null);
 
       // Initialize editable fields
       setTitle(data.item.title || '');
@@ -629,6 +632,18 @@ export default function ItemDetailPage() {
               </p>
             </div>
           </div>
+
+          {/* NFC Tag Assignment */}
+          <NFCAssign
+            itemId={item.id}
+            currentTag={nfcTag}
+            onAssigned={(tag) => {
+              setNfcTag(tag);
+            }}
+            onRemoved={() => {
+              setNfcTag(null);
+            }}
+          />
 
           {/* Tags */}
           <div>

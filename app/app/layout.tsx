@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import NotificationPrompt from "./components/NotificationPrompt";
+import CapacitorInit from "./components/CapacitorInit";
 import { ThemeProvider } from "./lib/theme";
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
+          <CapacitorInit />
           {children}
           <NotificationPrompt />
         </ThemeProvider>

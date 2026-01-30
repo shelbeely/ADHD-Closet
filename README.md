@@ -23,6 +23,8 @@ Wardrobe AI Closet helps you organize your clothing with AI-powered tools design
   - Time estimates and status visibility
 - **💻 Desktop Power Tools**: Bulk editing, keyboard shortcuts, advanced filtering
 - **📱 Mobile-First**: Optimized category-based navigation on mobile
+- **📲 PWA + Native Support**: Install as a Progressive Web App or build as a native iOS/Android app with Capacitor
+- **📡 NFC Tag Support**: Scan NFC tags on hangers to track items removed from/returned to closet (works in Chrome/Edge on Android, or native iOS/Android apps)
 - **💾 Export/Import**: Full data backup via ZIP files
 
 ## 📸 Screenshots
@@ -111,6 +113,32 @@ Visit [http://localhost:3000](http://localhost:3000) 🎉
   - **Text**: Gemini 3 Flash (fast outfit generation)
 - **Image Processing**: Sharp for server-side thumbnails and optimization
 - **Runtime**: Bun.js (with npm fallback for broader compatibility)
+- **PWA**: next-pwa with service worker and offline support
+- **Native Bridge**: Capacitor for iOS and Android native capabilities
+
+## 📲 PWA & Native Apps
+
+This application can be deployed as:
+
+1. **Progressive Web App (PWA)** - Install directly from the browser on any device
+2. **Native iOS App** - Build and deploy to the App Store using Capacitor
+3. **Native Android App** - Build and deploy to Google Play using Capacitor
+
+### Native Capabilities
+
+When running as a native app, additional device features are available:
+
+- **Native Camera** - Direct camera access with better performance
+- **File System** - Native file system access for better storage management
+- **Share Sheet** - Native share functionality
+- **Haptic Feedback** - Tactile feedback for interactions
+- **Status Bar** - Customizable status bar styling
+- **Splash Screen** - Native splash screen on app launch
+- **NFC Tags** - Scan NFC tags to track clothing items (also works in Chrome/Edge on Android via Web NFC API)
+
+For detailed instructions on building native apps, see [PWA_NATIVE_BRIDGE.md](PWA_NATIVE_BRIDGE.md).
+
+For NFC tag functionality, see [NFC_TAG_SUPPORT.md](NFC_TAG_SUPPORT.md).
 
 ## 🎨 Design Principles
 
