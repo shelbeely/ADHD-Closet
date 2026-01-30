@@ -158,6 +158,11 @@ Focus on accurate categorization, color identification, and relevant style tags.
 
 Required fields:
 - category: one of [tops, bottoms, dresses, outerwear, shoes, accessories, underwear_bras, jewelry]
+- subType: specific sub-type based on category:
+  - For accessories: one of [purse, bag, backpack, belt, hat, scarf, gloves, sunglasses, watch, other]
+  - For jewelry: one of [necklace, earrings, bracelet, ring, anklet, brooch, other]
+  - For shoes: one of [sneakers, boots, sandals, heels, flats, loafers, oxfords, platforms, other]
+  - For other categories: null
 - colors: array of named colors (e.g., ["black", "dark purple"])
 - colorPalette: array of hex codes for dominant colors
 - pattern: description (e.g., "solid", "striped", "floral", "graphic print")
@@ -166,9 +171,11 @@ Required fields:
   - For bottoms: rise (low, mid, high), inseam, fit (skinny, slim, straight, wide, bootcut, flare), hemline (raw, cuffed, distressed), visualWeight (minimal, moderate, heavy), pocketStyle (description)
   - For dresses: neckline, sleeveLength, waistline (natural, empire, dropped, none), hemline, silhouette (fitted, A-line, shift, bodycon, flowy)
   - For outerwear: silhouette, length (cropped, hip, mid-thigh, knee, long), visualWeight
-  - For shoes: heelHeight, heelThickness (none, slim, chunky, wedge), toeboxShape (rounded, almond, pointed, square), visualWeight (minimal, moderate, heavy)
-  - For accessories: type, material, visualWeight
+  - For shoes: heelHeight, heelThickness (none, slim, chunky, wedge), toeboxShape (rounded, almond, pointed, square), visualWeight (minimal, moderate, heavy), shoeType (from subType)
+  - For accessories: accessoryType (from subType), size (small, medium, large), material, structure (structured, unstructured, semi-structured), visualWeight (minimal, moderate, heavy), occasion (casual, formal, both)
+  - For jewelry: jewelryType (from subType), metal (gold, silver, rose gold, bronze, mixed, none), gemstones (yes/no), style (delicate, statement, chunky, minimalist), occasion (everyday, formal, special)
 - fitNotes: brief description of how the item fits and its proportions (e.g., "Oversized fit creates volume contrast", "High neckline flattens bust area", "Low rise may segment torso")
+- pairingTips: array of 1-2 suggestions for what items work well with this piece (e.g., "Pairs well with high-waisted bottoms", "Best with minimal jewelry", "Works as statement piece")
 - tags: array of style tags relevant to emo/goth/alt fashion
 - confidence: object with confidence scores (0-1) for each field
 
@@ -241,9 +248,21 @@ ${constraints.vibe ? `- Vibe: ${constraints.vibe}` : ''}
 ${constraints.occasion ? `- Occasion: ${constraints.occasion}` : ''}
 ${constraints.fitPrinciples ? `- Fit Principles: ${Array.isArray(constraints.fitPrinciples) ? constraints.fitPrinciples.join(', ') : constraints.fitPrinciples}` : ''}
 
+IMPORTANT: Use an Orchestrated/Generative UI approach:
+- Include accessories (purses, bags, jewelry) when they enhance the outfit
+- Suggest shoes that match the occasion and weather
+- Add jewelry strategically (e.g., statement necklace for simple outfits, minimal jewelry for busy patterns)
+- Consider visual weight: add accessories to balance minimal outfits, keep minimal for complex/heavy pieces
+- Match accessory colors to outfit palette (complementary or coordinating)
+- For ADHD-friendly experience: each outfit should feel "complete" without overwhelming choices
+
 Return JSON array with 1-5 outfits, each containing:
-- items: array of {itemId, role} where role is the garment's function in outfit
+- items: array of {itemId, role} where role is the garment's function in outfit (include role: 'accessory', 'jewelry', 'shoes')
 - explanation: short 1-2 sentence explanation of why this outfit works
+- accessorySuggestions: object with:
+  - included: array of accessory/jewelry items included in outfit with brief reason
+  - optional: array of alternative accessory suggestions if user wants to swap
+  - reasoning: brief explanation of accessory choices (e.g., "Minimal jewelry to let graphic tee be focal point")
 - fitAnalysis: object with:
   - visualWeightBalance: brief assessment of how visual weight is distributed
   - proportionHarmony: assessment of how proportions work together

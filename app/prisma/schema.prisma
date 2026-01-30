@@ -24,6 +24,41 @@ enum Category {
   jewelry
 }
 
+enum AccessoryType {
+  purse
+  bag
+  backpack
+  belt
+  hat
+  scarf
+  gloves
+  sunglasses
+  watch
+  other
+}
+
+enum JewelryType {
+  necklace
+  earrings
+  bracelet
+  ring
+  anklet
+  brooch
+  other
+}
+
+enum ShoeType {
+  sneakers
+  boots
+  sandals
+  heels
+  flats
+  loafers
+  oxfords
+  platforms
+  other
+}
+
 enum ItemState {
   available
   laundry
@@ -100,6 +135,11 @@ model Item {
   title         String?
   category      Category?
   state         ItemState  @default(available)
+  
+  // Sub-type categorization for accessories, jewelry, and shoes
+  accessoryType AccessoryType? @map("accessory_type")
+  jewelryType   JewelryType?   @map("jewelry_type")
+  shoeType      ShoeType?      @map("shoe_type")
   
   // Label/brand info (may come from AI OCR)
   brand         String?
