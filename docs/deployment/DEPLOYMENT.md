@@ -508,4 +508,4 @@ du -sh /var/www/wardrobe/data
 
 ## Troubleshooting
 
-See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for common issues and solutions.
+See [TROUBLESHOOTING.md](../user-guides/TROUBLESHOOTING.md) for common issues and solutions.

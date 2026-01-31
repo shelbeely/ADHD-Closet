@@ -517,5 +517,5 @@ Would require:
 
 ## References
 - [Prisma Schema](../app/prisma/schema.prisma)
-- [API Documentation](./API_DOCUMENTATION.md)
+- [API Documentation](../api/API_DOCUMENTATION.md)
 - [SPEC.md](./SPEC.md)

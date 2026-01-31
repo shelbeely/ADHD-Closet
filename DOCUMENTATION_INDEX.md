@@ -7,18 +7,18 @@ Complete guide to all documentation in the ADHD-Closet project.
 Start here if you're new:
 
 1. **[README.md](README.md)** - Project overview and quick start
-2. **[TUTORIAL.md](TUTORIAL.md)** - Step-by-step walkthrough
-3. **[FAQ.md](FAQ.md)** - Common questions answered
-4. **[DEPLOYMENT.md](DEPLOYMENT.md)** - How to install and deploy
+2. **[TUTORIAL.md](docs/user-guides/TUTORIAL.md)** - Step-by-step walkthrough
+3. **[FAQ.md](docs/user-guides/FAQ.md)** - Common questions answered
+4. **[DEPLOYMENT.md](docs/deployment/DEPLOYMENT.md)** - How to install and deploy
 
 ## 👥 For Users
 
 Using the application:
 
-- **[TUTORIAL.md](TUTORIAL.md)** - Complete user guide
-- **[FAQ.md](FAQ.md)** - Frequently asked questions
-- **[KEYBOARD_SHORTCUTS.md](KEYBOARD_SHORTCUTS.md)** - Keyboard shortcuts (desktop)
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Problem solving guide
+- **[TUTORIAL.md](docs/user-guides/TUTORIAL.md)** - Complete user guide
+- **[FAQ.md](docs/user-guides/FAQ.md)** - Frequently asked questions
+- **[KEYBOARD_SHORTCUTS.md](docs/user-guides/KEYBOARD_SHORTCUTS.md)** - Keyboard shortcuts (desktop)
+- **[TROUBLESHOOTING.md](docs/user-guides/TROUBLESHOOTING.md)** - Problem solving guide
 
 ## 💻 For Developers
 
@@ -27,91 +27,91 @@ Contributing to the project:
 ### Setup & Development
 - **[app/README.md](app/README.md)** - Development setup and API reference
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines and standards
-- **[DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md)** - Quality acceptance criteria
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production deployment guide
+- **[DEFINITION_OF_DONE.md](docs/developer/DEFINITION_OF_DONE.md)** - Quality acceptance criteria
+- **[DEPLOYMENT.md](docs/deployment/DEPLOYMENT.md)** - Production deployment guide
 
 ### Architecture & Design
-- **[SPEC.md](SPEC.md)** - Complete product and technical specification
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture and design decisions
-- **[API_CONTRACT.md](API_CONTRACT.md)** - API design principles
-- **[API_DOCUMENTATION.md](API_DOCUMENTATION.md)** - Complete API reference
+- **[SPEC.md](docs/developer/SPEC.md)** - Complete product and technical specification
+- **[ARCHITECTURE.md](docs/developer/ARCHITECTURE.md)** - System architecture and design decisions
+- **[API_CONTRACT.md](docs/api/API_CONTRACT.md)** - API design principles
+- **[API_DOCUMENTATION.md](docs/api/API_DOCUMENTATION.md)** - Complete API reference
 
 ### Security & Performance
-- **[SECURITY_PRIVACY.md](SECURITY_PRIVACY.md)** - Security considerations
-- **[PERFORMANCE.md](PERFORMANCE.md)** - Performance optimization guide
+- **[SECURITY_PRIVACY.md](docs/developer/SECURITY_PRIVACY.md)** - Security considerations
+- **[PERFORMANCE.md](docs/developer/PERFORMANCE.md)** - Performance optimization guide
 
 ## 📚 Feature Documentation
 
 Detailed guides for specific features:
 
 ### Core Features
-- **[CATEGORIES.md](CATEGORIES.md)** - Category system and organization
-- **[ATTRIBUTES.md](ATTRIBUTES.md)** - Item attributes and metadata
-- **[OUI_GUIDE.md](OUI_GUIDE.md)** - Orchestrated UI system
-- **[ADHD_IMPROVEMENTS.md](ADHD_IMPROVEMENTS.md)** - ADHD-friendly features
+- **[CATEGORIES.md](docs/features/CATEGORIES.md)** - Category system and organization
+- **[ATTRIBUTES.md](docs/features/ATTRIBUTES.md)** - Item attributes and metadata
+- **[OUI_GUIDE.md](docs/features/OUI_GUIDE.md)** - Orchestrated UI system
+- **[ADHD_IMPROVEMENTS.md](docs/features/ADHD_IMPROVEMENTS.md)** - ADHD-friendly features
 
 ### AI & Models
-- **[MODEL_SELECTION.md](MODEL_SELECTION.md)** - AI model configuration
-- **[PRO_VS_FLASH_GUIDE.md](PRO_VS_FLASH_GUIDE.md)** - Model comparison
-- **[IMAGE_GENERATION.md](IMAGE_GENERATION.md)** - Image generation features
-- **[VISION_MODEL_GUIDE.md](VISION_MODEL_GUIDE.md)** - Vision model features
+- **[MODEL_SELECTION.md](docs/features/MODEL_SELECTION.md)** - AI model configuration
+- **[PRO_VS_FLASH_GUIDE.md](docs/features/PRO_VS_FLASH_GUIDE.md)** - Model comparison
+- **[IMAGE_GENERATION.md](docs/features/IMAGE_GENERATION.md)** - Image generation features
+- **[VISION_MODEL_GUIDE.md](docs/features/VISION_MODEL_GUIDE.md)** - Vision model features
 
 ### Mobile & Native
-- **[PWA_NATIVE_BRIDGE.md](PWA_NATIVE_BRIDGE.md)** - PWA and native app support
-- **[NFC_TAG_SUPPORT.md](NFC_TAG_SUPPORT.md)** - NFC tag scanning
+- **[PWA_NATIVE_BRIDGE.md](docs/features/PWA_NATIVE_BRIDGE.md)** - PWA and native app support
+- **[NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md)** - NFC tag scanning
 
 ### Specialized Features
-- **[BAND_MERCH.md](BAND_MERCH.md)** - Band merch and licensed products
+- **[BAND_MERCH.md](docs/features/BAND_MERCH.md)** - Band merch and licensed products
 
 ## 📋 Project Management
 
 Tracking progress and planning:
 
-- **[TASK_BOARD.md](TASK_BOARD.md)** - Implementation checklist and progress
-- **[DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md)** - Quality standards
+- **[TASK_BOARD.md](docs/developer/TASK_BOARD.md)** - Implementation checklist and progress
+- **[DEFINITION_OF_DONE.md](docs/developer/DEFINITION_OF_DONE.md)** - Quality standards
 
 ## 📖 Document Organization
 
 ### By Audience
 
 **New Users:**
-README.md → TUTORIAL.md → FAQ.md
+README.md → docs/user-guides/TUTORIAL.md → docs/user-guides/FAQ.md
 
 **Developers Starting Out:**
-README.md → app/README.md → CONTRIBUTING.md → SPEC.md
+README.md → app/README.md → CONTRIBUTING.md → docs/developer/SPEC.md
 
 **Setting Up Deployment:**
-DEPLOYMENT.md → SECURITY_PRIVACY.md → PERFORMANCE.md
+docs/deployment/DEPLOYMENT.md → docs/developer/SECURITY_PRIVACY.md → docs/developer/PERFORMANCE.md
 
 **Working on Features:**
-SPEC.md → ARCHITECTURE.md → API_DOCUMENTATION.md → specific feature docs
+docs/developer/SPEC.md → docs/developer/ARCHITECTURE.md → docs/api/API_DOCUMENTATION.md → specific feature docs
 
 ### By Topic
 
 **Wardrobe Organization:**
-- CATEGORIES.md (how items are organized)
-- ATTRIBUTES.md (item metadata)
-- BAND_MERCH.md (licensed product support)
+- docs/features/CATEGORIES.md (how items are organized)
+- docs/features/ATTRIBUTES.md (item metadata)
+- docs/features/BAND_MERCH.md (licensed product support)
 
 **AI Features:**
-- MODEL_SELECTION.md (choosing models)
-- PRO_VS_FLASH_GUIDE.md (model comparison)
-- IMAGE_GENERATION.md (catalog images)
-- VISION_MODEL_GUIDE.md (item inference)
+- docs/features/MODEL_SELECTION.md (choosing models)
+- docs/features/PRO_VS_FLASH_GUIDE.md (model comparison)
+- docs/features/IMAGE_GENERATION.md (catalog images)
+- docs/features/VISION_MODEL_GUIDE.md (item inference)
 
 **User Experience:**
-- SPEC.md section 7 (ADHD-friendly design)
-- OUI_GUIDE.md (intelligent UI)
-- ADHD_IMPROVEMENTS.md (UX enhancements)
+- docs/developer/SPEC.md section 7 (ADHD-friendly design)
+- docs/features/OUI_GUIDE.md (intelligent UI)
+- docs/features/ADHD_IMPROVEMENTS.md (UX enhancements)
 
 **Mobile & Apps:**
-- PWA_NATIVE_BRIDGE.md (installation)
-- NFC_TAG_SUPPORT.md (tag scanning)
+- docs/features/PWA_NATIVE_BRIDGE.md (installation)
+- docs/features/NFC_TAG_SUPPORT.md (tag scanning)
 
 **Development:**
 - CONTRIBUTING.md (code standards)
-- API_DOCUMENTATION.md (endpoints)
-- ARCHITECTURE.md (system design)
+- docs/api/API_DOCUMENTATION.md (endpoints)
+- docs/developer/ARCHITECTURE.md (system design)
 
 ## 🔍 Finding Information
 
@@ -121,7 +121,7 @@ SPEC.md → ARCHITECTURE.md → API_DOCUMENTATION.md → specific feature docs
 → [README.md](README.md) Quick Start section
 
 **"I'm getting an error..."**
-→ [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+→ [TROUBLESHOOTING.md](docs/user-guides/TROUBLESHOOTING.md)
 
 **"How does [feature] work?"**
 → Search this index for the feature name
@@ -130,27 +130,38 @@ SPEC.md → ARCHITECTURE.md → API_DOCUMENTATION.md → specific feature docs
 → [CONTRIBUTING.md](CONTRIBUTING.md)
 
 **"How do I configure AI models?"**
-→ [MODEL_SELECTION.md](MODEL_SELECTION.md)
+→ [MODEL_SELECTION.md](docs/features/MODEL_SELECTION.md)
 
 **"What categories exist?"**
-→ [CATEGORIES.md](CATEGORIES.md)
+→ [CATEGORIES.md](docs/features/CATEGORIES.md)
 
 **"What can I track about items?"**
-→ [ATTRIBUTES.md](ATTRIBUTES.md)
+→ [ATTRIBUTES.md](docs/features/ATTRIBUTES.md)
 
 **"How do I deploy to production?"**
-→ [DEPLOYMENT.md](DEPLOYMENT.md)
+→ [DEPLOYMENT.md](docs/deployment/DEPLOYMENT.md)
 
 **"What's the API for [endpoint]?"**
-→ [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+→ [API_DOCUMENTATION.md](docs/api/API_DOCUMENTATION.md)
 
 **"Why was it designed this way?"**
-→ [SPEC.md](SPEC.md) section 7 (Design Philosophy)
+→ [SPEC.md](docs/developer/SPEC.md) section 7 (Design Philosophy)
 
 ## 📁 File Locations
 
 ### Root Documentation (/)
-All main documentation files are in the repository root for easy access.
+Essential entry points and navigation:
+- `README.md` - Main project overview
+- `DOCUMENTATION_INDEX.md` - This file - navigation hub
+- `CONTRIBUTING.md` - Contributor guidelines
+
+### Organized Documentation (/docs)
+All documentation is organized by purpose:
+- `docs/user-guides/` - Tutorials, FAQ, troubleshooting
+- `docs/developer/` - Architecture, specs, standards
+- `docs/features/` - Feature-specific guides
+- `docs/api/` - API documentation
+- `docs/deployment/` - Deployment guides
 
 ### App-Specific Docs (/app)
 - `app/README.md` - Development setup
@@ -218,11 +229,11 @@ Then:
 The following docs were consolidated or removed to reduce clutter:
 
 ### Consolidated
-- **OUI docs** (5 files) → [OUI_GUIDE.md](OUI_GUIDE.md)
+- **OUI docs** (5 files) → [OUI_GUIDE.md](docs/features/OUI_GUIDE.md)
 - **Quick references** (4 files) → Appended to main docs
-- **Band merch pair** (2 files) → [BAND_MERCH.md](BAND_MERCH.md)
-- **Image generation pair** (2 files) → [IMAGE_GENERATION.md](IMAGE_GENERATION.md)
-- **Vision model pair** (2 files) → [VISION_MODEL_GUIDE.md](VISION_MODEL_GUIDE.md)
+- **Band merch pair** (2 files) → [BAND_MERCH.md](docs/features/BAND_MERCH.md)
+- **Image generation pair** (2 files) → [IMAGE_GENERATION.md](docs/features/IMAGE_GENERATION.md)
+- **Vision model pair** (2 files) → [VISION_MODEL_GUIDE.md](docs/features/VISION_MODEL_GUIDE.md)
 
 ### Removed (Implementation Summaries)
 Session logs and implementation notes that aren't needed long-term:
@@ -253,16 +264,16 @@ Session logs and implementation notes that aren't needed long-term:
 - WEB_VIBRATION_IMPLEMENTATION.md (merged)
 
 **Before:** 57 files  
-**After:** 28 files  
-**Reduction:** 51% fewer docs, 100% of the important information retained
+**After:** 32 files organized in `/docs`  
+**Reduction:** Clear organization, 100% of the important information retained
 
 ## 📞 Need Help?
 
 Can't find what you're looking for?
 
 1. **Search this repository** for keywords
-2. **Check [FAQ.md](FAQ.md)** for common questions
-3. **Read [TROUBLESHOOTING.md](TROUBLESHOOTING.md)** for problems
+2. **Check [FAQ.md](docs/user-guides/FAQ.md)** for common questions
+3. **Read [TROUBLESHOOTING.md](docs/user-guides/TROUBLESHOOTING.md)** for problems
 4. **Open a GitHub Discussion** for questions
 5. **Open a GitHub Issue** for bugs or feature requests
 

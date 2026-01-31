@@ -120,7 +120,7 @@ There's no native iOS/Android app, but you can "Add to Home Screen" for app-like
 ## Deployment Questions
 
 ### How do I install it?
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for full guides:
+See [DEPLOYMENT.md](../deployment/DEPLOYMENT.md) for full guides:
 - **Easiest**: Docker (one command)
 - **Most control**: VPS (step-by-step)
 - **Fastest**: Vercel/Railway (click deploy)
@@ -221,7 +221,7 @@ Every design decision prioritizes ADHD users:
 - **Panic pick**: Emergency decision-making
 - **Limited choices**: 3-5 options max to avoid paralysis
 
-See [SPEC.md](./SPEC.md) section 7.1 for detailed UX rules.
+See [SPEC.md](../developer/SPEC.md) section 7.1 for detailed UX rules.
 
 ### Can I change the colors/theme?
 Yes! Modify `app/app/globals.css` color tokens:
@@ -340,7 +340,7 @@ But you must:
 ## Contributing Questions
 
 ### How can I contribute?
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for:
+See [CONTRIBUTING.md](../../CONTRIBUTING.md) for:
 - Code standards
 - PR process
 - Design system rules
@@ -407,9 +407,9 @@ Native apps require:
 ## Still Have Questions?
 
 - **Technical issues**: See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
-- **Setup help**: See [DEPLOYMENT.md](./DEPLOYMENT.md)
-- **Architecture questions**: See [ARCHITECTURE.md](./ARCHITECTURE.md)
-- **API questions**: See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+- **Setup help**: See [DEPLOYMENT.md](../deployment/DEPLOYMENT.md)
+- **Architecture questions**: See [ARCHITECTURE.md](../developer/ARCHITECTURE.md)
+- **API questions**: See [API_DOCUMENTATION.md](../api/API_DOCUMENTATION.md)
 - **Everything else**: Open a GitHub Discussion
 
 Happy organizing! 👗👔🧥

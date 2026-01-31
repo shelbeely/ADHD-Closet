@@ -136,9 +136,9 @@ When running as a native app, additional device features are available:
 - **Splash Screen** - Native splash screen on app launch
 - **NFC Tags** - Scan NFC tags to track clothing items (also works in Chrome/Edge on Android via Web NFC API)
 
-For detailed instructions on building native apps, see [PWA_NATIVE_BRIDGE.md](PWA_NATIVE_BRIDGE.md).
+For detailed instructions on building native apps, see [PWA_NATIVE_BRIDGE.md](docs/features/PWA_NATIVE_BRIDGE.md).
 
-For NFC tag functionality, see [NFC_TAG_SUPPORT.md](NFC_TAG_SUPPORT.md).
+For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
 ## 🎨 Design Principles
 
@@ -162,7 +162,7 @@ Our design specifically addresses common ADHD challenges:
 | **Memory** | Recent items, prominent search, breadcrumbs, state preservation |
 | **Feedback** | Instant responses (<100ms), success confirmation, optimistic UI |
 
-See [SPEC.md](SPEC.md) for complete design system guidelines.
+See [SPEC.md](docs/developer/SPEC.md) for complete design system guidelines.
 
 ## 🎯 Key Features
 
@@ -211,21 +211,21 @@ See [SPEC.md](SPEC.md) for complete design system guidelines.
 ### Quick Links
 
 **Getting Started:**
-- [Tutorial](TUTORIAL.md) - Step-by-step guide
-- [FAQ](FAQ.md) - Common questions
-- [Troubleshooting](TROUBLESHOOTING.md) - Problem solving
+- [Tutorial](docs/user-guides/TUTORIAL.md) - Step-by-step guide
+- [FAQ](docs/user-guides/FAQ.md) - Common questions
+- [Troubleshooting](docs/user-guides/TROUBLESHOOTING.md) - Problem solving
 
 **Developers:**
 - [Development Guide](app/README.md) - Setup and API
 - [Contributing](CONTRIBUTING.md) - Code standards
-- [Architecture](ARCHITECTURE.md) - System design
-- [API Documentation](API_DOCUMENTATION.md) - Endpoints
+- [Architecture](docs/developer/ARCHITECTURE.md) - System design
+- [API Documentation](docs/api/API_DOCUMENTATION.md) - Endpoints
 
 **Features:**
-- [Categories](CATEGORIES.md) - Item organization
-- [OUI Guide](OUI_GUIDE.md) - Smart UI system
-- [NFC Tags](NFC_TAG_SUPPORT.md) - Tag scanning
-- [PWA & Native](PWA_NATIVE_BRIDGE.md) - Mobile apps
+- [Categories](docs/features/CATEGORIES.md) - Item organization
+- [OUI Guide](docs/features/OUI_GUIDE.md) - Smart UI system
+- [NFC Tags](docs/features/NFC_TAG_SUPPORT.md) - Tag scanning
+- [PWA & Native](docs/features/PWA_NATIVE_BRIDGE.md) - Mobile apps
 
 ## 📋 Implementation Status
 
@@ -241,7 +241,7 @@ The project is actively being developed with the following phases:
 - ⏳ **Phase 7**: Export/import functionality
 - ⏳ **Phase 8**: Polish and hardening
 
-See [TASK_BOARD.md](TASK_BOARD.md) for detailed progress tracking.
+See [TASK_BOARD.md](docs/developer/TASK_BOARD.md) for detailed progress tracking.
 
 ## ⚙️ Environment Configuration
 
@@ -264,22 +264,22 @@ OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
-See [MODEL_SELECTION.md](MODEL_SELECTION.md) for detailed model comparisons and [app/.env.example](app/.env.example) for all available options.
+See [MODEL_SELECTION.md](docs/features/MODEL_SELECTION.md) for detailed model comparisons and [app/.env.example](app/.env.example) for all available options.
 
 ## 🤝 Contributing
 
 This project welcomes contributions! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
 ### Before You Start
-1. Check [TASK_BOARD.md](TASK_BOARD.md) for current priorities
+1. Check [TASK_BOARD.md](docs/developer/TASK_BOARD.md) for current priorities
 2. Read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
-3. Review [SPEC.md](SPEC.md) to understand the design principles
+3. Review [SPEC.md](docs/developer/SPEC.md) to understand the design principles
 
 ### Development Workflow
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes following the coding standards
-4. Test thoroughly (see [DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md))
+4. Test thoroughly (see [DEFINITION_OF_DONE.md](docs/developer/DEFINITION_OF_DONE.md))
 5. Submit a pull request
 
 ## 📝 Important Notes
@@ -315,7 +315,7 @@ docker exec wardrobe-redis redis-cli ping
 - See [app/BUN_SETUP.md](app/BUN_SETUP.md) for workarounds
 - The project fully supports npm as a fallback
 
-For more help, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+For more help, see [TROUBLESHOOTING.md](docs/user-guides/TROUBLESHOOTING.md).
 
 ## 📄 License
 
@@ -327,6 +327,6 @@ For more help, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
 
 **Built with 💜 for people with ADHD**
 
-[Report Bug](https://github.com/shelbeely/ADHD-Closet/issues) · [Request Feature](https://github.com/shelbeely/ADHD-Closet/issues) · [View Docs](SPEC.md)
+[Report Bug](https://github.com/shelbeely/ADHD-Closet/issues) · [Request Feature](https://github.com/shelbeely/ADHD-Closet/issues) · [View Docs](docs/developer/SPEC.md)
 
 </div>

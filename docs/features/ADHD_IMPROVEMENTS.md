@@ -349,6 +349,6 @@ When adding new ADHD-friendly features:
 
 ## Resources
 
-- [SPEC.md](../SPEC.md) - Full ADHD-friendly UX rules
+- [SPEC.md](../developer/SPEC.md) - Full ADHD-friendly UX rules
 - [ADHD & UX Design](https://uxdesign.cc/designing-for-adhd-3c8b13475f33)
 - [Material Design 3 Guidelines](https://m3.material.io/)

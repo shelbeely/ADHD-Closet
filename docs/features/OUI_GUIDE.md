@@ -556,13 +556,13 @@ OutfitBuilder
 
 - **Color theory basics**: [Adobe Color Wheel](https://color.adobe.com/)
 - **Material Design 3**: [Material You Design](https://m3.material.io/)
-- **ADHD-friendly UX**: See [SPEC.md](SPEC.md) section 7.1
+- **ADHD-friendly UX**: See [SPEC.md](../developer/SPEC.md) section 7.1
 
 ## Questions?
 
-- **Design questions**: See [SPEC.md](SPEC.md)
+- **Design questions**: See [SPEC.md](../developer/SPEC.md)
 - **Implementation details**: See component source code
-- **API reference**: See [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+- **API reference**: See [API_DOCUMENTATION.md](../api/API_DOCUMENTATION.md)
 - **Need help?**: Open a GitHub Discussion
 
 ---
