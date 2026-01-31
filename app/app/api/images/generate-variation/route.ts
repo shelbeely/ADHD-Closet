@@ -7,9 +7,16 @@ export const maxDuration = 60;
 /**
  * POST /api/images/generate-variation
  * 
+ * FEATURE DISABLED (2026-01-31)
+ * User requested: "I don't want ai recolored clothing at all"
+ * 
+ * This endpoint now returns 403 Forbidden. Original implementation
+ * has been preserved in comments for future reference if needed.
+ * 
+ * Original purpose:
  * Generate variations of an item using reference image for consistency
  * 
- * Body:
+ * Body (no longer accepted):
  * {
  *   referenceImageBase64: string,
  *   variationType: 'color' | 'seasonal' | 'pattern',
@@ -22,6 +29,17 @@ export const maxDuration = 60;
  * }
  */
 export async function POST(request: NextRequest) {
+  // FEATURE DISABLED: User doesn't want AI-recolored clothing at all
+  return NextResponse.json(
+    { 
+      error: 'AI color variation feature has been disabled',
+      message: 'This feature is no longer available. The user has requested that AI-recolored clothing not be generated.',
+      disabledAt: new Date().toISOString()
+    },
+    { status: 403 } // 403 Forbidden - feature intentionally disabled
+  );
+
+  /* ORIGINAL CODE PRESERVED FOR REFERENCE:
   try {
     const body = await request.json();
     const { referenceImageBase64, variationType, parameters = {} } = body;
@@ -108,55 +126,20 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+  */
 }
 
 /**
  * GET /api/images/generate-variation
- * Returns API documentation
+ * Returns API documentation (FEATURE DISABLED)
  */
 export async function GET() {
   return NextResponse.json({
     endpoint: '/api/images/generate-variation',
-    method: 'POST',
-    description: 'Generate variations of an item using reference image for consistency',
-    body: {
-      referenceImageBase64: 'string (required) - Base64 encoded reference image',
-      variationType: 'string (required) - Type of variation: color, seasonal, or pattern',
-      parameters: {
-        targetColor: 'string (required for color) - Target color name',
-        preserveDetails: 'boolean (optional for color) - Preserve graphics/patterns',
-        targetSeason: 'string (required for seasonal) - spring, summer, fall, or winter',
-        targetPattern: 'string (optional for pattern) - Target pattern description',
-      },
-    },
-    response: {
-      success: 'boolean',
-      generatedImageUrl: 'string - Generated image URL or base64',
-      variationType: 'string',
-      parameters: 'object',
-    },
-    examples: [
-      {
-        description: 'Generate burgundy color variation',
-        body: {
-          referenceImageBase64: '...',
-          variationType: 'color',
-          parameters: {
-            targetColor: 'burgundy',
-            preserveDetails: true,
-          },
-        },
-      },
-      {
-        description: 'Generate winter version',
-        body: {
-          referenceImageBase64: '...',
-          variationType: 'seasonal',
-          parameters: {
-            targetSeason: 'winter',
-          },
-        },
-      },
-    ],
+    status: 'DISABLED',
+    reason: 'User requested that AI-recolored clothing not be generated at all',
+    disabledAt: '2026-01-31',
+    message: 'This feature has been intentionally disabled and will return 403 Forbidden on POST requests.',
+    note: 'The original implementation has been preserved in comments for future reference if needed.',
   });
 }
