@@ -554,6 +554,3 @@ recordStyleChoice(itemId, category, colors, tags);
 Built with 💜 for people with ADHD
 
 These features are for visual thinkers, people who get stuck making decisions, and anyone who wants their closet app to actually learn what they like.
-
-**Version:** 2.0  
-**Status:** Ready to use
