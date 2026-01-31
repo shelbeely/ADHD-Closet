@@ -218,6 +218,31 @@ Use tags for what matters to you:
 
 ---
 
+## Keyboard Shortcuts (Desktop)
+
+For power users on desktop:
+
+**Global:**
+- `/` - Focus search
+- `g` - Open outfit generator
+- `Esc` - Close modal/panel
+
+**Inventory:**
+- `j` / `k` - Next/previous item
+- `Enter` - Open selected item
+- `e` - Edit selected item
+- `l` - Toggle laundry state
+- `d` - Mark for donation
+
+**Bulk Actions:**
+- `Shift + Click` - Range select
+- `Cmd/Ctrl + A` - Select all
+- `Cmd/Ctrl + Enter` - Apply bulk action
+
+**Outfits:**
+- `o` - Open outfit board
+- `p` - Panic pick (instant outfit)
+
 ## Need Help?
 
 - **Can't find an item?** Use the search bar (top of home screen)

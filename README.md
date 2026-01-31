@@ -136,7 +136,7 @@ When running as a native app, additional device features are available:
 - **Splash Screen** - Native splash screen on app launch
 - **NFC Tags** - Scan NFC tags to track clothing items (also works in Chrome/Edge on Android via Web NFC API)
 
-For detailed instructions on building native apps, see [MOBILE_APPS.md](docs/features/MOBILE_APPS.md).
+For detailed instructions on building native apps, see the Mobile Apps section in [DEPLOYMENT.md](docs/deployment/DEPLOYMENT.md).
 
 For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
@@ -225,7 +225,7 @@ See [SPEC.md](docs/developer/SPEC.md) for complete design system guidelines.
 - [Categories](docs/features/CATEGORIES.md) - Item organization
 - [OUI Guide](docs/features/OUI_GUIDE.md) - Smart UI system
 - [NFC Tags](docs/features/NFC_TAG_SUPPORT.md) - Tag scanning
-- [PWA & Native](docs/features/MOBILE_APPS.md) - Mobile apps
+- [PWA & Native](docs/deployment/DEPLOYMENT.md#mobile-apps) - Mobile apps
 
 ## 📋 Implementation Status
 
@@ -241,7 +241,7 @@ The project is actively being developed with the following phases:
 - ⏳ **Phase 7**: Export/import functionality
 - ⏳ **Phase 8**: Polish and hardening
 
-See [TASK_BOARD.md](docs/developer/TASK_BOARD.md) for detailed progress tracking.
+Check [GitHub Issues](https://github.com/shelbeely/ADHD-Closet/issues) for current priorities and progress tracking.
 
 ## ⚙️ Environment Configuration
 
@@ -271,7 +271,7 @@ See [MODEL_SELECTION.md](docs/features/MODEL_SELECTION.md) for detailed model co
 This project welcomes contributions! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
 ### Before You Start
-1. Check [TASK_BOARD.md](docs/developer/TASK_BOARD.md) for current priorities
+1. Check [GitHub Issues](https://github.com/shelbeely/ADHD-Closet/issues) for current priorities
 2. Read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 3. Review [SPEC.md](docs/developer/SPEC.md) to understand the design principles
 
@@ -279,7 +279,7 @@ This project welcomes contributions! Whether you're fixing bugs, adding features
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes following the coding standards
-4. Test thoroughly (see [DEFINITION_OF_DONE.md](docs/developer/DEFINITION_OF_DONE.md))
+4. Test thoroughly (see Definition of Done in [CONTRIBUTING.md](CONTRIBUTING.md#definition-of-done))
 5. Submit a pull request
 
 ## 📝 Important Notes

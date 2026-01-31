@@ -71,7 +71,6 @@ nav:
     - AI Models: features/MODEL_SELECTION.md
     - Image Generation: features/IMAGE_GENERATION.md
     - NFC Tags: features/NFC_TAG_SUPPORT.md
-    - Mobile Apps: features/MOBILE_APPS.md
   
   - For Developers:
     - Architecture: developer/ARCHITECTURE.md

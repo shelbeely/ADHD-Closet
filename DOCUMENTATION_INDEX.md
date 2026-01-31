@@ -43,7 +43,7 @@ New users start here:
 - [Categories](docs/features/CATEGORIES.md) - Item organization
 - [AI Models](docs/features/MODEL_SELECTION.md) - Model selection guide
 - [NFC Tags](docs/features/NFC_TAG_SUPPORT.md) - NFC tag support
-- [Mobile Apps](docs/features/MOBILE_APPS.md) - PWA and native apps
+- [Deployment](docs/deployment/DEPLOYMENT.md) - Including mobile apps
 
 ## Using MkDocs
 
