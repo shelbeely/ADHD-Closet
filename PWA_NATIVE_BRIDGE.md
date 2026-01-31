@@ -435,3 +435,50 @@ Potential additions for native capabilities:
 - [Next.js PWA Guide](https://github.com/shadowwalker/next-pwa)
 - [Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest)
 - [Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+
+---
+
+## Quick Start Guide
+
+### Install as PWA (Web)
+**Desktop (Chrome/Edge):**
+1. Click the install icon (⊕) in address bar
+2. Click "Install"
+
+**Mobile (Any browser):**
+1. Open browser menu (⋮)
+2. Select "Add to Home Screen" or "Install App"
+3. Tap "Add"
+
+### Build Native App
+
+**iOS:**
+```bash
+cd app
+npx cap add ios
+npx cap sync ios
+npx cap open ios
+# Build in Xcode
+```
+
+**Android:**
+```bash
+cd app
+npx cap add android
+npx cap sync android
+npx cap open android
+# Build in Android Studio
+```
+
+### Quick Feature Check
+
+| Feature | PWA | Native iOS | Native Android |
+|---------|-----|------------|----------------|
+| Install to home screen | ✅ | ✅ | ✅ |
+| Offline browsing | ✅ | ✅ | ✅ |
+| Push notifications | ✅ | ✅ | ✅ |
+| Camera access | ✅ | ✅ Better | ✅ Better |
+| NFC scanning | Android only | ✅ | ✅ |
+| Haptic feedback | ❌ | ✅ | ✅ |
+| App Store distribution | ❌ | ✅ | ✅ |
+

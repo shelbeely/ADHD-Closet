@@ -650,11 +650,50 @@ const counts = await prisma.item.groupBy({
 ## See Also
 
 - `SPEC.md` - ADHD-friendly UX design principles
-- `OUI_IMPLEMENTATION.md` - Smart suggestions using categories
-- `ADVANCED_OUI_FEATURES.md` - Seasonal and style recommendations
+- `OUI_GUIDE.md` - Smart suggestions using categories
 - `FAQ.md` - Common questions about the app
 
 ---
 
 **Last Updated:** 2026-01-31  
 **Version:** Current as of v2.0 (Advanced OUI)
+
+---
+
+## Quick Reference Chart
+
+### All Categories at a Glance
+
+| Icon | Category | Sub-types | Total Options |
+|------|----------|-----------|---------------|
+| 👕 | Tops | None | 1 |
+| 👖 | Bottoms | 9 types | 9 |
+| 👗 | Dresses | None | 1 |
+| 🧥 | Outerwear | None | 1 |
+| 👟 | Shoes | 9 types | 9 |
+| 🎒 | Accessories | 10 types | 10 |
+| 🩲 | Underwear & Bras | None | 1 |
+| 💍 | Jewelry | 7 types | 7 |
+| 🩱 | Swimwear | None | 1 |
+| 🏃 | Activewear | None | 1 |
+| 😴 | Sleepwear | None | 1 |
+| 🛋️ | Loungewear | None | 1 |
+| 👔 | Suits & Sets | None | 1 |
+| **TOTAL** | **13 categories** | **35 sub-types** | **48 options** |
+
+### Common Questions Quick Answers
+
+**Where do hoodies go?**
+- Light hoodie → Tops 👕
+- Heavy hoodie → Outerwear 🧥
+
+**Where do leggings go?**
+- As pants → Bottoms 👖 (choose "Leggings" sub-type)
+- As undergarments → Underwear & Bras 🩲
+
+**Where do watches go?**
+- Accessories 🎒 (functional items)
+
+**Can I add categories?**
+- Not currently. Use tags for custom organization (e.g., #work, #goth)
+

@@ -660,3 +660,47 @@ Attributes support ADHD-friendly features:
 
 **Last Updated:** 2026-01-31  
 **Version:** 1.0 (Complete Attributes Reference)
+
+---
+
+## Quick Reference Tables
+
+### Tops Attributes
+
+| Attribute | Options |
+|-----------|---------|
+| Neckline | crew, v-neck, scoop, boat, square, halter, off-shoulder, turtleneck, cowl, mock, polo |
+| Sleeve Length | sleeveless, short, 3/4, long |
+| Sleeve Fit | fitted, loose, puff, bell, cap, dolman, raglan |
+| Silhouette | fitted, loose, oversized, boxy, cropped, longline, tunic, peplum |
+
+### Bottoms Attributes
+
+| Attribute | Options |
+|-----------|---------|
+| Rise | high, mid, low, ultra-high, ultra-low |
+| Inseam | short (< 27"), regular (27-32"), long (32"+), extra-long (34"+) |
+| Leg Shape | skinny, straight, bootcut, flare, wide-leg, tapered, jogger |
+| Waistband | elastic, drawstring, button/zip, pull-on, belted |
+
+### Shoes Attributes
+
+| Attribute | Options |
+|-----------|---------|
+| Heel Height | flat (0-1"), low (1-2"), mid (2-3"), high (3-4"), stiletto (4"+) |
+| Toe Shape | round, pointed, square, almond, open |
+| Closure | lace-up, slip-on, buckle, zipper, velcro |
+
+### Universal Attributes
+
+| Attribute | Options |
+|-----------|---------|
+| Visual Weight | minimal, moderate, heavy, complex |
+| Pattern | solid, striped, plaid, floral, graphic, abstract, animal, polka-dot, paisley |
+| Material | cotton, polyester, wool, silk, denim, leather, synthetic, blend, linen, cashmere |
+| Fit | tight, fitted, regular, loose, oversized |
+
+---
+
+**Quick lookup complete!** For detailed descriptions, see sections above.
+
