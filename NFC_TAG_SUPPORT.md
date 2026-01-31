@@ -404,3 +404,31 @@ Potential future features:
 - [NFC Forum](https://nfc-forum.org/) - NFC standards
 - [Capacitor NFC Plugin](https://github.com/capgo/capacitor-nfc) - Plugin documentation for native apps
 - [NFC Tags Guide](https://www.shopnfc.com/en/content/6-nfc-tags-guide) - Tag types and uses
+
+---
+
+## Quick Reference
+
+### Scanning an NFC Tag
+1. **Tap the NFC icon** in the app toolbar
+2. **Hold your phone** near the NFC tag (on hanger or item)
+3. **Watch for feedback** - vibration + success message
+4. **Item updates automatically** - status changes to "worn" or "available"
+
+### Best Practices
+- ✅ Write item IDs in format: `wardrobe:item:{itemId}`
+- ✅ Use durable NFC tags (waterproof for clothes)
+- ✅ Test tags before bulk deployment
+- ✅ Keep a backup list of tag → item mappings
+
+### Troubleshooting Quick Fixes
+- **"NFC not supported"** → Use a device with NFC hardware
+- **"Permission denied"** → Enable NFC in phone settings
+- **"Tag not recognized"** → Re-write tag or check format
+- **Nothing happens** → Hold phone steady for 1-2 seconds
+
+### Supported Devices
+- ✅ Android (Chrome, Edge, Samsung Internet)
+- ✅ iOS/Android native apps (via Capacitor)
+- ❌ iOS web browsers (Apple restriction)
+

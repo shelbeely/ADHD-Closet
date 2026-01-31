@@ -206,33 +206,26 @@ See [SPEC.md](SPEC.md) for complete design system guidelines.
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in this repository:
+**[📖 Complete Documentation Index](DOCUMENTATION_INDEX.md)** - Find everything you need
 
-### For Users
-- **[TUTORIAL.md](TUTORIAL.md)** — Step-by-step guide to using the app
-- **[KEYBOARD_SHORTCUTS.md](KEYBOARD_SHORTCUTS.md)** — Desktop keyboard shortcuts
-- **[FAQ.md](FAQ.md)** — Frequently asked questions
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** — Common issues and solutions
+### Quick Links
 
-### For Developers
-- **[app/README.md](app/README.md)** — Development guide and API reference
-- **[SPEC.md](SPEC.md)** — Full product and technical specification
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** — System architecture and design decisions
-- **[API_CONTRACT.md](API_CONTRACT.md)** — REST API documentation
-- **[API_DOCUMENTATION.md](API_DOCUMENTATION.md)** — Detailed API endpoints
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute to the project
+**Getting Started:**
+- [Tutorial](TUTORIAL.md) - Step-by-step guide
+- [FAQ](FAQ.md) - Common questions
+- [Troubleshooting](TROUBLESHOOTING.md) - Problem solving
 
-### Project Management
-- **[TASK_BOARD.md](TASK_BOARD.md)** — Implementation checklist and progress
-- **[DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md)** — Quality acceptance criteria
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** — Production deployment guide
+**Developers:**
+- [Development Guide](app/README.md) - Setup and API
+- [Contributing](CONTRIBUTING.md) - Code standards
+- [Architecture](ARCHITECTURE.md) - System design
+- [API Documentation](API_DOCUMENTATION.md) - Endpoints
 
-### Specialized Topics
-- **[SECURITY_PRIVACY.md](SECURITY_PRIVACY.md)** — Security considerations
-- **[PERFORMANCE.md](PERFORMANCE.md)** — Performance optimization guide
-- **[MODEL_SELECTION.md](MODEL_SELECTION.md)** — AI model configuration guide
-- **[PRO_VS_FLASH_GUIDE.md](PRO_VS_FLASH_GUIDE.md)** — Choosing between AI models
-- **[app/BUN_SETUP.md](app/BUN_SETUP.md)** — Bun.js setup and troubleshooting
+**Features:**
+- [Categories](CATEGORIES.md) - Item organization
+- [OUI Guide](OUI_GUIDE.md) - Smart UI system
+- [NFC Tags](NFC_TAG_SUPPORT.md) - Tag scanning
+- [PWA & Native](PWA_NATIVE_BRIDGE.md) - Mobile apps
 
 ## 📋 Implementation Status
 
