@@ -430,76 +430,6 @@ Style guidelines:
     return message.content;
   }
 
-  /**
-   * Generate a color variation of an item while maintaining style and fit
-   * @param referenceImageBase64 - Original item image to use as reference
-   * @param targetColor - Target color (e.g., "burgundy", "forest green")
-   * @param preserveDetails - Whether to preserve graphics/patterns
-   */
-  async generateColorVariation(
-    referenceImageBase64: string,
-    targetColor: string,
-    preserveDetails: boolean = true
-  ): Promise<string> {
-    const prompt = `Transform this clothing item to ${targetColor} color while maintaining:
-- Exact same style, cut, and fit as the reference image
-- Same garment type and proportions
-- Same fabric texture and visual weight
-${preserveDetails ? '- Preserve any graphics, patterns, or design elements (just change base color)' : '- Change to solid color without graphics'}
-- Professional catalog quality
-- Clean, neutral background
-- Consistent lighting and perspective
-
-The result should look like the same garment, just in ${targetColor}.`;
-
-    const response = await this.makeRequest('/chat/completions', {
-      model: this.config.imageModel,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
-            {
-              type: 'image_url',
-              image_url: { url: `data:image/jpeg;base64,${referenceImageBase64}` },
-            },
-          ],
-        },
-      ],
-      temperature: 0.4,
-      max_tokens: 4096,
-      // Add image generation config
-      image_config: {
-        aspect_ratio: '1:1',
-        image_size: '1024x1024',
-      },
-    });
-
-    const message = response.choices[0].message;
-    
-    // Try multiple response formats
-    // Format 1: images array
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    
-    // Format 2: content with image URL
-    if (typeof message.content === 'string') {
-      // Check if content contains a URL or base64 image
-      if (message.content.startsWith('http') || message.content.startsWith('data:image/')) {
-        return message.content;
-      }
-      
-      // Try to extract image URL from text
-      const urlMatch = message.content.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|webp)/i);
-      if (urlMatch) {
-        return urlMatch[0];
-      }
-    }
-    
-    // If no image found, return an error message
-    throw new Error('No image generated. The model may not support image-to-image generation. Response: ' + JSON.stringify(message).substring(0, 200));
-  }
 
   /**
    * Generate a matching item to complement a reference piece
@@ -618,62 +548,6 @@ Output:
     return this.extractImageFromResponse(response.choices[0].message, 'style transfer');
   }
 
-  /**
-   * Generate seasonal variation of an item
-   * @param referenceImageBase64 - Original item
-   * @param targetSeason - Target season (spring, summer, fall, winter)
-   */
-  async generateSeasonalVariation(
-    referenceImageBase64: string,
-    targetSeason: 'spring' | 'summer' | 'fall' | 'winter'
-  ): Promise<string> {
-    const seasonalGuidance = {
-      spring: 'lighter weight fabrics, pastel or fresh colors, breathable materials',
-      summer: 'lightest weight, breathable fabrics, bright or neutral summer colors',
-      fall: 'medium weight, warm tones (rust, burgundy, brown), cozy textures',
-      winter: 'heavier weight, dark or jewel tones, warm fabrics like wool or fleece',
-    };
-
-    const prompt = `Transform this clothing item into a ${targetSeason} version:
-
-Seasonal adaptations for ${targetSeason}:
-- ${seasonalGuidance[targetSeason]}
-- Maintain the same general style and silhouette
-- Preserve any key design elements or brand identity
-- Adjust fabric weight appropriately
-- Update colors to season-appropriate palette
-- Keep the garment recognizable as a variation
-
-Output:
-- Professional catalog quality
-- Clean, neutral background
-- Season-appropriate styling
-- Realistic fabric representation`;
-
-    const response = await this.makeRequest('/chat/completions', {
-      model: this.config.imageModel,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
-            {
-              type: 'image_url',
-              image_url: { url: `data:image/jpeg;base64,${referenceImageBase64}` },
-            },
-          ],
-        },
-      ],
-      temperature: 0.5,
-      max_tokens: 4096,
-      image_config: {
-        aspect_ratio: '1:1',
-        image_size: '1024x1024',
-      },
-    });
-
-    return this.extractImageFromResponse(response.choices[0].message, 'seasonal variation');
-  }
 
   /**
    * Generate outfit variations with a specific context/occasion

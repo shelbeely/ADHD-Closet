@@ -613,51 +613,6 @@ Return the composite image showing the person wearing the outfit.`;
   }
 }
 
-/**
- * Generate color variation of an item
- */
-export async function generateColorVariation(
-  imageBase64: string,
-  targetColor: string
-): Promise<string> {
-  const openrouter = getOpenRouterClient();
-
-  const prompt = `Create a color variation of this clothing item in ${targetColor}. 
-  
-Guidelines:
-- Preserve all details, patterns, textures exactly
-- Only change the color to ${targetColor}
-- Maintain the same style, fit, and structure
-- Keep patterns/graphics visible but in the new color palette
-- Ensure realistic color representation`;
-
-  try {
-    const response = await openrouter.chat({
-      model: openrouter.config.imageModel,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
-            { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBase64}` } }
-          ]
-        }
-      ],
-      modalities: ['image', 'text'],
-      temperature: 0.4,
-      max_tokens: 1000
-    });
-
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
-  } catch (error) {
-    console.error('Color variation failed:', error);
-    throw new Error('Failed to generate color variation');
-  }
-}
 
 // ============================================================================
 // PHASE 4: SMART CATALOGING & ORGANIZATION
