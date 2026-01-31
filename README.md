@@ -136,7 +136,7 @@ When running as a native app, additional device features are available:
 - **Splash Screen** - Native splash screen on app launch
 - **NFC Tags** - Scan NFC tags to track clothing items (also works in Chrome/Edge on Android via Web NFC API)
 
-For detailed instructions on building native apps, see [PWA_NATIVE_BRIDGE.md](docs/features/PWA_NATIVE_BRIDGE.md).
+For detailed instructions on building native apps, see [MOBILE_APPS.md](docs/features/MOBILE_APPS.md).
 
 For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
@@ -225,7 +225,7 @@ See [SPEC.md](docs/developer/SPEC.md) for complete design system guidelines.
 - [Categories](docs/features/CATEGORIES.md) - Item organization
 - [OUI Guide](docs/features/OUI_GUIDE.md) - Smart UI system
 - [NFC Tags](docs/features/NFC_TAG_SUPPORT.md) - Tag scanning
-- [PWA & Native](docs/features/PWA_NATIVE_BRIDGE.md) - Mobile apps
+- [PWA & Native](docs/features/MOBILE_APPS.md) - Mobile apps
 
 ## 📋 Implementation Status
 

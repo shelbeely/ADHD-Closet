@@ -1,0 +1,85 @@
+site_name: ADHD Closet Documentation
+site_description: Documentation for the ADHD-friendly wardrobe organizer
+site_url: https://github.com/shelbeely/ADHD-Closet
+repo_url: https://github.com/shelbeely/ADHD-Closet
+repo_name: shelbeely/ADHD-Closet
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode  
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant      # Fast page loading
+    - navigation.tracking     # URL updates with scroll
+    - navigation.tabs         # Top-level navigation tabs
+    - navigation.sections     # Collapsible sections
+    - navigation.expand       # Expand all sections by default
+    - navigation.top          # Back to top button
+    - search.suggest          # Search suggestions
+    - search.highlight        # Highlight search terms
+    - content.code.copy       # Copy code button
+    - toc.follow              # TOC follows scroll
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition               # Call-out blocks
+  - pymdownx.details         # Collapsible blocks
+  - pymdownx.superfences     # Code blocks
+  - pymdownx.tabbed:         # Tabs
+      alternate_style: true
+  - pymdownx.emoji:          # Emojis
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables                   # Tables
+  - attr_list                # Attribute lists
+  - md_in_html              # Markdown in HTML
+
+# ADHD-friendly navigation - keep it simple and clear
+nav:
+  - Home: index.md
+  
+  - Getting Started:
+    - Quick Start: user-guides/TUTORIAL.md
+    - FAQ: user-guides/FAQ.md
+    - Troubleshooting: user-guides/TROUBLESHOOTING.md
+  
+  - Features:
+    - Categories & Organization: features/CATEGORIES.md
+    - Item Attributes: features/ATTRIBUTES.md
+    - AI Models: features/MODEL_SELECTION.md
+    - Image Generation: features/IMAGE_GENERATION.md
+    - NFC Tags: features/NFC_TAG_SUPPORT.md
+    - Mobile Apps: features/MOBILE_APPS.md
+  
+  - For Developers:
+    - Architecture: developer/ARCHITECTURE.md
+    - Contributing: CONTRIBUTING.md
+    - API Reference: api/API_DOCUMENTATION.md
+    - Deployment: deployment/DEPLOYMENT.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/shelbeely/ADHD-Closet

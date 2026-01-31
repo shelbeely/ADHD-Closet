@@ -340,7 +340,7 @@ But you must:
 ## Contributing Questions
 
 ### How can I contribute?
-See [CONTRIBUTING.md](../../CONTRIBUTING.md) for:
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for:
 - Code standards
 - PR process
 - Design system rules
