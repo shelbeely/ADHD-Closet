@@ -1,50 +1,50 @@
 # When to Use Pro vs Flash
 
-This guide explains when to choose Gemini 3 Pro Preview vs Gemini 3 Flash Preview for different tasks.
+When to choose Gemini 3 Pro Preview vs Gemini 3 Flash Preview for different tasks.
 
-## TL;DR - Current Configuration is Optimal for Most Users
+## TL;DR - Current Configuration Works for Most People
 
-✅ **Default (Recommended)**:
+**Default (Recommended)**:
 - Vision: **Pro** (accuracy critical)
 - Text: **Flash** (speed/cost matter more)
 
-But there are valid scenarios to swap them...
+Valid scenarios to swap them below.
 
 ---
 
 ## Vision Tasks (Item Inference, OCR, Categorization)
 
-### Default: Pro ✅ (Recommended)
+### Default: Pro (Recommended)
 
 **When to use Pro**:
-- ✅ **Normal use** - Item analysis is critical for app functionality
-- ✅ **You value accuracy** - Wrong categories/colors break outfit generation
-- ✅ **One-time cost** - Each item is only analyzed once
-- ✅ **Building your wardrobe** - Initial setup phase with many items
-- ✅ **Important items** - Expensive or frequently worn pieces
-- ✅ **Complex items** - Multi-colored, patterned, or unusual items
-- ✅ **Professional use** - Stylist, fashion business, content creation
-- ✅ **Cost isn't critical** - $0.20/month for 100 items is acceptable
+- Normal use - item analysis is critical
+- You value accuracy - wrong categories/colors break outfit generation
+- One-time cost - each item analyzed once
+- Building your wardrobe - initial setup with many items
+- Important items - expensive or frequently worn pieces
+- Complex items - multi-colored, patterned, or unusual
+- Professional use - stylist, fashion business, content creation
+- Cost isn't critical - $0.20/month for 100 items
 
-**Accuracy difference**:
+**Accuracy:**
 - Pro: 98.1% category, 95.2% color, 97.0% attributes, 94.0% OCR
 - Flash: 97.2% category, 94.5% color, 95.0% attributes, 92.0% OCR
-- **Gap**: 0.9-2% improvement with Pro
+- Gap: 0.9-2% improvement with Pro
 
-**Cost difference**:
+**Cost:**
 - Pro: $0.20/month for 100 items ($0.002 per item)
 - Flash: $0.05/month for 100 items ($0.0005 per item)
-- **Gap**: $0.15/month = $1.80/year
+- Gap: $0.15/month = $1.80/year
 
 ### When to use Flash instead:
 
-- ❌ **Extreme budget constraints** - Every penny matters
-- ❌ **Speed is critical** - Need instant inference (1.8s vs 3.2s)
-- ❌ **Large batch processing** - Adding 1000+ items at once
-- ❌ **Casual wardrobe** - Don't care about 1-2% accuracy drop
-- ❌ **Testing/development** - Iterating on the app itself
-- ❌ **Simple items** - Solid colors, basic styles (Flash handles easily)
-- ❌ **Non-critical items** - Workout clothes, loungewear, old items
+- Extreme budget constraints - every penny matters
+- Speed is critical - need instant inference (1.8s vs 3.2s)
+- Large batch processing - adding 1000+ items at once
+- Casual wardrobe - don't care about 1-2% accuracy drop
+- Testing/development - iterating on the app itself
+- Simple items - solid colors, basic styles (Flash handles easily)
+- Non-critical items - workout clothes, loungewear, old items
 
 **Example scenarios for Flash**:
 ```env
@@ -63,37 +63,37 @@ OPENROUTER_VISION_MODEL="google/gemini-3-flash-preview"
 
 ## Text Tasks (Outfit Generation, Explanations)
 
-### Default: Flash ✅ (Recommended)
+### Default: Flash (Recommended)
 
 **When to use Flash**:
-- ✅ **Normal use** - Near-Pro quality (8.7/10) is sufficient
-- ✅ **Frequent generation** - Creating outfits multiple times per day
-- ✅ **Speed matters** - ADHD users benefit from fast responses (2.1s vs 4.5s)
-- ✅ **Cost matters** - Text generation happens often (4x cheaper)
-- ✅ **Interactive use** - Can regenerate if first result isn't perfect
-- ✅ **Good enough quality** - 95% of outfit suggestions are excellent with Flash
-- ✅ **Personal use** - Not for clients or professional styling
+- Normal use - near-Pro quality (8.7/10) is good enough
+- Frequent generation - creating outfits multiple times per day
+- Speed matters - ADHD users benefit from fast responses (2.1s vs 4.5s)
+- Cost matters - text generation happens often (4x cheaper)
+- Interactive use - can regenerate if first result isn't perfect
+- Good enough quality - 95% of outfit suggestions are excellent with Flash
+- Personal use - not for clients or professional styling
 
-**Quality difference**:
+**Quality:**
 - Pro: 9.1/10 outfit matching, 8.9/10 explanations
 - Flash: 8.7/10 outfit matching, 8.2/10 explanations
-- **Gap**: 0.4-0.7 points (both are excellent)
+- Gap: 0.4-0.7 points (both are excellent)
 
-**Cost difference**:
+**Cost:**
 - Pro: $0.40/month for 50 outfits ($0.008 per outfit)
 - Flash: $0.10/month for 50 outfits ($0.002 per outfit)
-- **Gap**: $0.30/month = $3.60/year
+- Gap: $0.30/month = $3.60/year
 
 ### When to use Pro instead:
 
-- ✅ **Professional styling** - Clients expect perfection
-- ✅ **Complex wardrobes** - 500+ items need sophisticated reasoning
-- ✅ **Nuanced constraints** - Very specific occasion/vibe requirements
-- ✅ **Content creation** - Blog posts, Instagram captions need better explanations
-- ✅ **Business use** - Charging money for outfit advice
-- ✅ **Maximum quality** - Cost isn't a concern, want absolute best
-- ✅ **Critical events** - Wedding, job interview, important date
-- ✅ **Learning/inspiration** - Want detailed style education in explanations
+- Professional styling - clients expect perfection
+- Complex wardrobes - 500+ items need sophisticated reasoning
+- Nuanced constraints - very specific occasion/vibe requirements
+- Content creation - blog posts, Instagram captions need better explanations
+- Business use - charging money for outfit advice
+- Maximum quality - cost isn't a concern, want absolute best
+- Critical events - wedding, job interview, important date
+- Learning/inspiration - want detailed style education in explanations
 
 **Example scenarios for Pro**:
 ```env
@@ -224,7 +224,7 @@ OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 
 ## Summary
 
-### Current Default is Optimal Because:
+### Current Default Works Because:
 
 1. **Vision (Pro)**: Item analysis is critical and happens once per item
    - 2% accuracy improvement worth $0.15/month
@@ -232,8 +232,8 @@ OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
    - One-time cost, long-term benefit
 
 2. **Text (Flash)**: Outfit generation is frequent and iterative
-   - Near-Pro quality (8.7/10 vs 9.1/10) is sufficient
-   - 4x cost savings adds up over time
+   - Near-Pro quality (8.7/10 vs 9.1/10) is good enough
+   - 4x cost savings adds up
    - Speed matters for UX (ADHD-optimized)
    - Can regenerate if not satisfied
 
@@ -266,10 +266,10 @@ OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 
 ## Recommendation
 
-**Keep the current default** for 95% of users:
+**Keep the current default** for most users:
 ```env
 OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
-Only change if you have a specific reason from the scenarios above.
+Change only if you have a specific reason from the scenarios above.

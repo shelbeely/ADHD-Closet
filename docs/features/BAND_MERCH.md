@@ -1,24 +1,23 @@
 # Band Merch & Licensed Product Support
 
-Complete guide to tracking and filtering band merchandise and licensed products in ADHD-Closet.
+Track and filter band merchandise and licensed products in ADHD-Closet.
 
-## Overview
+## What's Supported
 
-The ADHD-Closet now supports comprehensive tracking of licensed merchandise including:
-- 🎸 **Band Merch** - Concert tees, tour hoodies, band accessories
-- 🎬 **Movie Merch** - Character shirts, franchise hoodies, themed accessories
-- 📺 **TV Show Merch** - Show-branded clothing and accessories
-- 🎮 **Game Merch** - Video game character apparel and accessories
-- ⚡ **Anime Merch** - Anime character clothing and accessories
-- 💥 **Comic Merch** - Superhero and comic book themed items
-- ⚽ **Sports Merch** - Team jerseys, fan gear, sports apparel
-- 🏷️ **Brand Items** - Fashion/lifestyle brands with prominent branding
+- Band Merch - Concert tees, tour hoodies, band accessories
+- Movie Merch - Character shirts, franchise hoodies, themed accessories
+- TV Show Merch - Show-branded clothing and accessories
+- Game Merch - Video game character apparel and accessories
+- Anime Merch - Anime character clothing and accessories
+- Comic Merch - Superhero and comic book themed items
+- Sports Merch - Team jerseys, fan gear, sports apparel
+- Brand Items - Fashion/lifestyle brands with prominent branding
 
 ---
 
 ## Features
 
-### 1. AI Auto-Detection 🤖
+### 1. AI Auto-Detection
 
 The vision AI automatically detects:
 - Band logos and names
@@ -34,7 +33,7 @@ Photo of t-shirt with "My Chemical Romance" logo
 → AI detects: franchise="My Chemical Romance", franchiseType="band"
 ```
 
-### 2. Filtering & Search 🔍
+### 2. Filtering & Search
 
 **Filter by Franchise Type:**
 - Show only band merch
@@ -51,17 +50,17 @@ Photo of t-shirt with "My Chemical Romance" logo
 - One-click filter to show only licensed merchandise
 - Hide generic/non-branded items
 
-### 3. Visual Display Badges 🏷️
+### 3. Visual Display Badges
 
-Items display franchise badges showing:
-- Franchise name (e.g., "My Chemical Romance")
+Items show franchise badges with:
+- Franchise name ("My Chemical Romance")
 - Type icon (🎸 for band, 🎬 for movie, etc.)
-- Color-coded by type for quick recognition
+- Color-coded by type
 
 **Badge Variants:**
-- **Standard** - Full franchise name with icon
-- **Compact** - Icon only for small spaces
-- **List** - Multiple franchises in a grid
+- Standard - Full franchise name with icon
+- Compact - Icon only for small spaces
+- List - Multiple franchises in a grid
 
 ---
 
@@ -93,9 +92,9 @@ Items display franchise badges showing:
 
 ## Usage Examples
 
-### Example 1: Band T-Shirt Collection
+### Band T-Shirt Collection
 
-**Item:**
+**Items:**
 - Black t-shirt with Slipknot logo and tour dates
 - White t-shirt with My Chemical Romance artwork
 - Red hoodie with Metallica "Master of Puppets" design
@@ -107,13 +106,11 @@ Items display franchise badges showing:
 4. Search "Slipknot" to find specific band items
 
 **Result:**
-- All band merch in one place
-- Easy to see entire collection
-- Quick outfit planning with favorite bands
+All band merch in one place. Easy outfit planning with favorite bands.
 
-### Example 2: Movie/TV Collection
+### Movie/TV Collection
 
-**Item:**
+**Items:**
 - Hoodie with Baby Yoda/Grogu from The Mandalorian
 - T-shirt with Marvel Avengers logo
 - Socks with Harry Potter house crests
@@ -122,16 +119,14 @@ Items display franchise badges showing:
 1. AI detects characters/logos automatically
 2. Sets franchiseType to `tv_show` or `movie`
 3. Filter by franchise type to see all movie/TV merch
-4. Search specific franchise (e.g., "Star Wars")
+4. Search specific franchise ("Star Wars")
 
 **Result:**
-- Organized by franchise
-- Easy themed outfit creation
-- See all items from favorite franchises
+Organized by franchise. Easy themed outfit creation.
 
-### Example 3: Game Merch
+### Game Merch
 
-**Item:**
+**Items:**
 - T-shirt with Mario and Luigi
 - Hoodie with Legend of Zelda Triforce
 - Hat with Pokemon characters
@@ -143,13 +138,11 @@ Items display franchise badges showing:
 4. Filter by specific game series
 
 **Result:**
-- Gaming wardrobe organized
-- Easy to find gaming-themed outfits
-- Track game merch collection
+Gaming wardrobe organized. Easy to find gaming-themed outfits.
 
 ---
 
-## AI Detection Guide
+## AI Detection
 
 ### What AI Looks For
 
@@ -163,7 +156,7 @@ Items display franchise badges showing:
 **Movie/TV Merch:**
 - Character images and silhouettes
 - Show/movie logos and titles
-- Iconic symbols (e.g., Deathly Hallows, Triforce)
+- Iconic symbols (Deathly Hallows, Triforce)
 - Character catchphrases
 - Production company logos
 
@@ -177,7 +170,7 @@ Items display franchise badges showing:
 **Anime/Comic Merch:**
 - Character artwork
 - Series logos and titles
-- Iconic symbols (e.g., Sharingan, Captain America shield)
+- Iconic symbols (Sharingan, Captain America shield)
 - Japanese text for anime
 - Comic book style graphics
 
@@ -190,18 +183,18 @@ Items display franchise badges showing:
 
 ### Confidence Scoring
 
-AI provides confidence scores for:
+AI provides confidence scores:
 - Franchise detection (0-1)
 - Franchise name accuracy (0-1)
 - Franchise type classification (0-1)
 
-**High confidence (0.9+):** Clear, prominent branding
-**Medium confidence (0.7-0.9):** Visible but subtle branding
-**Low confidence (<0.7):** Uncertain or generic design
+High confidence (0.9+): Clear, prominent branding
+Medium confidence (0.7-0.9): Visible but subtle branding
+Low confidence (<0.7): Uncertain or generic design
 
 ---
 
-## Filtering Guide
+## Filtering
 
 ### In FilterPanel Component
 
@@ -209,17 +202,13 @@ AI provides confidence scores for:
 ```tsx
 ☑️ Licensed Merch Only
 ```
-- One-click toggle
-- Shows only items with `isLicensedMerch: true`
-- Hides all generic/non-branded items
+One-click toggle. Shows only items with `isLicensedMerch: true`. Hides all generic items.
 
 **Franchise Search:**
 ```tsx
 🔍 Search franchises... (e.g., 'Slipknot')
 ```
-- Search specific band/movie/game names
-- Partial matching (e.g., "star" finds "Star Wars")
-- Case-insensitive
+Search specific band/movie/game names. Partial matching ("star" finds "Star Wars"). Case-insensitive.
 
 **Franchise Type Filters:**
 ```tsx
@@ -233,27 +222,25 @@ AI provides confidence scores for:
 🏷️ Brands
 🌟 Other
 ```
-- Click any to filter by type
-- Multiple types can be selected
-- Combined with other filters
+Click any to filter by type. Multiple types can be selected. Combined with other filters.
 
-### Combining Filters
+### Filter Examples
 
-**Example: All Band T-Shirts**
+**All Band T-Shirts:**
 1. Select Category: "Tops"
 2. Select Franchise Type: "Band Merch"
-3. Result: Only band t-shirts shown
+Result: Only band t-shirts
 
-**Example: Specific Band in Hoodies**
+**Specific Band in Hoodies:**
 1. Select Category: "Outerwear"
 2. Search: "My Chemical Romance"
-3. Result: Only MCR hoodies
+Result: Only MCR hoodies
 
-**Example: All Licensed Merch Ready to Wear**
+**All Licensed Merch Ready to Wear:**
 1. Toggle "Licensed Merch Only"
 2. Select State: "Available"
 3. Select Clean Status: "Clean"
-4. Result: All clean, available licensed merch
+Result: All clean, available licensed merch
 
 ---
 
@@ -317,37 +304,25 @@ Integrated franchise filtering:
 
 ## Benefits
 
-### For Superfans 🌟
+**For Superfans:**
+Track your collection. See all merch from favorite bands/franchises. Create themed outfits easily. Never forget what you have.
 
-- **Track Your Collection**: See all merch from favorite bands/franchises
-- **Easy Organization**: Filter by specific band/movie/game
-- **Outfit Planning**: Create themed outfits easily
-- **Never Forget**: All merch catalogued in one place
+**For ADHD Users:**
+Filter down to specific franchises. Emoji icons for instant recognition. Quick decisions. Clear organization. No more "I forgot I had this."
 
-### For ADHD Users 🧠
-
-- **Reduce Overwhelm**: Filter down to specific franchises
-- **Visual Recognition**: Emoji icons for instant identification
-- **Quick Decisions**: See only what you want
-- **Clear Organization**: No more "I forgot I had this"
-
-### For Everyone 💜
-
-- **AI Auto-Detection**: 90% less manual data entry
-- **Fast Filtering**: Find specific items in seconds
-- **Visual Badges**: Clear franchise display
-- **Flexible Search**: Search by name or type
+**For Everyone:**
+AI auto-detection (90% less manual entry). Fast filtering. Visual badges. Flexible search.
 
 ---
 
-## Privacy & Data
+## Privacy
 
-**What's Stored:**
-- Franchise names (e.g., "My Chemical Romance")
-- Franchise types (e.g., "band", "movie")
+**Stored:**
+- Franchise names ("My Chemical Romance")
+- Franchise types ("band", "movie")
 - Licensed merchandise flag
 
-**What's NOT Stored:**
+**Not Stored:**
 - No personal data
 - No purchase history
 - No external tracking
@@ -359,9 +334,8 @@ Integrated franchise filtering:
 
 ---
 
-## Future Enhancements
+## Future Plans
 
-**Planned Features:**
 - Franchise statistics (most worn bands/franchises)
 - Franchise-based outfit recommendations
 - "Complete the Look" by franchise theme
@@ -372,30 +346,24 @@ Integrated franchise filtering:
 
 ## Quick Start
 
-1. **Upload Item Photo**: AI detects franchise automatically
-2. **Review Detection**: Confirm or edit franchise name/type
-3. **Filter Your Collection**: Use FilterPanel to find specific franchises
-4. **Create Outfits**: Mix and match franchise merch
-5. **Track Favorites**: See which franchises you wear most
+1. Upload item photo - AI detects franchise automatically
+2. Review detection - confirm or edit franchise name/type
+3. Filter your collection - use FilterPanel to find specific franchises
+4. Create outfits - mix and match franchise merch
+5. Track favorites - see which franchises you wear most
 
 ---
 
-## Support
+## Troubleshooting
 
 **AI Not Detecting Franchise?**
-- Ensure logo/branding is clearly visible
-- Try retaking photo with better lighting
-- Manually add franchise in item details
+Ensure logo/branding is clearly visible. Try retaking photo with better lighting. Manually add franchise in item details.
 
 **Wrong Franchise Detected?**
-- Edit item details
-- Correct franchise name and type
-- AI learns from corrections
+Edit item details. Correct franchise name and type. AI learns from corrections.
 
 **Can't Find Specific Franchise?**
-- Use franchise search in FilterPanel
-- Check spelling
-- Try broader search (e.g., "star" instead of "Star Wars")
+Use franchise search in FilterPanel. Check spelling. Try broader search ("star" instead of "Star Wars").
 
 ---
 
@@ -423,4 +391,4 @@ Integrated franchise filtering:
 
 ---
 
-**Track your fandom, organize your wardrobe!** 🎸🎬🎮
+Track your fandom, organize your wardrobe. 🎸🎬🎮

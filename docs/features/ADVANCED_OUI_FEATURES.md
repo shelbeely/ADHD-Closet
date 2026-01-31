@@ -1,30 +1,24 @@
 # Advanced OUI Features Guide
 
-## Overview
-
-These are the new features I added to the OUI system to make it smarter and more helpful. The goal was to keep things ADHD-friendly while adding color harmony detection, seasonal intelligence, style learning, and quick actions.
+New features I added to the OUI system: color harmony detection, seasonal intelligence, style learning, and quick actions. All ADHD-friendly.
 
 ## New Features
 
-### 1. Advanced Color Harmony 🎨
+### 1. Color Harmony
 
 **Location:** `app/lib/colorHarmony.ts`
 
-**What it does:**
-Instead of just matching exact colors, this uses actual color theory to find colors that work well together.
+Uses color theory to find colors that work together instead of just exact matches.
 
 **Harmony Types:**
-1. **Exact** (🎨) - Same color, score: 1.0
-2. **Complementary** (🔄) - Opposite on color wheel (~180°), score: 0.9
-3. **Analogous** (🌈) - Adjacent colors (0-60°), score: 0.85
-4. **Triadic** (🔺) - 120° apart, score: 0.75
-5. **Split-Complementary** (🎭) - 150° and 210° from base, score: 0.7
-6. **Neutral Match** (⚫⚪) - Both neutrals or one neutral, score: 0.8-0.85
+1. **Exact** 🎨 - Same color, score: 1.0
+2. **Complementary** 🔄 - Opposite on color wheel (~180°), score: 0.9
+3. **Analogous** 🌈 - Adjacent colors (0-60°), score: 0.85
+4. **Triadic** 🔺 - 120° apart, score: 0.75
+5. **Split-Complementary** 🎭 - 150° and 210° from base, score: 0.7
+6. **Neutral Match** ⚫⚪ - Both neutrals or one neutral, score: 0.8-0.85
 
-**ADHD Benefits:**
-- Emoji indicators so you can see the harmony type at a glance
-- Simple scores, no color theory degree required
-- Automatically picks the best match when items have multiple colors
+Emoji indicators show the harmony type at a glance. Simple scores from 0-1. Automatically picks the best match when items have multiple colors.
 
 **Usage:**
 ```typescript
@@ -42,31 +36,27 @@ console.log(harmony.emoji); // '🔄'
 console.log(harmony.description); // 'Complementary colors create contrast'
 ```
 
-**Color Theory Made Simple:**
-- **Complementary:** Bold contrast (e.g., red + green)
-- **Analogous:** Smooth transitions (e.g., blue + purple)
-- **Triadic:** Vibrant balance (e.g., red + yellow + blue)
+**Color Theory:**
+- **Complementary:** Bold contrast (red + green)
+- **Analogous:** Smooth transitions (blue + purple)
+- **Triadic:** Vibrant balance (red + yellow + blue)
 - **Neutrals:** Black/white/gray go with everything
 
 ---
 
-### 2. Visual Weight Indicators ⚫◐⚪
+### 2. Visual Weight Indicators
 
 **Location:** `app/components/VisualWeightBadge.tsx`
 
-**What it does:**
-This shows how much visual attention an item grabs. Helps you avoid the "too many loud pieces" problem.
+Shows how much visual attention an item grabs. Helps you avoid wearing three competing statement pieces.
 
 **Weight Levels:**
-1. **Minimal** (⚪) - Simple, understated
-2. **Moderate** (◐) - Balanced presence
-3. **Heavy** (⚫) - Strong focal point
-4. **Complex** (🌟) - Lots of details
+1. **Minimal** ⚪ - Simple, understated
+2. **Moderate** ◐ - Balanced presence
+3. **Heavy** ⚫ - Strong focal point
+4. **Complex** 🌟 - Lots of details
 
-**ADHD Benefits:**
-- Quick visual indicators (no need to analyze)
-- Takes the guesswork out of balancing outfits
-- Stops you from accidentally wearing three competing statement pieces
+Quick visual indicators with no analysis required.
 
 **Usage:**
 ```typescript
@@ -90,30 +80,25 @@ const weight = calculateVisualWeight({
 
 ---
 
-### 3. Quick Actions Menu ⚡
+### 3. Quick Actions Menu
 
 **Location:** `app/components/QuickActionsMenu.tsx`
 
-**What it does:**
-Common actions in one tap. No more clicking through five different screens to add something to an outfit.
+Common actions in one tap instead of clicking through five screens.
 
 **Features:**
-- **QuickActionsMenu:** Floating menu with large touch targets
-- **SwipeActions:** Swipe gestures for mobile
-- **Haptic Feedback:** Vibration on mobile devices
-- **Auto-dismiss:** Closes after action
+- Floating menu with large touch targets (48dp)
+- Swipe gestures for mobile
+- Haptic feedback (vibration)
+- Auto-dismiss after action
 
-**Actions Available:**
-- ➕ Add to outfit
-- ⭐ Mark as favorite
-- 👁️ Quick view
-- 🧺 Move to laundry
+**Actions:**
+- Add to outfit
+- Mark as favorite
+- Quick view
+- Move to laundry
 
-**ADHD Benefits:**
-- Way less friction - one tap and you're done
-- Big touch targets (48dp) so you don't miss
-- Icons with labels because nobody remembers what icons mean
-- Instant feedback so you know it worked
+One tap and you're done. Big touch targets so you don't miss. Icons have labels. Instant feedback.
 
 **Usage:**
 ```typescript
@@ -147,18 +132,17 @@ import QuickActionsMenu, { SwipeActions } from '@/app/components/QuickActionsMen
 
 ---
 
-### 4. Seasonal Intelligence 🌸☀️🍂❄️
+### 4. Seasonal Intelligence
 
 **Location:** `app/lib/seasonalIntelligence.ts`, `app/components/SeasonalBanner.tsx`
 
-**What it does:**
 Figures out what season it is and suggests stuff that makes sense for the weather.
 
 **Features:**
-- **Auto-detection:** Based on current month
-- **Seasonal scoring:** Rates item appropriateness (0-1)
-- **Smart tips:** Actionable advice for each season
-- **Filtering:** Show/hide off-season items
+- Auto-detection based on current month
+- Seasonal scoring: rates item appropriateness (0-1)
+- Tips for each season
+- Filtering: show/hide off-season items
 
 **Season Recommendations:**
 ```typescript
@@ -183,11 +167,7 @@ Winter ❄️
 - Tip: "Scarves and gloves keep you warm"
 ```
 
-**ADHD Benefits:**
-- Updates automatically, you don't have to do anything
-- Banner can be dismissed if it's annoying you
-- Short tips, not essays
-- Season emoji so you know at a glance
+Updates automatically. Banner can be dismissed. Short tips. Season emoji.
 
 **Usage:**
 ```typescript
@@ -214,27 +194,22 @@ const seasonalItems = filterBySeason(allItems, 'winter', 0.7);
 
 ---
 
-### 5. Style Profile Learning 💜🧠
+### 5. Style Profile Learning
 
 **Location:** `app/lib/styleProfile.ts`, `app/components/StyleProfileWidget.tsx`
 
-**What it does:**
-Learns what you like over time and gets better at suggesting things you'll actually wear.
+Learns what you like and gets better at suggesting things you'll actually wear.
 
-**What it tracks:**
-- Your top 5 colors
-- Which categories you reach for most
-- Style tags you use
+**Tracks:**
+- Top 5 colors
+- Most-used categories
+- Style tags
 - Recent patterns
 
 **How it works:**
-Every time you add something to an outfit, it remembers. After your last 100 choices, it starts boosting suggestions that match your style. All stored locally in your browser.
+Every time you add something to an outfit, it remembers. After your last 100 choices, it boosts suggestions that match your style. All stored locally in your browser.
 
-**ADHD Benefits:**
-- Zero setup, it just works
-- Learns in the background while you use the app
-- Gives you positive feedback about your style
-- Gets better the more you use it
+Zero setup. Learns in the background. Gets better the more you use it.
 
 **Usage:**
 ```typescript
@@ -270,10 +245,10 @@ console.log(insights.topColor); // '#000000'
 console.log(insights.recentTrend); // 'Loving tops lately!'
 ```
 
-**Preference Scoring:**
-- 0.0-0.3: Doesn't match your style
+**Scoring:**
+- 0.0-0.3: Doesn't match
 - 0.4-0.6: Neutral
-- 0.7-0.9: Good match (shows "Your style" badge)
+- 0.7-0.9: Good match ("Your style" badge)
 - 0.9-1.0: Perfect match (20% boost)
 
 **Privacy:**
@@ -391,65 +366,55 @@ function EnhancedOutfitBuilder() {
 
 ## ADHD-Friendly Design
 
-All of these features stick to ADHD-friendly principles:
-
-### Visual Clarity
+**Visual Clarity:**
 - Emojis so you don't have to read everything
-- Consistent color meanings throughout
-- Most important info shows first
+- Consistent color meanings
+- Most important info first
 
-### Less Friction
+**Less Friction:**
 - Season and color harmony work automatically
-- Style profile learns without you having to train it
+- Style profile learns without training
 - One tap instead of five clicks
 
-### Decision Support
-- Scores from 0-1 (simple)
+**Decision Support:**
+- Scores from 0-1
 - Best options at the top
-- Short explanations that actually help
+- Short explanations
 
-### Progressive Disclosure
-- Seasonal banner dismisses but comes back tomorrow if relevant
+**Progressive Disclosure:**
+- Seasonal banner dismisses but comes back tomorrow
 - Style widget expands when you want details
-- Quick actions hide until you need them
+- Quick actions hide until needed
 
 ---
 
-## Testing Guide
-
-### Manual Testing
+## Testing
 
 **Color Harmony:**
-- [ ] Create outfit with complementary colors (red + green)
-- [ ] Verify harmony badge shows "🔄 Bold contrast"
-- [ ] Try analogous colors (blue + purple)
-- [ ] Verify shows "🌈 Harmonious blend"
+- Create outfit with complementary colors (red + green) - verify harmony badge shows "🔄 Bold contrast"
+- Try analogous colors (blue + purple) - verify shows "🌈 Harmonious blend"
 
 **Visual Weight:**
-- [ ] Add simple black tee (should show minimal)
-- [ ] Add graphic print (should show heavy/complex)
-- [ ] Verify outfit balance suggestions
+- Add simple black tee (should show minimal)
+- Add graphic print (should show heavy/complex)
+- Check outfit balance suggestions
 
 **Quick Actions:**
-- [ ] Click quick actions button
-- [ ] Menu appears with 4 actions
-- [ ] Actions trigger correctly
-- [ ] Menu auto-dismisses after action
-- [ ] Test swipe gestures on mobile
+- Click quick actions button - menu appears with 4 actions
+- Actions trigger correctly
+- Menu auto-dismisses after action
+- Test swipe gestures on mobile
 
 **Seasonal Intelligence:**
-- [ ] Seasonal banner appears
-- [ ] Shows current season correctly
-- [ ] Displays 3 suggested accessories
-- [ ] Can be dismissed
-- [ ] Reappears next day
+- Seasonal banner appears and shows current season
+- Displays 3 suggested accessories
+- Can be dismissed
+- Reappears next day
 
 **Style Profile:**
-- [ ] Add 5+ items to outfits
-- [ ] Profile widget appears
-- [ ] Shows favorite colors
-- [ ] Shows top category
-- [ ] "Your style" badges appear on matching items
+- Add 5+ items to outfits
+- Profile widget appears with favorite colors and top category
+- "Your style" badges appear on matching items
 
 ---
 
@@ -479,27 +444,25 @@ All of these features stick to ADHD-friendly principles:
 
 ## Future Ideas
 
-Some things I'd like to add eventually:
-
 **Color Harmony:**
-- Suggest color palettes when you're adding new items
-- Warn you before you add something that clashes
+- Suggest color palettes when adding new items
+- Warn before adding something that clashes
 - Generate whole color schemes
 
 **Seasonal Intelligence:**
-- Hook into a weather API for your actual location
-- Handle Southern vs Northern hemisphere seasons
-- Adjust for different climate zones
+- Weather API for actual location
+- Southern vs Northern hemisphere
+- Climate zone adjustments
 
 **Style Profile:**
-- Let you export/import your profile
-- Maybe anonymous style comparisons (if people want that)
-- Better AI predictions based on your history
+- Export/import profile
+- Anonymous style comparisons
+- Better AI predictions
 
 **Visual Weight:**
-- Use AI for smarter weight calculation
+- AI for smarter calculation
 - Visual outfit balance preview
-- Proportion analysis tools
+- Proportion analysis
 
 ---
 
@@ -520,29 +483,28 @@ model Item {
 
 ---
 
-## Migration Guide
+## Migration
 
-If you're updating from an older version:
+If updating from an older version:
 
-1. No database changes needed - these features work with what you have
-2. LocalStorage entries are created automatically
-3. Everything is backwards compatible and won't break existing features
+1. No database changes needed
+2. LocalStorage entries created automatically
+3. Backwards compatible
 
 To integrate:
 
 ```typescript
-// Import the new stuff
+// Import
 import SeasonalBanner from '@/app/components/SeasonalBanner';
 import StyleProfileWidget from '@/app/components/StyleProfileWidget';
 import QuickActionsMenu from '@/app/components/QuickActionsMenu';
 
-// Add to your pages
+// Add to pages
 <SeasonalBanner />
 <StyleProfileWidget />
 
 // Use color harmony
 import { findBestColorHarmony } from '@/app/lib/colorHarmony';
-// ColorCompatibilityBadge already uses this
 
 // Track style choices
 import { recordStyleChoice } from '@/app/lib/styleProfile';
@@ -551,6 +513,4 @@ recordStyleChoice(itemId, category, colors, tags);
 
 ---
 
-Built with 💜 for people with ADHD
-
-These features are for visual thinkers, people who get stuck making decisions, and anyone who wants their closet app to actually learn what they like.
+Built with 💜 for people with ADHD, visual thinkers, and anyone who gets stuck making decisions.

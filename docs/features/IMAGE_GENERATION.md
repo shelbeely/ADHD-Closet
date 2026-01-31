@@ -34,11 +34,7 @@ POST /api/images/generate-variation
 }
 ```
 
-**Benefits:**
-- Maintains exact style and fit
-- Preserves graphics/logos (band merch stays recognizable)
-- Professional catalog quality
-- Consistent with original item
+The system maintains the exact style and fit while changing colors. Graphics and logos stay recognizable (important for band merch), and the output quality is consistent with the original item.
 
 ---
 
@@ -377,24 +373,16 @@ function MatchingItemGenerator({ topImage }: { topImage: string }) {
 All image generation features are designed with ADHD users in mind:
 
 ### Visual Consistency
-- Reference images ensure predictable results
-- Generated items match existing wardrobe
-- Reduces decision paralysis
+Reference images produce predictable results. Generated items match your existing wardrobe, which reduces decision paralysis.
 
 ### Quick Previews
-- See variations before buying
-- Preview outfits for different contexts
-- Instant visual feedback
+See variations before buying. Preview outfits for different contexts with instant visual feedback.
 
 ### Reduced Overwhelm
-- One reference → focused results
-- Clear visual comparisons
-- Limited, relevant options
+One reference produces focused results. Clear visual comparisons show limited, relevant options.
 
 ### Confidence Building
-- See how items look together
-- Preview before committing
-- Understand what works
+See how items look together. Preview before committing to understand what works.
 
 ---
 
@@ -430,11 +418,11 @@ All image generation features are designed with ADHD users in mind:
 ## Privacy & Security
 
 All image generation:
-- ✅ Processes server-side only
-- ✅ No image storage (ephemeral processing)
-- ✅ No third-party sharing
-- ✅ Reference images stay in request context
-- ✅ GDPR compliant
+- Processes server-side only
+- No image storage (ephemeral processing)
+- No third-party sharing
+- Reference images stay in request context
+- GDPR compliant
 
 ---
 
@@ -486,11 +474,9 @@ Planned features:
 
 ## Conclusion
 
-These image-to-image generation features enable:
-- **Visual Consistency**: All generations use references
-- **Style Preservation**: Maintain personal aesthetic
-- **Quick Exploration**: Preview variations instantly
-- **Reduced Anxiety**: See results before committing
-- **Better Planning**: Understand wardrobe needs
-
-Perfect for ADHD users who benefit from visual feedback and consistent results!
+These image-to-image generation features are useful for ADHD users who benefit from visual feedback:
+- All generations use references for consistency
+- Personal aesthetic is maintained across variations
+- Preview variations instantly before making decisions
+- See results before committing reduces anxiety
+- Better wardrobe planning through visualization

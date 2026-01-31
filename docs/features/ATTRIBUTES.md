@@ -4,11 +4,11 @@ Complete guide to all attributes tracked for clothing items in the ADHD-Closet a
 
 ## Overview
 
-The ADHD-Closet tracks rich metadata about each clothing item to enable:
-- 🤖 **Smart AI recommendations** - Better outfit matching
-- 🎯 **Precise filtering** - Find exactly what you need
-- 📊 **Visual balance** - Create harmonious outfits
-- 🧠 **ADHD-friendly organization** - Less decision paralysis
+The ADHD-Closet tracks rich metadata about each clothing item:
+- Smart AI recommendations for outfit matching
+- Precise filtering to find specific items
+- Visual balance for harmonious outfits
+- ADHD-friendly organization to reduce decision paralysis
 
 ---
 
@@ -26,7 +26,7 @@ These fields apply to every item in your wardrobe:
 | **sizeText** | String | Size information | "M", "32x30", "One Size" |
 | **materials** | String | Fabric composition | "100% cotton", "Polyester blend" |
 
-### Licensed Merchandise & Band Merch 🎸🎬🎮
+### Licensed Merchandise & Band Merch
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
@@ -93,7 +93,7 @@ These fields apply to every item in your wardrobe:
 
 These attributes are stored in the `attributes` JSON field and vary by category.
 
-### 👕 Tops
+### Tops
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -116,7 +116,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 👖 Bottoms
+### Bottoms
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -144,7 +144,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 👗 Dresses
+### Dresses
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -167,7 +167,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 🧥 Outerwear
+### Outerwear
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -186,7 +186,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 👟 Shoes
+### Shoes
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -208,7 +208,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 🎒 Accessories
+### Accessories
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -232,7 +232,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 💍 Jewelry
+### Jewelry
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -254,7 +254,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 🩱 Swimwear
+### Swimwear
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -273,7 +273,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 🏃 Activewear
+### Activewear
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -294,7 +294,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 😴 Sleepwear
+### Sleepwear
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -313,7 +313,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 🛋️ Loungewear
+### Loungewear
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -332,7 +332,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ---
 
-### 👔 Suits & Sets
+### Suits & Sets
 
 | Attribute | Values | Description |
 |-----------|--------|-------------|
@@ -416,7 +416,7 @@ These attributes are stored in the `attributes` JSON field and vary by category.
 
 ## How Attributes Are Used
 
-### 🤖 AI Outfit Generation
+### AI Outfit Generation
 The AI uses attributes to create balanced, cohesive outfits:
 
 ```
@@ -432,7 +432,7 @@ AI analyzes:
 Result: Balanced, wearable outfit
 ```
 
-### 🎯 Smart Filtering
+### Smart Filtering
 Filter by specific attributes:
 
 ```typescript
@@ -451,7 +451,7 @@ items.filter(item =>
 )
 ```
 
-### 💡 Pairing Recommendations
+### Pairing Recommendations
 Attributes drive smart pairing suggestions:
 
 - **High rise + Crop top** = "Pairs well together"
@@ -585,22 +585,22 @@ The AI considers:
 
 Attributes support ADHD-friendly features:
 
-### 🎯 **Reduced Decision Paralysis**
+### Reduced Decision Paralysis
 - Pre-filtered suggestions based on attributes
 - "Top picks" use attribute matching
 - Progressive disclosure (show key attributes first)
 
-### 👀 **Visual Clarity**
+### Visual Clarity
 - Visual weight indicators
 - Color compatibility badges
 - Clear attribute labels
 
-### ⚡ **Quick Actions**
+### Quick Actions
 - Filter by common attributes (high-rise, oversized, etc.)
 - One-tap outfit generation using attribute intelligence
 - "Find similar" based on attributes
 
-### 🧠 **Learning System**
+### Learning System
 - Tracks which attribute combinations you choose
 - Learns your style preferences
 - Personalizes suggestions
@@ -650,11 +650,11 @@ Attributes support ADHD-friendly features:
 
 ### Key Benefits
 
-✅ **Smarter outfit generation** - AI matches items intelligently  
-✅ **Better organization** - Find exactly what you need  
-✅ **Visual balance** - Create harmonious looks  
-✅ **ADHD-friendly** - Reduced decision-making burden  
-✅ **Learning system** - Gets better over time  
+- Smarter outfit generation - AI matches items intelligently
+- Better organization - Find exactly what you need
+- Visual balance - Create harmonious looks
+- ADHD-friendly - Reduced decision-making burden
+- Learning system - Gets better over time  
 
 ---
 
