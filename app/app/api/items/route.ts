@@ -46,9 +46,16 @@ export async function GET(request: NextRequest) {
     const cleanStatus = searchParams.get('cleanStatus');
     const tag = searchParams.get('tag');
     const q = searchParams.get('q'); // search query
+    const excludeGenerated = searchParams.get('excludeGenerated') !== 'false'; // Default to true (hide generated items)
 
     // Build where clause
     const where: any = {};
+    
+    // By default, exclude AI-generated items (show only real wardrobe)
+    // Users can explicitly include them by passing excludeGenerated=false
+    if (excludeGenerated) {
+      where.isGenerated = false;
+    }
     
     if (category) {
       where.category = category;

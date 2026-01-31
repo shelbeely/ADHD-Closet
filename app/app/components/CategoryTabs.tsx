@@ -11,6 +11,11 @@ const CATEGORIES = [
   { value: 'accessories', label: 'Accessories', icon: '🎒' },
   { value: 'underwear_bras', label: 'Underwear', icon: '🩲' },
   { value: 'jewelry', label: 'Jewelry', icon: '💍' },
+  { value: 'swimwear', label: 'Swimwear', icon: '🩱' },
+  { value: 'activewear', label: 'Activewear', icon: '🏃' },
+  { value: 'sleepwear', label: 'Sleepwear', icon: '😴' },
+  { value: 'loungewear', label: 'Loungewear', icon: '🛋️' },
+  { value: 'suits_sets', label: 'Suits & Sets', icon: '👔' },
 ] as const;
 
 interface CategoryTabsProps {

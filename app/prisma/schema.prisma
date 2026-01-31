@@ -22,6 +22,70 @@ enum Category {
   accessories
   underwear_bras
   jewelry
+  swimwear
+  activewear
+  sleepwear
+  loungewear
+  suits_sets
+}
+
+enum AccessoryType {
+  purse
+  bag
+  backpack
+  belt
+  hat
+  scarf
+  gloves
+  sunglasses
+  watch
+  other
+}
+
+enum JewelryType {
+  necklace
+  earrings
+  bracelet
+  ring
+  anklet
+  brooch
+  other
+}
+
+enum ShoeType {
+  sneakers
+  boots
+  sandals
+  heels
+  flats
+  loafers
+  oxfords
+  platforms
+  other
+}
+
+enum BottomsType {
+  jeans
+  dress_pants
+  casual_pants
+  cargo_pants
+  shorts
+  skirt
+  leggings
+  joggers
+  other
+}
+
+enum FranchiseType {
+  band
+  movie
+  tv_show
+  game
+  anime
+  comic
+  sports
+  brand
+  other
 }
 
 enum ItemState {
@@ -67,6 +131,11 @@ enum OutfitRole {
   accessory
   underwear_bras
   jewelry
+  swimwear
+  activewear
+  sleepwear
+  loungewear
+  suit_set
 }
 
 enum OutfitRating {
@@ -101,10 +170,26 @@ model Item {
   category      Category?
   state         ItemState  @default(available)
   
+  // Sub-type categorization for accessories, jewelry, shoes, and bottoms
+  accessoryType AccessoryType? @map("accessory_type")
+  jewelryType   JewelryType?   @map("jewelry_type")
+  shoeType      ShoeType?      @map("shoe_type")
+  bottomsType   BottomsType?   @map("bottoms_type")
+  
   // Label/brand info (may come from AI OCR)
   brand         String?
   sizeText      String?    @map("size_text")
   materials     String?    // JSON string or plain text
+  
+  // Licensed merchandise / band merch tracking
+  isLicensedMerch Boolean?      @map("is_licensed_merch")  // Is this official licensed merchandise?
+  franchise       String?                                   // Band name, movie title, game name, etc.
+  franchiseType   FranchiseType? @map("franchise_type")    // Type of franchise (band, movie, tv_show, etc.)
+  
+  // AI-generated vs real item tracking
+  isGenerated     Boolean        @default(false) @map("is_generated")  // Is this an AI-generated variation (not a real item)?
+  sourceItemId    String?        @map("source_item_id")                 // If generated, ID of the original real item
+  generationType  String?        @map("generation_type")                // Type: 'color_variation', 'seasonal', 'style_transfer', 'matching', etc.
   
   // AI-inferred attributes
   colorPalette  Json?      @map("color_palette") // ["#FF0000", "#000000"]

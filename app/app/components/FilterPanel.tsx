@@ -30,6 +30,18 @@ const CLEAN_STATUSES = [
   { value: 'needs_wash', label: 'Needs Wash', icon: '🚿' },
 ];
 
+const FRANCHISE_TYPES = [
+  { value: 'band', label: 'Band Merch', icon: '🎸' },
+  { value: 'movie', label: 'Movies', icon: '🎬' },
+  { value: 'tv_show', label: 'TV Shows', icon: '📺' },
+  { value: 'game', label: 'Video Games', icon: '🎮' },
+  { value: 'anime', label: 'Anime', icon: '⚡' },
+  { value: 'comic', label: 'Comics', icon: '💥' },
+  { value: 'sports', label: 'Sports Teams', icon: '⚽' },
+  { value: 'brand', label: 'Brands', icon: '🏷️' },
+  { value: 'other', label: 'Other', icon: '🌟' },
+];
+
 /**
  * Desktop Filter Panel
  * 
@@ -45,7 +57,12 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [selectedCleanStatuses, setSelectedCleanStatuses] = useState<string[]>([]);
+  const [selectedFranchiseTypes, setSelectedFranchiseTypes] = useState<string[]>([]);
+  const [licensedMerchOnly, setLicensedMerchOnly] = useState(false);
+  const [franchiseSearch, setFranchiseSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  // showGenerated state removed - feature disabled per user request: "I don't want ai recolored clothing at all"
+  // AI-generated items are now always excluded
 
   const toggleCategory = (category: string) => {
     const newCategories = selectedCategories.includes(category)
@@ -57,7 +74,11 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       categories: newCategories, 
       states: selectedStates, 
       cleanStatuses: selectedCleanStatuses,
-      search: searchQuery 
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
     });
   };
 
@@ -71,7 +92,11 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       categories: selectedCategories, 
       states: newStates, 
       cleanStatuses: selectedCleanStatuses,
-      search: searchQuery 
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
     });
   };
 
@@ -85,19 +110,86 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       categories: selectedCategories, 
       states: selectedStates, 
       cleanStatuses: newStatuses,
-      search: searchQuery 
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
     });
   };
+
+  const toggleFranchiseType = (type: string) => {
+    const newTypes = selectedFranchiseTypes.includes(type)
+      ? selectedFranchiseTypes.filter(t => t !== type)
+      : [...selectedFranchiseTypes, type];
+    
+    setSelectedFranchiseTypes(newTypes);
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: selectedStates, 
+      cleanStatuses: selectedCleanStatuses,
+      franchiseTypes: newTypes,
+      licensedMerchOnly,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
+    });
+  };
+
+  const toggleLicensedMerchOnly = () => {
+    const newValue = !licensedMerchOnly;
+    setLicensedMerchOnly(newValue);
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: selectedStates, 
+      cleanStatuses: selectedCleanStatuses,
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly: newValue,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
+    });
+  };
+
+  const handleFranchiseSearch = (value: string) => {
+    setFranchiseSearch(value);
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: selectedStates, 
+      cleanStatuses: selectedCleanStatuses,
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly,
+      franchiseSearch: value,
+      search: searchQuery,
+      showGenerated: false // Always exclude AI-generated items
+    });
+  };
+
+  // toggleShowGenerated function removed - feature disabled per user request
 
   const clearFilters = () => {
     setSelectedCategories([]);
     setSelectedStates([]);
     setSelectedCleanStatuses([]);
+    setSelectedFranchiseTypes([]);
+    setLicensedMerchOnly(false);
+    setFranchiseSearch('');
     setSearchQuery('');
-    onFilterChange({ categories: [], states: [], cleanStatuses: [], search: '' });
+    // showGenerated state removed - always false
+    onFilterChange({ 
+      categories: [], 
+      states: [], 
+      cleanStatuses: [], 
+      franchiseTypes: [],
+      licensedMerchOnly: false,
+      franchiseSearch: '',
+      search: '',
+      showGenerated: false // Always exclude AI-generated items
+    });
   };
 
-  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || selectedCleanStatuses.length > 0 || searchQuery;
+  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || selectedCleanStatuses.length > 0 || selectedFranchiseTypes.length > 0 || licensedMerchOnly || franchiseSearch || searchQuery;
+  // Removed showGenerated from hasFilters check since it's always false
 
   return (
     <aside className="w-60 h-full bg-surface-container-low border-r border-outline flex flex-col">
@@ -122,7 +214,16 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              onFilterChange({ categories: selectedCategories, states: selectedStates, search: e.target.value });
+              onFilterChange({ 
+                categories: selectedCategories, 
+                states: selectedStates, 
+                cleanStatuses: selectedCleanStatuses,
+                franchiseTypes: selectedFranchiseTypes,
+                licensedMerchOnly,
+                franchiseSearch,
+                search: e.target.value,
+                showGenerated: false // Always exclude AI-generated items
+              });
             }}
             placeholder="Search items..."
             className="w-full px-4 py-3 pl-10 bg-surface-container border border-outline rounded-xl text-body-medium text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-0 transition-colors"
@@ -233,6 +334,89 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
             ))}
           </div>
         </div>
+
+        {/* Licensed Merch & Franchise Filters */}
+        <div>
+          <h3 className="text-label-large text-on-surface mb-3">Licensed Merch 🎸</h3>
+          
+          {/* Show Licensed Merch Only Toggle */}
+          <button
+            onClick={toggleLicensedMerchOnly}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all mb-3 ${
+              licensedMerchOnly
+                ? 'bg-primary-container text-on-primary-container'
+                : 'hover:bg-surface-variant text-on-surface'
+            }`}
+          >
+            <span className="text-xl">🏷️</span>
+            <span className="text-body-medium flex-1">Licensed Merch Only</span>
+            {licensedMerchOnly && (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </button>
+
+          {/* Franchise Search */}
+          <div className="relative mb-3">
+            <input
+              type="text"
+              value={franchiseSearch}
+              onChange={(e) => handleFranchiseSearch(e.target.value)}
+              placeholder="Search franchises... (e.g., 'Slipknot')"
+              className="w-full px-3 py-2.5 pl-9 bg-surface-container border border-outline rounded-xl text-body-small text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-0 transition-colors"
+            />
+            <svg
+              className="absolute left-2.5 top-3 w-4 h-4 text-on-surface-variant"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+
+          {/* Franchise Type Filters */}
+          <div className="space-y-2">
+            {FRANCHISE_TYPES.map((type) => (
+              <button
+                key={type.value}
+                onClick={() => toggleFranchiseType(type.value)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${
+                  selectedFranchiseTypes.includes(type.value)
+                    ? 'bg-secondary-container text-on-secondary-container'
+                    : 'hover:bg-surface-variant text-on-surface'
+                }`}
+              >
+                <span className="text-xl">{type.icon}</span>
+                <span className="text-body-medium flex-1">{type.label}</span>
+                {selectedFranchiseTypes.includes(type.value) && (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* AI-Generated Items Toggle - REMOVED
+         * User requested: "I don't want ai recolored clothing at all"
+         * Feature permanently disabled - always excludes AI-generated items
+         */}
       </div>
     </aside>
   );

@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Pick the first available item from each category
-      const outfitItems: Array<{ itemId: string; role: 'top' | 'bottom' | 'dress' | 'outerwear' | 'shoes' | 'accessory' | 'underwear_bras' | 'jewelry' }> = [
+      const outfitItems: Array<{ itemId: string; role: 'top' | 'bottom' | 'dress' | 'outerwear' | 'shoes' | 'accessory' | 'underwear_bras' | 'jewelry' | 'swimwear' | 'activewear' | 'sleepwear' | 'loungewear' | 'suit_set' }> = [
         { itemId: tops[0].id, role: 'top' },
         { itemId: bottoms[0].id, role: 'bottom' }
       ];

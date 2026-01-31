@@ -92,6 +92,12 @@ export default function Home() {
         if (filters.search) {
           params.append('search', filters.search);
         }
+        // Handle showGenerated filter - if false (default), excludeGenerated is true
+        if (!filters.showGenerated) {
+          params.append('excludeGenerated', 'true');
+        } else {
+          params.append('excludeGenerated', 'false');
+        }
       }
       
       const response = await fetch(`/api/items?${params.toString()}`);
