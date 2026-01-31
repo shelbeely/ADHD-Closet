@@ -152,7 +152,7 @@ class OpenRouterClient {
   async inferItemDetails(imageBase64: string, labelImageBase64?: string): Promise<any> {
     const systemPrompt = `You are an expert fashion cataloger specializing in emo/goth/alt styles. 
 Analyze clothing items and provide structured data in JSON format.
-Focus on accurate categorization, color identification, and relevant style tags.`;
+Focus on accurate categorization, color identification, relevant style tags, and licensed merchandise detection.`;
 
     const userPrompt = `Analyze this clothing item and provide detailed information in JSON format:
 
@@ -183,7 +183,20 @@ Required fields:
 - fitNotes: brief description of how the item fits and its proportions (e.g., "Oversized fit creates volume contrast", "High neckline flattens bust area", "Low rise may segment torso")
 - pairingTips: array of 1-2 suggestions for what items work well with this piece (e.g., "Pairs well with high-waisted bottoms", "Best with minimal jewelry", "Works as statement piece")
 - tags: array of style tags relevant to emo/goth/alt fashion
-- confidence: object with confidence scores (0-1) for each field
+
+**Licensed Merchandise Detection:**
+Carefully examine the item for band logos, movie/TV characters, game graphics, anime art, comic book characters, sports team logos, or other licensed designs:
+- isLicensedMerch: boolean - true if this appears to be official licensed merchandise (band merch, movie/TV merch, game merch, etc.), false if generic/no franchise
+- franchise: string or null - If licensed merch detected, provide the specific band name, movie title, TV show name, game title, anime name, comic name, sports team, or brand. Examples: "My Chemical Romance", "Star Wars", "The Legend of Zelda", "Naruto", "Marvel", "Manchester United". Leave null if not licensed merch.
+- franchiseType: one of [band, movie, tv_show, game, anime, comic, sports, brand, other] or null - Type of franchise detected. Use "band" for music groups, "movie" for films, "tv_show" for TV series, "game" for video games, "anime" for anime series, "comic" for comic books/graphic novels, "sports" for sports teams, "brand" for fashion/lifestyle brands with logo prominence, "other" for licensed content that doesn't fit categories. Leave null if not licensed merch.
+
+Examples of franchise detection:
+- T-shirt with "Slipknot" logo and band artwork → isLicensedMerch: true, franchise: "Slipknot", franchiseType: "band"
+- Hoodie with Baby Yoda/Grogu → isLicensedMerch: true, franchise: "The Mandalorian", franchiseType: "tv_show"
+- Shirt with Mario graphics → isLicensedMerch: true, franchise: "Super Mario Bros", franchiseType: "game"
+- Plain black t-shirt with no logos → isLicensedMerch: false, franchise: null, franchiseType: null
+
+- confidence: object with confidence scores (0-1) for each field, including franchise detection
 
 ${labelImageBase64 ? 'Also analyze the label image to extract:' : ''}
 ${labelImageBase64 ? '- brand: brand name' : ''}

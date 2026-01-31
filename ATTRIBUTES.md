@@ -26,6 +26,31 @@ These fields apply to every item in your wardrobe:
 | **sizeText** | String | Size information | "M", "32x30", "One Size" |
 | **materials** | String | Fabric composition | "100% cotton", "Polyester blend" |
 
+### Licensed Merchandise & Band Merch 🎸🎬🎮
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| **isLicensedMerch** | Boolean | Is this official licensed merchandise? | `true`, `false`, `null` |
+| **franchise** | String | Band name, movie, game, show, etc. | "My Chemical Romance", "Star Wars", "The Legend of Zelda" |
+| **franchiseType** | Enum | Type of franchise | `band`, `movie`, `tv_show`, `game`, `anime`, `comic`, `sports`, `brand`, `other` |
+
+**Franchise Types:**
+- **band** - Music groups/artists (My Chemical Romance, Metallica, BTS)
+- **movie** - Films (Star Wars, Marvel, Harry Potter)
+- **tv_show** - TV series (Stranger Things, The Mandalorian, Friends)
+- **game** - Video games (The Legend of Zelda, Minecraft, Pokemon)
+- **anime** - Anime series (Naruto, Attack on Titan, Sailor Moon)
+- **comic** - Comic books/graphic novels (Marvel, DC, manga)
+- **sports** - Sports teams (Manchester United, Lakers, Yankees)
+- **brand** - Fashion/lifestyle brands with prominent branding (Supreme, Nike, Adidas)
+- **other** - Other licensed content
+
+**Examples:**
+- Band t-shirt with Slipknot logo: `isLicensedMerch: true, franchise: "Slipknot", franchiseType: "band"`
+- Hoodie with Baby Yoda: `isLicensedMerch: true, franchise: "The Mandalorian", franchiseType: "tv_show"`
+- Shirt with Mario graphics: `isLicensedMerch: true, franchise: "Super Mario Bros", franchiseType: "game"`
+- Plain black t-shirt: `isLicensedMerch: false, franchise: null, franchiseType: null`
+
 ### Visual Characteristics
 
 | Field | Type | Description | Example |

@@ -76,6 +76,18 @@ enum BottomsType {
   other
 }
 
+enum FranchiseType {
+  band
+  movie
+  tv_show
+  game
+  anime
+  comic
+  sports
+  brand
+  other
+}
+
 enum ItemState {
   available
   laundry
@@ -168,6 +180,11 @@ model Item {
   brand         String?
   sizeText      String?    @map("size_text")
   materials     String?    // JSON string or plain text
+  
+  // Licensed merchandise / band merch tracking
+  isLicensedMerch Boolean?      @map("is_licensed_merch")  // Is this official licensed merchandise?
+  franchise       String?                                   // Band name, movie title, game name, etc.
+  franchiseType   FranchiseType? @map("franchise_type")    // Type of franchise (band, movie, tv_show, etc.)
   
   // AI-inferred attributes
   colorPalette  Json?      @map("color_palette") // ["#FF0000", "#000000"]
