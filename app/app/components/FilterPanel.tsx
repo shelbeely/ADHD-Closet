@@ -61,6 +61,7 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
   const [licensedMerchOnly, setLicensedMerchOnly] = useState(false);
   const [franchiseSearch, setFranchiseSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showGenerated, setShowGenerated] = useState(false); // Default: hide AI-generated items
 
   const toggleCategory = (category: string) => {
     const newCategories = selectedCategories.includes(category)
@@ -75,7 +76,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: selectedFranchiseTypes,
       licensedMerchOnly,
       franchiseSearch,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
     });
   };
 
@@ -92,7 +94,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: selectedFranchiseTypes,
       licensedMerchOnly,
       franchiseSearch,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
     });
   };
 
@@ -109,7 +112,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: selectedFranchiseTypes,
       licensedMerchOnly,
       franchiseSearch,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
     });
   };
 
@@ -126,7 +130,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: newTypes,
       licensedMerchOnly,
       franchiseSearch,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
     });
   };
 
@@ -140,7 +145,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: selectedFranchiseTypes,
       licensedMerchOnly: newValue,
       franchiseSearch,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
     });
   };
 
@@ -153,7 +159,23 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: selectedFranchiseTypes,
       licensedMerchOnly,
       franchiseSearch: value,
-      search: searchQuery 
+      search: searchQuery,
+      showGenerated
+    });
+  };
+
+  const toggleShowGenerated = () => {
+    const newValue = !showGenerated;
+    setShowGenerated(newValue);
+    onFilterChange({ 
+      categories: selectedCategories, 
+      states: selectedStates, 
+      cleanStatuses: selectedCleanStatuses,
+      franchiseTypes: selectedFranchiseTypes,
+      licensedMerchOnly,
+      franchiseSearch,
+      search: searchQuery,
+      showGenerated: newValue
     });
   };
 
@@ -165,6 +187,7 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
     setLicensedMerchOnly(false);
     setFranchiseSearch('');
     setSearchQuery('');
+    setShowGenerated(false); // Reset to default (hide generated)
     onFilterChange({ 
       categories: [], 
       states: [], 
@@ -172,11 +195,12 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       franchiseTypes: [],
       licensedMerchOnly: false,
       franchiseSearch: '',
-      search: '' 
+      search: '',
+      showGenerated: false
     });
   };
 
-  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || selectedCleanStatuses.length > 0 || selectedFranchiseTypes.length > 0 || licensedMerchOnly || franchiseSearch || searchQuery;
+  const hasFilters = selectedCategories.length > 0 || selectedStates.length > 0 || selectedCleanStatuses.length > 0 || selectedFranchiseTypes.length > 0 || licensedMerchOnly || franchiseSearch || searchQuery || showGenerated;
 
   return (
     <aside className="w-60 h-full bg-surface-container-low border-r border-outline flex flex-col">
@@ -208,7 +232,8 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
                 franchiseTypes: selectedFranchiseTypes,
                 licensedMerchOnly,
                 franchiseSearch,
-                search: e.target.value 
+                search: e.target.value,
+                showGenerated
               });
             }}
             placeholder="Search items..."
@@ -397,6 +422,38 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Show AI-Generated Items Toggle */}
+        <div>
+          <h3 className="text-label-large text-on-surface mb-3">AI-Generated Items 🤖</h3>
+          <button
+            onClick={toggleShowGenerated}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${
+              showGenerated
+                ? 'bg-tertiary-container text-on-tertiary-container'
+                : 'hover:bg-surface-variant text-on-surface'
+            }`}
+          >
+            <span className="text-xl">{showGenerated ? '👁️' : '🙈'}</span>
+            <span className="text-body-medium flex-1">
+              {showGenerated ? 'Showing AI-Generated' : 'Only Real Clothes'}
+            </span>
+            {showGenerated && (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </button>
+          <p className="text-caption text-on-surface-variant mt-2 px-3">
+            {showGenerated 
+              ? 'Includes color variations and AI-generated items' 
+              : 'Only showing your actual wardrobe items'}
+          </p>
         </div>
       </div>
     </aside>

@@ -186,6 +186,11 @@ model Item {
   franchise       String?                                   // Band name, movie title, game name, etc.
   franchiseType   FranchiseType? @map("franchise_type")    // Type of franchise (band, movie, tv_show, etc.)
   
+  // AI-generated vs real item tracking
+  isGenerated     Boolean        @default(false) @map("is_generated")  // Is this an AI-generated variation (not a real item)?
+  sourceItemId    String?        @map("source_item_id")                 // If generated, ID of the original real item
+  generationType  String?        @map("generation_type")                // Type: 'color_variation', 'seasonal', 'style_transfer', 'matching', etc.
+  
   // AI-inferred attributes
   colorPalette  Json?      @map("color_palette") // ["#FF0000", "#000000"]
   attributes    Json?      // { "neckline": "crew", "sleeve_length": "short", ... }
