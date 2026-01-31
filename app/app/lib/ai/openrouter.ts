@@ -399,6 +399,359 @@ Style guidelines:
     // Fallback to content parsing
     return message.content;
   }
+
+  /**
+   * Generate a color variation of an item while maintaining style and fit
+   * @param referenceImageBase64 - Original item image to use as reference
+   * @param targetColor - Target color (e.g., "burgundy", "forest green")
+   * @param preserveDetails - Whether to preserve graphics/patterns
+   */
+  async generateColorVariation(
+    referenceImageBase64: string,
+    targetColor: string,
+    preserveDetails: boolean = true
+  ): Promise<string> {
+    const prompt = `Transform this clothing item to ${targetColor} color while maintaining:
+- Exact same style, cut, and fit as the reference image
+- Same garment type and proportions
+- Same fabric texture and visual weight
+${preserveDetails ? '- Preserve any graphics, patterns, or design elements (just change base color)' : '- Change to solid color without graphics'}
+- Professional catalog quality
+- Clean, neutral background
+- Consistent lighting and perspective
+
+The result should look like the same garment, just in ${targetColor}.`;
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${referenceImageBase64}` },
+            },
+          ],
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.4,
+      max_tokens: 1000,
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
+
+  /**
+   * Generate a matching item to complement a reference piece
+   * @param referenceImageBase64 - Item to match with (e.g., a top)
+   * @param targetCategory - What to generate (e.g., "bottoms", "accessories")
+   * @param styleNotes - Additional style guidance
+   */
+  async generateMatchingItem(
+    referenceImageBase64: string,
+    targetCategory: string,
+    styleNotes?: string
+  ): Promise<string> {
+    const prompt = `Generate a ${targetCategory} item that perfectly complements and matches this reference piece:
+
+Style matching requirements:
+- Extract and match the color palette from the reference
+- Match the aesthetic and style level (casual/formal/edgy/etc.)
+- Coordinate patterns (solid with pattern, or complementary patterns)
+- Match the visual weight appropriately
+- Ensure colors harmonize (complementary, analogous, or matching tones)
+${styleNotes ? `- Additional guidance: ${styleNotes}` : ''}
+
+Output:
+- Professional catalog-quality image
+- Clean, neutral background
+- Well-lit and clearly visible
+- Realistic fabric textures
+- The item should look like it belongs to the same outfit`;
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${referenceImageBase64}` },
+            },
+          ],
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.6,
+      max_tokens: 1000,
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
+
+  /**
+   * Apply style transfer from a reference image/mood board
+   * @param itemImageBase64 - Item to restyle
+   * @param styleReferenceBase64 - Image with desired aesthetic/style
+   * @param transferStrength - How much to transform (0.3-0.9)
+   */
+  async applyStyleTransfer(
+    itemImageBase64: string,
+    styleReferenceBase64: string,
+    transferStrength: number = 0.6
+  ): Promise<string> {
+    const strengthDescription = transferStrength < 0.5 
+      ? 'subtle inspiration' 
+      : transferStrength < 0.7 
+        ? 'moderate transformation' 
+        : 'strong transformation';
+
+    const prompt = `Apply the aesthetic and styling from the style reference to this clothing item:
+
+Style transfer guidance (${strengthDescription}):
+- Adopt the color palette and tones from the style reference
+- Match the overall vibe, mood, and aesthetic
+- Incorporate similar patterns, textures, or design elements
+- Maintain the base garment type and general fit
+- The result should feel like it belongs in the style reference's aesthetic
+- Strength: ${(transferStrength * 100).toFixed(0)}% transformation
+
+Output:
+- Professional catalog quality
+- Clean background
+- Preserve garment wearability
+- Realistic and cohesive result`;
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            { type: 'text', text: 'Item to transform:' },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${itemImageBase64}` },
+            },
+            { type: 'text', text: 'Style reference to match:' },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${styleReferenceBase64}` },
+            },
+          ],
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.5 + (transferStrength * 0.3),
+      max_tokens: 1000,
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
+
+  /**
+   * Generate seasonal variation of an item
+   * @param referenceImageBase64 - Original item
+   * @param targetSeason - Target season (spring, summer, fall, winter)
+   */
+  async generateSeasonalVariation(
+    referenceImageBase64: string,
+    targetSeason: 'spring' | 'summer' | 'fall' | 'winter'
+  ): Promise<string> {
+    const seasonalGuidance = {
+      spring: 'lighter weight fabrics, pastel or fresh colors, breathable materials',
+      summer: 'lightest weight, breathable fabrics, bright or neutral summer colors',
+      fall: 'medium weight, warm tones (rust, burgundy, brown), cozy textures',
+      winter: 'heavier weight, dark or jewel tones, warm fabrics like wool or fleece',
+    };
+
+    const prompt = `Transform this clothing item into a ${targetSeason} version:
+
+Seasonal adaptations for ${targetSeason}:
+- ${seasonalGuidance[targetSeason]}
+- Maintain the same general style and silhouette
+- Preserve any key design elements or brand identity
+- Adjust fabric weight appropriately
+- Update colors to season-appropriate palette
+- Keep the garment recognizable as a variation
+
+Output:
+- Professional catalog quality
+- Clean, neutral background
+- Season-appropriate styling
+- Realistic fabric representation`;
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${referenceImageBase64}` },
+            },
+          ],
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.5,
+      max_tokens: 1000,
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
+
+  /**
+   * Generate outfit variations with a specific context/occasion
+   * @param itemImagesBase64 - Array of outfit item images to use as base
+   * @param targetContext - Target occasion/setting
+   * @param maintainPieces - Which pieces to keep unchanged
+   */
+  async generateOutfitContextVariation(
+    itemImagesBase64: Array<{ id: string; base64: string; category: string }>,
+    targetContext: string,
+    maintainPieces?: string[]
+  ): Promise<string> {
+    const maintainedPieces = maintainPieces && maintainPieces.length > 0
+      ? `Keep these pieces unchanged: ${maintainPieces.join(', ')}`
+      : 'You may adapt any pieces as needed';
+
+    const prompt = `Adapt this outfit for: ${targetContext}
+
+Reference outfit pieces:
+${itemImagesBase64.map((item, idx) => `${idx + 1}. ${item.category} (ID: ${item.id})`).join('\n')}
+
+Adaptation guidelines:
+- Transform the outfit to be appropriate for: ${targetContext}
+- ${maintainedPieces}
+- Maintain the overall color harmony and aesthetic
+- Adjust formality, coverage, or style as needed
+- Preserve the wearer's personal style
+- Result should be a cohesive, wearable outfit
+
+Output:
+- Show complete outfit suitable for the context
+- Professional visualization quality
+- Clean background
+- All items clearly visible`;
+
+    const contentArray: any[] = [{ type: 'text', text: prompt }];
+    for (const item of itemImagesBase64) {
+      contentArray.push({
+        type: 'image_url',
+        image_url: { url: `data:image/jpeg;base64,${item.base64}` },
+      });
+    }
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: contentArray,
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.6,
+      max_tokens: 1000,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
+
+  /**
+   * Generate a coordinated set (matching pieces)
+   * @param anchorImageBase64 - The piece to build around
+   * @param setType - Type of set to create
+   */
+  async generateCoordinatedSet(
+    anchorImageBase64: string,
+    setType: 'two-piece' | 'three-piece' | 'complete-outfit'
+  ): Promise<string> {
+    const setGuidance = {
+      'two-piece': 'Generate one matching piece (top+bottom or jacket+dress)',
+      'three-piece': 'Generate two coordinating pieces (top+bottom+layer or similar)',
+      'complete-outfit': 'Generate a full outfit with all necessary pieces',
+    };
+
+    const prompt = `Create a coordinated ${setType} set based on this anchor piece:
+
+Set requirements:
+- ${setGuidance[setType]}
+- Match or complement the color palette
+- Coordinate patterns and textures
+- Match the style level and aesthetic
+- Ensure visual balance and harmony
+- All pieces should look intentionally coordinated
+
+Output:
+- Show all pieces in a flat lay / outfit board style
+- Professional catalog quality
+- Clean, neutral background
+- All items clearly visible and well-arranged
+- Should look like a cohesive, ready-to-wear set`;
+
+    const response = await this.makeRequest('/chat/completions', {
+      model: this.config.imageModel,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${anchorImageBase64}` },
+            },
+          ],
+        },
+      ],
+      modalities: ['image', 'text'],
+      temperature: 0.5,
+      max_tokens: 1000,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
+    });
+
+    const message = response.choices[0].message;
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    return message.content;
+  }
 }
 
 // Singleton instance
