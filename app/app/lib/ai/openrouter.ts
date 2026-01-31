@@ -61,9 +61,11 @@ class OpenRouterClient {
     this.config = {
       apiKey: config.apiKey,
       baseUrl: config.baseUrl || 'https://openrouter.ai/api/v1',
-      imageModel: config.imageModel || 'google/gemini-3-pro-image-preview',
-      visionModel: config.visionModel || 'google/gemini-3-pro-preview',
-      textModel: config.textModel || 'google/gemini-3-flash-preview',
+      // Use a model that supports image generation
+      // Options: 'openai/dall-e-3', 'stability-ai/stable-diffusion-xl', 'black-forest-labs/flux-1.1-pro'
+      imageModel: config.imageModel || 'black-forest-labs/flux-1.1-pro',
+      visionModel: config.visionModel || 'google/gemini-2.0-flash-exp:free',
+      textModel: config.textModel || 'google/gemini-2.0-flash-exp:free',
     };
   }
 
@@ -436,16 +438,39 @@ The result should look like the same garment, just in ${targetColor}.`;
           ],
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.4,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      // Add image generation config
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
     });
 
     const message = response.choices[0].message;
+    
+    // Try multiple response formats
+    // Format 1: images array
     if (message.images && message.images.length > 0) {
       return message.images[0];
     }
-    return message.content;
+    
+    // Format 2: content with image URL
+    if (typeof message.content === 'string') {
+      // Check if content contains a URL or base64 image
+      if (message.content.startsWith('http') || message.content.startsWith('data:image/')) {
+        return message.content;
+      }
+      
+      // Try to extract image URL from text
+      const urlMatch = message.content.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|webp)/i);
+      if (urlMatch) {
+        return urlMatch[0];
+      }
+    }
+    
+    // If no image found, return an error message
+    throw new Error('No image generated. The model may not support image-to-image generation. Response: ' + JSON.stringify(message).substring(0, 200));
   }
 
   /**
