@@ -26,7 +26,6 @@ interface OpenRouterRequest {
   temperature?: number;
   max_tokens?: number;
   response_format?: { type: 'json_object' };
-  modalities?: string[]; // For image generation: ['image', 'text']
   image_config?: {
     aspect_ratio?: string;
     image_size?: string;
@@ -108,6 +107,40 @@ class OpenRouterClient {
     }
   }
 
+  /**
+   * Extract image from OpenRouter response
+   * Handles multiple response formats
+   */
+  private extractImageFromResponse(message: any, context: string = 'image generation'): string {
+    // Format 1: images array
+    if (message.images && message.images.length > 0) {
+      return message.images[0];
+    }
+    
+    // Format 2: content with image URL or base64
+    if (typeof message.content === 'string') {
+      // Check if content is a URL or base64 image
+      if (message.content.startsWith('http') || message.content.startsWith('data:image/')) {
+        return message.content;
+      }
+      
+      // Try to extract image URL from text
+      const urlMatch = message.content.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|webp)/i);
+      if (urlMatch) {
+        return urlMatch[0];
+      }
+    }
+    
+    // If no image found, throw descriptive error
+    throw new Error(
+      `No image generated for ${context}. ` +
+      `The model may not support image-to-image generation. ` +
+      `Current model: ${this.config.imageModel}. ` +
+      `Response: ${JSON.stringify(message).substring(0, 200)}. ` +
+      `Try using: 'black-forest-labs/flux-1.1-pro', 'openai/dall-e-3', or 'stability-ai/stable-diffusion-xl'`
+    );
+  }
+
   async generateCatalogImage(imageBase64: string): Promise<string> {
     const prompt = `Transform this clothing item photo into a professional catalog image:
 - Remove or replace background with neutral, clean background
@@ -118,7 +151,6 @@ class OpenRouterClient {
 - Create crisp edges without halos
 - Output should be square format, well-lit, and catalog-quality`;
 
-    // OpenRouter uses modalities for image generation
     const response = await this.makeRequest('/chat/completions', {
       model: this.config.imageModel,
       messages: [
@@ -133,22 +165,15 @@ class OpenRouterClient {
           ],
         },
       ],
-      modalities: ['image', 'text'], // Enable image generation
       temperature: 0.3,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
     });
 
-    // Extract generated image from response
-    // OpenRouter returns images in the message.images array or content
-    const message = response.choices[0].message;
-    
-    // Check for images array (newer format)
-    if (message.images && message.images.length > 0) {
-      return message.images[0]; // URL or base64
-    }
-    
-    // Fallback to content parsing
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'catalog image generation');
   }
 
   async inferItemDetails(imageBase64: string, labelImageBase64?: string): Promise<any> {
@@ -381,9 +406,12 @@ Style guidelines:
           content: contentArray,
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.5,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
       image_config: {
         aspect_ratio: '1:1',
         image_size: '1024x1024',
@@ -515,16 +543,15 @@ Output:
           ],
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.6,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
     });
 
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'matching item generation');
   }
 
   /**
@@ -580,16 +607,15 @@ Output:
           ],
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.5 + (transferStrength * 0.3),
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
     });
 
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'style transfer');
   }
 
   /**
@@ -638,16 +664,15 @@ Output:
           ],
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.5,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
     });
 
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'seasonal variation');
   }
 
   /**
@@ -700,20 +725,19 @@ Output:
           content: contentArray,
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.6,
-      max_tokens: 1000,
+      max_tokens: 4096,
+      image_config: {
+        aspect_ratio: '1:1',
+        image_size: '1024x1024',
+      },
       image_config: {
         aspect_ratio: '1:1',
         image_size: '1024x1024',
       },
     });
 
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'image generation');
   }
 
   /**
@@ -762,20 +786,15 @@ Output:
           ],
         },
       ],
-      modalities: ['image', 'text'],
       temperature: 0.5,
-      max_tokens: 1000,
+      max_tokens: 4096,
       image_config: {
         aspect_ratio: '1:1',
         image_size: '1024x1024',
       },
     });
 
-    const message = response.choices[0].message;
-    if (message.images && message.images.length > 0) {
-      return message.images[0];
-    }
-    return message.content;
+    return this.extractImageFromResponse(response.choices[0].message, 'coordinated set generation');
   }
 }
 
