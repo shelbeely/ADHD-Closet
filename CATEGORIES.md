@@ -650,8 +650,7 @@ const counts = await prisma.item.groupBy({
 ## See Also
 
 - `SPEC.md` - ADHD-friendly UX design principles
-- `OUI_IMPLEMENTATION.md` - Smart suggestions using categories
-- `ADVANCED_OUI_FEATURES.md` - Seasonal and style recommendations
+- `OUI_GUIDE.md` - Smart suggestions using categories
 - `FAQ.md` - Common questions about the app
 
 ---
