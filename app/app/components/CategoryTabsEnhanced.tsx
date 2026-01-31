@@ -11,10 +11,25 @@ const CATEGORIES = [
   { value: 'accessories', label: 'Accessories', icon: '🎒' },
   { value: 'underwear_bras', label: 'Underwear', icon: '🩲' },
   { value: 'jewelry', label: 'Jewelry', icon: '💍' },
+  { value: 'swimwear', label: 'Swimwear', icon: '🩱' },
+  { value: 'activewear', label: 'Activewear', icon: '🏃' },
+  { value: 'sleepwear', label: 'Sleepwear', icon: '😴' },
+  { value: 'loungewear', label: 'Loungewear', icon: '🛋️' },
+  { value: 'suits_sets', label: 'Suits & Sets', icon: '👔' },
 ] as const;
 
-// Sub-categories for accessories, jewelry, and shoes
+// Sub-categories for accessories, jewelry, shoes, and bottoms
 const SUB_CATEGORIES = {
+  bottoms: [
+    { value: 'jeans', label: 'Jeans', icon: '👖' },
+    { value: 'dress_pants', label: 'Dress Pants', icon: '👔' },
+    { value: 'casual_pants', label: 'Casual Pants', icon: '👖' },
+    { value: 'cargo_pants', label: 'Cargo Pants', icon: '🎒' },
+    { value: 'shorts', label: 'Shorts', icon: '🩳' },
+    { value: 'skirt', label: 'Skirts', icon: '👗' },
+    { value: 'leggings', label: 'Leggings', icon: '🧘' },
+    { value: 'joggers', label: 'Joggers', icon: '🏃' },
+  ],
   accessories: [
     { value: 'purse', label: 'Purses', icon: '👜' },
     { value: 'bag', label: 'Bags', icon: '🎒' },

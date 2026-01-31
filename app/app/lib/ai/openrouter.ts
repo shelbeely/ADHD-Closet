@@ -157,11 +157,12 @@ Focus on accurate categorization, color identification, and relevant style tags.
     const userPrompt = `Analyze this clothing item and provide detailed information in JSON format:
 
 Required fields:
-- category: one of [tops, bottoms, dresses, outerwear, shoes, accessories, underwear_bras, jewelry]
+- category: one of [tops, bottoms, dresses, outerwear, shoes, accessories, underwear_bras, jewelry, swimwear, activewear, sleepwear, loungewear, suits_sets]
 - subType: specific sub-type based on category:
   - For accessories: one of [purse, bag, backpack, belt, hat, scarf, gloves, sunglasses, watch, other]
   - For jewelry: one of [necklace, earrings, bracelet, ring, anklet, brooch, other]
   - For shoes: one of [sneakers, boots, sandals, heels, flats, loafers, oxfords, platforms, other]
+  - For bottoms: one of [jeans, dress_pants, casual_pants, cargo_pants, shorts, skirt, leggings, joggers, other]
   - For other categories: null
 - colors: array of named colors (e.g., ["black", "dark purple"])
 - colorPalette: array of hex codes for dominant colors
@@ -174,6 +175,11 @@ Required fields:
   - For shoes: heelHeight, heelThickness (none, slim, chunky, wedge), toeboxShape (rounded, almond, pointed, square), visualWeight (minimal, moderate, heavy), shoeType (from subType)
   - For accessories: accessoryType (from subType), size (small, medium, large), material, structure (structured, unstructured, semi-structured), visualWeight (minimal, moderate, heavy), occasion (casual, formal, both)
   - For jewelry: jewelryType (from subType), metal (gold, silver, rose gold, bronze, mixed, none), gemstones (yes/no), style (delicate, statement, chunky, minimalist), occasion (everyday, formal, special)
+  - For swimwear: style (one-piece, two-piece, bikini, tankini, boardshorts, rash-guard), coverage (minimal, moderate, full), activity (swimming, surfing, beach, pool)
+  - For activewear: activityType (gym, running, yoga, cycling, sports), fit (compression, fitted, loose), moisture-wicking (yes/no), visualWeight (minimal, moderate)
+  - For sleepwear: style (pajamas, nightgown, robe, sleep-shirt, shorts-set), warmth (light, medium, heavy), season (summer, winter, all-season)
+  - For loungewear: comfort-level (ultra-comfy, relaxed, presentable), style (sweats, joggers, lounge-set, casual), occasion (home-only, casual-outing)
+  - For suits_sets: type (two-piece, three-piece, co-ord, matching-set), formality (casual, business-casual, formal), completeness (complete-set, mix-and-match)
 - fitNotes: brief description of how the item fits and its proportions (e.g., "Oversized fit creates volume contrast", "High neckline flattens bust area", "Low rise may segment torso")
 - pairingTips: array of 1-2 suggestions for what items work well with this piece (e.g., "Pairs well with high-waisted bottoms", "Best with minimal jewelry", "Works as statement piece")
 - tags: array of style tags relevant to emo/goth/alt fashion

@@ -2,41 +2,64 @@
 
 ## 🎯 Quick Summary
 
-The ADHD-Closet application has **8 main categories** for organizing your wardrobe:
+The ADHD-Closet application has **13 main categories** for organizing your wardrobe:
 
 ```
 1. 👕 Tops
-2. 👖 Bottoms
+2. 👖 Bottoms (with 9 sub-types!)
 3. 👗 Dresses
 4. 🧥 Outerwear
-5. 👟 Shoes
-6. 🎒 Accessories
+5. 👟 Shoes (with 9 sub-types)
+6. 🎒 Accessories (with 10 sub-types)
 7. 🩲 Underwear & Bras
-8. 💍 Jewelry
+8. 💍 Jewelry (with 7 sub-types)
+9. 🩱 Swimwear
+10. 🏃 Activewear
+11. 😴 Sleepwear
+12. 🛋️ Loungewear
+13. 👔 Suits & Sets
 ```
 
-Plus **26 sub-categories** for more specific organization!
+Plus **35 sub-categories** for more specific organization!
 
 ---
 
 ## 📋 Complete List
 
-### Main Categories (8)
+### Main Categories (13)
 
 | Icon | Category | Description |
 |------|----------|-------------|
 | 👕 | **Tops** | T-shirts, blouses, sweaters, tank tops |
-| 👖 | **Bottoms** | Jeans, pants, shorts, skirts, leggings |
+| 👖 | **Bottoms** | Jeans, pants, shorts, skirts, leggings (with 9 sub-types) |
 | 👗 | **Dresses** | All types of dresses |
 | 🧥 | **Outerwear** | Jackets, coats, blazers, cardigans |
 | 👟 | **Shoes** | All footwear (with 9 sub-types) |
 | 🎒 | **Accessories** | Bags, belts, hats, scarves (with 10 sub-types) |
 | 🩲 | **Underwear & Bras** | Undergarments, intimates, socks |
 | 💍 | **Jewelry** | Necklaces, earrings, rings (with 7 sub-types) |
+| 🩱 | **Swimwear** | Swimsuits, bikinis, board shorts |
+| 🏃 | **Activewear** | Athletic/sports clothing, gym wear |
+| 😴 | **Sleepwear** | Pajamas, nightgowns, robes |
+| 🛋️ | **Loungewear** | Comfy home clothes, sweats |
+| 👔 | **Suits & Sets** | Matching sets, coordinated ensembles |
 
 ---
 
 ## 🔍 Categories with Sub-Types
+
+### 👖 Bottoms (9 sub-types) ⭐ NEW!
+- Jeans 👖 (skinny, straight, bootcut, wide-leg)
+- Dress Pants 👔
+- Casual Pants 👖
+- Cargo Pants 🎒
+- Shorts 🩳
+- Skirts 👗 (mini, midi, maxi)
+- Leggings 🧘
+- Joggers 🏃
+- Other
+
+**Note:** High rise, mid rise, low rise are tracked as attributes within each type!
 
 ### 👟 Shoes (9 sub-types)
 - Sneakers 👟
@@ -74,9 +97,10 @@ Plus **26 sub-categories** for more specific organization!
 
 ## 📊 Statistics
 
-**Total:** 34 classification options
-- 8 main categories
-- 26 sub-categories
+**Total:** 48 classification options
+- 13 main categories
+- 35 sub-categories
+  - 9 bottoms types (NEW!)
   - 9 shoe types
   - 10 accessory types
   - 7 jewelry types

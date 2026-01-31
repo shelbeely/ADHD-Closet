@@ -22,6 +22,11 @@ enum Category {
   accessories
   underwear_bras
   jewelry
+  swimwear
+  activewear
+  sleepwear
+  loungewear
+  suits_sets
 }
 
 enum AccessoryType {
@@ -56,6 +61,18 @@ enum ShoeType {
   loafers
   oxfords
   platforms
+  other
+}
+
+enum BottomsType {
+  jeans
+  dress_pants
+  casual_pants
+  cargo_pants
+  shorts
+  skirt
+  leggings
+  joggers
   other
 }
 
@@ -102,6 +119,11 @@ enum OutfitRole {
   accessory
   underwear_bras
   jewelry
+  swimwear
+  activewear
+  sleepwear
+  loungewear
+  suit_set
 }
 
 enum OutfitRating {
@@ -136,10 +158,11 @@ model Item {
   category      Category?
   state         ItemState  @default(available)
   
-  // Sub-type categorization for accessories, jewelry, and shoes
+  // Sub-type categorization for accessories, jewelry, shoes, and bottoms
   accessoryType AccessoryType? @map("accessory_type")
   jewelryType   JewelryType?   @map("jewelry_type")
   shoeType      ShoeType?      @map("shoe_type")
+  bottomsType   BottomsType?   @map("bottoms_type")
   
   // Label/brand info (may come from AI OCR)
   brand         String?

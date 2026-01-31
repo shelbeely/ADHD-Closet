@@ -8,7 +8,7 @@ This document provides a comprehensive reference for all categories and sub-cate
 
 ## Main Categories
 
-The application supports **8 main categories** for organizing wardrobe items:
+The application supports **13 main categories** for organizing wardrobe items:
 
 ### 1. 👕 Tops
 **Database value:** `tops`
@@ -38,16 +38,35 @@ Items worn on the upper body.
 
 Items worn on the lower body.
 
+**Sub-categories available:**
+- 👖 **Jeans** - Denim pants of all styles
+- 👔 **Dress Pants** - Formal trousers
+- 👖 **Casual Pants** - Everyday pants
+- 🎒 **Cargo Pants** - Pants with utility pockets
+- 🩳 **Shorts** - Short pants
+- 👗 **Skirts** - All types of skirts
+- 🧘 **Leggings** - Form-fitting stretch pants
+- 🏃 **Joggers** - Athletic/casual tapered pants
+- **Other** - Miscellaneous bottoms
+
 **Examples:**
-- Jeans
-- Pants
+- Jeans (skinny, straight, bootcut, wide-leg)
+- Dress pants
+- Casual pants
 - Shorts
-- Skirts
+- Skirts (mini, midi, maxi)
 - Leggings
 
 **Attributes tracked:**
+- Bottoms type (from sub-category)
 - Rise (low, mid, high)
 - Inseam
+- Fit (skinny, slim, straight, wide, bootcut, flare)
+- Hemline (raw, cuffed, distressed)
+- Visual weight (minimal, moderate, heavy)
+- Pocket style
+
+**Note:** High rise, skinny fit, etc. are tracked as attributes within each sub-type.
 - Fit (skinny, slim, straight, wide, bootcut, flare)
 - Hemline (raw, cuffed, distressed)
 - Visual weight (minimal, moderate, heavy)
@@ -188,13 +207,125 @@ Decorative accessories worn on the body.
 
 ---
 
+### 9. 🩱 Swimwear
+**Database value:** `swimwear`
+
+Swimming and water activity clothing.
+
+**Examples:**
+- Swimsuits
+- Bikinis
+- Board shorts
+- Rash guards
+- Swim trunks
+- Cover-ups
+
+**Attributes tracked:**
+- Style (one-piece, two-piece, bikini, tankini, boardshorts, rash-guard)
+- Coverage (minimal, moderate, full)
+- Activity (swimming, surfing, beach, pool)
+
+---
+
+### 10. 🏃 Activewear
+**Database value:** `activewear`
+
+Athletic and sports clothing.
+
+**Examples:**
+- Sports bras
+- Leggings (athletic)
+- Gym shorts
+- Running tops
+- Yoga pants
+- Track suits
+- Compression wear
+
+**Attributes tracked:**
+- Activity type (gym, running, yoga, cycling, sports)
+- Fit (compression, fitted, loose)
+- Moisture-wicking (yes/no)
+- Visual weight (minimal, moderate)
+
+---
+
+### 11. 😴 Sleepwear
+**Database value:** `sleepwear`
+
+Clothing worn for sleeping.
+
+**Examples:**
+- Pajamas
+- Nightgowns
+- Robes
+- Sleep shirts
+- PJ sets
+- Night shorts
+
+**Attributes tracked:**
+- Style (pajamas, nightgown, robe, sleep-shirt, shorts-set)
+- Warmth (light, medium, heavy)
+- Season (summer, winter, all-season)
+
+---
+
+### 12. 🛋️ Loungewear
+**Database value:** `loungewear`
+
+Comfortable clothing for home and casual wear.
+
+**Examples:**
+- Sweatpants
+- Joggers
+- Lounge sets
+- Comfy sweaters
+- Casual hoodies
+- Relaxed shorts
+
+**Attributes tracked:**
+- Comfort level (ultra-comfy, relaxed, presentable)
+- Style (sweats, joggers, lounge-set, casual)
+- Occasion (home-only, casual-outing)
+
+---
+
+### 13. 👔 Suits & Sets
+**Database value:** `suits_sets`
+
+Matching sets and coordinated ensembles.
+
+**Examples:**
+- Business suits
+- Two-piece sets
+- Co-ord sets
+- Matching outfits
+- Three-piece suits
+- Blazer sets
+
+**Attributes tracked:**
+- Type (two-piece, three-piece, co-ord, matching-set)
+- Formality (casual, business-casual, formal)
+- Completeness (complete-set, mix-and-match)
+
+---
+
 ## Complete Category Hierarchy
 
 ```
 📦 ADHD-Closet Categories
 │
 ├── 👕 Tops
+│
 ├── 👖 Bottoms
+│   ├── 👖 Jeans
+│   ├── 👔 Dress Pants
+│   ├── 👖 Casual Pants
+│   ├── 🎒 Cargo Pants
+│   ├── 🩳 Shorts
+│   ├── 👗 Skirts
+│   ├── 🧘 Leggings
+│   └── 🏃 Joggers
+│
 ├── 👗 Dresses
 ├── 🧥 Outerwear
 │
@@ -222,14 +353,20 @@ Decorative accessories worn on the body.
 │
 ├── 🩲 Underwear & Bras
 │
-└── 💍 Jewelry
-    ├── 📿 Necklace
-    ├── 💎 Earrings
-    ├── 📿 Bracelet
-    ├── 💍 Ring
-    ├── Anklet
-    ├── Brooch
-    └── Other
+├── 💍 Jewelry
+│   ├── 📿 Necklace
+│   ├── 💎 Earrings
+│   ├── 📿 Bracelet
+│   ├── 💍 Ring
+│   ├── Anklet
+│   ├── Brooch
+│   └── Other
+│
+├── 🩱 Swimwear
+├── 🏃 Activewear
+├── 😴 Sleepwear
+├── 🛋️ Loungewear
+└── 👔 Suits & Sets
 ```
 
 ---
@@ -248,6 +385,14 @@ enum Category {
   outerwear
   shoes
   accessories
+  underwear_bras
+  jewelry
+  swimwear
+  activewear
+  sleepwear
+  loungewear
+  suits_sets
+}
   underwear_bras
   jewelry
 }
@@ -284,6 +429,18 @@ enum ShoeType {
   loafers
   oxfords
   platforms
+  other
+}
+
+enum BottomsType {
+  jeans
+  dress_pants
+  casual_pants
+  cargo_pants
+  shorts
+  skirt
+  leggings
+  joggers
   other
 }
 ```
@@ -470,17 +627,23 @@ const counts = await prisma.item.groupBy({
 ## Summary
 
 **Total Categories:**
-- 8 main categories
+- 13 main categories
+- 9 bottoms sub-types
 - 10 accessory sub-types
 - 7 jewelry sub-types
 - 9 shoe sub-types
-- **34 total classification options**
+- **48 total classification options**
 
 **Design Philosophy:**
-- Simple by default (8 categories)
+- Simple by default (13 categories)
 - Detailed when needed (sub-types)
 - ADHD-friendly (visual, intuitive, progressive disclosure)
 - AI-enhanced (automatic detection)
+
+**New Features:**
+- 5 new main categories for better outfit recommendations (swimwear, activewear, sleepwear, loungewear, suits_sets)
+- Bottoms now have sub-types like shoes and accessories (jeans, dress pants, shorts, skirts, etc.)
+- Attributes like "high rise" and "skinny" are tracked within each bottoms sub-type
 
 ---
 
