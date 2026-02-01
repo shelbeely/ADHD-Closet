@@ -1,24 +1,45 @@
 # Database Seeding
 
-This directory contains the database seeding script that populates the database with dummy data for testing and development.
+This directory contains the database seeding script that populates the database with comprehensive dummy data for testing and development.
 
 ## What Does the Seed Script Do?
 
-The seed script (`seed.ts`) creates **one item for each of the 13 main categories** in the ADHD Closet application:
+The seed script (`seed.ts`) creates **comprehensive test data covering all categories and attribute variations**:
 
-1. 👕 **Tops** - Black Band T-Shirt (My Chemical Romance merch)
-2. 👖 **Bottoms** - Dark Wash Skinny Jeans (with sub-type: jeans)
-3. 👗 **Dresses** - Gothic Lace Maxi Dress
-4. 🧥 **Outerwear** - Oversized Denim Jacket
-5. 👟 **Shoes** - Platform Combat Boots (with sub-type: boots)
-6. 🎒 **Accessories** - Black Crossbody Bag (with sub-type: purse)
-7. 🩲 **Underwear & Bras** - Black Sports Bra
-8. 💍 **Jewelry** - Silver Chain Necklace (with sub-type: necklace)
-9. 🩱 **Swimwear** - Black One-Piece Swimsuit
-10. 🏃 **Activewear** - Black Leggings
-11. 😴 **Sleepwear** - Skull Print Pajama Set
-12. 🛋️ **Loungewear** - Oversized Hoodie
-13. 👔 **Suits & Sets** - Black Two-Piece Co-ord Set
+### Categories Covered (13 main categories):
+
+1. 👕 **Tops** (6 items) - Different necklines and sleeve lengths
+   - Crew neck, V-neck, Scoop neck, Boat neck, Turtleneck, Off-shoulder
+   
+2. 👖 **Bottoms** (8 items) - All sub-types
+   - Jeans, Dress pants, Casual pants, Cargo pants, Shorts, Skirt, Leggings, Joggers
+   
+3. 👗 **Dresses** (2 items) - Different styles and silhouettes
+   
+4. 🧥 **Outerwear** (2 items) - Different lengths and weights
+   
+5. 👟 **Shoes** (8 items) - All sub-types
+   - Sneakers, Boots, Sandals, Heels, Flats, Loafers, Oxfords, Platforms
+   
+6. 🎒 **Accessories** (9 items) - All sub-types
+   - Purse, Bag, Backpack, Belt, Hat, Scarf, Gloves, Sunglasses, Watch
+   
+7. 🩲 **Underwear & Bras** (2 items)
+   
+8. 💍 **Jewelry** (6 items) - All sub-types
+   - Necklace, Earrings, Bracelet, Ring, Anklet, Brooch
+   
+9. 🩱 **Swimwear** (2 items) - Different styles and coverage
+   
+10. 🏃 **Activewear** (2 items) - Different activity types
+   
+11. 😴 **Sleepwear** (2 items) - Different warmth levels
+   
+12. 🛋️ **Loungewear** (2 items) - Different comfort levels
+   
+13. 👔 **Suits & Sets** (2 items) - Two-piece and three-piece
+
+**Total: ~53 items** with realistic data including brands, sizes, materials, color palettes, and category-specific attributes.
 
 Each item includes realistic data such as:
 - Brand name
