@@ -11,6 +11,7 @@ interface Item {
   cleanStatus: string;
   currentWears: number;
   wearsBeforeWash: number;
+  colorPalette?: string[]; // Array of hex color codes
   images: Array<{
     id: string;
     kind: string;
@@ -28,10 +29,23 @@ interface ItemGridProps {
 
 export default function ItemGrid({ items, loading }: ItemGridProps) {
   const getItemImages = (item: Item) => {
-    const frontImage = item.images.find(img => img.kind === 'original_main');
+    // Prefer AI catalog images over originals for cleaner display
+    const catalogImage = item.images.find(img => img.kind === 'ai_catalog');
+    const frontImage = catalogImage || item.images.find(img => img.kind === 'original_main');
     const backImage = item.images.find(img => img.kind === 'original_back');
-    const hasBothSides = frontImage && backImage;
+    const hasBothSides = !catalogImage && frontImage && backImage; // Only show both sides if no catalog image
     return { frontImage, backImage, hasBothSides };
+  };
+
+  // Format category for display
+  const formatCategory = (category?: string): string => {
+    if (!category) return '';
+    return category.replace(/_/g, ' ').toUpperCase();
+  };
+
+  // Get primary color from palette
+  const getPrimaryColor = (colorPalette?: string[]): string | null => {
+    return colorPalette && colorPalette.length > 0 ? colorPalette[0] : null;
   };
 
   if (loading) {
@@ -100,13 +114,44 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
                   </div>
                 </div>
               ) : (
-                /* Single image view for items with only front or only back */
+                /* Single image view for items with only front or catalog image */
                 frontImage || backImage ? (
-                  <img
-                    src={`/api/images/${(frontImage || backImage)!.id}`}
-                    alt={item.title || 'Item'}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="w-full h-full relative">
+                    <img
+                      src={`/api/images/${(frontImage || backImage)!.id}`}
+                      alt={item.title || 'Item'}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Category and brand overlay (only for catalog images) */}
+                    {frontImage?.kind === 'ai_catalog' && (
+                      <div className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/60 to-transparent">
+                        {item.category && (
+                          <div className="text-white text-label-large font-bold tracking-wider mb-1">
+                            {formatCategory(item.category)}
+                          </div>
+                        )}
+                        {item.brand && (
+                          <div className="text-white/90 text-label-medium font-medium">
+                            {item.brand.toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Primary color indicator */}
+                    {getPrimaryColor(item.colorPalette) && (
+                      <div className="absolute bottom-3 left-3 flex items-center gap-2 px-2 py-1 bg-surface-container/90 backdrop-blur-sm rounded-full shadow-elevation-1">
+                        <div 
+                          className="w-4 h-4 rounded-full border-2 border-white/50" 
+                          style={{ backgroundColor: getPrimaryColor(item.colorPalette) || '#000' }}
+                        />
+                        <span className="text-on-surface text-label-small font-medium pr-1">
+                          Color
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-5xl bg-surface-variant">
                     👕
