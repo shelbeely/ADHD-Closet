@@ -77,6 +77,7 @@ nav:
     - Contributing: CONTRIBUTING.md
     - API Reference: api/API_DOCUMENTATION.md
     - Deployment: deployment/DEPLOYMENT.md
+    - Android APK Build: mobile/ANDROID_BUILD.md
 
 extra:
   social:

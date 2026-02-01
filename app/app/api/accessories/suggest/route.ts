@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
 
     // Suggest shoes if not already in outfit
     if (!hasShoes && shoes.length > 0) {
-      shoes.forEach(shoe => {
+      shoes.forEach((shoe: typeof shoes[0]) => {
         const shoeColors = (shoe.colorPalette as string[]) || [];
         const colorMatch = shoeColors.some(color => outfitColors.includes(color));
         const shoeType = (shoe.attributes as any)?.shoeType || 'shoes';
@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
 
     // Suggest accessories (bags, purses) if needed
     if (!hasAccessory && accessories.length > 0) {
-      accessories.forEach(accessory => {
+      accessories.forEach((accessory: typeof accessories[0]) => {
         const accColors = (accessory.colorPalette as string[]) || [];
         const colorMatch = accColors.some(color => outfitColors.includes(color));
         const accType = (accessory.attributes as any)?.accessoryType || 'accessory';
@@ -169,11 +169,11 @@ export async function POST(request: NextRequest) {
 
     // Smart jewelry suggestions based on outfit complexity
     if (!hasJewelry && jewelry.length > 0) {
-      jewelry.forEach(jewel => {
+      jewelry.forEach((jewel: typeof jewelry[0]) => {
         const jewelColors = (jewel.colorPalette as string[]) || [];
         const colorMatch = jewelColors.some(color => outfitColors.includes(color));
         const jewelType = (jewel.attributes as any)?.jewelryType || 'jewelry';
-        const isStatement = jewel.tags.some(t => 
+        const isStatement = jewel.tags.some((t: typeof jewel.tags[0]) => 
           t.tag.name.toLowerCase().includes('statement') || 
           t.tag.name.toLowerCase().includes('bold')
         );

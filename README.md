@@ -244,6 +244,7 @@ See [SPEC.md](docs/developer/SPEC.md) for complete design system guidelines.
 - [Contributing](CONTRIBUTING.md) - Code standards
 - [Architecture](docs/developer/ARCHITECTURE.md) - System design
 - [API Documentation](docs/api/API_DOCUMENTATION.md) - Endpoints
+- [Android APK Build Guide](docs/mobile/ANDROID_BUILD.md) - Build Android app
 
 **Features:**
 - [Categories](docs/features/CATEGORIES.md) - Item organization
