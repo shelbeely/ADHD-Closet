@@ -50,11 +50,11 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {[...Array(10)].map((_, i) => (
+      <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="aspect-square bg-surface-variant rounded-3xl animate-pulse"
+            className="aspect-[3/4] bg-surface-variant rounded-3xl animate-pulse shadow-elevation-2"
           />
         ))}
       </div>
@@ -78,9 +78,10 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {items.map((item) => {
         const { frontImage, backImage, hasBothSides } = getItemImages(item);
+        const primaryColor = getPrimaryColor(item.colorPalette);
 
         return (
           <Link
@@ -88,137 +89,138 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
             href={`/items/${item.id}`}
             className="group cursor-pointer"
           >
-            <div className="aspect-square bg-surface-container-low rounded-3xl overflow-hidden mb-3 relative transition-all duration-300 hover:shadow-elevation-2 hover:scale-[1.02]">
-              {hasBothSides ? (
-                /* Side-by-side view for items with both front and back */
-                <div className="w-full h-full flex">
-                  <div className="w-1/2 h-full relative border-r border-outline-variant">
-                    <img
-                      src={`/api/images/${frontImage!.id}`}
-                      alt={`${item.title || 'Item'} - Front`}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-primary-container/90 backdrop-blur-sm text-on-primary-container text-label-small rounded-full font-medium">
-                      Front
+            {/* Card-based UI with prominent image and overlaid text */}
+            <div className="bg-surface-container rounded-3xl overflow-hidden shadow-elevation-2 transition-all duration-300 hover:shadow-elevation-3 hover:scale-[1.02]">
+              {/* Image Container - 3:4 aspect ratio like typical product cards */}
+              <div className="aspect-[3/4] bg-surface-container-low relative">
+                {hasBothSides ? (
+                  /* Side-by-side view for items with both front and back */
+                  <div className="w-full h-full flex">
+                    <div className="w-1/2 h-full relative border-r border-outline-variant">
+                      <img
+                        src={`/api/images/${frontImage!.id}`}
+                        alt={`${item.title || 'Item'} - Front`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary-container/90 backdrop-blur-sm text-on-primary-container text-label-small rounded-full font-medium">
+                        Front
+                      </div>
+                    </div>
+                    <div className="w-1/2 h-full relative">
+                      <img
+                        src={`/api/images/${backImage!.id}`}
+                        alt={`${item.title || 'Item'} - Back`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-secondary-container/90 backdrop-blur-sm text-on-secondary-container text-label-small rounded-full font-medium">
+                        Back
+                      </div>
                     </div>
                   </div>
-                  <div className="w-1/2 h-full relative">
-                    <img
-                      src={`/api/images/${backImage!.id}`}
-                      alt={`${item.title || 'Item'} - Back`}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-secondary-container/90 backdrop-blur-sm text-on-secondary-container text-label-small rounded-full font-medium">
-                      Back
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* Single image view for items with only front or catalog image */
-                frontImage || backImage ? (
-                  <div className="w-full h-full relative">
-                    <img
-                      src={`/api/images/${(frontImage || backImage)!.id}`}
-                      alt={item.title || 'Item'}
-                      className="w-full h-full object-cover"
-                    />
-                    
-                    {/* Category and brand overlay (only for catalog images) */}
-                    {frontImage?.kind === 'ai_catalog' && (
-                      <div className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/60 to-transparent">
+                ) : (
+                  /* Single image view with overlaid metadata */
+                  frontImage || backImage ? (
+                    <div className="w-full h-full relative">
+                      <img
+                        src={`/api/images/${(frontImage || backImage)!.id}`}
+                        alt={item.title || 'Item'}
+                        className="w-full h-full object-cover"
+                      />
+                      
+                      {/* Top overlay with category, brand, and optional color text */}
+                      <div className="absolute inset-x-0 top-0 p-4 bg-gradient-to-b from-black/70 via-black/40 to-transparent">
                         {item.category && (
-                          <div className="text-white text-label-large font-bold tracking-wider mb-1 uppercase">
+                          <div className="text-white text-title-medium font-bold tracking-wide mb-1 uppercase drop-shadow-lg">
                             {formatCategory(item.category)}
                           </div>
                         )}
                         {item.brand && (
                           <div 
-                            className="text-white/90 text-label-medium font-medium uppercase"
+                            className="text-white/95 text-body-large font-semibold uppercase drop-shadow-lg"
                             aria-label={item.brand}
                           >
                             {item.brand}
                           </div>
                         )}
                       </div>
-                    )}
-                    
-                    {/* Primary color indicator (only for catalog images) */}
-                    {getPrimaryColor(item.colorPalette) && frontImage?.kind === 'ai_catalog' && (
-                      <div 
-                        className="absolute bottom-3 left-3 flex items-center gap-2 px-2 py-1 bg-surface-container/90 backdrop-blur-sm rounded-full shadow-elevation-1"
-                        aria-label={`Primary color: ${getPrimaryColor(item.colorPalette)}`}
+                      
+                      {/* Bottom overlay with color badge */}
+                      {primaryColor && (
+                        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end justify-between">
+                          <div 
+                            className="flex items-center gap-2 px-3 py-2 bg-white/90 backdrop-blur-sm rounded-full shadow-elevation-2"
+                            aria-label={`Primary color: ${primaryColor}`}
+                          >
+                            <div 
+                              className="w-5 h-5 rounded-full border-2 border-white shadow-sm" 
+                              style={{ backgroundColor: primaryColor }}
+                              aria-hidden="true"
+                            />
+                            <span className="text-on-surface text-label-large font-bold uppercase tracking-wide">
+                              {primaryColor}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-6xl bg-surface-variant">
+                      👕
+                    </div>
+                  )
+                )}
+                
+                {/* State badge */}
+                {item.state !== 'available' && (
+                  <div className="absolute top-4 right-4 px-3 py-1.5 bg-secondary-container text-on-secondary-container text-label-medium rounded-full shadow-elevation-2 font-bold uppercase">
+                    {item.state}
+                  </div>
+                )}
+                
+                {/* Clean status badge */}
+                {item.cleanStatus !== 'clean' && (
+                  <div className={`absolute top-4 ${item.state !== 'available' ? 'right-[100px]' : 'right-4'} px-3 py-1.5 text-label-medium rounded-full shadow-elevation-2 font-bold ${
+                    item.cleanStatus === 'needs_wash' 
+                      ? 'bg-error-container text-on-error-container' 
+                      : 'bg-tertiary-container text-on-tertiary-container'
+                  }`}>
+                    {item.cleanStatus === 'needs_wash' ? '🚿 Wash' : '🧺 Dirty'}
+                  </div>
+                )}
+                
+                {/* Additional images count */}
+                {item.imageCount > 2 && (
+                  <div className="absolute bottom-4 right-4 px-3 py-1.5 bg-primary-container text-on-primary-container text-label-medium rounded-full shadow-elevation-2 font-bold">
+                    +{item.imageCount - 2} photos
+                  </div>
+                )}
+              </div>
+              
+              {/* Card footer with title and tags - minimal, clean */}
+              <div className="p-4 space-y-2">
+                {item.title && (
+                  <h3 className="text-title-small text-on-surface line-clamp-2 font-bold">
+                    {item.title}
+                  </h3>
+                )}
+                {item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {item.tags.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag.name}
+                        className="text-label-medium px-2 py-1 bg-surface-variant rounded-lg text-on-surface-variant"
                       >
-                        <div 
-                          className="w-4 h-4 rounded-full border-2 border-white/50" 
-                          style={{ backgroundColor: getPrimaryColor(item.colorPalette) || '#000' }}
-                          aria-hidden="true"
-                        />
-                        <span className="text-on-surface text-label-small font-medium pr-1">
-                          Color
-                        </span>
-                      </div>
+                        {tag.name}
+                      </span>
+                    ))}
+                    {item.tags.length > 3 && (
+                      <span className="text-label-medium px-2 py-1 bg-surface-variant rounded-lg text-on-surface-variant font-bold">
+                        +{item.tags.length - 3}
+                      </span>
                     )}
                   </div>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-5xl bg-surface-variant">
-                    👕
-                  </div>
-                )
-              )}
-              
-              {/* State badge */}
-              {item.state !== 'available' && (
-                <div className="absolute top-3 right-3 px-3 py-1.5 bg-secondary-container text-on-secondary-container text-label-small rounded-full shadow-elevation-1">
-                  {item.state}
-                </div>
-              )}
-              
-              {/* Clean status badge */}
-              {item.cleanStatus !== 'clean' && (
-                <div className={`absolute top-3 ${item.state !== 'available' ? 'right-[90px]' : 'right-3'} px-2 py-1 text-label-small rounded-full shadow-elevation-1 font-medium ${
-                  item.cleanStatus === 'needs_wash' 
-                    ? 'bg-error-container text-on-error-container' 
-                    : 'bg-tertiary-container text-on-tertiary-container'
-                }`}>
-                  {item.cleanStatus === 'needs_wash' ? '🚿' : '🧺'}
-                </div>
-              )}
-              
-              {/* Additional images count */}
-              {item.imageCount > 2 && (
-                <div className="absolute bottom-3 right-3 px-3 py-1.5 bg-tertiary-container text-on-tertiary-container text-label-small rounded-full shadow-elevation-1 font-medium">
-                  +{item.imageCount - 2}
-                </div>
-              )}
-            </div>
-            <div className="space-y-1 px-1">
-              {item.title && (
-                <h3 className="text-body-medium text-on-surface line-clamp-1 font-medium">
-                  {item.title}
-                </h3>
-              )}
-              {item.brand && (
-                <p className="text-body-small text-on-surface-variant line-clamp-1">
-                  {item.brand}
-                </p>
-              )}
-              {item.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {item.tags.slice(0, 2).map((tag) => (
-                    <span
-                      key={tag.name}
-                      className="text-label-small px-2 py-0.5 bg-surface-variant rounded-lg text-on-surface-variant"
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
-                  {item.tags.length > 2 && (
-                    <span className="text-label-small px-2 py-0.5 bg-surface-variant rounded-lg text-on-surface-variant font-medium">
-                      +{item.tags.length - 2}
-                    </span>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </Link>
         );
