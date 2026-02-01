@@ -62,10 +62,9 @@ class OpenRouterClient {
       apiKey: config.apiKey,
       baseUrl: config.baseUrl || 'https://openrouter.ai/api/v1',
       // Use a model that supports image generation
-      // Options: 'openai/dall-e-3', 'stability-ai/stable-diffusion-xl', 'black-forest-labs/flux-1.1-pro'
-      imageModel: config.imageModel || 'black-forest-labs/flux-1.1-pro',
-      visionModel: config.visionModel || 'google/gemini-2.0-flash-exp:free',
-      textModel: config.textModel || 'google/gemini-2.0-flash-exp:free',
+      imageModel: config.imageModel || 'google/gemini-3-pro-image-preview',
+      visionModel: config.visionModel || 'google/gemini-3-pro-preview',
+      textModel: config.textModel || 'google/gemini-3-flash-preview',
     };
   }
 
@@ -138,7 +137,7 @@ class OpenRouterClient {
       `The model may not support image-to-image generation. ` +
       `Current model: ${this.config.imageModel}. ` +
       `Response: ${JSON.stringify(message).substring(0, 200)}. ` +
-      `Try using: 'black-forest-labs/flux-1.1-pro', 'openai/dall-e-3', or 'stability-ai/stable-diffusion-xl'`
+      `Try using: 'google/gemini-3-pro-image-preview'`
     );
   }
 

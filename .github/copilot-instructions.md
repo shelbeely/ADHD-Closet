@@ -298,13 +298,13 @@ OPENROUTER_API_KEY="your-api-key-here"
 ### AI Model Configuration (Optimal Setup)
 ```bash
 # Image generation (REQUIRED for catalog images)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 
 # Vision/OCR (BEST quality for item inference)
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 
 # Text generation (FAST for outfits)
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 ### Optional

@@ -16,13 +16,13 @@ The application uses **three different AI models** via the OpenRouter API, each 
 
 ```bash
 # Image generation - REQUIRED for catalog images and visualizations
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 
 # Vision model - BEST for item analysis, OCR, and detail detection  
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 
 # Text model - FAST and cost-effective for outfit generation
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 ### Fallback Defaults (Hard-coded)
@@ -40,7 +40,7 @@ textModel: 'google/gemini-3-flash-preview'
 
 ### 1. Image Generation Model
 
-**Current**: `black-forest-labs/flux-1.1-pro`  
+**Current**: `google/gemini-3-pro-image-preview`  
 **Fallback**: `google/gemini-3-pro-image-preview`
 
 **Used For**:
@@ -61,7 +61,7 @@ textModel: 'google/gemini-3-flash-preview'
 
 ### 2. Vision Model
 
-**Current**: `google/gemini-2.0-flash-exp:free`  
+**Current**: `google/gemini-3-pro-preview`  
 **Fallback**: `google/gemini-3-pro-preview`
 
 **Used For**:
@@ -85,7 +85,7 @@ textModel: 'google/gemini-3-flash-preview'
 
 ### 3. Text Generation Model
 
-**Current**: `google/gemini-2.0-flash-exp:free`  
+**Current**: `google/gemini-3-flash-preview`  
 **Fallback**: `google/gemini-3-flash-preview`
 
 **Used For**:
@@ -133,9 +133,9 @@ The OpenRouter client configuration reads all three model environment variables 
 
 ```typescript
 {
-  imageModel: process.env.OPENROUTER_IMAGE_MODEL || 'black-forest-labs/flux-1.1-pro',
-  visionModel: process.env.OPENROUTER_VISION_MODEL || 'google/gemini-2.0-flash-exp:free',
-  textModel: process.env.OPENROUTER_TEXT_MODEL || 'google/gemini-2.0-flash-exp:free',
+  imageModel: process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3-pro-image-preview',
+  visionModel: process.env.OPENROUTER_VISION_MODEL || 'google/gemini-3-pro-preview',
+  textModel: process.env.OPENROUTER_TEXT_MODEL || 'google/gemini-3-flash-preview',
 }
 ```
 
@@ -144,19 +144,19 @@ The OpenRouter client configuration reads all three model environment variables 
 See `docs/features/MODEL_SELECTION.md` for detailed analysis of why each model was chosen.
 
 **Quick Summary**:
-- **Flux 1.1 Pro**: High-quality image generation with good prompt adherence
-- **Gemini 2.0 Flash**: Fast, cost-effective, excellent for vision and text tasks
-- **Free tier**: Uses free Gemini models to minimize costs for users
+- **Gemini 3 Pro Image Preview**: Only model that can generate images
+- **Gemini 3 Pro**: Highest quality for vision and critical item analysis
+- **Gemini 3 Flash**: Fast and cost-effective for text generation
 
 ## Cost Estimates
 
 Based on `.env.example` configuration (monthly estimates):
 
-- Image generation: ~$0.10-0.50/month (depends on usage)
-- Vision processing: Free (using free tier model)
-- Text generation: Free (using free tier model)
+- Image generation: ~$0.24/month (Gemini 3 Pro Image Preview)
+- Vision processing: ~$0.20/month (Gemini 3 Pro)
+- Text generation: ~$0.10/month (Gemini 3 Flash)
 
-**Total**: ~$0.10-0.50/month for typical usage (100 items, 50 outfits)
+**Total**: ~$0.54/month for typical usage (100 items, 50 outfits)
 
 ## Configuration Reference
 
@@ -167,9 +167,9 @@ All model configuration is managed via environment variables in `.env`:
 OPENROUTER_API_KEY="your-api-key-here"
 
 # Optional (recommended to set explicitly)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 If not set, the application will use hard-coded fallback models (see above).
@@ -187,11 +187,10 @@ To use different models:
 
 ## Future Considerations
 
-The codebase mentions these potential alternative models in comments:
+The codebase uses the latest Gemini 3 models. Alternative image generation models could include:
 
-- `openai/dall-e-3` - Image generation alternative
-- `stability-ai/stable-diffusion-xl` - Image generation alternative
-- Gemini 3.0 models when available (currently using 2.0 Flash)
+- `openai/dall-e-3` - OpenAI's image generation model
+- `stability-ai/stable-diffusion-xl` - Stability AI's image generation model
 
 ## Related Documentation
 
