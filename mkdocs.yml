@@ -78,7 +78,8 @@ nav:
     - API Reference: api/API_DOCUMENTATION.md
     - Deployment:
       - Overview: deployment/DEPLOYMENT.md
-      - Cloudflare: deployment/CLOUDFLARE.md
+      - Free Tier ($0-5/mo): deployment/FREE-TIER.md
+      - Cloudflare ($10-35/mo): deployment/CLOUDFLARE.md
 
 extra:
   social:
