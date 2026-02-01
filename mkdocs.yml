@@ -76,7 +76,10 @@ nav:
     - Architecture: developer/ARCHITECTURE.md
     - Contributing: CONTRIBUTING.md
     - API Reference: api/API_DOCUMENTATION.md
-    - Deployment: deployment/DEPLOYMENT.md
+    - Deployment:
+      - Overview: deployment/DEPLOYMENT.md
+      - Free Tier ($0-5/mo): deployment/FREE-TIER.md
+      - Cloudflare ($10-35/mo): deployment/CLOUDFLARE.md
 
 extra:
   social:

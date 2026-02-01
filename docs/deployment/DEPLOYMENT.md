@@ -2,6 +2,16 @@
 
 This guide covers deploying Wardrobe AI Closet to production.
 
+## Deployment Options
+
+Choose the deployment method that best fits your needs:
+
+- **[Free Tier Services](FREE-TIER.md)** - Deploy for $0-5/month using Vercel, Neon, Supabase, Upstash (recommended for personal use)
+- **[Cloudflare](CLOUDFLARE.md)** - Edge-native deployment with global CDN ($10-35/month, recommended for production)
+- **[Docker](#docker-deployment)** - Self-hosted containerized deployment
+- **[VPS](#vps-deployment)** - Traditional server deployment
+- **[Other Cloud Platforms](#cloud-platforms)** - Vercel, Railway, Fly.io
+
 ## Table of Contents
 1. [Docker Deployment](#docker-deployment)
 2. [VPS Deployment (Ubuntu/Debian)](#vps-deployment)
