@@ -110,6 +110,7 @@ grep -i "experts believe\|studies show\|research indicates" *.md
 - [Softaworks Agent Toolkit](https://github.com/softaworks/agent-toolkit) - Contains additional useful writing skills
 - [GitHub Copilot Agents Documentation](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 - [Remotion AI Skills Documentation](https://www.remotion.dev/docs/ai/skills) - Standard format for AI agent skills
+- [CloudAI-X Three.js Skills](https://github.com/CloudAI-X/threejs-skills) - Three.js skills for Claude Code
 
 ## Contributing
 

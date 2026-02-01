@@ -168,3 +168,4 @@ The documentation in this repository is now better equipped to remain clear, nat
 - Softaworks Agent Toolkit: https://github.com/softaworks/agent-toolkit
 - GitHub Copilot Agents: https://docs.github.com/en/copilot/concepts/agents
 - Remotion AI Skills: https://www.remotion.dev/docs/ai/skills
+- CloudAI-X Three.js Skills: https://github.com/CloudAI-X/threejs-skills
