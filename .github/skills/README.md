@@ -6,6 +6,26 @@ This directory contains Agent Skills for GitHub Copilot, following the [official
 
 Agent Skills are folders of instructions, scripts, and resources that Copilot can load when relevant to improve its performance in specialized tasks. Agent Skills is an [open standard](https://github.com/agentskills/agentskills), used by a range of different agents.
 
+## Agent Skills vs Custom Agents
+
+This repository uses both concepts, which serve different purposes:
+
+### Agent Skills (`.github/skills/`)
+- **What**: Instructions/resources that ANY agent can load when relevant
+- **When to use**: Copilot decides based on your prompt and the skill's description
+- **Format**: `.github/skills/[skill-name]/SKILL.md`
+- **Documentation**: [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
+
+### Custom Agents (`.github/agents/`)
+- **What**: Specialized AI agents you can directly invoke with custom prompts and tools
+- **When to use**: You explicitly select the agent from a dropdown
+- **Format**: `.github/agents/[agent-name].agent.md`
+- **Documentation**: [Create custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+
+Both can coexist! For example, `humanizer` exists as both:
+- **Custom agent**: `.github/agents/humanizer.agent.md` - Invoke directly when you want to humanize text
+- **Agent skill**: `.github/skills/humanizer/SKILL.md` - Copilot loads automatically when detecting AI writing patterns
+
 ## Skills in this Repository
 
 ### humanizer
@@ -33,13 +53,17 @@ To create a new skill:
 
 ## Related Resources
 
-- [GitHub Copilot Agent Skills Documentation](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
+- [GitHub Copilot Agent Skills Documentation](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) - About agent skills
+- [GitHub Custom Agents Documentation](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) - Create custom agents
 - [Agent Skills Open Standard](https://github.com/agentskills/agentskills)
 - [Remotion AI Skills](https://www.remotion.dev/docs/ai/skills) - Standard format for AI agent skills
 - [CloudAI-X Three.js Skills](https://github.com/CloudAI-X/threejs-skills) - Three.js skills for Claude Code
 - [Anthropic Skills Repository](https://github.com/anthropics/skills)
 - [GitHub Awesome Copilot Collection](https://github.com/github/awesome-copilot)
 
-## Legacy Note
+## Note on Directory Structure
 
-The `.github/agents/` directory contains an older format. Skills in `.github/skills/` follow the official GitHub standard and will be used by GitHub Copilot.
+- **`.github/skills/`** - Agent skills (this directory) - Instructions any agent can load automatically
+- **`.github/agents/`** - Custom agents - Specialized agents you explicitly invoke
+
+Both directories are valid and serve different purposes according to GitHub's documentation.
