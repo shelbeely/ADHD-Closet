@@ -32,9 +32,25 @@ Both can coexist! For example, `humanizer` exists as both:
 
 Removes signs of AI-generated writing from text. Use when editing or reviewing text to make it sound more natural and human-written.
 
-Location: `.github/skills/humanizer/SKILL.md`
+**Location**: `.github/skills/humanizer/SKILL.md`
 
 Based on [Wikipedia's Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) guide.
+
+### remotion-best-practices
+
+Best practices for creating videos programmatically with Remotion in React. Use when working with video animations, compositions, or React-based video content.
+
+**Location**: `.github/skills/remotion/SKILL.md`
+
+Covers core Remotion concepts including compositions, animations, sequencing, assets, and Three.js integration. Based on [Remotion official skills](https://github.com/remotion-dev/remotion/tree/main/packages/skills).
+
+### threejs-fundamentals
+
+Three.js scene setup, cameras, renderer, and 3D basics. Use when setting up 3D scenes, creating cameras, configuring renderers, or working with 3D objects and transforms.
+
+**Location**: `.github/skills/threejs-fundamentals/SKILL.md`
+
+Essential for working with the 3D closet rail visualization in this project. Covers scene setup, materials, lights, React Three Fiber integration, and performance optimization. Based on [CloudAI-X Three.js skills](https://github.com/CloudAI-X/threejs-skills).
 
 ## How Skills Work
 
