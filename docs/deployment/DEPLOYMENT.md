@@ -524,5 +524,7 @@ See [TROUBLESHOOTING.md](../user-guides/TROUBLESHOOTING.md) for common issues an
 
 ## Mobile Apps
 
-For information about installing the app as a PWA or building native Android/iOS apps, see [Mobile Apps Guide](MOBILE-APPS.md).
+For information about installing the app as a PWA or building native Android/iOS apps, see:
+- [Android APK Build Guide](../mobile/ANDROID_BUILD.md)
+- [Mobile Apps Guide (iOS)](MOBILE-APPS.md)
 

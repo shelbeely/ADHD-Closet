@@ -80,7 +80,7 @@ nav:
       - Overview: deployment/DEPLOYMENT.md
       - Free Tier ($0-5/mo): deployment/FREE-TIER.md
       - Cloudflare ($10-35/mo): deployment/CLOUDFLARE.md
-      - Android APK Build: deployment/MOBILE-APPS.md
+      - Android APK Build: mobile/ANDROID_BUILD.md
 
 extra:
   social:
