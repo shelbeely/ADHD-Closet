@@ -72,7 +72,13 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
    npm run prisma:generate
    ```
 
-7. **Start the development server**:
+7. **(Optional) Seed database with dummy data**:
+   ```bash
+   npm run prisma:seed
+   ```
+   This creates 53 test items covering all categories and attributes.
+
+8. **Start the development server**:
    ```bash
    # With Bun
    bun dev
@@ -81,7 +87,7 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
    npm run dev
    ```
 
-8. **Open in browser**: [http://localhost:3000](http://localhost:3000)
+9. **Open in browser**: [http://localhost:3000](http://localhost:3000)
 
 ## Development
 
@@ -94,8 +100,24 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
 - `prisma:generate` - Generate Prisma Client
 - `prisma:migrate` - Run database migrations
 - `prisma:studio` - Open Prisma Studio (database GUI)
+- `prisma:seed` - Seed database with dummy data (53 items covering all categories and attributes)
 
 ### Database Management
+
+#### Seed Database with Dummy Data
+
+To populate your database with comprehensive test data (53 items covering all categories and attribute variations):
+
+```bash
+npm run prisma:seed
+```
+
+This creates one item for each:
+- All 13 main categories (tops, bottoms, dresses, outerwear, shoes, accessories, underwear_bras, jewelry, swimwear, activewear, sleepwear, loungewear, suits_sets)
+- All 31 sub-types (8 bottoms types, 8 shoe types, 9 accessory types, 6 jewelry types)
+- Various attributes (different necklines, sleeve lengths, rises, fits, etc.)
+
+See `prisma/README.md` for more details.
 
 #### View/Edit Database
 ```bash
