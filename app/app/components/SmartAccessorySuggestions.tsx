@@ -118,6 +118,12 @@ export default function SmartAccessorySuggestions({
     onAddAccessory(accessory.id);
   };
 
+  // Progressive disclosure: show 3 by default, all when expanded
+  const displaySuggestions = expanded ? suggestions : suggestions.slice(0, 3);
+  
+  // Extract colors from outfit items for harmony checking
+  const outfitColors = outfitItems.flatMap(item => item.colorPalette || []);
+
   return (
     <div className={`bg-surface-container-low rounded-2xl p-4 ${className}`}>
       {/* Header - ADHD-friendly with clear icon and title */}
@@ -140,7 +146,7 @@ export default function SmartAccessorySuggestions({
       <div className="grid grid-cols-1 gap-3">
         {displaySuggestions.map((suggestion) => {
           // Calculate enhanced scores
-          const itemColors = []; // Would come from suggestion if available
+          const itemColors: string[] = []; // Would come from suggestion if available
           const colorHarmony = findBestColorHarmony(itemColors, outfitColors);
           const seasonalScore = getSeasonalScore(suggestion.category, suggestion.subType);
           const styleBoost = getPersonalizationBoost(suggestion.category, itemColors, []);
