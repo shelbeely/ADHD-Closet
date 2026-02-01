@@ -21,7 +21,7 @@ Complete visual and functional reference for all React components in the Twin St
 
 **Purpose**: Display a single wardrobe item with image, metadata, and quick actions.
 
-**Screenshot**: ![Mobile View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-mobile-view.png)
+**Screenshot**: ![Grid View with Items](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/03-desktop-grid-view.png)
 
 **Props**:
 ```typescript
@@ -183,7 +183,7 @@ interface SuccessFeedbackProps {
 
 **Purpose**: Category filter navigation optimized for mobile.
 
-**Screenshot**: ![Mobile Menu](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/mobile-menu-open.png)
+**Screenshot**: ![Mobile Menu](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/11-mobile-menu-open.png)
 
 **Props**:
 ```typescript

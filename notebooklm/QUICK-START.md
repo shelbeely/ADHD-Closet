@@ -20,14 +20,20 @@ https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/11-DEPLO
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/12-TROUBLESHOOTING-FAQ.md
 ```
 
-### Screenshots (6 images)
+### Screenshots (13 comprehensive images with seeded data)
 ```
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-mobile-view.png
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/mobile-menu-open.png
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-mobile.png
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-desktop.png
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-desktop-empty.png
-https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/guide-page-mobile.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/10-mobile-home-page.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/11-mobile-menu-open.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/12-analytics-page-mobile.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/13-nfc-scan-page-mobile.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/03-desktop-grid-view.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/02-desktop-table-view-with-notification.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/04-filtered-tops-category.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/05-generate-outfit-page.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/06-settings-page.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/07-guide-page.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/08-3d-closet-rail.png
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/09-add-item-page.png
 ```
 
 ### Additional Context
@@ -64,7 +70,7 @@ Once imported, try these questions:
 - **Deployment & Operations**: Production guide, monitoring
 - **Troubleshooting & FAQ**: Common issues, solutions
 
-Total: ~182,000 words + 6 screenshots
+Total: ~182,000 words + 13 comprehensive screenshots
 
 ## 🎯 Best For
 
