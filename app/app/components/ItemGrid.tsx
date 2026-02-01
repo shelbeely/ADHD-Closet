@@ -50,11 +50,11 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 gap-10 p-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto">
+      <div className="flex flex-col gap-8 p-8 max-w-5xl mx-auto">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="aspect-[4/5] bg-surface-variant rounded-3xl animate-pulse shadow-elevation-3"
+            className="w-full h-96 bg-surface-variant rounded-3xl animate-pulse shadow-elevation-3"
           />
         ))}
       </div>
@@ -78,7 +78,7 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-10 p-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto">
+    <div className="flex flex-col gap-8 p-8 max-w-5xl mx-auto">
       {items.map((item) => {
         const { frontImage, backImage, hasBothSides } = getItemImages(item);
         const primaryColor = getPrimaryColor(item.colorPalette);
@@ -87,12 +87,16 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
           <Link
             key={item.id}
             href={`/items/${item.id}`}
-            className="group cursor-pointer"
+            className="group cursor-pointer block"
           >
-            {/* Large, prominent card with clear visual boundaries */}
-            <div className="bg-surface-container rounded-3xl overflow-hidden shadow-elevation-3 border border-outline-variant transition-all duration-300 hover:shadow-elevation-4 hover:scale-[1.03] hover:border-primary">
-              {/* Image Container - taller 4:5 aspect ratio for prominent cards */}
-              <div className="aspect-[4/5] bg-surface-container-low relative">
+            {/* Material Design 3 Elevated Card */}
+            <div className="bg-surface-container rounded-[28px] overflow-hidden shadow-elevation-3 border border-outline-variant/20 transition-all duration-300 hover:shadow-elevation-4 hover:scale-[1.01] hover:border-primary/30">
+              
+              {/* Card Media Section - Horizontal layout with image on left, content on right */}
+              <div className="flex flex-col md:flex-row">
+                
+                {/* Image Container - Fixed height, flexible width on desktop */}
+                <div className="w-full md:w-1/2 lg:w-2/5 h-80 md:h-96 bg-surface-container-low relative flex-shrink-0">
                 {hasBothSides ? (
                   /* Side-by-side view for items with both front and back */
                   <div className="w-full h-full flex">
@@ -196,33 +200,103 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
                 )}
               </div>
               
-              {/* Card footer with title and tags - larger, more prominent */}
-              <div className="p-6 space-y-3">
-                {item.title && (
-                  <h3 className="text-title-large text-on-surface line-clamp-2 font-bold">
-                    {item.title}
-                  </h3>
-                )}
-                {item.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag.name}
-                        className="text-label-large px-3 py-1.5 bg-surface-variant rounded-xl text-on-surface-variant"
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
-                    {item.tags.length > 3 && (
-                      <span className="text-label-large px-3 py-1.5 bg-surface-variant rounded-xl text-on-surface-variant font-bold">
-                        +{item.tags.length - 3}
-                      </span>
+              {/* Card Content Section - Beside image on desktop, below on mobile */}
+              <div className="flex-1 p-8 flex flex-col justify-between">
+                
+                {/* Primary Content */}
+                <div className="space-y-4">
+                  {item.title && (
+                    <h2 className="text-headline-medium text-on-surface font-bold leading-tight">
+                      {item.title}
+                    </h2>
+                  )}
+                  
+                  {/* Metadata Grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                    {item.category && (
+                      <div className="space-y-1">
+                        <div className="text-label-medium text-on-surface-variant uppercase tracking-wide">
+                          Category
+                        </div>
+                        <div className="text-body-large text-on-surface font-medium">
+                          {formatCategory(item.category)}
+                        </div>
+                      </div>
+                    )}
+                    {item.brand && (
+                      <div className="space-y-1">
+                        <div className="text-label-medium text-on-surface-variant uppercase tracking-wide">
+                          Brand
+                        </div>
+                        <div className="text-body-large text-on-surface font-medium">
+                          {item.brand}
+                        </div>
+                      </div>
+                    )}
+                    {primaryColor && (
+                      <div className="space-y-1">
+                        <div className="text-label-medium text-on-surface-variant uppercase tracking-wide">
+                          Primary Color
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-6 h-6 rounded-full border-2 border-outline" 
+                            style={{ backgroundColor: primaryColor }}
+                          />
+                          <span className="text-body-medium text-on-surface font-mono">
+                            {primaryColor}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {item.state !== 'available' && (
+                      <div className="space-y-1">
+                        <div className="text-label-medium text-on-surface-variant uppercase tracking-wide">
+                          Status
+                        </div>
+                        <div className="text-body-large text-on-surface font-medium capitalize">
+                          {item.state}
+                        </div>
+                      </div>
                     )}
                   </div>
-                )}
+                  
+                  {/* Tags */}
+                  {item.tags.length > 0 && (
+                    <div className="pt-2">
+                      <div className="flex flex-wrap gap-2">
+                        {item.tags.slice(0, 5).map((tag) => (
+                          <span
+                            key={tag.name}
+                            className="px-3 py-1.5 bg-secondary-container text-on-secondary-container text-label-large rounded-lg font-medium"
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                        {item.tags.length > 5 && (
+                          <span className="px-3 py-1.5 bg-tertiary-container text-on-tertiary-container text-label-large rounded-lg font-bold">
+                            +{item.tags.length - 5} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Card Actions - Bottom of content area */}
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-outline-variant">
+                  <div className="text-label-large text-on-surface-variant">
+                    Tap to view details
+                  </div>
+                  <svg className="w-6 h-6 text-on-surface-variant group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
+              
             </div>
-          </Link>
+          </div>
+        </Link>
         );
       })}
     </div>
