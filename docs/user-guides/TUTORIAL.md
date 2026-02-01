@@ -2,6 +2,9 @@
 
 Welcome to your personal wardrobe organizer! This tutorial will walk you through the main features and workflows.
 
+![Mobile Main View](../screenshots/main-mobile-view.png)
+*ADHD-friendly mobile interface with category-first navigation*
+
 ## Table of Contents
 1. [Your First Item](#your-first-item)
 2. [Creating Your First Outfit](#creating-your-first-outfit)
@@ -13,6 +16,9 @@ Welcome to your personal wardrobe organizer! This tutorial will walk you through
 ## Your First Item
 
 Adding items is fast and easy—just a few taps to get started.
+
+![Desktop Empty State](../screenshots/main-desktop-empty.png)
+*Desktop view when you first start - click the + Add Item button*
 
 ### Step 1: Take a Photo
 1. From the home screen, tap the **+ Add Item** button (the big purple floating button)
@@ -108,6 +114,9 @@ After wearing an outfit:
 ## Using Desktop Power Tools
 
 On screens ≥1024px wide, you unlock advanced features.
+
+![Desktop View](../screenshots/outfits-generate-desktop.png)
+*Desktop view with filters, bulk editing, and outfit generation*
 
 ### Bulk Edit Table
 **What it does**: Edit multiple items at once

@@ -2,8 +2,19 @@
 
 A single-user, self-hosted wardrobe organizer powered by AI — designed with ADHD-friendly workflows to make managing your closet effortless and fun.
 
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://shelbeely.github.io/ADHD-Closet/)
+[![Wiki](https://img.shields.io/badge/docs-GitHub%20Wiki-green)](https://github.com/shelbeely/ADHD-Closet/wiki)
+[![License](https://img.shields.io/badge/license-MIT-purple)](LICENSE)
+
 ![Desktop View](https://github.com/user-attachments/assets/caa04353-a7bd-48f8-906d-65f4f4faa0fb)
 *Desktop view with filters and table layout*
+
+## 📚 Documentation
+
+- **[📖 Full Documentation (GitHub Pages)](https://shelbeely.github.io/ADHD-Closet/)** - Complete docs with search and dark mode
+- **[📝 Quick Wiki](https://github.com/shelbeely/ADHD-Closet/wiki)** - Fast reference on GitHub
+- **[❓ FAQ](https://shelbeely.github.io/ADHD-Closet/user-guides/FAQ/)** - Common questions
+- **[🎓 Tutorial](https://shelbeely.github.io/ADHD-Closet/user-guides/TUTORIAL/)** - Get started guide
 
 ## ✨ What is this?
 
