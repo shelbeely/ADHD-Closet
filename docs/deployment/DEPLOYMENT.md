@@ -2,6 +2,15 @@
 
 This guide covers deploying Wardrobe AI Closet to production.
 
+## Deployment Options
+
+Choose the deployment method that best fits your needs:
+
+- **[Cloudflare](CLOUDFLARE.md)** - Edge-native deployment with global CDN, recommended for production
+- **[Docker](#docker-deployment)** - Self-hosted containerized deployment
+- **[VPS](#vps-deployment)** - Traditional server deployment
+- **[Other Cloud Platforms](#cloud-platforms)** - Vercel, Railway, Fly.io
+
 ## Table of Contents
 1. [Docker Deployment](#docker-deployment)
 2. [VPS Deployment (Ubuntu/Debian)](#vps-deployment)
