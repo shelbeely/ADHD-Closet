@@ -1,0 +1,286 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Documentation for the ADHD-friendly wardrobe organizer"><link href=https://shelbeely.github.io/ADHD-Closet/developer/ARCHITECTURE/ rel=canonical><link href=../../features/NFC_TAG_SUPPORT/ rel=prev><link href=../../CONTRIBUTING/ rel=next><link rel=icon href=../../assets/images/favicon.png><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.7.1"><title>Architecture - ADHD Closet Documentation</title><link rel=stylesheet href=../../assets/stylesheets/main.484c7ddc.min.css><link rel=stylesheet href=../../assets/stylesheets/palette.ab4e12ef.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=deep-purple data-md-color-accent=purple> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#system-architecture class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=../.. title="ADHD Closet Documentation" class="md-header__button md-logo" aria-label="ADHD Closet Documentation" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> ADHD Closet Documentation </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Architecture </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=default data-md-color-primary=deep-purple data-md-color-accent=purple aria-label="Switch to dark mode" type=radio name=__palette id=__palette_0> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=deep-purple data-md-color-accent=purple aria-label="Switch to light mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_0 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg> </label> </form> <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> </button> </nav> <div class=md-search__suggest data-md-component=search-suggest></div> </form> <div class=md-search__output> <div class=md-search__scrollwrap tabindex=0 data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list role=presentation></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/shelbeely/ADHD-Closet title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </div> <div class=md-source__repository> shelbeely/ADHD-Closet </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <nav class=md-tabs aria-label=Tabs data-md-component=tabs> <div class=md-grid> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=../.. class=md-tabs__link> Home </a> </li> <li class=md-tabs__item> <a href=../../user-guides/TUTORIAL/ class=md-tabs__link> Getting Started </a> </li> <li class=md-tabs__item> <a href=../../features/CATEGORIES/ class=md-tabs__link> Features </a> </li> <li class="md-tabs__item md-tabs__item--active"> <a href=./ class=md-tabs__link> For Developers </a> </li> </ul> </div> </nav> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../.. title="ADHD Closet Documentation" class="md-nav__button md-logo" aria-label="ADHD Closet Documentation" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg> </a> ADHD Closet Documentation </label> <div class=md-nav__source> <a href=https://github.com/shelbeely/ADHD-Closet title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </div> <div class=md-source__repository> shelbeely/ADHD-Closet </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../.. class=md-nav__link> <span class=md-ellipsis> Home </span> </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2 id=__nav_2_label tabindex=0> <span class=md-ellipsis> Getting Started </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_2_label aria-expanded=false> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Getting Started </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../user-guides/TUTORIAL/ class=md-nav__link> <span class=md-ellipsis> Quick Start </span> </a> </li> <li class=md-nav__item> <a href=../../user-guides/FAQ/ class=md-nav__link> <span class=md-ellipsis> FAQ </span> </a> </li> <li class=md-nav__item> <a href=../../user-guides/TROUBLESHOOTING/ class=md-nav__link> <span class=md-ellipsis> Troubleshooting </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3 id=__nav_3_label tabindex=0> <span class=md-ellipsis> Features </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_3_label aria-expanded=false> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> Features </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../features/CATEGORIES/ class=md-nav__link> <span class=md-ellipsis> Categories & Organization </span> </a> </li> <li class=md-nav__item> <a href=../../features/ATTRIBUTES/ class=md-nav__link> <span class=md-ellipsis> Item Attributes </span> </a> </li> <li class=md-nav__item> <a href=../../features/MODEL_SELECTION/ class=md-nav__link> <span class=md-ellipsis> AI Models </span> </a> </li> <li class=md-nav__item> <a href=../../features/IMAGE_GENERATION/ class=md-nav__link> <span class=md-ellipsis> Image Generation </span> </a> </li> <li class=md-nav__item> <a href=../../features/NFC_TAG_SUPPORT/ class=md-nav__link> <span class=md-ellipsis> NFC Tags </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_4 checked> <label class=md-nav__link for=__nav_4 id=__nav_4_label tabindex> <span class=md-ellipsis> For Developers </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_4_label aria-expanded=true> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> For Developers </label> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> <span class=md-ellipsis> Architecture </span> <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> <span class=md-ellipsis> Architecture </span> </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#table-of-contents class=md-nav__link> <span class=md-ellipsis> Table of Contents </span> </a> </li> <li class=md-nav__item> <a href=#high-level-overview class=md-nav__link> <span class=md-ellipsis> High-Level Overview </span> </a> <nav class=md-nav aria-label="High-Level Overview"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#technology-stack class=md-nav__link> <span class=md-ellipsis> Technology Stack </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#component-architecture class=md-nav__link> <span class=md-ellipsis> Component Architecture </span> </a> <nav class=md-nav aria-label="Component Architecture"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#frontend-layers class=md-nav__link> <span class=md-ellipsis> Frontend Layers </span> </a> </li> <li class=md-nav__item> <a href=#backend-layers class=md-nav__link> <span class=md-ellipsis> Backend Layers </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#data-flow class=md-nav__link> <span class=md-ellipsis> Data Flow </span> </a> <nav class=md-nav aria-label="Data Flow"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-add-item-flow class=md-nav__link> <span class=md-ellipsis> 1. Add Item Flow </span> </a> </li> <li class=md-nav__item> <a href=#2-generate-outfit-flow class=md-nav__link> <span class=md-ellipsis> 2. Generate Outfit Flow </span> </a> </li> <li class=md-nav__item> <a href=#3-exportimport-flow class=md-nav__link> <span class=md-ellipsis> 3. Export/Import Flow </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#ai-job-processing class=md-nav__link> <span class=md-ellipsis> AI Job Processing </span> </a> <nav class=md-nav aria-label="AI Job Processing"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#job-lifecycle class=md-nav__link> <span class=md-ellipsis> Job Lifecycle </span> </a> </li> <li class=md-nav__item> <a href=#job-types class=md-nav__link> <span class=md-ellipsis> Job Types </span> </a> </li> <li class=md-nav__item> <a href=#worker-configuration class=md-nav__link> <span class=md-ellipsis> Worker Configuration </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caching-strategy class=md-nav__link> <span class=md-ellipsis> Caching Strategy </span> </a> <nav class=md-nav aria-label="Caching Strategy"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-image-caching class=md-nav__link> <span class=md-ellipsis> 1. Image Caching </span> </a> </li> <li class=md-nav__item> <a href=#2-database-query-caching class=md-nav__link> <span class=md-ellipsis> 2. Database Query Caching </span> </a> </li> <li class=md-nav__item> <a href=#3-static-assets class=md-nav__link> <span class=md-ellipsis> 3. Static Assets </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#database-schema class=md-nav__link> <span class=md-ellipsis> Database Schema </span> </a> <nav class=md-nav aria-label="Database Schema"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#entity-relationship-diagram class=md-nav__link> <span class=md-ellipsis> Entity Relationship Diagram </span> </a> </li> <li class=md-nav__item> <a href=#key-design-decisions class=md-nav__link> <span class=md-ellipsis> Key Design Decisions </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#performance-considerations class=md-nav__link> <span class=md-ellipsis> Performance Considerations </span> </a> <nav class=md-nav aria-label="Performance Considerations"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#bottlenecks class=md-nav__link> <span class=md-ellipsis> Bottlenecks </span> </a> </li> <li class=md-nav__item> <a href=#optimizations class=md-nav__link> <span class=md-ellipsis> Optimizations </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#security-considerations class=md-nav__link> <span class=md-ellipsis> Security Considerations </span> </a> <nav class=md-nav aria-label="Security Considerations"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#single-user-design class=md-nav__link> <span class=md-ellipsis> Single-User Design </span> </a> </li> <li class=md-nav__item> <a href=#data-protection class=md-nav__link> <span class=md-ellipsis> Data Protection </span> </a> </li> <li class=md-nav__item> <a href=#input-validation class=md-nav__link> <span class=md-ellipsis> Input Validation </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#scalability class=md-nav__link> <span class=md-ellipsis> Scalability </span> </a> <nav class=md-nav aria-label=Scalability> <ul class=md-nav__list> <li class=md-nav__item> <a href=#current-limits class=md-nav__link> <span class=md-ellipsis> Current Limits </span> </a> </li> <li class=md-nav__item> <a href=#future-multi-user-considerations class=md-nav__link> <span class=md-ellipsis> Future Multi-User Considerations </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#monitoring-observability class=md-nav__link> <span class=md-ellipsis> Monitoring &amp; Observability </span> </a> <nav class=md-nav aria-label="Monitoring & Observability"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#current class=md-nav__link> <span class=md-ellipsis> Current </span> </a> </li> <li class=md-nav__item> <a href=#future class=md-nav__link> <span class=md-ellipsis> Future </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#security-privacy class=md-nav__link> <span class=md-ellipsis> Security &amp; Privacy </span> </a> <nav class=md-nav aria-label="Security & Privacy"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#threat-model class=md-nav__link> <span class=md-ellipsis> Threat Model </span> </a> </li> <li class=md-nav__item> <a href=#requirements class=md-nav__link> <span class=md-ellipsis> Requirements </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#performance-budget class=md-nav__link> <span class=md-ellipsis> Performance Budget </span> </a> <nav class=md-nav aria-label="Performance Budget"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#images class=md-nav__link> <span class=md-ellipsis> Images </span> </a> </li> <li class=md-nav__item> <a href=#lists class=md-nav__link> <span class=md-ellipsis> Lists </span> </a> </li> <li class=md-nav__item> <a href=#threejs class=md-nav__link> <span class=md-ellipsis> Three.js </span> </a> </li> <li class=md-nav__item> <a href=#jobs class=md-nav__link> <span class=md-ellipsis> Jobs </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> <span class=md-ellipsis> References </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../../CONTRIBUTING/ class=md-nav__link> <span class=md-ellipsis> Contributing </span> </a> </li> <li class=md-nav__item> <a href=../../api/API_DOCUMENTATION/ class=md-nav__link> <span class=md-ellipsis> API Reference </span> </a> </li> <li class=md-nav__item> <a href=../../deployment/DEPLOYMENT/ class=md-nav__link> <span class=md-ellipsis> Deployment </span> </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#table-of-contents class=md-nav__link> <span class=md-ellipsis> Table of Contents </span> </a> </li> <li class=md-nav__item> <a href=#high-level-overview class=md-nav__link> <span class=md-ellipsis> High-Level Overview </span> </a> <nav class=md-nav aria-label="High-Level Overview"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#technology-stack class=md-nav__link> <span class=md-ellipsis> Technology Stack </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#component-architecture class=md-nav__link> <span class=md-ellipsis> Component Architecture </span> </a> <nav class=md-nav aria-label="Component Architecture"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#frontend-layers class=md-nav__link> <span class=md-ellipsis> Frontend Layers </span> </a> </li> <li class=md-nav__item> <a href=#backend-layers class=md-nav__link> <span class=md-ellipsis> Backend Layers </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#data-flow class=md-nav__link> <span class=md-ellipsis> Data Flow </span> </a> <nav class=md-nav aria-label="Data Flow"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-add-item-flow class=md-nav__link> <span class=md-ellipsis> 1. Add Item Flow </span> </a> </li> <li class=md-nav__item> <a href=#2-generate-outfit-flow class=md-nav__link> <span class=md-ellipsis> 2. Generate Outfit Flow </span> </a> </li> <li class=md-nav__item> <a href=#3-exportimport-flow class=md-nav__link> <span class=md-ellipsis> 3. Export/Import Flow </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#ai-job-processing class=md-nav__link> <span class=md-ellipsis> AI Job Processing </span> </a> <nav class=md-nav aria-label="AI Job Processing"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#job-lifecycle class=md-nav__link> <span class=md-ellipsis> Job Lifecycle </span> </a> </li> <li class=md-nav__item> <a href=#job-types class=md-nav__link> <span class=md-ellipsis> Job Types </span> </a> </li> <li class=md-nav__item> <a href=#worker-configuration class=md-nav__link> <span class=md-ellipsis> Worker Configuration </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#caching-strategy class=md-nav__link> <span class=md-ellipsis> Caching Strategy </span> </a> <nav class=md-nav aria-label="Caching Strategy"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-image-caching class=md-nav__link> <span class=md-ellipsis> 1. Image Caching </span> </a> </li> <li class=md-nav__item> <a href=#2-database-query-caching class=md-nav__link> <span class=md-ellipsis> 2. Database Query Caching </span> </a> </li> <li class=md-nav__item> <a href=#3-static-assets class=md-nav__link> <span class=md-ellipsis> 3. Static Assets </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#database-schema class=md-nav__link> <span class=md-ellipsis> Database Schema </span> </a> <nav class=md-nav aria-label="Database Schema"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#entity-relationship-diagram class=md-nav__link> <span class=md-ellipsis> Entity Relationship Diagram </span> </a> </li> <li class=md-nav__item> <a href=#key-design-decisions class=md-nav__link> <span class=md-ellipsis> Key Design Decisions </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#performance-considerations class=md-nav__link> <span class=md-ellipsis> Performance Considerations </span> </a> <nav class=md-nav aria-label="Performance Considerations"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#bottlenecks class=md-nav__link> <span class=md-ellipsis> Bottlenecks </span> </a> </li> <li class=md-nav__item> <a href=#optimizations class=md-nav__link> <span class=md-ellipsis> Optimizations </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#security-considerations class=md-nav__link> <span class=md-ellipsis> Security Considerations </span> </a> <nav class=md-nav aria-label="Security Considerations"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#single-user-design class=md-nav__link> <span class=md-ellipsis> Single-User Design </span> </a> </li> <li class=md-nav__item> <a href=#data-protection class=md-nav__link> <span class=md-ellipsis> Data Protection </span> </a> </li> <li class=md-nav__item> <a href=#input-validation class=md-nav__link> <span class=md-ellipsis> Input Validation </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#scalability class=md-nav__link> <span class=md-ellipsis> Scalability </span> </a> <nav class=md-nav aria-label=Scalability> <ul class=md-nav__list> <li class=md-nav__item> <a href=#current-limits class=md-nav__link> <span class=md-ellipsis> Current Limits </span> </a> </li> <li class=md-nav__item> <a href=#future-multi-user-considerations class=md-nav__link> <span class=md-ellipsis> Future Multi-User Considerations </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#monitoring-observability class=md-nav__link> <span class=md-ellipsis> Monitoring &amp; Observability </span> </a> <nav class=md-nav aria-label="Monitoring & Observability"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#current class=md-nav__link> <span class=md-ellipsis> Current </span> </a> </li> <li class=md-nav__item> <a href=#future class=md-nav__link> <span class=md-ellipsis> Future </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#security-privacy class=md-nav__link> <span class=md-ellipsis> Security &amp; Privacy </span> </a> <nav class=md-nav aria-label="Security & Privacy"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#threat-model class=md-nav__link> <span class=md-ellipsis> Threat Model </span> </a> </li> <li class=md-nav__item> <a href=#requirements class=md-nav__link> <span class=md-ellipsis> Requirements </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#performance-budget class=md-nav__link> <span class=md-ellipsis> Performance Budget </span> </a> <nav class=md-nav aria-label="Performance Budget"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#images class=md-nav__link> <span class=md-ellipsis> Images </span> </a> </li> <li class=md-nav__item> <a href=#lists class=md-nav__link> <span class=md-ellipsis> Lists </span> </a> </li> <li class=md-nav__item> <a href=#threejs class=md-nav__link> <span class=md-ellipsis> Three.js </span> </a> </li> <li class=md-nav__item> <a href=#jobs class=md-nav__link> <span class=md-ellipsis> Jobs </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#references class=md-nav__link> <span class=md-ellipsis> References </span> </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <h1 id=system-architecture>System Architecture</h1> <p>Wardrobe AI Closet technical architecture and data flow diagrams.</p> <h2 id=table-of-contents>Table of Contents</h2> <ol> <li><a href=#high-level-overview>High-Level Overview</a></li> <li><a href=#component-architecture>Component Architecture</a></li> <li><a href=#data-flow>Data Flow</a></li> <li><a href=#ai-job-processing>AI Job Processing</a></li> <li><a href=#caching-strategy>Caching Strategy</a></li> <li><a href=#database-schema>Database Schema</a></li> </ol> <hr> <h2 id=high-level-overview>High-Level Overview</h2> <div class=highlight><pre><span></span><code>┌─────────────────┐
+│   Web Browser   │
+│  (React/Next)   │
+└────────┬────────┘
+         │ HTTPS
+         ▼
+┌─────────────────────────────────────┐
+│       Next.js App Router            │
+│  ┌──────────┐    ┌──────────────┐  │
+│  │  Pages   │    │  API Routes  │  │
+│  │ (UI/UX)  │◄───┤  (REST API)  │  │
+│  └──────────┘    └───────┬──────┘  │
+│                          │          │
+└──────────────────────────┼──────────┘
+                           │
+         ┌─────────────────┼─────────────────┐
+         │                 │                 │
+         ▼                 ▼                 ▼
+  ┌───────────┐     ┌────────────┐    ┌──────────┐
+  │ PostgreSQL│     │   Redis    │    │   Disk   │
+  │   (Data)  │     │  (Queue)   │    │ (Images) │
+  └───────────┘     └─────┬──────┘    └──────────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │  BullMQ      │
+                   │  AI Workers  │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │  OpenRouter  │
+                   │   AI API     │
+                   └──────────────┘
+</code></pre></div> <h3 id=technology-stack>Technology Stack</h3> <ul> <li><strong>Frontend</strong>: React 19, Next.js 16 (App Router)</li> <li><strong>Backend</strong>: Next.js API Routes</li> <li><strong>Database</strong>: PostgreSQL 14+ with Prisma ORM</li> <li><strong>Queue</strong>: Redis + BullMQ</li> <li><strong>AI</strong>: OpenRouter (Claude, GPT-4V, DALL-E)</li> <li><strong>Storage</strong>: Local filesystem</li> <li><strong>Styling</strong>: Tailwind CSS 4 + Material Design 3</li> </ul> <hr> <h2 id=component-architecture>Component Architecture</h2> <h3 id=frontend-layers>Frontend Layers</h3> <div class=highlight><pre><span></span><code>┌──────────────────────────────────────┐
+│            Pages (Routes)            │
+│  /               - Home              │
+│  /items/[id]     - Item Detail       │
+│  /items/new      - Add Item          │
+│  /outfits        - Outfit History    │
+│  /outfits/gen    - Outfit Generator  │
+│  /analytics      - Analytics         │
+│  /settings       - Settings          │
+│  /closet-rail    - 3D View           │
+└──────────────┬───────────────────────┘
+               │
+┌──────────────▼───────────────────────┐
+│       Components (Reusable)          │
+│  - ItemCard      - FilterPanel       │
+│  - ItemGrid      - CategoryTabs      │
+│  - BulkEditTable - EnhancedSearch    │
+│  - AddItemBtn    - NotificationPrompt│
+└──────────────┬───────────────────────┘
+               │
+┌──────────────▼───────────────────────┐
+│          Library (Utilities)         │
+│  - hooks/          - types/          │
+│  - utils/          - theme           │
+│  - notifications   - prisma client   │
+└──────────────────────────────────────┘
+</code></pre></div> <h3 id=backend-layers>Backend Layers</h3> <div class=highlight><pre><span></span><code>┌──────────────────────────────────────┐
+│          API Routes (REST)           │
+│  /api/items              (CRUD)      │
+│  /api/items/[id]         (CRUD)      │
+│  /api/items/[id]/images  (Upload)    │
+│  /api/outfits            (CRUD)      │
+│  /api/outfits/generate   (AI)        │
+│  /api/images/[id]        (Stream)    │
+│  /api/ai/jobs            (Status)    │
+│  /api/export             (Backup)    │
+│  /api/import             (Restore)   │
+│  /api/reminders          (Laundry)   │
+│  /api/tags               (CRUD)      │
+└──────────────┬───────────────────────┘
+               │
+┌──────────────▼───────────────────────┐
+│         Business Logic Layer         │
+│  - Validation (Zod schemas)          │
+│  - Database operations (Prisma)      │
+│  - File operations (fs/sharp)        │
+│  - Queue management (BullMQ)         │
+└──────────────┬───────────────────────┘
+               │
+┌──────────────▼───────────────────────┐
+│           Data Layer                 │
+│  - Prisma Client (ORM)               │
+│  - Redis Client (ioredis)            │
+│  - File System (Node fs)             │
+└──────────────────────────────────────┘
+</code></pre></div> <hr> <h2 id=data-flow>Data Flow</h2> <h3 id=1-add-item-flow>1. Add Item Flow</h3> <div class=highlight><pre><span></span><code>User takes photo
+     │
+     ▼
+[Upload to /api/items/[id]/images]
+     │
+     ├─► Save to disk (DATA_DIR/images)
+     ├─► Create ImageAsset record (Prisma)
+     └─► Enqueue AI jobs:
+         ├─► generate_catalog_image (if original_main)
+         ├─► generate_catalog_image (if original_back)
+         ├─► infer_item (category, colors, tags)
+         └─► extract_label (if label_brand/label_care)
+              │
+              ▼
+         [BullMQ Worker picks up jobs]
+              │
+              ├─► Call OpenRouter API
+              ├─► Process response
+              ├─► Save results to DB
+              └─► Mark job as succeeded/failed
+                   │
+                   ▼
+              [UI polls for status]
+                   │
+                   └─► Update item display
+</code></pre></div> <h3 id=2-generate-outfit-flow>2. Generate Outfit Flow</h3> <div class=highlight><pre><span></span><code>User sets constraints (weather, vibe, occasion)
+     │
+     ▼
+[POST /api/outfits/generate]
+     │
+     ├─► Fetch available items (state = available)
+     ├─► Filter by constraints
+     ├─► Build prompt for AI
+     │
+     ▼
+[Enqueue generate_outfit job]
+     │
+     ▼
+[BullMQ Worker]
+     │
+     ├─► Call OpenRouter API
+     ├─► Parse structured response
+     ├─► Create Outfit + OutfitItem records
+     └─► Return outfit ID
+          │
+          ▼
+     [Redirect user to outfit view]
+</code></pre></div> <h3 id=3-exportimport-flow>3. Export/Import Flow</h3> <p><strong>Export</strong>: <div class=highlight><pre><span></span><code>User clicks &quot;Export Wardrobe&quot;
+     │
+     ▼
+[POST /api/export]
+     │
+     ├─► Query all data (items, outfits, tags)
+     ├─► Generate JSON export
+     ├─► Generate CSV files
+     ├─► Create ZIP archive
+     │    ├─► export.json
+     │    ├─► items.csv
+     │    ├─► outfits.csv
+     │    ├─► images/ (copy all)
+     │    └─► manifest.json
+     │
+     └─► Stream ZIP to user
+</code></pre></div></p> <p><strong>Import</strong>: <div class=highlight><pre><span></span><code>User uploads ZIP backup
+     │
+     ▼
+[POST /api/import]
+     │
+     ├─► Extract ZIP to temp directory
+     ├─► Validate manifest
+     ├─► Parse export.json
+     │
+     ├─► If mode = &quot;replace&quot;:
+     │    └─► Delete all existing data
+     │
+     ├─► If mode = &quot;merge&quot;:
+     │    └─► Skip duplicates (by ID)
+     │
+     ├─► Import data:
+     │    ├─► Tags
+     │    ├─► Items
+     │    ├─► Images (copy files)
+     │    └─► Outfits
+     │
+     └─► Return import summary
+</code></pre></div></p> <hr> <h2 id=ai-job-processing>AI Job Processing</h2> <h3 id=job-lifecycle>Job Lifecycle</h3> <div class=highlight><pre><span></span><code>┌─────────────┐
+│   Queued    │  Job created, waiting for worker
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   Running   │  Worker picked up job, calling AI API
+└──────┬──────┘
+       │
+       ├──► Success ──┐
+       │              ▼
+       │         ┌─────────────┐
+       │         │  Succeeded  │  Result saved to DB
+       │         └─────────────┘
+       │
+       ├──► Failure ──┐
+       │              ▼
+       │         ┌─────────────┐
+       │         │   Failed    │  Error logged, retry?
+       │         └──────┬──────┘
+       │                │
+       │         (if attempts &lt; maxAttempts)
+       │                │
+       └────────────────┘
+
+       └──► Needs Review ──┐
+                           ▼
+                      ┌──────────────┐
+                      │Needs Review  │  AI uncertain, human review needed
+                      └──────────────┘
+</code></pre></div> <h3 id=job-types>Job Types</h3> <p><strong>1. generate_catalog_image</strong> - <strong>Input</strong>: Original image (original_main or original_back) - <strong>Process</strong>: Use image generation model to create clean catalog-style image - <strong>Output</strong>: New ImageAsset with kind=ai_catalog</p> <p><strong>2. infer_item</strong> - <strong>Input</strong>: Item images (all kinds) - <strong>Process</strong>: Use vision model to identify category, colors, attributes, tags - <strong>Output</strong>: Update Item with inferred data</p> <p><strong>3. extract_label</strong> - <strong>Input</strong>: Label images (label_brand, label_care) - <strong>Process</strong>: Use OCR vision model to read text - <strong>Output</strong>: Update Item with brand, sizeText, materials, care instructions</p> <p><strong>4. generate_outfit</strong> - <strong>Input</strong>: Available items + constraints (weather, vibe, occasion) - <strong>Process</strong>: Use text model to suggest outfit combinations - <strong>Output</strong>: Create Outfit with OutfitItems</p> <h3 id=worker-configuration>Worker Configuration</h3> <div class=highlight><pre><span></span><code><span class=c1>// lib/ai/worker.ts</span>
+<span class=kd>const</span><span class=w> </span><span class=nx>worker</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ow>new</span><span class=w> </span><span class=nx>Worker</span><span class=p>(</span><span class=s1>&#39;ai-jobs&#39;</span><span class=p>,</span><span class=w> </span><span class=k>async</span><span class=w> </span><span class=p>(</span><span class=nx>job</span><span class=p>)</span><span class=w> </span><span class=p>=&gt;</span><span class=w> </span><span class=p>{</span>
+<span class=w>  </span><span class=k>switch</span><span class=w> </span><span class=p>(</span><span class=nx>job</span><span class=p>.</span><span class=nx>data</span><span class=p>.</span><span class=kr>type</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+<span class=w>    </span><span class=k>case</span><span class=w> </span><span class=s1>&#39;generate_catalog_image&#39;</span><span class=o>:</span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=k>await</span><span class=w> </span><span class=nx>generateCatalogImage</span><span class=p>(</span><span class=nx>job</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+<span class=w>    </span><span class=k>case</span><span class=w> </span><span class=s1>&#39;infer_item&#39;</span><span class=o>:</span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=k>await</span><span class=w> </span><span class=nx>inferItem</span><span class=p>(</span><span class=nx>job</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+<span class=w>    </span><span class=k>case</span><span class=w> </span><span class=s1>&#39;extract_label&#39;</span><span class=o>:</span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=k>await</span><span class=w> </span><span class=nx>extractLabel</span><span class=p>(</span><span class=nx>job</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+<span class=w>    </span><span class=k>case</span><span class=w> </span><span class=s1>&#39;generate_outfit&#39;</span><span class=o>:</span>
+<span class=w>      </span><span class=k>return</span><span class=w> </span><span class=k>await</span><span class=w> </span><span class=nx>generateOutfit</span><span class=p>(</span><span class=nx>job</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+<span class=w>  </span><span class=p>}</span>
+<span class=p>},</span><span class=w> </span><span class=p>{</span>
+<span class=w>  </span><span class=nx>connection</span><span class=o>:</span><span class=w> </span><span class=kt>redis</span><span class=p>,</span>
+<span class=w>  </span><span class=nx>concurrency</span><span class=o>:</span><span class=w> </span><span class=kt>3</span><span class=p>,</span><span class=w>  </span><span class=c1>// Process 3 jobs concurrently</span>
+<span class=w>  </span><span class=nx>removeOnComplete</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=nx>age</span><span class=o>:</span><span class=w> </span><span class=kt>86400</span><span class=w> </span><span class=p>},</span><span class=w>  </span><span class=c1>// Keep completed jobs for 24h</span>
+<span class=w>  </span><span class=nx>removeOnFail</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=nx>age</span><span class=o>:</span><span class=w> </span><span class=kt>604800</span><span class=w> </span><span class=p>},</span><span class=w>     </span><span class=c1>// Keep failed jobs for 7 days</span>
+<span class=p>});</span>
+</code></pre></div> <hr> <h2 id=caching-strategy>Caching Strategy</h2> <h3 id=1-image-caching>1. Image Caching</h3> <ul> <li><strong>Original images</strong>: Never cached (large, infrequently accessed)</li> <li><strong>Thumbnails</strong>: Cached in browser (immutable, small)</li> <li><strong>Catalog images</strong>: Cached with versioning</li> </ul> <h3 id=2-database-query-caching>2. Database Query Caching</h3> <p>Currently no caching layer. Future considerations: - Redis cache for frequent queries (e.g., homepage items) - SWR/React Query for client-side caching - Prisma middleware for query result caching</p> <h3 id=3-static-assets>3. Static Assets</h3> <ul> <li>Next.js automatic static optimization</li> <li>Images served with cache headers: <div class=highlight><pre><span></span><code><span class=nx>res</span><span class=p>.</span><span class=nx>setHeader</span><span class=p>(</span><span class=s1>&#39;Cache-Control&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;public, max-age=31536000, immutable&#39;</span><span class=p>);</span>
+</code></pre></div></li> </ul> <hr> <h2 id=database-schema>Database Schema</h2> <h3 id=entity-relationship-diagram>Entity Relationship Diagram</h3> <div class=highlight><pre><span></span><code>┌─────────────┐
+│    Tag      │
+│─────────────│
+│ id (PK)     │
+│ name (UQ)   │
+└──────┬──────┘
+       │
+       │ M:N
+       │
+┌──────▼──────┐       ┌──────────────┐
+│   ItemTag   │       │     Item     │
+│─────────────│       │──────────────│
+│ itemId (FK) │◄──────┤ id (PK)      │
+│ tagId (FK)  │       │ title        │
+└─────────────┘       │ category     │
+                      │ state        │
+                      │ brand        │
+                      │ colorPalette │
+                      │ attributes   │
+                      └──────┬───────┘
+                             │
+                             │ 1:N
+                             │
+                      ┌──────▼───────┐
+                      │  ImageAsset  │
+                      │──────────────│
+                      │ id (PK)      │
+                      │ itemId (FK)  │
+                      │ kind (ENUM)  │
+                      │ filePath     │
+                      │ width, height│
+                      └──────────────┘
+                             │
+                             │ 1:N
+                             │
+                      ┌──────▼───────┐
+                      │    AIJob     │
+                      │──────────────│
+                      │ id (PK)      │
+                      │ itemId (FK)  │
+                      │ type (ENUM)  │
+                      │ status       │
+                      │ outputJson   │
+                      │ error        │
+                      └──────────────┘
+
+┌─────────────┐       ┌──────────────┐
+│   Outfit    │       │  OutfitItem  │
+│─────────────│       │──────────────│
+│ id (PK)     │◄──────┤ outfitId (FK)│
+│ title       │       │ itemId (FK)  │
+│ rating      │       │ role (ENUM)  │
+│ weather     │       └──────┬───────┘
+│ vibe        │              │
+│ explanation │              │
+└─────────────┘              │
+                             │
+                      ┌──────▼───────┐
+                      │     Item     │
+                      │──────────────│
+                      │ id (PK)      │
+                      └──────────────┘
+</code></pre></div> <h3 id=key-design-decisions>Key Design Decisions</h3> <p><strong>1. ImageAsset separate from Item</strong> - Allows multiple images per item - Different <code>kind</code> values (original, catalog, thumbnail, label) - Easy to add/remove images without touching Item</p> <p><strong>2. Tags as separate entities</strong> - Reusable across items - Easy to rename tags globally - Can show tag popularity (count items per tag)</p> <p><strong>3. Outfit references Items, not copies</strong> - Item changes reflect in outfits - If item deleted, outfit shows as incomplete - Easier to track "most worn" items</p> <p><strong>4. AIJob tracks all AI operations</strong> - Debug failed jobs - Show processing history to user - Retry logic built-in - Cost tracking (via rawResponse)</p> <p><strong>5. JSON fields for flexible data</strong> - <code>colorPalette</code>: Array of hex colors - <code>attributes</code>: Object with category-specific fields - <code>outputJson</code>: Store full AI response</p> <hr> <h2 id=performance-considerations>Performance Considerations</h2> <h3 id=bottlenecks>Bottlenecks</h3> <ol> <li><strong>Image generation</strong>: 10-30 seconds per image</li> <li><strong>Database queries</strong>: N+1 problem with relations</li> <li><strong>Image uploads</strong>: Large files (5-50MB)</li> <li><strong>Export/Import</strong>: ZIP creation with many files</li> </ol> <h3 id=optimizations>Optimizations</h3> <ol> <li><strong>Thumbnail generation</strong>: WebP format, 512px max</li> <li><strong>Prisma includes</strong>: Only fetch needed relations</li> <li><strong>Queue concurrency</strong>: Process 3 AI jobs in parallel</li> <li><strong>Image streaming</strong>: Stream large files, don't buffer</li> <li><strong>Lazy loading</strong>: Load images on-demand, not all at once</li> </ol> <hr> <h2 id=security-considerations>Security Considerations</h2> <h3 id=single-user-design>Single-User Design</h3> <ul> <li>No authentication layer</li> <li>Assumes trusted network (localhost or VPN)</li> <li>For internet exposure: Add reverse proxy with basic auth</li> </ul> <h3 id=data-protection>Data Protection</h3> <ul> <li>All data stored locally</li> <li>No third-party analytics</li> <li>Images never leave server (except to OpenRouter for AI)</li> </ul> <h3 id=input-validation>Input Validation</h3> <ul> <li>Zod schemas for all API inputs</li> <li>File type validation for uploads</li> <li>SQL injection protection (Prisma parameterized queries)</li> <li>XSS protection (React escapes by default)</li> </ul> <hr> <h2 id=scalability>Scalability</h2> <h3 id=current-limits>Current Limits</h3> <ul> <li><strong>Items</strong>: 10,000+ (tested)</li> <li><strong>Images</strong>: 50,000+ (disk space dependent)</li> <li><strong>Outfits</strong>: 1,000+ (no performance impact)</li> <li><strong>Concurrent users</strong>: 1 (single-user design)</li> </ul> <h3 id=future-multi-user-considerations>Future Multi-User Considerations</h3> <p>Would require: - Authentication (NextAuth.js) - User isolation (add userId to all tables) - S3-compatible storage (for scalable images) - Redis sessions - Rate limiting per user</p> <hr> <h2 id=monitoring-observability>Monitoring &amp; Observability</h2> <h3 id=current>Current</h3> <ul> <li>Console logging</li> <li>Prisma query logging (dev mode)</li> <li>Redis queue dashboard (optional: Bull Board)</li> </ul> <h3 id=future>Future</h3> <ul> <li>Structured logging (Winston, Pino)</li> <li>Error tracking (Sentry)</li> <li>Performance monitoring (New Relic, Datadog)</li> <li>Database query analysis (Prisma Studio)</li> </ul> <hr> <h2 id=security-privacy>Security &amp; Privacy</h2> <h3 id=threat-model>Threat Model</h3> <ul> <li>Single-user self-hosted, but still protect:</li> <li>OpenRouter API key</li> <li>File serving path traversal</li> <li>Oversized uploads</li> <li>Accidental exposure if deployed publicly</li> </ul> <h3 id=requirements>Requirements</h3> <ul> <li>OpenRouter API key must never be sent to client</li> <li>All AI requests must be made from server routes/workers</li> <li>File serving endpoint must map ImageAsset IDs to known file paths under DATA_DIR</li> <li>Reject any request that attempts to serve an arbitrary path</li> <li>Set upload size limits and validate mime types</li> <li>Include an in-app disclosure:</li> <li>"AI processing sends images to model providers"</li> <li>Toggle to disable AI jobs (app remains usable manually)</li> </ul> <h2 id=performance-budget>Performance Budget</h2> <h3 id=images>Images</h3> <ul> <li>Always display thumbnails in grids/lists/3D (never full-res originals)</li> <li>Store thumbnail as WebP with max dimension 512px</li> <li>Use lazy loading for images in lists</li> </ul> <h3 id=lists>Lists</h3> <ul> <li>Paginate results for mobile</li> <li>Virtualize lists/tables on desktop (bulk view) if item count grows</li> </ul> <h3 id=threejs>Three.js</h3> <ul> <li>Use thumbnails (&lt;=512px textures)</li> <li>Lazy-load textures as cards enter view</li> <li>Avoid expensive postprocessing</li> <li>Cap number of simultaneously loaded textures</li> <li>Prefer instancing/sprites for cards if needed</li> </ul> <h3 id=jobs>Jobs</h3> <ul> <li>AI and image processing must be background jobs; never block UI requests</li> <li>Status polling should be throttled (or use SSE later)</li> </ul> <hr> <h2 id=references>References</h2> <ul> <li><a href=../app/prisma/schema.prisma>Prisma Schema</a></li> <li><a href=../../api/API_DOCUMENTATION/ >API Documentation</a></li> <li><a href=../SPEC/ >SPEC.md</a></li> </ul> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> Back to top </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://github.com/shelbeely/ADHD-Closet target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../../assets/javascripts/bundle.79ae519e.min.js></script> </body> </html>
