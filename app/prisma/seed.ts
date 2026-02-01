@@ -11,7 +11,7 @@
  * Run with: npm run prisma:seed
  */
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Category } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import 'dotenv/config';
@@ -137,7 +137,6 @@ async function main() {
       state: 'available' as const,
     },
     
-    // ========== BOTTOMS - All sub-types ==========
     // ========== BOTTOMS - All sub-types ==========
     {
       title: 'Dark Wash Skinny Jeans',

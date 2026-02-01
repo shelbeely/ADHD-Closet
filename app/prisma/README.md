@@ -104,18 +104,23 @@ When the seed script runs successfully, you'll see output like:
 🗑️  Clearing existing items...
 ✅ Existing data cleared
 📦 Creating items...
-  ✓ Created: Black Band T-Shirt (tops)
-  ✓ Created: Dark Wash Skinny Jeans (bottoms)
-  ✓ Created: Gothic Lace Maxi Dress (dresses)
+  ✓ Created: Black Crew Neck T-Shirt (tops)
+  ✓ Created: Gray V-Neck Sweater (tops)
+  ✓ Created: White Scoop Neck Tank (tops)
+  ... (continues for all 53 items)
+
+✨ Successfully seeded 53 items with comprehensive attribute coverage
+
+📊 Summary by Category:
+  tops: 6 item(s)
+  bottoms: 8 item(s)
+  dresses: 2 item(s)
   ... (and so on for all 13 categories)
 
-✨ Successfully seeded 13 items (one for each category)
-
-📊 Summary:
-  tops: 1 item(s)
-  bottoms: 1 item(s)
-  dresses: 1 item(s)
-  ... (and so on)
+📊 Summary by Sub-Type:
+  Bottoms - jeans: 1 item(s)
+  Bottoms - dress_pants: 1 item(s)
+  ... (and so on for all sub-types)
 ```
 
 ## Important Notes
