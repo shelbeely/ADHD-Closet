@@ -50,11 +50,11 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {[...Array(8)].map((_, i) => (
+      <div className="grid grid-cols-1 gap-10 p-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto">
+        {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="aspect-[3/4] bg-surface-variant rounded-3xl animate-pulse shadow-elevation-2"
+            className="aspect-[4/5] bg-surface-variant rounded-3xl animate-pulse shadow-elevation-3"
           />
         ))}
       </div>
@@ -78,7 +78,7 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-10 p-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto">
       {items.map((item) => {
         const { frontImage, backImage, hasBothSides } = getItemImages(item);
         const primaryColor = getPrimaryColor(item.colorPalette);
@@ -89,10 +89,10 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
             href={`/items/${item.id}`}
             className="group cursor-pointer"
           >
-            {/* Card-based UI with prominent image and overlaid text */}
-            <div className="bg-surface-container rounded-3xl overflow-hidden shadow-elevation-2 transition-all duration-300 hover:shadow-elevation-3 hover:scale-[1.02]">
-              {/* Image Container - 3:4 aspect ratio like typical product cards */}
-              <div className="aspect-[3/4] bg-surface-container-low relative">
+            {/* Large, prominent card with clear visual boundaries */}
+            <div className="bg-surface-container rounded-3xl overflow-hidden shadow-elevation-3 border border-outline-variant transition-all duration-300 hover:shadow-elevation-4 hover:scale-[1.03] hover:border-primary">
+              {/* Image Container - taller 4:5 aspect ratio for prominent cards */}
+              <div className="aspect-[4/5] bg-surface-container-low relative">
                 {hasBothSides ? (
                   /* Side-by-side view for items with both front and back */
                   <div className="w-full h-full flex">
@@ -196,10 +196,10 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
                 )}
               </div>
               
-              {/* Card footer with title and tags - minimal, clean */}
-              <div className="p-4 space-y-2">
+              {/* Card footer with title and tags - larger, more prominent */}
+              <div className="p-6 space-y-3">
                 {item.title && (
-                  <h3 className="text-title-small text-on-surface line-clamp-2 font-bold">
+                  <h3 className="text-title-large text-on-surface line-clamp-2 font-bold">
                     {item.title}
                   </h3>
                 )}
@@ -208,13 +208,13 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
                     {item.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag.name}
-                        className="text-label-medium px-2 py-1 bg-surface-variant rounded-lg text-on-surface-variant"
+                        className="text-label-large px-3 py-1.5 bg-surface-variant rounded-xl text-on-surface-variant"
                       >
                         {tag.name}
                       </span>
                     ))}
                     {item.tags.length > 3 && (
-                      <span className="text-label-medium px-2 py-1 bg-surface-variant rounded-lg text-on-surface-variant font-bold">
+                      <span className="text-label-large px-3 py-1.5 bg-surface-variant rounded-xl text-on-surface-variant font-bold">
                         +{item.tags.length - 3}
                       </span>
                     )}
