@@ -127,24 +127,31 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
                     {frontImage?.kind === 'ai_catalog' && (
                       <div className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/60 to-transparent">
                         {item.category && (
-                          <div className="text-white text-label-large font-bold tracking-wider mb-1">
+                          <div className="text-white text-label-large font-bold tracking-wider mb-1 uppercase">
                             {formatCategory(item.category)}
                           </div>
                         )}
                         {item.brand && (
-                          <div className="text-white/90 text-label-medium font-medium">
-                            {item.brand.toUpperCase()}
+                          <div 
+                            className="text-white/90 text-label-medium font-medium uppercase"
+                            aria-label={item.brand}
+                          >
+                            {item.brand}
                           </div>
                         )}
                       </div>
                     )}
                     
-                    {/* Primary color indicator */}
-                    {getPrimaryColor(item.colorPalette) && (
-                      <div className="absolute bottom-3 left-3 flex items-center gap-2 px-2 py-1 bg-surface-container/90 backdrop-blur-sm rounded-full shadow-elevation-1">
+                    {/* Primary color indicator (only for catalog images) */}
+                    {getPrimaryColor(item.colorPalette) && frontImage?.kind === 'ai_catalog' && (
+                      <div 
+                        className="absolute bottom-3 left-3 flex items-center gap-2 px-2 py-1 bg-surface-container/90 backdrop-blur-sm rounded-full shadow-elevation-1"
+                        aria-label={`Primary color: ${getPrimaryColor(item.colorPalette)}`}
+                      >
                         <div 
                           className="w-4 h-4 rounded-full border-2 border-white/50" 
                           style={{ backgroundColor: getPrimaryColor(item.colorPalette) || '#000' }}
+                          aria-hidden="true"
                         />
                         <span className="text-on-surface text-label-small font-medium pr-1">
                           Color
