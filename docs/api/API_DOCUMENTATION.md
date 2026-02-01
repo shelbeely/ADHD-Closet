@@ -10,6 +10,16 @@ http://localhost:3000/api
 ## Authentication
 This is a single-user application with no authentication required.
 
+## API Contract & Conventions
+
+All endpoints use Next.js Route Handlers under `/api/*`. All responses are JSON unless noted.
+
+**Conventions:**
+- All IDs are UUID strings
+- Upload endpoints use multipart/form-data
+- Image serving endpoints stream bytes with correct Content-Type
+- Errors return: `{ "error": { "code": string, "message": string, "details"?: any } }`
+
 ---
 
 ## Endpoints

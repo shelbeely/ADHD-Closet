@@ -91,7 +91,7 @@ The app will automatically use the Web NFC API.
 
 ### 3. Native App Setup (Optional - iOS/Android)
 
-For iOS support or enhanced Android experience, you can build a native app. See [PWA_NATIVE_BRIDGE.md](./PWA_NATIVE_BRIDGE.md) for building instructions.
+For iOS support or enhanced Android experience, you can build a native app. See [MOBILE_APPS.md](./MOBILE_APPS.md) for building instructions.
 
 #### iOS Permissions
 

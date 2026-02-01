@@ -515,7 +515,50 @@ Would require:
 
 ---
 
+## Security & Privacy
+
+### Threat Model
+- Single-user self-hosted, but still protect:
+  - OpenRouter API key
+  - File serving path traversal
+  - Oversized uploads
+  - Accidental exposure if deployed publicly
+
+### Requirements
+- OpenRouter API key must never be sent to client
+- All AI requests must be made from server routes/workers
+- File serving endpoint must map ImageAsset IDs to known file paths under DATA_DIR
+- Reject any request that attempts to serve an arbitrary path
+- Set upload size limits and validate mime types
+- Include an in-app disclosure:
+  - "AI processing sends images to model providers"
+  - Toggle to disable AI jobs (app remains usable manually)
+
+## Performance Budget
+
+### Images
+- Always display thumbnails in grids/lists/3D (never full-res originals)
+- Store thumbnail as WebP with max dimension 512px
+- Use lazy loading for images in lists
+
+### Lists
+- Paginate results for mobile
+- Virtualize lists/tables on desktop (bulk view) if item count grows
+
+### Three.js
+- Use thumbnails (<=512px textures)
+- Lazy-load textures as cards enter view
+- Avoid expensive postprocessing
+- Cap number of simultaneously loaded textures
+- Prefer instancing/sprites for cards if needed
+
+### Jobs
+- AI and image processing must be background jobs; never block UI requests
+- Status polling should be throttled (or use SSE later)
+
+---
+
 ## References
 - [Prisma Schema](../app/prisma/schema.prisma)
-- [API Documentation](./API_DOCUMENTATION.md)
+- [API Documentation](../api/API_DOCUMENTATION.md)
 - [SPEC.md](./SPEC.md)

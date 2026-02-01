@@ -238,3 +238,55 @@ Internal testing results (100 items, 50 outfits):
 | Total | $0.28 | $1.12 | **Flash (75% cheaper)** |
 
 **Conclusion**: Flash offers excellent quality-to-cost ratio for this application.
+
+---
+
+## Quick Decision Guide: Pro vs Flash
+
+### For Vision (Item Analysis)
+
+**Use Pro** (default ✅):
+- Normal use - accuracy matters for categorization
+- One-time cost per item
+- Wrong categories break outfit generation
+- Cost: ~$0.20/month for 100 items
+
+**Use Flash instead**:
+- Extreme budget constraints
+- Batch processing 1000+ items
+- Testing/development
+- Simple items (solid colors, basic styles)
+- Cost: ~$0.05/month for 100 items
+
+### For Text (Outfit Generation)
+
+**Use Flash** (default ✅):
+- Normal use - near-Pro quality (8.7/10 vs 9.1/10)
+- Speed matters (2.1s vs 4.5s)
+- Frequent generation
+- 4x cheaper, can regenerate if needed
+- Cost: ~$0.10/month for 50 outfits
+
+**Use Pro instead**:
+- Professional styling
+- Complex wardrobes (500+ items)
+- Content creation needs
+- Maximum quality required
+- Cost: ~$0.40/month for 50 outfits
+
+### Common Scenarios
+
+**Budget-conscious** (Flash/Flash):
+- $0.15/month total
+- 95%+ accuracy, good outfits
+- Best for: students, casual use
+
+**Balanced** (Pro/Flash) - DEFAULT ✅:
+- $0.30/month total
+- Best item accuracy + fast outfits
+- Best for: most users
+
+**Professional** (Pro/Pro):
+- $0.60/month total
+- Maximum quality everything
+- Best for: stylists, business use

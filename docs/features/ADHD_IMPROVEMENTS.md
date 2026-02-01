@@ -2,15 +2,15 @@
 
 ## Overview
 
-This document describes additional ADHD-friendly improvements added to the Wardrobe AI Closet application.
+This document covers ADHD-friendly features added to the Wardrobe AI Closet app.
 
 ## Improvements Implemented
 
-### 1. Quick Stats Dashboard Widget ✅
+### 1. Quick Stats Dashboard Widget
 
 **Location**: `app/components/QuickStatsWidget.tsx`
 
-**Purpose**: Provides an at-a-glance, actionable overview of the closet status
+**Purpose**: Shows closet status at a glance
 
 **Features**:
 - Shows 4 key metrics in a 2x2 grid on mobile, 1x4 on desktop
@@ -19,11 +19,11 @@ This document describes additional ADHD-friendly improvements added to the Wardr
 - **Available Count**: Info card showing available items
 - **Quick Outfit Button**: Primary action to generate outfits immediately
 
-**ADHD Benefits**:
-- **Reduces decision fatigue**: Clear overview of what needs attention
-- **Actionable**: Each card is tappable to filter/navigate
-- **Visual hierarchy**: Color-coded priorities (tertiary for laundry, secondary for donate, primary for action)
-- **No overwhelming data**: Limited to 3-4 metrics max
+**Why this helps**:
+- Clear overview of what needs attention
+- Each card is tappable to filter/navigate
+- Color-coded priorities (tertiary for laundry, secondary for donate, primary for action)
+- Only shows 3-4 metrics so you don't get overwhelmed
 
 **Usage**:
 ```typescript
@@ -37,11 +37,11 @@ import QuickStatsWidget from './components/QuickStatsWidget';
 
 ---
 
-### 2. Success Feedback with Celebrations ✅
+### 2. Success Feedback with Celebrations
 
 **Location**: `app/components/SuccessFeedback.tsx`
 
-**Purpose**: Provides dopamine rewards for task completion
+**Purpose**: Gives you that little dopamine hit when you complete something
 
 **Features**:
 - Subtle success animation (bounce)
@@ -51,11 +51,11 @@ import QuickStatsWidget from './components/QuickStatsWidget';
   - Celebration: Sparkles ✨
   - Milestone: Party popper 🎉
 
-**ADHD Benefits**:
-- **Dopamine reward**: Positive reinforcement for completing tasks
-- **Builds positive habits**: Celebrates progress
-- **Non-intrusive**: Auto-dismisses, doesn't require user action
-- **Encouragement**: Shows encouraging messages for milestones
+**Why this helps**:
+- Positive reinforcement when you finish tasks
+- Celebrates progress and builds good habits
+- Doesn't require you to dismiss it manually
+- Shows encouraging messages when you hit milestones
 
 **Usage**:
 ```typescript
@@ -81,23 +81,23 @@ Added `animate-bounce-once` class to `globals.css` for subtle bounce effect
 
 ---
 
-### 3. Enhanced Loading States ✅
+### 3. Enhanced Loading States
 
 **Location**: `app/components/LoadingState.tsx`
 
-**Purpose**: Reduce anxiety during AI operations with time estimates
+**Purpose**: Shows how long AI stuff will take so you're not stuck wondering
 
 **Features**:
 - Animated spinner
 - **Time estimate display**: Shows estimated seconds remaining
 - **Progress bar**: Visual progress indicator (optional)
-- **Helpful hints**: For long operations, suggests user can do something else
+- **Helpful hints**: For long operations, suggests you can do something else
 
-**ADHD Benefits**:
-- **Time blindness support**: Clear indication of "how long will this take?"
-- **Reduces anxiety**: Knowing duration prevents worry
-- **Status visibility**: Always shows what's happening
-- **Actionable guidance**: Suggests multitasking for long operations
+**Why this helps**:
+- Answers the "how long will this take?" question
+- Less stressful when you know the duration
+- Always shows what's happening
+- Suggests multitasking for long operations
 
 **Usage**:
 ```typescript
@@ -117,11 +117,11 @@ import LoadingState from './components/LoadingState';
 
 ---
 
-### 4. Achievement & Milestone Tracking ✅
+### 4. Achievement & Milestone Tracking
 
 **Location**: `app/lib/achievements.ts`
 
-**Purpose**: Celebrate progress and build positive habits
+**Purpose**: Celebrates your progress and builds good habits
 
 **Features**:
 - Tracks meaningful milestones:
@@ -131,11 +131,11 @@ import LoadingState from './components/LoadingState';
 - Returns random encouraging messages
 - Stores seen milestones in localStorage (show each milestone only once)
 
-**ADHD Benefits**:
-- **Dopamine rewards**: Celebrates progress at meaningful points
-- **Builds positive habits**: Positive reinforcement
-- **Non-repetitive**: Each milestone shown only once
-- **Variety**: Random encouraging messages keep it fresh
+**Why this helps**:
+- Celebrates progress at meaningful points
+- Positive reinforcement builds better habits
+- Each milestone only shows once so it doesn't get annoying
+- Random messages keep it feeling fresh
 
 **Usage**:
 ```typescript
@@ -220,7 +220,7 @@ const handleSuccess = async (itemId: string) => {
 
 ## Future Enhancements (Not Yet Implemented)
 
-These are planned but not yet implemented:
+Things we're planning but haven't built yet:
 
 ### 1. Gentle Reminders & Nudges
 - Optional "laundry day" reminders
@@ -249,26 +249,26 @@ These are planned but not yet implemented:
 
 ---
 
-## Design Principles Followed
+## Design Principles
 
-All improvements follow the existing ADHD-optimized design principles:
+All improvements follow these ADHD-optimized design principles:
 
-1. **Visual Hierarchy**: Clear primary actions, secondary actions demoted
-2. **Progressive Disclosure**: Advanced features hidden until requested
+1. **Visual Hierarchy**: Primary actions are obvious, secondary actions are less prominent
+2. **Progressive Disclosure**: Advanced stuff is hidden until you ask for it
 3. **Minimal Friction**: Auto-save, no forced completion, quick actions
-4. **Decision Paralysis Reducers**: Limited choices (3-5 max), guided workflows
-5. **Time Blindness Support**: Time estimates, progress indicators
-6. **Immediate Feedback**: All actions provide clear confirmation
-7. **Forgiveness**: Easy to undo, non-destructive by default
+4. **Fewer Choices**: Limited options (3-5 max), guided workflows
+5. **Time Management**: Time estimates and progress indicators
+6. **Immediate Feedback**: Every action confirms it worked
+7. **Forgiveness**: Easy to undo, nothing is destructive by default
 
 ---
 
 ## Testing Checklist
 
-- [ ] Quick Stats Widget displays correct counts
-- [ ] Quick Stats cards are tappable and navigate correctly
+- [ ] Quick Stats Widget shows correct counts
+- [ ] Quick Stats cards navigate correctly when clicked
 - [ ] Success feedback appears and auto-dismisses
-- [ ] Milestone celebrations show for correct thresholds
+- [ ] Milestone celebrations trigger at the right thresholds
 - [ ] Milestones only show once (localStorage check)
 - [ ] Loading states show time estimates
 - [ ] Loading progress bars animate correctly
@@ -278,30 +278,30 @@ All improvements follow the existing ADHD-optimized design principles:
 
 ## Accessibility
 
-- All interactive elements are keyboard accessible
+- All interactive elements work with keyboard
 - Focus indicators are visible (3px outline)
-- Color is not the only indicator (icons + text always present)
+- Color isn't the only indicator (we use icons + text)
 - Animations respect `prefers-reduced-motion` media query
-- Touch targets are minimum 48x48dp
+- Touch targets are at least 48x48dp
 
 ---
 
 ## Performance
 
-- Quick Stats Widget: Single API call, minimal overhead
-- Success Feedback: CSS animations, no JavaScript animations
-- Loading States: Lightweight countdown timer
+- Quick Stats Widget: Single API call
+- Success Feedback: CSS animations only, no JavaScript
+- Loading States: Simple countdown timer
 - Achievements: localStorage only, no network calls
 
 ---
 
 ## Browser Support
 
-All features work in:
+Works in:
 - Chrome/Edge (desktop & mobile)
 - Firefox (desktop & mobile)
 - Safari (desktop & mobile)
-- All modern browsers supporting CSS animations
+- All modern browsers that support CSS animations
 
 ---
 
@@ -349,6 +349,6 @@ When adding new ADHD-friendly features:
 
 ## Resources
 
-- [SPEC.md](../SPEC.md) - Full ADHD-friendly UX rules
+- [SPEC.md](../developer/SPEC.md) - Full ADHD-friendly UX rules
 - [ADHD & UX Design](https://uxdesign.cc/designing-for-adhd-3c8b13475f33)
 - [Material Design 3 Guidelines](https://m3.material.io/)
