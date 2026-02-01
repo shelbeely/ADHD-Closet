@@ -1,7 +1,7 @@
 {
-  "name": "Wardrobe AI Closet",
-  "short_name": "My Closet",
-  "description": "Single-user, self-hosted wardrobe organizer powered by AI with ADHD-optimized design",
+  "name": "Twin Style",
+  "short_name": "Twin Style",
+  "description": "ADHD-friendly wardrobe organizer powered by Google Gemini AI",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

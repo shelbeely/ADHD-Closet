@@ -5,13 +5,13 @@ import CapacitorInit from "./components/CapacitorInit";
 import { ThemeProvider } from "./lib/theme";
 
 export const metadata: Metadata = {
-  title: "Wardrobe AI Closet",
-  description: "Single-user, self-hosted wardrobe organizer powered by AI with ADHD-optimized design",
-  applicationName: "Wardrobe AI Closet",
+  title: "Twin Style",
+  description: "ADHD-friendly wardrobe organizer powered by Google Gemini AI",
+  applicationName: "Twin Style",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "My Closet",
+    title: "Twin Style",
   },
   formatDetection: {
     telephone: false,

@@ -83,7 +83,7 @@ class OpenRouterClient {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.config.apiKey}`,
             'HTTP-Referer': process.env.PUBLIC_BASE_URL || 'http://localhost:3000',
-            'X-Title': 'Wardrobe AI Closet',
+            'X-Title': 'Twin Style',
           },
           body: JSON.stringify(body),
         });
