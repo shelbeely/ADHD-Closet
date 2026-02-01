@@ -82,6 +82,42 @@ NotebookLM is Google's AI-powered research and note-taking tool that can analyze
    - Performance optimization
    - ~16,800 words
 
+9. **[09-CODE-EXAMPLES.md](./09-CODE-EXAMPLES.md)**
+   - Real code patterns and snippets
+   - API route examples
+   - React component patterns
+   - Prisma database queries
+   - Custom hooks and utilities
+   - Error handling patterns
+   - ~19,000 words
+
+10. **[10-COMPONENT-CATALOG.md](./10-COMPONENT-CATALOG.md)**
+    - Complete component reference
+    - Props and usage examples
+    - Display, form, and layout components
+    - Navigation and utility components
+    - Native feature components
+    - Component composition patterns
+    - ~15,000 words
+
+11. **[11-DEPLOYMENT-OPERATIONS.md](./11-DEPLOYMENT-OPERATIONS.md)**
+    - Docker Compose deployment
+    - VPS deployment guide
+    - SSL/TLS configuration
+    - Monitoring and logging
+    - Backup and recovery
+    - Security hardening
+    - ~13,000 words
+
+12. **[12-TROUBLESHOOTING-FAQ.md](./12-TROUBLESHOOTING-FAQ.md)**
+    - Common issues and solutions
+    - Installation problems
+    - Database and Redis issues
+    - AI integration troubleshooting
+    - Performance optimization
+    - Frequently asked questions
+    - ~13,000 words
+
 ### Supporting Resources
 
 9. **[images/](./images/)**
@@ -196,7 +232,11 @@ Once you've imported the documentation, try asking NotebookLM:
 | Features & Capabilities | ~16,900 | Functionality |
 | Development Guide | ~14,800 | Building & contributing |
 | AI Integration | ~16,800 | AI workflows |
-| **Total** | **~122,000 words** | **Complete project knowledge** |
+| Code Examples | ~19,000 | Code patterns |
+| Component Catalog | ~15,000 | UI components |
+| Deployment & Operations | ~13,000 | Production deployment |
+| Troubleshooting & FAQ | ~13,000 | Problem solving |
+| **Total** | **~182,000 words** | **Complete project knowledge** |
 
 ## Additional Resources
 

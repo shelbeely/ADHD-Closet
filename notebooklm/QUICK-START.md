@@ -4,7 +4,7 @@
 
 Visit https://notebooklm.google.com/ and add these URLs as sources:
 
-### Core Documentation (8 files)
+### Core Documentation (12 files)
 ```
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/01-PROJECT-OVERVIEW.md
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/02-TECHNICAL-ARCHITECTURE.md
@@ -14,6 +14,10 @@ https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/05-UI-UX
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/06-FEATURES-AND-CAPABILITIES.md
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/07-DEVELOPMENT-GUIDE.md
 https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/08-AI-INTEGRATION.md
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/09-CODE-EXAMPLES.md
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/10-COMPONENT-CATALOG.md
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/11-DEPLOYMENT-OPERATIONS.md
+https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/12-TROUBLESHOOTING-FAQ.md
 ```
 
 ### Screenshots (6 images)
@@ -55,8 +59,12 @@ Once imported, try these questions:
 - **Features**: Complete functionality guide
 - **Development**: Setup, workflow, standards
 - **AI Integration**: Models, prompts, job queue
+- **Code Examples**: Real patterns, React, Prisma, API routes
+- **Component Catalog**: Complete UI component reference
+- **Deployment & Operations**: Production guide, monitoring
+- **Troubleshooting & FAQ**: Common issues, solutions
 
-Total: ~16,400 words + 6 screenshots
+Total: ~182,000 words + 6 screenshots
 
 ## 🎯 Best For
 
