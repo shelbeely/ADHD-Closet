@@ -1,8 +1,6 @@
 ---
 name: Remotion
-description: Remotion is a framework that can create videos programmatically.
-It is based on React.js. All output should be valid React code and be written in TypeScript.
-
+description: Remotion is a framework that can create videos programmatically., It is based on React.js, All output should be valid React code and be written in TypeScript.
 ---
 
 # Project structure
