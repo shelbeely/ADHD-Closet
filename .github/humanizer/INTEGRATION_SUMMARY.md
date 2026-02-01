@@ -167,3 +167,4 @@ The documentation in this repository is now better equipped to remain clear, nat
 - Wikipedia Signs of AI Writing: https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing
 - Softaworks Agent Toolkit: https://github.com/softaworks/agent-toolkit
 - GitHub Copilot Agents: https://docs.github.com/en/copilot/concepts/agents
+- Remotion AI Skills: https://www.remotion.dev/docs/ai/skills
