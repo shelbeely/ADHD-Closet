@@ -34,7 +34,7 @@ The app is optimized for rapid item entry with minimal friction:
 
 Items with both front and back photos display in a split view:
 
-![Example of side-by-side view](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-mobile-view.png)
+![Example of mobile home with seeded data](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/10-mobile-home-page.png)
 
 - Left half: Front photo with "Front" label
 - Right half: Back photo with "Back" label
@@ -174,7 +174,7 @@ User can accept or try again
 
 **No decisions required**. No constraints to set. Just instant outfit.
 
-![Outfit Generator](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-mobile.png)
+![Outfit Generator with Panic Pick](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/05-generate-outfit-page.png)
 
 ### Constraint-Based Generation
 
@@ -222,7 +222,7 @@ For when you have 15+ minutes and specific needs:
 
 Built-in styling guide helps understand what works:
 
-![Fit Guide](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/guide-page-mobile.png)
+![Fit & Proportion Guide](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/07-guide-page.png)
 
 **Topics Covered**:
 - Body proportions
@@ -319,7 +319,7 @@ Know where items are in your closet:
 
 **Access**: Desktop view (≥1024px)
 
-![Desktop View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-desktop-empty.png)
+![Desktop Grid View with Filters](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/03-desktop-grid-view.png)
 
 **Features**:
 - Select multiple items with checkboxes

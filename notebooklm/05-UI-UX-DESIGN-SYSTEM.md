@@ -8,25 +8,43 @@ Twin Style uses **Material Design 3 Expressive** combined with **ADHD-optimized 
 
 ### Mobile Experience
 
-![Mobile Main View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-mobile-view.png)
-*Mobile main view with category-first navigation*
+![Mobile Home Page](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/10-mobile-home-page.png)
+*Mobile home page with seeded wardrobe data showing grid layout and category navigation*
 
-![Mobile Menu](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/mobile-menu-open.png)
-*Mobile menu with quick access to all features*
+![Mobile Menu](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/11-mobile-menu-open.png)
+*Mobile navigation menu with quick access to Generate Outfits, Fit Guide, and Settings*
 
-![Outfit Generator Mobile](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-mobile.png)
-*Outfit generator on mobile with constraint selection*
+![Outfit Generator Mobile](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/05-generate-outfit-page.png)
+*Outfit generator with ADHD-friendly "Panic Pick" feature and constraint selection*
 
-![Fit Guide Mobile](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/guide-page-mobile.png)
-*Built-in fit and proportion guide on mobile*
+![Analytics Mobile](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/12-analytics-page-mobile.png)
+*Analytics dashboard showing wardrobe statistics and insights*
+
+![NFC Scan](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/13-nfc-scan-page-mobile.png)
+*NFC tag scanning interface for tracking items removed from closet*
+
+![Fit Guide Mobile](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/07-guide-page.png)
+*Built-in fit and proportion guide with collapsible sections*
 
 ### Desktop Experience
 
-![Desktop Main View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-desktop-empty.png)
-*Desktop view with filters and table layout*
+![Desktop Grid View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/03-desktop-grid-view.png)
+*Desktop grid view showing all 53 seeded items with sidebar filters*
 
-![Outfit Generator Desktop](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-desktop.png)
-*Outfit generator on desktop with full constraint options*
+![Desktop Table View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/02-desktop-table-view-with-notification.png)
+*Desktop table view with notification modal for enabling push notifications*
+
+![Filtered Category View](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/04-filtered-tops-category.png)
+*Category filtering in action - showing only tops with active filter chip*
+
+![Settings Page](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/06-settings-page.png)
+*Settings page with dark mode toggle, laundry reminders, and export/import functionality*
+
+![3D Closet Rail](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/08-3d-closet-rail.png)
+*3D visualization of closet rail using Three.js with interactive navigation*
+
+![Add Item Page](https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/09-add-item-page.png)
+*Streamlined add item workflow - just take a photo and let AI do the rest*
 
 ## Material Design 3 Implementation
 

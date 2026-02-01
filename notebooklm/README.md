@@ -122,7 +122,10 @@ NotebookLM is Google's AI-powered research and note-taking tool that can analyze
 
 9. **[images/](./images/)**
    - Screenshots of mobile and desktop UI
-   - 6 high-quality PNG images
+   - 13 comprehensive high-quality PNG images showing:
+     - Desktop views: grid, table, filtered categories, outfit generation, settings, guide, 3D rail, add item
+     - Mobile views: home page, menu, analytics, NFC scanning
+   - All screenshots show actual seeded data (53 items)
    - Referenced throughout documentation
 
 ## How to Use with NotebookLM
@@ -144,14 +147,20 @@ NotebookLM is Google's AI-powered research and note-taking tool that can analyze
    https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/08-AI-INTEGRATION.md
    ```
 
-5. Add screenshot images as sources:
+5. Add screenshot images as sources (comprehensive set with seeded data):
    ```
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-mobile-view.png
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/mobile-menu-open.png
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-mobile.png
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/outfits-generate-desktop.png
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/main-desktop-empty.png
-   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/docs/screenshots/guide-page-mobile.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/10-mobile-home-page.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/11-mobile-menu-open.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/12-analytics-page-mobile.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/13-nfc-scan-page-mobile.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/03-desktop-grid-view.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/02-desktop-table-view-with-notification.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/04-filtered-tops-category.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/05-generate-outfit-page.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/06-settings-page.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/07-guide-page.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/08-3d-closet-rail.png
+   https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm/images/09-add-item-page.png
    ```
 
 6. Add primary documentation site:
