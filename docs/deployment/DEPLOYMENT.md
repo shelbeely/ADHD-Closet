@@ -550,7 +550,7 @@ When installed as a PWA, you get:
 
 For developers wanting to build native iOS/Android apps:
 - Uses Capacitor for native capabilities
-- See `app/README.md` for build instructions
+- See [Android Build Guide](../mobile/ANDROID_BUILD.md) for detailed APK build instructions
 - Adds native camera, NFC, haptics, and more
 
 ### Why Build Native?
@@ -559,18 +559,33 @@ Web PWA is fine for most users. Build native if you need:
 - NFC tags on iOS (not available in web browsers)
 - Better camera performance
 - Native file system access
-- App Store distribution
+- App Store/Google Play distribution
 
-### Quick Build
+### Quick Build - Android APK
 
 ```bash
 cd app
-npm run build
-npx cap sync
-npx cap open ios    # or: npx cap open android
+npm install
+npx cap add android
+npx cap sync android
+npm run build:android
 ```
 
-Then build and sign in Xcode/Android Studio.
+APK will be at: `app/android/app/build/outputs/apk/debug/app-debug.apk`
+
+For detailed instructions, CI/CD setup, and troubleshooting, see the [Android Build Guide](../mobile/ANDROID_BUILD.md).
+
+### Quick Build - iOS (requires macOS)
+
+```bash
+cd app
+npm install
+npx cap add ios
+npx cap sync ios
+npx cap open ios
+```
+
+Then build and sign in Xcode.
 
 ## Comparison
 
