@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Code Examples and Patterns
+# Twin Style - Code Examples and Patterns
 
 ## Overview
 
-This document provides real code examples and patterns used throughout the Wardrobe AI Closet project. These examples demonstrate best practices, common patterns, and reusable code snippets.
+This document provides real code examples and patterns used throughout the Twin Style project. These examples demonstrate best practices, common patterns, and reusable code snippets.
 
 ## Table of Contents
 
@@ -667,7 +667,7 @@ export async function callOpenRouter(request: OpenRouterRequest) {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
       'HTTP-Referer': process.env.PUBLIC_BASE_URL || 'http://localhost:3000',
-      'X-Title': 'Wardrobe AI Closet',
+      'X-Title': 'Twin Style',
     },
     body: JSON.stringify(request),
   });

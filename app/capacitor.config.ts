@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.wardrobe.closet',
-  appName: 'Wardrobe AI Closet',
+  appId: 'com.twinstyle.app',
+  appName: 'Twin Style',
   webDir: 'public',
   server: {
     // For production builds, this will be overridden

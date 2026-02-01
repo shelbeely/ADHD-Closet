@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Component Catalog
+# Twin Style - Component Catalog
 
 ## Overview
 
-Complete visual and functional reference for all React components in the Wardrobe AI Closet application. This catalog helps developers understand available components, their props, and usage patterns.
+Complete visual and functional reference for all React components in the Twin Style application. This catalog helps developers understand available components, their props, and usage patterns.
 
 ## Component Categories
 

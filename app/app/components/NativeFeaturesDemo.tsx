@@ -40,7 +40,7 @@ export default function NativeFeaturesDemo() {
     await haptics.light();
     await share.share(
       'Check out my wardrobe!',
-      'I\'m using Wardrobe AI Closet to organize my clothes',
+      'I\'m using Twin Style to organize my clothes',
       window.location.href
     );
   };

@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - Database Schema and Data Models
+# Twin Style - Database Schema and Data Models
 
 ## Database Overview
 

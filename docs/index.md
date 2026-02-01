@@ -1,6 +1,8 @@
-# Welcome to ADHD Closet Documentation
+# Welcome to Twin Style Documentation
 
-A single-user, self-hosted wardrobe organizer powered by AI — designed with ADHD-friendly workflows to make managing your closet effortless and fun.
+**Your ADHD-friendly wardrobe organizer powered by Google Gemini AI**
+
+Twin Style leverages the power of Google's Gemini AI (the "twins" reference) to help you manage your wardrobe effortlessly. The dual nature of **your style** meets **AI assistance**.
 
 ## Quick Links
 

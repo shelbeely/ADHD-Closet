@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - UI/UX Design System
+# Twin Style - UI/UX Design System
 
 ## Design Philosophy
 
-Wardrobe AI Closet uses **Material Design 3 Expressive** combined with **ADHD-optimized UX patterns** to create an interface that is both beautiful and highly functional for neurodivergent users.
+Twin Style uses **Material Design 3 Expressive** combined with **ADHD-optimized UX patterns** to create an interface that is both beautiful and highly functional for neurodivergent users.
 
 ## Screenshots
 

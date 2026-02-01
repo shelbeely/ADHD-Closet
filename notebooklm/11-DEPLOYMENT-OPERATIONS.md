@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Deployment & Operations Guide
+# Twin Style - Deployment & Operations Guide
 
 ## Overview
 
-Comprehensive guide for deploying, configuring, monitoring, and maintaining Wardrobe AI Closet in production environments.
+Comprehensive guide for deploying, configuring, monitoring, and maintaining Twin Style in production environments.
 
 ## Deployment Options
 
@@ -196,7 +196,7 @@ npm run build
 echo "Setting up systemd service..."
 sudo tee /etc/systemd/system/wardrobe.service > /dev/null <<EOF
 [Unit]
-Description=Wardrobe AI Closet
+Description=Twin Style
 After=network.target postgresql.service redis.service
 
 [Service]
@@ -281,9 +281,9 @@ REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="sk-or-v1-..."
 
 # AI Models (Optional, defaults provided)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 
 # Application
 PUBLIC_BASE_URL="https://yourdomain.com"

@@ -1,6 +1,6 @@
-// Vision Model Enhancements for ADHD Closet
+// Vision Model Enhancements for Twin Style
 // Advanced image analysis, similarity search, virtual try-on, and more
-// All features powered by OpenRouter vision models
+// All features powered by Google Gemini vision models via OpenRouter
 
 import { getOpenRouterClient } from './openrouter';
 

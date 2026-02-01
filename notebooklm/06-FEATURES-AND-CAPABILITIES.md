@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Features and Capabilities
+# Twin Style - Features and Capabilities
 
 ## Core Features Overview
 
-This document provides a comprehensive guide to all features and capabilities of Wardrobe AI Closet, organized by user workflow and use case.
+This document provides a comprehensive guide to all features and capabilities of Twin Style, organized by user workflow and use case.
 
 ## Photo-Based Inventory Management
 
@@ -558,13 +558,13 @@ Flexible AI provider configuration via environment variables.
 **Current Optimal Setup**:
 ```bash
 # Image generation
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 
 # Vision/OCR
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 
 # Text generation
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 **Alternative Models**:

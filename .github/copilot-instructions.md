@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Copilot Instructions
+# Twin Style - Copilot Instructions
 
 ## Repository Summary
 
-Wardrobe AI Closet is a single-user, self-hosted wardrobe organizer powered by AI, designed with ADHD-friendly workflows. Users take photos of clothing items, AI generates clean catalog images and suggests categories, and the system provides intelligent outfit recommendations based on weather, mood, and constraints.
+Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google Gemini AI**, designed with ADHD-friendly workflows. The name references Gemini (Latin for "twins"), representing the dual nature of **your style** meets **AI assistance**. This app is **specifically built for Gemini models**, leveraging their advanced vision, image generation, and reasoning capabilities. Users take photos of clothing items, Gemini AI generates clean catalog images and suggests categories, and the system provides intelligent outfit recommendations based on weather, mood, and constraints.
 
 **Project Type**: Full-stack web application with optional native mobile apps  
 **Size**: ~50k+ lines of code  
@@ -15,7 +15,7 @@ Wardrobe AI Closet is a single-user, self-hosted wardrobe organizer powered by A
 - **Backend**: Next.js API Routes (serverless functions)
 - **Database**: PostgreSQL 14+ with Prisma ORM 7.3
 - **Background Jobs**: BullMQ 5.x + Redis 7+ for async AI processing
-- **AI Provider**: OpenRouter API (Gemini models for vision/text/image generation)
+- **AI Provider**: OpenRouter API (**Google Gemini 3 models exclusively** for vision/text/image generation)
 - **Image Processing**: Sharp for thumbnails and optimization
 - **Runtime**: Bun.js 1.3+ (with npm fallback for CI/CD)
 - **PWA**: next-pwa with service worker and offline support
@@ -298,13 +298,13 @@ OPENROUTER_API_KEY="your-api-key-here"
 ### AI Model Configuration (Optimal Setup)
 ```bash
 # Image generation (REQUIRED for catalog images)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 
 # Vision/OCR (BEST quality for item inference)
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
 
 # Text generation (FAST for outfits)
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 ### Optional

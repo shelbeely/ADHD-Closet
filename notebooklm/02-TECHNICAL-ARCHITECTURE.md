@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - Technical Architecture
+# Twin Style - Technical Architecture
 
 ## System Architecture Overview
 
