@@ -39,6 +39,7 @@ interface OpenRouterResponse {
     message: {
       role: string;
       content: string;
+      images?: string[]; // For image generation responses
     };
     finish_reason: string;
   }>;
@@ -50,7 +51,7 @@ interface OpenRouterResponse {
 }
 
 class OpenRouterClient {
-  private config: Required<OpenRouterConfig>;
+  public config: Required<OpenRouterConfig>;
 
   constructor(config: OpenRouterConfig) {
     if (!config.apiKey) {
@@ -139,6 +140,13 @@ class OpenRouterClient {
       `Response: ${JSON.stringify(message).substring(0, 200)}. ` +
       `Try using: 'black-forest-labs/flux-1.1-pro', 'openai/dall-e-3', or 'stability-ai/stable-diffusion-xl'`
     );
+  }
+
+  /**
+   * Public chat method for external use (e.g., visionEnhancements)
+   */
+  async chat(request: OpenRouterRequest): Promise<OpenRouterResponse> {
+    return this.makeRequest('/chat/completions', request);
   }
 
   async generateCatalogImage(imageBase64: string): Promise<string> {
@@ -412,10 +420,6 @@ Style guidelines:
         aspect_ratio: '1:1',
         image_size: '1024x1024',
       },
-      image_config: {
-        aspect_ratio: '1:1',
-        image_size: '1024x1024',
-      },
     });
 
     // Extract generated image from response
@@ -601,10 +605,6 @@ Output:
       ],
       temperature: 0.6,
       max_tokens: 4096,
-      image_config: {
-        aspect_ratio: '1:1',
-        image_size: '1024x1024',
-      },
       image_config: {
         aspect_ratio: '1:1',
         image_size: '1024x1024',

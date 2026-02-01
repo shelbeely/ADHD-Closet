@@ -217,7 +217,6 @@ export async function removeBackground(imageBase64: string): Promise<string> {
           ]
         }
       ],
-      modalities: ['image', 'text'],
       temperature: 0.2,
       max_tokens: 1000
     });
@@ -596,7 +595,6 @@ Return the composite image showing the person wearing the outfit.`;
     const response = await openrouter.chat({
       model: openrouter.config.imageModel,
       messages: [{ role: 'user', content: contentArray }],
-      modalities: ['image', 'text'],
       temperature: 0.5,
       max_tokens: 1000,
       image_config: { aspect_ratio: '1:1', image_size: '1024x1024' }
@@ -643,7 +641,6 @@ export async function autoCropItem(imageBase64: string): Promise<string> {
           ]
         }
       ],
-      modalities: ['image', 'text'],
       temperature: 0.2,
       max_tokens: 500
     });
