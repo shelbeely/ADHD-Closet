@@ -24,7 +24,9 @@
     "cap:open:android": "cap open android",
     "cap:run:ios": "cap run ios",
     "cap:run:android": "cap run android",
-    "build:mobile": "next build && cap sync"
+    "build:mobile": "cap sync",
+    "build:android": "cd android && ./gradlew assembleDebug && cd ..",
+    "build:android:release": "cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "@capacitor/android": "^8.0.2",

@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.twinstyle.app',
   appName: 'Twin Style',
-  webDir: 'public',
+  webDir: 'www',
   server: {
     // For production builds, this will be overridden
     // In development, you can point to your local server
