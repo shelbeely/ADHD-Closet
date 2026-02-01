@@ -252,3 +252,59 @@ This is a single-user project, but contributions are welcome! Please open an iss
 - [Definition of Done](../DEFINITION_OF_DONE.md)
 - [Bun Setup Guide](./BUN_SETUP.md)
 
+
+## 📱 Building Android APK
+
+Twin Style can be built as a native Android app using Capacitor. The app connects to a running Next.js server (either local development or production deployment).
+
+### Quick Start
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Add Android platform (first time only):**
+   ```bash
+   npx cap add android
+   ```
+
+3. **Sync Capacitor:**
+   ```bash
+   npx cap sync android
+   ```
+
+4. **Build APK:**
+   ```bash
+   npm run build:android
+   ```
+
+The APK will be at: `android/app/build/outputs/apk/debug/app-debug.apk`
+
+### Requirements
+
+- **Node.js** ≥ 22.0.0 (Capacitor 8.x requirement)
+- **Java JDK** 17
+- **Android SDK** (via Android Studio)
+
+### Using GitHub Actions
+
+You can also build APKs automatically using GitHub Actions:
+
+1. Go to the **Actions** tab in GitHub
+2. Select **Build Android APK** workflow
+3. Click **Run workflow**
+4. Download the APK artifact when complete
+
+### Documentation
+
+For detailed instructions, troubleshooting, and configuration options, see:
+- [📱 Android Build Guide](../docs/mobile/ANDROID_BUILD.md)
+
+### Server Connection
+
+The mobile app needs to connect to a running Twin Style server. You can either:
+- Point to your local dev server for testing
+- Deploy to a production server and configure the app to connect to it
+
+See the [Android Build Guide](../docs/mobile/ANDROID_BUILD.md#configuration-options) for details.
