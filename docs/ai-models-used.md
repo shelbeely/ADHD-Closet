@@ -1,14 +1,24 @@
-# AI Models Currently Used in ADHD Closet
+# AI Models Used in Gemini Wardrobe - ADHD Closet
 
-This document provides a complete overview of all AI models used in the ADHD Closet codebase.
+This document provides a complete overview of all AI models used in the Gemini Wardrobe (ADHD Closet) codebase.
 
 ## Overview
 
-The application uses **three different AI models** via the OpenRouter API, each optimized for specific tasks:
+**This application is built exclusively for Google Gemini AI models.** The entire workflow is optimized around Gemini 3's multimodal capabilities, making it the perfect AI closet companion.
 
-1. **Image Generation Model** - Creates catalog images and outfit visualizations
-2. **Vision Model** - Analyzes clothing items and extracts information
-3. **Text Model** - Generates outfit recommendations and explanations
+The application uses **three different Gemini models** via the OpenRouter API, each optimized for specific tasks:
+
+1. **Gemini 3 Pro Image Preview** - Creates catalog images and outfit visualizations (only model that can generate images)
+2. **Gemini 3 Pro** - Analyzes clothing items and extracts information with high accuracy
+3. **Gemini 3 Flash** - Generates outfit recommendations and explanations quickly and cost-effectively
+
+### Why Gemini Only?
+
+- **Gemini 3 Pro Image Preview** is the only model that supports both image understanding AND image generation
+- **Integrated ecosystem**: All three models share the same architecture for consistent results
+- **Multimodal excellence**: Gemini's vision capabilities are specifically tuned for this use case
+- **Cost-effective**: Gemini 3 Flash provides excellent quality at a fraction of the cost
+- **Future-proof**: Built on Google's latest AI technology
 
 ## Current Configuration
 

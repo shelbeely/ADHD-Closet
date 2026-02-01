@@ -354,8 +354,8 @@ const job = await queue.add('process', data, {
 
 1. **Model not suitable**:
 ```bash
-# Try different model
-OPENROUTER_IMAGE_MODEL="dall-e-3"
+# The default Gemini model should work best
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
 ```
 
 2. **Prompt needs adjustment**:
@@ -557,9 +557,9 @@ A: Yes! Set `AI_ENABLED=false` in your `.env` file. The app remains fully functi
 
 A: Recommended configuration (as of Feb 2024):
 ```bash
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 See [Model Selection Guide](https://shelbeely.github.io/ADHD-Closet/features/MODEL_SELECTION/) for alternatives.

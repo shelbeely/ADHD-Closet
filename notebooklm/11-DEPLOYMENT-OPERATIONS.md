@@ -281,9 +281,9 @@ REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="sk-or-v1-..."
 
 # AI Models (Optional, defaults provided)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 
 # Application
 PUBLIC_BASE_URL="https://yourdomain.com"

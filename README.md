@@ -1,6 +1,8 @@
-# 👕 Wardrobe AI Closet
+# 👕 Gemini Wardrobe - ADHD Closet
 
-A single-user, self-hosted wardrobe organizer powered by AI — designed with ADHD-friendly workflows to make managing your closet effortless and fun.
+A single-user, self-hosted wardrobe organizer powered by **Google Gemini AI** — designed with ADHD-friendly workflows to make managing your closet effortless and fun.
+
+> **Built for Gemini**: This app is specifically optimized for Google's Gemini AI models, leveraging Gemini 3's advanced vision, image generation, and reasoning capabilities.
 
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://shelbeely.github.io/ADHD-Closet/)
 [![Wiki](https://img.shields.io/badge/docs-GitHub%20Wiki-green)](https://github.com/shelbeely/ADHD-Closet/wiki)
@@ -18,7 +20,16 @@ A single-user, self-hosted wardrobe organizer powered by AI — designed with AD
 
 ## ✨ What is this?
 
-Wardrobe AI Closet helps you organize your clothing with AI-powered tools designed specifically for ADHD-friendly workflows. Take photos of your clothes, let AI generate clean catalog images and suggest categories, then get instant outfit recommendations based on weather, mood, and time constraints.
+Gemini Wardrobe (ADHD Closet) helps you organize your clothing with **Google Gemini AI-powered** tools designed specifically for ADHD-friendly workflows. Take photos of your clothes, let Gemini's advanced vision AI generate clean catalog images and suggest categories, then get instant outfit recommendations based on weather, mood, and time constraints.
+
+### 🧠 Why Gemini?
+
+This app is built exclusively around **Google Gemini 3** models:
+- **Gemini 3 Pro Image Preview**: Only model that can generate high-quality catalog images
+- **Gemini 3 Pro**: Advanced vision capabilities for accurate item categorization and OCR
+- **Gemini 3 Flash**: Fast, cost-effective outfit generation with excellent reasoning
+
+The entire workflow is optimized for Gemini's multimodal capabilities, making it the perfect AI closet companion.
 
 ### 🎯 Key Features
 

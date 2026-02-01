@@ -1,17 +1,23 @@
-# Wardrobe AI Closet - Project Overview
+# Gemini Wardrobe - ADHD Closet - Project Overview
 
 ## Project Identity
 
-**Name**: Wardrobe AI Closet  
+**Name**: Gemini Wardrobe - ADHD Closet  
 **Type**: Single-user, self-hosted web application  
-**Purpose**: ADHD-friendly wardrobe organizer powered by AI  
+**Purpose**: ADHD-friendly wardrobe organizer powered by **Google Gemini AI**  
 **License**: MIT  
 **Target Users**: Individuals with ADHD who need help managing their wardrobe  
-**Style Focus**: Emo/goth/alt fashion aesthetic
+**Style Focus**: Emo/goth/alt fashion aesthetic  
+**AI Technology**: Built exclusively for Google Gemini 3 models
 
 ## Project Description
 
-Wardrobe AI Closet is a personal wardrobe management system designed from the ground up with ADHD-friendly workflows. It helps users catalog their clothing through photos, uses AI to generate clean catalog images and automatically categorize items, and provides intelligent outfit recommendations based on weather, mood, and time constraints.
+Gemini Wardrobe (ADHD Closet) is a personal wardrobe management system designed from the ground up with ADHD-friendly workflows and **powered exclusively by Google Gemini AI**. It helps users catalog their clothing through photos, uses Gemini's advanced vision AI to generate clean catalog images and automatically categorize items, and provides intelligent outfit recommendations based on weather, mood, and time constraints.
+
+The application leverages **Gemini 3's unique multimodal capabilities**:
+- **Image generation** (Gemini 3 Pro Image Preview)
+- **Advanced vision understanding** (Gemini 3 Pro)
+- **Fast reasoning** (Gemini 3 Flash)
 
 The application is built for self-hosting, giving users complete privacy and control over their data. All images are stored locally, and the single-user design eliminates authentication complexity while maintaining a smooth user experience.
 

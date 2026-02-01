@@ -12,16 +12,16 @@
 OPENROUTER_API_KEY="sk-or-v1-..."
 
 # Model configuration (optional, defaults provided)
-OPENROUTER_IMAGE_MODEL="black-forest-labs/flux-1.1-pro"
-OPENROUTER_VISION_MODEL="google/gemini-2.0-flash-exp:free"
-OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
+OPENROUTER_IMAGE_MODEL="google/gemini-3-pro-image-preview"
+OPENROUTER_VISION_MODEL="google/gemini-3-pro-preview"
+OPENROUTER_TEXT_MODEL="google/gemini-3-flash-preview"
 ```
 
 ## AI Models Used
 
 ### 1. Image Generation Model
 
-**Current**: `black-forest-labs/flux-1.1-pro`  
+**Current**: `google/gemini-3-pro-image-preview`  
 **Purpose**: Generate catalog-style images from photos  
 **Pricing**: ~$0.04 per image  
 **Speed**: ~10-30 seconds
@@ -30,17 +30,16 @@ OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
 **Output**: Clean, centered, professional catalog image (1024x1024)
 
 **Alternatives**:
-- `dall-e-3`: Higher quality, more expensive
-- `stable-diffusion-xl`: Faster, less consistent
-- `midjourney`: Not available via API
+- `openai/dall-e-3`: Alternative image generation model
+- `stability-ai/stable-diffusion-xl`: Alternative image generation model
 
 **Model Selection Guide**: https://shelbeely.github.io/ADHD-Closet/features/MODEL_SELECTION/
 
 ### 2. Vision Model (OCR + Analysis)
 
-**Current**: `google/gemini-2.0-flash-exp:free`  
+**Current**: `google/gemini-3-pro-preview`  
 **Purpose**: Analyze images for category, colors, attributes  
-**Pricing**: Free (experimental), ~$0.01 when stable  
+**Pricing**: ~$0.002 per prompt token, ~$0.012 per completion token  
 **Speed**: ~5-15 seconds
 
 **Capabilities**:
@@ -51,17 +50,15 @@ OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
 - OCR for label text (brand, size, materials)
 
 **Alternatives**:
-- `gpt-4-vision-preview`: Higher quality, more expensive
-- `claude-3-opus`: Best reasoning, slowest
-- `google/gemini-pro-vision`: Stable paid version
+- `google/gemini-3-flash-preview`: Faster, more cost-effective version
 
 **Vision Model Guide**: https://shelbeely.github.io/ADHD-Closet/features/VISION_MODEL_GUIDE/
 
 ### 3. Text Generation Model
 
-**Current**: `google/gemini-2.0-flash-exp:free`  
+**Current**: `google/gemini-3-flash-preview`  
 **Purpose**: Generate outfit combinations and explanations  
-**Pricing**: Free (experimental), ~$0.001 when stable  
+**Pricing**: ~$0.0005 per prompt token, ~$0.003 per completion token  
 **Speed**: ~5-10 seconds
 
 **Capabilities**:
@@ -72,9 +69,7 @@ OPENROUTER_TEXT_MODEL="google/gemini-2.0-flash-exp:free"
 - Natural language responses
 
 **Alternatives**:
-- `gpt-4-turbo`: Better reasoning, more expensive
-- `claude-3-sonnet`: Good balance, mid-price
-- `mistral-large`: Fast, cost-effective
+- `google/gemini-3-pro-preview`: Higher quality reasoning
 
 ## AI Job Queue System
 
