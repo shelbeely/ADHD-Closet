@@ -1,6 +1,6 @@
 # NotebookLM Documentation Package
 
-This directory contains a comprehensive set of documentation files optimized for import into **Google NotebookLM** to help you understand and visualize the Wardrobe AI Closet project.
+This directory contains a comprehensive set of documentation files optimized for import into **Google NotebookLM** to help you understand and visualize the Twin Style project.
 
 ## What is NotebookLM?
 
@@ -307,7 +307,7 @@ For questions or issues with this documentation:
 
 ## License
 
-This documentation is part of the Wardrobe AI Closet project and shares the same MIT license.
+This documentation is part of the Twin Style project and shares the same MIT license.
 
 ---
 

@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - Development Guide
+# Twin Style - Development Guide
 
 ## Quick Start
 

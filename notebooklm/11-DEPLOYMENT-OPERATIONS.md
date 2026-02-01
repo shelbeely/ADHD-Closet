@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Deployment & Operations Guide
+# Twin Style - Deployment & Operations Guide
 
 ## Overview
 
-Comprehensive guide for deploying, configuring, monitoring, and maintaining Wardrobe AI Closet in production environments.
+Comprehensive guide for deploying, configuring, monitoring, and maintaining Twin Style in production environments.
 
 ## Deployment Options
 
@@ -196,7 +196,7 @@ npm run build
 echo "Setting up systemd service..."
 sudo tee /etc/systemd/system/wardrobe.service > /dev/null <<EOF
 [Unit]
-Description=Wardrobe AI Closet
+Description=Twin Style
 After=network.target postgresql.service redis.service
 
 [Service]

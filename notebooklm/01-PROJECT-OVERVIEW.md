@@ -1,8 +1,8 @@
-# Gemini Wardrobe - ADHD Closet - Project Overview
+# Twin Style - Project Overview
 
 ## Project Identity
 
-**Name**: Gemini Wardrobe - ADHD Closet  
+**Name**: Twin Style  
 **Type**: Single-user, self-hosted web application  
 **Purpose**: ADHD-friendly wardrobe organizer powered by **Google Gemini AI**  
 **License**: MIT  
@@ -12,7 +12,9 @@
 
 ## Project Description
 
-Gemini Wardrobe (ADHD Closet) is a personal wardrobe management system designed from the ground up with ADHD-friendly workflows and **powered exclusively by Google Gemini AI**. It helps users catalog their clothing through photos, uses Gemini's advanced vision AI to generate clean catalog images and automatically categorize items, and provides intelligent outfit recommendations based on weather, mood, and time constraints.
+Twin Style is a personal wardrobe management system designed from the ground up with ADHD-friendly workflows and **powered exclusively by Google Gemini AI**. The name references Gemini (Latin for "twins"), representing the dual nature of **your style** meets **AI assistance**.
+
+It helps users catalog their clothing through photos, uses Gemini's advanced vision AI to generate clean catalog images and automatically categorize items, and provides intelligent outfit recommendations based on weather, mood, and time constraints.
 
 The application leverages **Gemini 3's unique multimodal capabilities**:
 - **Image generation** (Gemini 3 Pro Image Preview)

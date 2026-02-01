@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - API Reference
+# Twin Style - API Reference
 
 ## API Overview
 

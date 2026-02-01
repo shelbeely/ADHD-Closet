@@ -1,10 +1,10 @@
-# AI Models Used in Gemini Wardrobe - ADHD Closet
+# AI Models Used in Twin Style
 
-This document provides a complete overview of all AI models used in the Gemini Wardrobe (ADHD Closet) codebase.
+This document provides a complete overview of all AI models used in Twin Style.
 
 ## Overview
 
-**This application is built exclusively for Google Gemini AI models.** The entire workflow is optimized around Gemini 3's multimodal capabilities, making it the perfect AI closet companion.
+**Twin Style is built exclusively for Google Gemini AI models.** The name references Gemini (Latin for "twins"), representing the dual nature of **your style** meets **AI assistance**. The entire workflow is optimized around Gemini 3's multimodal capabilities, making it the perfect AI wardrobe companion.
 
 The application uses **three different Gemini models** via the OpenRouter API, each optimized for specific tasks:
 

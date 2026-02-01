@@ -1,8 +1,8 @@
-# Wardrobe AI Closet - Features and Capabilities
+# Twin Style - Features and Capabilities
 
 ## Core Features Overview
 
-This document provides a comprehensive guide to all features and capabilities of Wardrobe AI Closet, organized by user workflow and use case.
+This document provides a comprehensive guide to all features and capabilities of Twin Style, organized by user workflow and use case.
 
 ## Photo-Based Inventory Management
 

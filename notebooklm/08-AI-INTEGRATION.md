@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - AI Integration and Workflows
+# Twin Style - AI Integration and Workflows
 
 ## AI Provider: OpenRouter
 

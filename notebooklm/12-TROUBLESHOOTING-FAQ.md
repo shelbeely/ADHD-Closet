@@ -1,4 +1,4 @@
-# Wardrobe AI Closet - Troubleshooting & FAQ
+# Twin Style - Troubleshooting & FAQ
 
 ## Common Issues & Solutions
 
@@ -540,7 +540,7 @@ const worker = new Worker('ai-jobs', processJob, {
 
 **Q: Is this a multi-user application?**
 
-A: No, Wardrobe AI Closet is designed as a single-user, self-hosted application. There is no authentication system or user management. If you need multi-user support, significant changes would be required.
+A: No, Twin Style is designed as a single-user, self-hosted application. There is no authentication system or user management. If you need multi-user support, significant changes would be required.
 
 ---
 
