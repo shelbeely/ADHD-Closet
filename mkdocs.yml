@@ -81,6 +81,9 @@ nav:
     - Multi-User Analytics: developer/MULTI_USER_ANALYTICS.md
     - Analytics Examples: developer/ANALYTICS_EXAMPLES.md
     - Hosted Version Guide: developer/HOSTED_VERSION_GUIDE.md
+  - Business Strategy:
+    - Monetization Strategy: business/MONETIZATION_STRATEGY.md
+    - Revenue Activation Guide: business/REVENUE_ACTIVATION_GUIDE.md
 
 extra:
   social:
