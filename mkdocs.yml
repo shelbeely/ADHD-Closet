@@ -80,6 +80,7 @@ nav:
     - Android APK Build: mobile/ANDROID_BUILD.md
     - Multi-User Analytics: developer/MULTI_USER_ANALYTICS.md
     - Analytics Examples: developer/ANALYTICS_EXAMPLES.md
+    - Hosted Version Guide: developer/HOSTED_VERSION_GUIDE.md
 
 extra:
   social:
