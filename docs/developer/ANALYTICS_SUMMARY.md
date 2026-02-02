@@ -174,10 +174,9 @@ Open a GitHub issue to discuss: https://github.com/shelbeely/ADHD-Closet/issues
 
 ## Related Documentation
 
-- [ARCHITECTURE.md](developer/ARCHITECTURE.md) - Current system design
-- [SPEC.md](developer/SPEC.md) - Product design system
-- [API_DOCUMENTATION.md](api/API_DOCUMENTATION.md) - API reference
-- [Prisma Schema](../app/prisma/schema.prisma) - Database schema
+- [ARCHITECTURE.md](ARCHITECTURE.md) - Current system design
+- [SPEC.md](SPEC.md) - Product design system
+- [API_DOCUMENTATION.md](../api/API_DOCUMENTATION.md) - API reference
 
 ---
 
