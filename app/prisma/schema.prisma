@@ -1,5 +1,5 @@
 // Wardrobe AI Closet - Prisma Schema
-// Single-user, self-hosted wardrobe organizer
+// Multi-user with self-hosted option support
 
 generator client {
   provider = "prisma-client-js"
@@ -12,6 +12,37 @@ datasource db {
 // ============================================================================
 // ENUMS
 // ============================================================================
+
+enum SubscriptionTier {
+  free
+  premium
+  ad_supported
+  self_hosted
+}
+
+enum AnalyticsEventType {
+  item_created
+  item_edited
+  item_deleted
+  item_worn
+  outfit_created
+  outfit_rated
+  ai_catalog_generated
+  ai_outfit_generated
+  panic_pick_used
+  search_performed
+  filter_applied
+  export_data
+  page_view
+  session_start
+  session_end
+}
+
+enum PrivacySetting {
+  all_data
+  anonymized_only
+  opt_out
+}
 
 enum Category {
   tops
@@ -164,8 +195,126 @@ enum AIJobStatus {
 // MODELS
 // ============================================================================
 
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id                String           @id @default(uuid())
+  email             String           @unique
+  emailVerified     DateTime?        @map("email_verified")
+  username          String?          @unique
+  name              String?
+  image             String?          // Profile image URL
+  
+  // Subscription & billing
+  subscriptionTier  SubscriptionTier @default(free) @map("subscription_tier")
+  stripeCustomerId  String?          @unique @map("stripe_customer_id")
+  stripeSubscriptionId String?       @unique @map("stripe_subscription_id")
+  subscriptionExpiry DateTime?       @map("subscription_expiry")
+  
+  // Privacy settings
+  analyticsOptIn    Boolean          @default(false) @map("analytics_opt_in")
+  dataSharing       PrivacySetting   @default(opt_out) @map("data_sharing")
+  adConsent         Boolean          @default(false) @map("ad_consent")
+  
+  // Deployment type tracking
+  isHostedUser      Boolean          @default(true) @map("is_hosted_user")   // false for self-hosted instances
+  
+  // Relationships
+  items             Item[]
+  outfits           Outfit[]
+  analyticsEvents   AnalyticsEvent[]
+  accounts          Account[]
+  sessions          Session[]
+  
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+  lastLoginAt       DateTime?        @map("last_login_at")
+
+  @@map("users")
+}
+
+// NextAuth.js models
+model Account {
+  id                String   @id @default(uuid())
+  userId            String   @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================================================
+// ANALYTICS & DATA COLLECTION
+// ============================================================================
+
+model AnalyticsEvent {
+  id                String              @id @default(uuid())
+  userId            String?             @map("user_id")  // Null for anonymous/aggregated events
+  user              User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  eventType         AnalyticsEventType  @map("event_type")
+  eventData         Json?               @map("event_data")  // Flexible payload
+  
+  // Session tracking
+  sessionId         String?             @map("session_id")
+  
+  // Context
+  userAgent         String?             @map("user_agent")
+  ipAddressHash     String?             @map("ip_address_hash")  // Hashed for privacy
+  
+  // Anonymization flag
+  isAnonymized      Boolean             @default(false) @map("is_anonymized")
+  
+  createdAt         DateTime            @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@map("analytics_events")
+}
+
+// ============================================================================
+// WARDROBE ITEMS
+// ============================================================================
+
 model Item {
   id            String     @id @default(uuid())
+  userId        String?    @map("user_id")  // Owner of the item (null for backwards compatibility)
+  user          User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   title         String?
   category      Category?
   state         ItemState  @default(available)
@@ -218,6 +367,7 @@ model Item {
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @updatedAt @map("updated_at")
 
+  @@index([userId])
   @@map("items")
 }
 
@@ -262,6 +412,9 @@ model ItemTag {
 
 model Outfit {
   id               String       @id @default(uuid())
+  userId           String?      @map("user_id")  // Owner of the outfit (null for backwards compatibility)
+  user             User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   title            String?
   notes            String?
   rating           OutfitRating @default(neutral)
@@ -283,6 +436,7 @@ model Outfit {
   createdAt        DateTime     @default(now()) @map("created_at")
   updatedAt        DateTime     @updatedAt @map("updated_at")
 
+  @@index([userId])
   @@map("outfits")
 }
 
