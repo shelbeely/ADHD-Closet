@@ -19,7 +19,15 @@ interface InputPrompt {
 }
 
 export default function WorkspacePage() {
-  const [messageList, setMessageList] = useState<MessageBubble[]>([]);
+  const [messageList, setMessageList] = useState<MessageBubble[]>([
+    {
+      uid: `asst-initial`,
+      from: 'assistant',
+      text: 'Welcome! 👋 This is your interactive communication space. I\'ll guide you through tasks using visual elements instead of terminal commands. What would you like to explore?',
+      createdAt: new Date(),
+      messageStyle: 'notification',
+    }
+  ]);
   const [currentPrompt, setCurrentPrompt] = useState<InputPrompt | null>(null);
   const [textValue, setTextValue] = useState<string>('');
   const [checkedOptions, setCheckedOptions] = useState<string[]>([]);
@@ -28,13 +36,6 @@ export default function WorkspacePage() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messageList, currentPrompt]);
-
-  useEffect(() => {
-    appendAssistantMessage(
-      'Welcome! 👋 This is your interactive communication space. I\'ll guide you through tasks using visual elements instead of terminal commands. What would you like to explore?',
-      'notification'
-    );
-  }, []);
 
   const appendAssistantMessage = (content: string, style: 'standard' | 'inquiry' | 'notification' = 'standard') => {
     const msg: MessageBubble = {
