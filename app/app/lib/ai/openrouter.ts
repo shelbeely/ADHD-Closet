@@ -150,13 +150,15 @@ class OpenRouterClient {
 
   async generateCatalogImage(imageBase64: string): Promise<string> {
     const prompt = `Transform this clothing item photo into a professional catalog image:
-- Remove or replace background with neutral, clean background
+- Remove or replace background with neutral, clean background (white, light gray, or subtle gradient)
 - Center the garment with consistent padding
-- Preserve all colors, patterns, and graphic details exactly
-- No text overlays or watermarks
+- Preserve all colors, patterns, logos, and graphic details exactly as they appear on the garment
+- Maintain the original shape and structure of the clothing item
 - Minimize wrinkles only if it doesn't change the garment's appearance
-- Create crisp edges without halos
-- Output should be square format, well-lit, and catalog-quality`;
+- Create crisp edges without halos or artifacts
+- Output should be square format, well-lit, and catalog-quality
+
+CRITICAL: DO NOT add any text labels, category names, brand names, color descriptions, or any typography/lettering that is not part of the original garment design. Generate ONLY the clean clothing item on a neutral background. No overlays, watermarks, or annotations.`;
 
     const response = await this.makeRequest('/chat/completions', {
       model: this.config.imageModel,
