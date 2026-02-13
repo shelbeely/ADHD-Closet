@@ -63,9 +63,9 @@ Twin Style is a Next.js 16 web app with:
 
 1. Read the issue title and body
 2. Search the codebase for related files if the issue references specific features
-3. Pick the single most appropriate label from the allowed list
-4. Add the label to the issue
-5. Leave a concise comment explaining why this label was applied and suggesting next steps
+3. Pick the most appropriate label(s) from the allowed list — use multiple labels when the issue fits more than one category (e.g., a bug that is also a good-first-issue)
+4. Add the label(s) to the issue
+5. Leave a concise comment explaining why these labels were applied and suggesting next steps
 
 ## Comment Template
 
@@ -74,11 +74,11 @@ Use this format:
 ```markdown
 ### 🏷️ Issue Triaged
 
-Hi @{author}! This issue has been categorized as **{label}**.
+Hi @{author}! This issue has been categorized as **{label(s)}**.
 
 **Why**: {one-sentence explanation}
 
-**Suggested next steps**: {1-2 actionable suggestions relevant to the label}
+**Suggested next steps**: {1-2 actionable suggestions relevant to the labels}
 ```
 
 Keep the comment short and helpful. Do not wrap content in `<details>` tags — keep it scannable for ADHD-friendly reading.
