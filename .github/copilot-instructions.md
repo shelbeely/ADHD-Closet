@@ -286,6 +286,20 @@ The project uses MkDocs with Material theme for documentation:
 - **Command**: `mkdocs gh-deploy --force`
 - **Output**: Deployed to GitHub Pages at https://shelbeely.github.io/ADHD-Closet/
 
+### Agentic Workflows
+
+The project uses [GitHub Agentic Workflows](https://github.github.com/gh-aw/) — Markdown-based workflow definitions that run AI agents in GitHub Actions. These `.md` files in `.github/workflows/` are compiled to `.lock.yml` files via `gh aw compile`.
+
+- **Issue Triage** (`issue-triage.md`): Auto-labels new issues with project-specific categories (bug, enhancement, ui/ux, ai-integration, mobile, accessibility, performance, etc.) and leaves a comment explaining the categorization.
+- **CI Doctor** (`ci-doctor.md`): Investigates failed CI runs (Android APK builds), analyzes logs, identifies root causes, and creates diagnostic issues with fix suggestions.
+- **Daily Status** (`daily-status.md`): Creates a daily status report issue summarizing recent activity, open issues, phase progress, and action items.
+- **PR Review** (`pr-review.md`): Reviews pull requests against project conventions (MD3 compliance, ADHD-optimized UX, TypeScript standards, API patterns) and posts findings as a comment.
+
+To add or modify agentic workflows:
+1. Edit the `.md` file in `.github/workflows/`
+2. Compile with `gh aw compile`
+3. Commit both the `.md` and generated `.lock.yml` files
+
 ## Environment Variables
 
 ### Required
