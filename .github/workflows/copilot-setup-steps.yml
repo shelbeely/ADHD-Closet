@@ -17,20 +17,6 @@ jobs:
       contents: read
 
     services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: wardrobe
-          POSTGRES_PASSWORD: wardrobe_dev_password
-          POSTGRES_DB: wardrobe_closet
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U wardrobe"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
       redis:
         image: redis:7-alpine
         ports:
@@ -60,7 +46,11 @@ jobs:
 
       - name: Set up environment file
         working-directory: ./app
-        run: cp .env.example .env
+        run: |
+          cp .env.example .env
+          # DATABASE_URL and DIRECT_URL are provided via copilot environment secrets
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+          echo "DIRECT_URL=$DIRECT_URL" >> .env
 
       - name: Create database schema
         working-directory: ./app

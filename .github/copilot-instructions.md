@@ -13,7 +13,7 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript 5.9, Tailwind CSS 4
 - **3D Graphics**: Three.js, @react-three/fiber, @react-three/drei
 - **Backend**: Next.js API Routes (serverless functions)
-- **Database**: PostgreSQL 14+ with Prisma ORM 7.3
+- **Database**: Supabase (PostgreSQL) with Prisma ORM 7.3
 - **Background Jobs**: BullMQ 5.x + Redis 7+ for async AI processing
 - **AI Provider**: OpenRouter API (**Google Gemini 3 models exclusively** for vision/text/image generation)
 - **Image Processing**: Sharp for thumbnails and optimization
@@ -25,7 +25,7 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 
 ### Prerequisites
 - **Bun** ≥ 1.0.0 (recommended) OR **Node.js** ≥ 20
-- **Docker** and **Docker Compose** (for PostgreSQL + Redis)
+- **Docker** and **Docker Compose** (for Redis; PostgreSQL is hosted on Supabase)
 - **OpenRouter API Key** (required for AI features)
 
 ### Bootstrap Sequence (First Time Setup)
@@ -47,13 +47,13 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 3. **Setup environment:**
    ```bash
    cp .env.example .env
-   # Edit .env and add OPENROUTER_API_KEY
+   # Edit .env and add your Supabase DATABASE_URL, DIRECT_URL, and OPENROUTER_API_KEY
    ```
 
-4. **Start database services (from repo root):**
+4. **Start Redis service (from repo root):**
    ```bash
    cd /home/runner/work/ADHD-Closet/ADHD-Closet
-   docker compose up -d postgres redis
+   docker compose up -d redis
    # Wait 3-5 seconds for services to be ready
    ```
 
@@ -99,10 +99,8 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 
 Before submitting changes:
 
-1. **Verify Docker services:**
+1. **Verify services:**
    ```bash
-   docker ps  # Should show wardrobe-postgres and wardrobe-redis running
-   docker exec wardrobe-postgres pg_isready -U wardrobe  # Should return "accepting connections"
    docker exec wardrobe-redis redis-cli ping  # Should return PONG
    ```
 
@@ -168,7 +166,7 @@ Before submitting changes:
 │   ├── api/                          # API documentation
 │   ├── features/                     # Feature documentation
 │   └── user-guides/                  # End-user guides
-├── docker-compose.yml                # PostgreSQL + Redis setup
+├── docker-compose.yml                # Redis + optional local PostgreSQL setup
 ├── mkdocs.yml                        # MkDocs configuration
 ├── README.md                         # Main project documentation
 └── CONTRIBUTING.md                   # Contribution guidelines
@@ -307,15 +305,18 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 - Sets up Bun 1.3.6 as the JavaScript runtime
 - Installs dependencies (`bun install` in `app/`)
 - Generates the Prisma Client
-- Copies `.env.example` to `.env`
-- Starts PostgreSQL 16 and Redis 7 as services
+- Copies `.env.example` to `.env` and injects `DATABASE_URL`/`DIRECT_URL` from copilot environment secrets
+- Starts Redis 7 as a service (PostgreSQL is hosted on Supabase)
 - Pushes the Prisma schema to create database tables
 
 ## Environment Variables
 
 ### Required
 ```bash
-DATABASE_URL="postgresql://wardrobe:password@localhost:5432/wardrobe_closet"
+# Supabase PostgreSQL (connection pooler for runtime)
+DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
+# Supabase PostgreSQL (direct connection for Prisma migrations)
+DIRECT_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
 REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="your-api-key-here"
 ```
@@ -344,16 +345,13 @@ NODE_ENV="development"                     # Environment mode
 
 ### Database Connection Fails
 ```bash
-# Check Docker containers are running
-docker ps
-docker compose ps
+# Verify your Supabase DATABASE_URL is correct in .env
+# Test connection with Prisma
+cd app && npx prisma db pull
 
-# Verify PostgreSQL is ready
+# If using local PostgreSQL for offline development:
+docker compose --profile local-db up -d
 docker exec wardrobe-postgres pg_isready -U wardrobe
-# Should output: "accepting connections"
-
-# Restart if needed
-docker compose restart postgres
 ```
 
 ### Redis Connection Issues
