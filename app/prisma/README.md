@@ -51,10 +51,15 @@ Each item includes realistic data such as:
 
 ## Prerequisites
 
-1. **Database running**: Ensure PostgreSQL is running via Docker:
+1. **Database available**: Ensure your Supabase project is running and `DATABASE_URL` is set in `.env`:
+   ```bash
+   cd app
+   npx prisma db pull  # Verify connection works
+   ```
+   Or for local development with Docker:
    ```bash
    cd /home/runner/work/ADHD-Closet/ADHD-Closet
-   docker compose up -d postgres
+   docker compose --profile local-db up -d
    ```
 
 2. **Database migrations applied**: Run migrations to set up the schema:
@@ -148,9 +153,14 @@ npm install --save-dev tsx
 
 ### Error: Database connection failed
 
-Make sure PostgreSQL is running:
+Make sure your Supabase `DATABASE_URL` is correct in `.env`:
 ```bash
-docker ps  # Should show wardrobe-postgres container
+cd app && npx prisma db pull  # Verify connection
+```
+
+For local PostgreSQL:
+```bash
+docker compose --profile local-db ps  # Should show wardrobe-postgres container
 docker exec wardrobe-postgres pg_isready -U wardrobe  # Should return "accepting connections"
 ```
 

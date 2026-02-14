@@ -18,7 +18,7 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS
 - **3D**: Three.js, @react-three/fiber, @react-three/drei
 - **Backend**: Next.js API Routes
-- **Database**: PostgreSQL (via Prisma ORM)
+- **Database**: Supabase (PostgreSQL via Prisma ORM)
 - **Jobs**: BullMQ + Redis for background AI processing
 - **AI**: OpenRouter (Vision + Text + Image generation)
 - **Image Processing**: Sharp for thumbnails and optimization
@@ -29,7 +29,8 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
 ### Prerequisites
 
 - [Bun](https://bun.sh) ≥ 1.0.0 (recommended) or Node.js ≥ 20
-- Docker & Docker Compose (for Postgres + Redis)
+- Docker & Docker Compose (for Redis)
+- [Supabase](https://supabase.com/) project (for PostgreSQL database)
 - OpenRouter API key ([get one here](https://openrouter.ai/))
 
 ### Installation
@@ -52,13 +53,13 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
 3. **Set up environment variables**:
    ```bash
    cp .env.example .env
-   # Edit .env and add your OPENROUTER_API_KEY
+   # Edit .env and add your Supabase DATABASE_URL and OPENROUTER_API_KEY
    ```
 
-4. **Start database services**:
+4. **Start Redis service**:
    ```bash
    cd ..
-   docker-compose up -d postgres redis
+   docker-compose up -d redis
    ```
 
 5. **Run database migrations**:

@@ -272,7 +272,8 @@ Check [GitHub Issues](https://github.com/shelbeely/ADHD-Closet/issues) for curre
 
 ### Required Variables
 ```bash
-DATABASE_URL="postgresql://wardrobe:password@localhost:5432/wardrobe_closet"
+# Supabase PostgreSQL connection string
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
 REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="your-api-key-here"
 ```
@@ -321,10 +322,12 @@ This project welcomes contributions! Whether you're fixing bugs, adding features
 
 **Database connection fails**
 ```bash
-# Check if Docker containers are running
-docker compose ps
+# Verify your Supabase DATABASE_URL is correct in .env
+# Test connection with Prisma
+cd app && npx prisma db pull
 
-# Verify PostgreSQL is ready
+# If using local PostgreSQL for offline development:
+docker compose --profile local-db up -d
 docker exec wardrobe-postgres pg_isready -U wardrobe
 ```
 
