@@ -61,3 +61,7 @@ jobs:
       - name: Set up environment file
         working-directory: ./app
         run: cp .env.example .env
+
+      - name: Run database migrations
+        working-directory: ./app
+        run: bunx prisma migrate deploy

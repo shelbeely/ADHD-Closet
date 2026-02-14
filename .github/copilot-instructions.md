@@ -309,6 +309,7 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 - Generates the Prisma Client
 - Copies `.env.example` to `.env`
 - Starts PostgreSQL 16 and Redis 7 as services
+- Runs Prisma migrations to create the database schema
 
 ## Environment Variables
 
