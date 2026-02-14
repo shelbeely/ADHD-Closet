@@ -314,7 +314,7 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 ### Required
 ```bash
 # Supabase PostgreSQL connection string
-DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
 REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="your-api-key-here"
 ```
