@@ -304,12 +304,11 @@ To add or modify agentic workflows:
 
 The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot coding agent's development environment. It runs before the agent starts working and:
 
-- Sets up Node.js 22 with npm caching
-- Installs npm dependencies (`npm ci` in `app/`)
+- Sets up Bun 1.3.6 as the JavaScript runtime
+- Installs dependencies (`bun install` in `app/`)
 - Generates the Prisma Client
 - Copies `.env.example` to `.env`
 - Starts PostgreSQL 16 and Redis 7 as services
-- Runs Prisma migrations against the database
 
 ## Environment Variables
 
