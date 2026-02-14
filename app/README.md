@@ -53,7 +53,7 @@ A single-user, self-hosted wardrobe organizer powered by AI. Capture clothing it
 3. **Set up environment variables**:
    ```bash
    cp .env.example .env
-   # Edit .env and add your Supabase DATABASE_URL, DIRECT_URL, and OPENROUTER_API_KEY
+   # Edit .env and add your Supabase DATABASE_URL and OPENROUTER_API_KEY
    ```
 
 4. **Start Redis service**:

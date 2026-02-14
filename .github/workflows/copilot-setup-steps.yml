@@ -48,9 +48,8 @@ jobs:
         working-directory: ./app
         run: |
           cp .env.example .env
-          # DATABASE_URL and DIRECT_URL are provided via copilot environment secrets
+          # DATABASE_URL is provided via the copilot environment secret
           echo "DATABASE_URL=$DATABASE_URL" >> .env
-          echo "DIRECT_URL=$DIRECT_URL" >> .env
 
       - name: Create database schema
         working-directory: ./app

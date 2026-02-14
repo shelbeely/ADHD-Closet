@@ -47,7 +47,7 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 3. **Setup environment:**
    ```bash
    cp .env.example .env
-   # Edit .env and add your Supabase DATABASE_URL, DIRECT_URL, and OPENROUTER_API_KEY
+   # Edit .env and add your Supabase DATABASE_URL and OPENROUTER_API_KEY
    ```
 
 4. **Start Redis service (from repo root):**
@@ -305,7 +305,7 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 - Sets up Bun 1.3.6 as the JavaScript runtime
 - Installs dependencies (`bun install` in `app/`)
 - Generates the Prisma Client
-- Copies `.env.example` to `.env` and injects `DATABASE_URL`/`DIRECT_URL` from copilot environment secrets
+- Copies `.env.example` to `.env` and injects `DATABASE_URL` from copilot environment secret
 - Starts Redis 7 as a service (PostgreSQL is hosted on Supabase)
 - Pushes the Prisma schema to create database tables
 
@@ -313,10 +313,8 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 
 ### Required
 ```bash
-# Supabase PostgreSQL (connection pooler for runtime)
+# Supabase PostgreSQL connection string
 DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
-# Supabase PostgreSQL (direct connection for Prisma migrations)
-DIRECT_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
 REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="your-api-key-here"
 ```

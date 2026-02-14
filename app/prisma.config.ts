@@ -3,14 +3,36 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+/**
+ * Derive a direct PostgreSQL connection URL from a Supabase pooled connection URL.
+ * Prisma CLI operations (migrations, db push, introspect) need a direct connection
+ * because pgbouncer doesn't support prepared statements in transaction mode.
+ *
+ * Transforms: port 6543 → 5432, removes ?pgbouncer=true
+ * Non-Supabase URLs (e.g. localhost) are returned as-is.
+ */
+function getDirectUrl(databaseUrl: string | undefined): string | undefined {
+  if (!databaseUrl) return undefined;
+  try {
+    const url = new URL(databaseUrl);
+    if (url.port === "6543") {
+      url.port = "5432";
+    }
+    url.searchParams.delete("pgbouncer");
+    return url.toString();
+  } catch {
+    return databaseUrl;
+  }
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    // Use DIRECT_URL for Prisma CLI operations (migrations, db push) to bypass
-    // Supabase's connection pooler (pgbouncer), falling back to DATABASE_URL
-    url: process.env["DIRECT_URL"] || process.env["DATABASE_URL"],
+    // Derive direct connection URL from DATABASE_URL for Prisma CLI operations
+    // (bypasses Supabase's pgbouncer connection pooler)
+    url: process.env["DIRECT_URL"] || getDirectUrl(process.env["DATABASE_URL"]),
   },
 });

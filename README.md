@@ -272,10 +272,8 @@ Check [GitHub Issues](https://github.com/shelbeely/ADHD-Closet/issues) for curre
 
 ### Required Variables
 ```bash
-# Supabase PostgreSQL (connection pooler for runtime)
+# Supabase PostgreSQL connection string
 DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
-# Supabase PostgreSQL (direct connection for Prisma migrations)
-DIRECT_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
 REDIS_URL="redis://localhost:6379"
 OPENROUTER_API_KEY="your-api-key-here"
 ```
