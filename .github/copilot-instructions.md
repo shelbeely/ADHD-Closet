@@ -300,6 +300,17 @@ To add or modify agentic workflows:
 2. Compile with `gh aw compile`
 3. Commit both the `.md` and generated `.lock.yml` files
 
+### Copilot Coding Agent Environment
+
+The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot coding agent's development environment. It runs before the agent starts working and:
+
+- Sets up Node.js 22 with npm caching
+- Installs npm dependencies (`npm ci` in `app/`)
+- Generates the Prisma Client
+- Copies `.env.example` to `.env`
+- Starts PostgreSQL 16 and Redis 7 as services
+- Runs Prisma migrations against the database
+
 ## Environment Variables
 
 ### Required
