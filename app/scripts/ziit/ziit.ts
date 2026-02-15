@@ -78,11 +78,11 @@ export class ZiitClient {
       // If batch endpoint returns 400, fall back to sending individual heartbeats
       if (response.status === 400) {
         console.log(`[Ziit] Batch endpoint unavailable, sending ${data.length} heartbeat(s) individually...`);
-        let successCount = 0;
-        for (const heartbeat of data) {
-          const success = await this.heartbeat(heartbeat);
-          if (success) successCount++;
-        }
+        // Send all heartbeats concurrently for better performance
+        const results = await Promise.allSettled(
+          data.map(heartbeat => this.heartbeat(heartbeat))
+        );
+        const successCount = results.filter(r => r.status === 'fulfilled' && r.value).length;
         return successCount === data.length;
       }
 
