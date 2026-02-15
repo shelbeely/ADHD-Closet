@@ -51,12 +51,10 @@ jobs:
           # DATABASE_URL is provided via the copilot environment secret
           echo "DATABASE_URL=$DATABASE_URL" >> .env
 
-      # Note: Database schema creation step removed because:
-      # - Supabase is a persistent hosted database (not ephemeral)
-      # - Schema already exists and persists across Copilot sessions
-      # - Running `prisma db push` on every session is unnecessary
-      # - Malformed DIRECT_URL secret was causing failures
-      # The database schema only needs to be created once manually or via migrations.
+      # Note: No database schema creation step needed here because Supabase
+      # is a persistent hosted database (not ephemeral). The schema exists
+      # and persists across all Copilot sessions. Schema updates should be
+      # done via `prisma migrate dev` locally and committed to version control.
 
       - name: Start Ziit heartbeat daemon
         working-directory: ./app

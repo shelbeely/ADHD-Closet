@@ -400,7 +400,8 @@ The file `.github/workflows/copilot-setup-steps.yml` pre-configures the Copilot 
 - Generates the Prisma Client
 - Copies `.env.example` to `.env` and injects `DATABASE_URL` from copilot environment secret
 - Starts Redis 7 as a service (PostgreSQL is hosted on Supabase)
-- Pushes the Prisma schema to create database tables
+
+Note: Database schema creation is NOT part of the setup because Supabase is a persistent hosted database where the schema already exists and persists across all Copilot sessions.
 
 ## Environment Variables
 
