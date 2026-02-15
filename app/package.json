@@ -18,6 +18,8 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "prisma:seed:full": "npm run prisma:seed && npx tsx prisma/seed-extension.ts",
     "prisma:seed:demo": "npx tsx prisma/seed-demo.ts",
+    "ziit:watch": "bun run scripts/ziit/watch-daemon.ts",
+    "ziit:health": "bun run scripts/ziit/health-check.ts",
     "cap:init": "cap init",
     "cap:add:ios": "cap add ios",
     "cap:add:android": "cap add android",
