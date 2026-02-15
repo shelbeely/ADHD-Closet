@@ -107,7 +107,7 @@ async function detectProject(): Promise<string> {
       stdout: 'pipe',
     });
     
-    const output = await new Response(proc.stdout).text();
+    const output = await proc.stdout.text();
     await proc.exited;
     
     const match = output.trim().match(/github\.com[:/](.+?)(?:\.git)?$/);
@@ -130,7 +130,7 @@ async function detectBranch(): Promise<string | undefined> {
       stdout: 'pipe',
     });
     
-    const output = await new Response(proc.stdout).text();
+    const output = await proc.stdout.text();
     await proc.exited;
     
     const branch = output.trim();
@@ -152,7 +152,7 @@ async function checkGitStatus(filePaths: string[]): Promise<Set<string>> {
       stderr: 'ignore',
     });
     
-    const output = await new Response(proc.stdout).text();
+    const output = await proc.stdout.text();
     await proc.exited;
     
     if (proc.exitCode !== 0) {

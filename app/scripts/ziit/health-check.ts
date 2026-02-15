@@ -34,7 +34,7 @@ async function runGitCommand(args: string[]): Promise<{ stdout: string; code: nu
       stderr: 'ignore',
     });
     
-    const stdout = await new Response(proc.stdout).text();
+    const stdout = await proc.stdout.text();
     await proc.exited;
     
     return { stdout: stdout.trim(), code: proc.exitCode || 0 };
