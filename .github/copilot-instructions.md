@@ -8,6 +8,38 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 **Size**: ~50k+ lines of code  
 **Primary Languages**: TypeScript (95%), JavaScript (3%), CSS (2%)
 
+## 🧠 Repository Memory System
+
+**⚠️ READ THIS FIRST ⚠️**
+
+This repository has a persistent knowledge base in `.github/memory/` that you MUST read before exploring:
+
+```bash
+# Essential reading (in order):
+1. .github/memory/README.md          # Memory system guide
+2. .github/memory/repo-map.md        # Folder structure
+3. .github/memory/architecture.md    # System design & data flows
+4. .github/memory/dependencies.md    # Used libraries
+5. .github/memory/runtime-requirements.md  # Services & env vars
+6. .github/memory/dev-commands.md    # Build & dev commands
+7. .github/memory/context7-notes.md  # Context7 patterns
+```
+
+**Authority Hierarchy:**
+1. **Context7 Documentation** (via MCP) - External library behavior
+2. **Repository Code/Config/Docs** - Ground truth for implementation
+3. **`.github/memory/`** - High-signal index & architectural model
+4. **Internal AI Knowledge** - Last resort fallback
+
+**Why Memory First:**
+- Eliminates redundant exploration
+- Provides validated, accurate context
+- Documents known issues and workarounds
+- References Context7 patterns already validated
+- Saves 10-20 minutes per session
+
+**Update Memory:** When you learn something important, update `.github/memory/` incrementally. Never store secrets or env values.
+
 ## Tools & MCP Servers
 
 ### Context7 MCP (Model Context Protocol)
@@ -486,10 +518,17 @@ npx prisma migrate reset
 
 ## Search Before Exploration
 
-**Trust these instructions first.** Only use grep/find/search tools if:
-- The instructions are incomplete for your specific task
-- You need to locate exact implementation details not covered here
-- You encounter errors that contradict these instructions
+**Start with memory, then these instructions, then explore if needed.**
+
+**Order of Authority:**
+1. **Read `.github/memory/` first** - Most comprehensive and up-to-date architectural knowledge
+2. **Trust these copilot instructions** - High-level guidance and conventions
+3. **Only then use grep/find/search** if:
+   - Memory and instructions incomplete for your specific task
+   - You need exact implementation details not covered
+   - You encounter errors that contradict documentation
+
+**Remember:** `.github/memory/` contains validated patterns, known issues, and Context7-grounded implementations. Reading it saves exploration time.
 
 ## Key Architecture Notes
 
