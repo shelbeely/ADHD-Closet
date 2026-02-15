@@ -55,7 +55,16 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
    
    This verifies your setup before starting the daemon.
 
-3. **Start in dry-run mode** (recommended for first time):
+3. **Send a test heartbeat** (recommended for first time):
+   ```bash
+   export ZIIT_API_KEY="your-api-key-here"
+   bun run ziit:test
+   ```
+   
+   This sends a single test heartbeat to verify your API key and network connectivity.
+   You should see a success message and can check your activity at https://ziit.app/activity
+
+4. **Start in dry-run mode** (optional):
    ```bash
    export ZIIT_DRY_RUN=true
    export ZIIT_VERBOSE=true
@@ -64,18 +73,18 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
    
    This shows what would be sent without actually sending data.
 
-4. **Run the watch daemon for real**:
+5. **Run the watch daemon for real**:
    ```bash
    export ZIIT_DRY_RUN=false  # or unset ZIIT_DRY_RUN
    bun run ziit:watch
    ```
 
-5. **Test by editing a file**:
+6. **Test by editing a file**:
    - Edit any TypeScript file in `app/app/`
    - Save the file
    - Check terminal for `[Ziit ✓] Sent X heartbeat(s)` message
 
-6. **Stop the daemon**: Press `Ctrl+C` (it will flush pending heartbeats before exiting)
+7. **Stop the daemon**: Press `Ctrl+C` (it will flush pending heartbeats before exiting)
 
 ### GitHub Copilot Agent Sessions
 
@@ -152,6 +161,7 @@ Authorization: `Bearer <ZIIT_API_KEY>`
 - **`ziit.ts`**: Minimal API client (ZiitClient class)
 - **`watch-daemon.ts`**: Filesystem watcher daemon (main entry point)
 - **`health-check.ts`**: Diagnostic script to verify setup
+- **`test-heartbeat.ts`**: Send a single test heartbeat to verify integration
 - **`README.md`**: This file
 
 ### Scripts
@@ -160,6 +170,7 @@ Run from `app/` directory:
 
 - **`bun run ziit:watch`**: Start the watch daemon
 - **`bun run ziit:health`**: Run health check diagnostic
+- **`bun run ziit:test`**: Send a test heartbeat to verify integration
 
 ### Zero Dependencies
 
@@ -173,6 +184,19 @@ This client uses only Bun.js-compatible APIs:
 No external packages required. **100% Bun.js compatible.**
 
 ## Troubleshooting
+
+### Quick Test
+
+To quickly verify your Ziit integration is working:
+
+```bash
+cd app
+export ZIIT_API_KEY="your-api-key-here"
+bun run ziit:test
+```
+
+This sends a single test heartbeat and reports success/failure immediately.
+If successful, check https://ziit.app/activity to see the heartbeat.
 
 ### Daemon not starting
 
