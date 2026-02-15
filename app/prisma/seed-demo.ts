@@ -215,19 +215,26 @@ async function seedDemo() {
   // ========== UNDERWEAR/BRAS (12 items) ==========
   console.log('Creating underwear/bras...');
   for (let i = 0; i < 12; i++) {
-    const type = i % 2 === 0 ? 'Bra' : 'Underwear Pack';
+    const isBra = i % 2 === 0;
+    const type = isBra ? 'Bra' : 'Underwear';
     const colorIdx = i % 5;
     
+    // Vary the attributes for realism
+    const hasTucking = !isBra && i % 3 === 0; // Some underwear has tucking support
+    const hasRemovablePads = isBra && i % 3 !== 0; // Most bras have removable pads
+    
     items.push({
-      title: `${colors.tops[colorIdx]} ${type}`,
+      title: `${colors.tops[colorIdx]} ${type}${hasTucking ? ' (Tucking)' : ''}${hasRemovablePads ? ' (Removable Pads)' : ''}`,
       category: 'underwear_bras' as Category,
-      brand: 'Target',
-      sizeText: i % 2 === 0 ? '34B' : sizes[i % sizes.length],
+      brand: isBra ? (hasRemovablePads ? 'Target' : 'Victoria\'s Secret') : (hasTucking ? 'TomboyX' : 'Target'),
+      sizeText: isBra ? '34B' : sizes[i % sizes.length],
       materials: 'Cotton',
       colorPalette: [colors.hex[colorIdx]],
       cleanStatus: i % 4 === 0 ? 'needs_wash' : 'clean' as CleanStatus,
       state: 'available' as ItemState,
       storageType: 'drawer' as StorageType,
+      hasTucking: hasTucking || undefined,
+      hasRemovablePads: hasRemovablePads || undefined,
     });
   }
   

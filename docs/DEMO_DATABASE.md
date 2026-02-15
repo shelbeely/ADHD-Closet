@@ -37,7 +37,7 @@ This will:
 | **Outerwear** | 19 | Jackets, coats, blazers, cardigans |
 | **Jewelry** | 18 | Necklaces, earrings, bracelets, rings |
 | **Loungewear** | 16 | Hoodies, sweatpants, cozy sets |
-| **Underwear/Bras** | 12 | Various colors and sizes |
+| **Underwear/Bras** | 12 | Various colors and sizes, includes tucking underwear and bras with removable pads |
 | **Suits/Sets** | 12 | Two-piece, three-piece, co-ord sets |
 | **Sleepwear** | 12 | Pajama sets, nightgowns |
 | **Swimwear** | 12 | One-pieces, bikinis, tankinis |
@@ -77,6 +77,13 @@ This will:
 - ✅ TV show merch (Friends)
 - ✅ Game merch (Zelda)
 - ✅ Anime merch (Naruto)
+
+### Specialized Underwear/Bra Attributes
+- ✅ **Tucking support** - 2 underwear items with tucking functionality (TomboyX brand)
+- ✅ **Removable pads** - 4 bras with removable pad pockets (Target brand)
+- ✅ **No removable pads** - 2 bras explicitly without pad pockets (Victoria's Secret)
+
+See [UNDERWEAR_BRA_ATTRIBUTES.md](./UNDERWEAR_BRA_ATTRIBUTES.md) for detailed documentation.
 
 ### Tags for Organization
 - favorite

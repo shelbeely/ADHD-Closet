@@ -39,6 +39,10 @@ async function extend() {
     { title: 'AI Red Tee', category: 'tops' as Category, cleanStatus: 'clean' as CleanStatus, state: 'available' as ItemState, isGenerated: true, generationType: 'color_variation', brand: 'Uniqlo', sizeText: 'M', materials: 'Cotton', colorPalette: ['#FF0000'], storageType: 'folded' as StorageType },
     // Wear tracking
     { title: 'Well-Worn Jeans', category: 'bottoms' as Category, bottomsType: 'jeans', cleanStatus: 'needs_wash' as CleanStatus, state: 'available' as ItemState, wearsBeforeWash: 5, currentWears: 4, lastWornDate: new Date('2026-02-13'), brand: 'Levis', sizeText: '30x32', materials: 'Denim', colorPalette: ['#4682B4'], storageType: 'hanging' as StorageType },
+    // Underwear/bras with new attributes
+    { title: 'Tucking Underwear', category: 'underwear_bras' as Category, cleanStatus: 'clean' as CleanStatus, state: 'available' as ItemState, hasTucking: true, brand: 'TomboyX', sizeText: 'M', materials: 'Cotton/Spandex', colorPalette: ['#000000'], storageType: 'drawer' as StorageType },
+    { title: 'Sports Bra with Removable Pads', category: 'underwear_bras' as Category, cleanStatus: 'clean' as CleanStatus, state: 'available' as ItemState, hasRemovablePads: true, brand: 'Nike', sizeText: 'M', materials: 'Polyester/Spandex', colorPalette: ['#000000'], storageType: 'drawer' as StorageType },
+    { title: 'Seamless Bra (No Pads)', category: 'underwear_bras' as Category, cleanStatus: 'clean' as CleanStatus, state: 'available' as ItemState, hasRemovablePads: false, brand: 'Calvin Klein', sizeText: '34B', materials: 'Nylon/Spandex', colorPalette: ['#F5F5DC'], storageType: 'drawer' as StorageType },
   ];
   
   for (const item of items) {

@@ -176,6 +176,10 @@ model Item {
   shoeType      ShoeType?      @map("shoe_type")
   bottomsType   BottomsType?   @map("bottoms_type")
   
+  // Underwear/bras specific attributes
+  hasTucking         Boolean? @map("has_tucking")           // For underwear: supports tucking
+  hasRemovablePads   Boolean? @map("has_removable_pads")    // For bras: has removable pad pockets
+  
   // Label/brand info (may come from AI OCR)
   brand         String?
   sizeText      String?    @map("size_text")
