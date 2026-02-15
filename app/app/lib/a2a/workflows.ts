@@ -21,38 +21,48 @@ export const uploadToOutfitWorkflow: SequentialWorkflow = {
     {
       agentUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000' + '/api/a2a',
       skillName: 'generate_catalog_image',
-      mapInput: (previousOutput, context) => ({
-        imageBase64: context.originalImageBase64,
-      }),
+      mapInput: (previousOutput, context) => {
+        const ctx = context as Record<string, unknown>;
+        return {
+          imageBase64: ctx.originalImageBase64,
+        };
+      },
     },
     {
       agentUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000' + '/api/a2a',
       skillName: 'infer_item_attributes',
-      mapInput: (previousOutput, context) => ({
-        imageBase64: context.originalImageBase64,
-        userPrompt: context.userPrompt || '',
-      }),
+      mapInput: (previousOutput, context) => {
+        const ctx = context as Record<string, unknown>;
+        return {
+          imageBase64: ctx.originalImageBase64,
+          userPrompt: ctx.userPrompt || '',
+        };
+      },
       validateOutput: (output) => {
-        return output.category && output.category !== 'uncategorized';
+        const result = output as Record<string, unknown>;
+        return result.category !== undefined && result.category !== 'uncategorized';
       },
     },
     {
       agentUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000' + '/api/a2a',
       skillName: 'generate_outfit',
       mapInput: (previousOutput, context) => {
+        const ctx = context as Record<string, unknown>;
+        const prevOut = previousOutput as Record<string, unknown>;
+        
         // Create a new item object from the inferred attributes
         const newItem = {
-          id: context.itemId || 'new-item',
-          category: previousOutput.category,
-          colors: previousOutput.colors,
-          style: previousOutput.style,
+          id: ctx.itemId || 'new-item',
+          category: prevOut.category,
+          colors: prevOut.colors,
+          style: prevOut.style,
         };
 
         // Combine with existing available items
-        const availableItems = [newItem, ...(context.availableItems || [])];
+        const availableItems = [newItem, ...(ctx.availableItems as Array<Record<string, unknown>> || [])];
 
         return {
-          constraints: context.constraints || {
+          constraints: ctx.constraints || {
             weather: 'moderate',
             occasion: 'casual',
           },
@@ -75,9 +85,12 @@ export const labelExtractionWorkflow: SequentialWorkflow = {
     {
       agentUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000' + '/api/a2a',
       skillName: 'extract_label_info',
-      mapInput: (previousOutput, context) => ({
-        imageBase64: context.labelImageBase64,
-      }),
+      mapInput: (previousOutput, context) => {
+        const ctx = context as Record<string, unknown>;
+        return {
+          imageBase64: ctx.labelImageBase64,
+        };
+      },
     },
   ],
 };

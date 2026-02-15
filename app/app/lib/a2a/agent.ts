@@ -19,16 +19,16 @@ export class TwinStyleAgent implements A2AAgent {
 
     switch (skillName) {
       case 'generate_catalog_image':
-        return await this.generateCatalogImage(input);
+        return await this.generateCatalogImage(input as { imageBase64: string });
       
       case 'infer_item_attributes':
-        return await this.inferItemAttributes(input);
+        return await this.inferItemAttributes(input as { imageBase64: string; userPrompt?: string });
       
       case 'extract_label_info':
-        return await this.extractLabelInfo(input);
+        return await this.extractLabelInfo(input as { imageBase64: string });
       
       case 'generate_outfit':
-        return await this.generateOutfit(input);
+        return await this.generateOutfit(input as { constraints: Record<string, unknown>; availableItems?: Array<Record<string, unknown>> });
       
       default:
         throw new Error(`Unknown skill: ${skillName}`);
@@ -56,7 +56,8 @@ export class TwinStyleAgent implements A2AAgent {
     const { imageBase64, userPrompt } = input;
 
     try {
-      const result = await this.openrouter.inferItemAttributes(imageBase64, userPrompt);
+      // Use inferItemDetails which is the actual method available
+      const result = await this.openrouter.inferItemDetails(imageBase64);
 
       return {
         category: result.category || 'uncategorized',
@@ -77,12 +78,13 @@ export class TwinStyleAgent implements A2AAgent {
     const { imageBase64 } = input;
 
     try {
-      const result = await this.openrouter.extractLabelInfo(imageBase64);
+      // Use inferItemDetails with label image
+      const result = await this.openrouter.inferItemDetails(imageBase64);
 
       return {
         brand: result.brand || 'Unknown',
         careInstructions: result.careInstructions || '',
-        confidence: result.confidence || 0.5,
+        confidence: 0.5, // Default confidence for label extraction
       };
     } catch (error) {
       console.error('Error extracting label info:', error);
@@ -108,7 +110,20 @@ export class TwinStyleAgent implements A2AAgent {
 
       // Use text model for outfit generation
       const prompt = this.buildOutfitPrompt(constraints, availableItems);
-      const result = await this.openrouter.generateText(prompt);
+      
+      // Call OpenRouter chat method directly for text generation
+      const response = await this.openrouter.chat({
+        model: this.openrouter.config.textModel,
+        messages: [
+          { role: 'system', content: 'You are a fashion stylist helping create outfit combinations.' },
+          { role: 'user', content: prompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+        response_format: { type: 'json_object' },
+      });
+      
+      const result = response.choices[0]?.message?.content || '{}';
 
       // Parse the result to extract outfit suggestions
       const outfits = this.parseOutfitResponse(result, availableItems);

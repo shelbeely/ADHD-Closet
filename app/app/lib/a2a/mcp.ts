@@ -47,13 +47,13 @@ export class WardrobeDataSource implements MCPDataSource {
 
   async listResources(): Promise<MCPResource[]> {
     const items = await prisma.item.findMany({
-      select: { id: true, name: true, category: true },
+      select: { id: true, category: true },
       take: 100,
     });
 
     return items.map(item => ({
       uri: `wardrobe://items/${item.id}`,
-      name: item.name || `Item ${item.id}`,
+      name: `Item ${item.id}`,
       description: `Wardrobe item in category: ${item.category || 'uncategorized'}`,
       mimeType: 'application/json',
     }));
@@ -81,19 +81,14 @@ export class WardrobeDataSource implements MCPDataSource {
 
     return {
       id: item.id,
-      name: item.name,
+      title: item.title,
       category: item.category,
-      colors: item.colors,
-      pattern: item.pattern,
-      style: item.style,
-      occasion: item.occasion,
-      season: item.season,
       brand: item.brand,
       images: item.images.map(img => ({
         kind: img.kind,
         filePath: img.filePath,
       })),
-      tags: item.tags.map(tag => tag.name),
+      tags: item.tags.map(tag => tag),
     };
   }
 
@@ -138,15 +133,17 @@ export class WardrobeDataSource implements MCPDataSource {
   }
 
   async callTool(name: string, args: unknown): Promise<unknown> {
+    const typedArgs = args as Record<string, unknown>;
+    
     switch (name) {
       case 'search_items':
-        return await this.searchItems(args);
+        return await this.searchItems(typedArgs);
       
       case 'get_item_by_id':
-        return await this.getItemById(args.itemId);
+        return await this.getItemById(typedArgs.itemId as string);
       
       case 'get_available_items':
-        return await this.getAvailableItems(args.limit || 50);
+        return await this.getAvailableItems((typedArgs.limit as number) || 50);
       
       default:
         throw new Error(`Unknown tool: ${name}`);
@@ -186,7 +183,7 @@ export class WardrobeDataSource implements MCPDataSource {
       where,
       include: {
         images: {
-          where: { kind: 'catalog_main' },
+          where: { kind: 'ai_catalog' },
           take: 1,
         },
       },
@@ -195,12 +192,9 @@ export class WardrobeDataSource implements MCPDataSource {
 
     return items.map(item => ({
       id: item.id,
-      name: item.name,
+      title: item.title,
       category: item.category,
-      colors: item.colors,
-      style: item.style,
-      occasion: item.occasion,
-      season: item.season,
+      brand: item.brand,
       imageUrl: item.images[0]?.filePath,
     }));
   }
@@ -220,13 +214,8 @@ export class WardrobeDataSource implements MCPDataSource {
 
     return {
       id: item.id,
-      name: item.name,
+      title: item.title,
       category: item.category,
-      colors: item.colors,
-      pattern: item.pattern,
-      style: item.style,
-      occasion: item.occasion,
-      season: item.season,
       brand: item.brand,
       images: item.images,
       tags: item.tags,
@@ -237,7 +226,7 @@ export class WardrobeDataSource implements MCPDataSource {
     const items = await prisma.item.findMany({
       include: {
         images: {
-          where: { kind: 'catalog_main' },
+          where: { kind: 'ai_catalog' },
           take: 1,
         },
       },
@@ -247,12 +236,9 @@ export class WardrobeDataSource implements MCPDataSource {
 
     return items.map(item => ({
       id: item.id,
-      name: item.name,
+      title: item.title,
       category: item.category,
-      colors: item.colors,
-      style: item.style,
-      occasion: item.occasion,
-      season: item.season,
+      brand: item.brand,
       imageUrl: item.images[0]?.filePath,
     }));
   }

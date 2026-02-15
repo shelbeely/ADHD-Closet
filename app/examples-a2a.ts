@@ -4,7 +4,7 @@
  * This file demonstrates how to use the A2A integration in various scenarios.
  */
 
-import { orchestrator, uploadToOutfitWorkflow } from './app/lib/a2a';
+import { orchestrator, uploadToOutfitWorkflow, SequentialWorkflow } from './app/lib/a2a';
 
 /**
  * Example 1: Execute a single agent skill
@@ -40,7 +40,7 @@ async function example2_UseMCPDataSource() {
   const toolsResponse = await fetch(
     'http://localhost:3000/api/a2a/mcp/tools?dataSource=wardrobe-database'
   );
-  const { tools } = await toolsResponse.json();
+  const { tools } = await toolsResponse.json() as { tools: Array<{ name: string }> };
   console.log('Available tools:', tools.map(t => t.name));
   
   // Execute a tool
@@ -91,26 +91,33 @@ async function example3_SequentialWorkflow() {
 async function example4_CustomWorkflow() {
   console.log('\n📌 Example 4: Custom workflow\n');
   
-  const customWorkflow = {
+  const customWorkflow: SequentialWorkflow = {
     name: 'catalog-and-categorize',
     description: 'Generate catalog image and categorize item',
     steps: [
       {
         agentUrl: 'http://localhost:3000/api/a2a',
         skillName: 'generate_catalog_image',
-        mapInput: (prev: unknown, ctx: Record<string, unknown>) => ({
-          imageBase64: ctx.originalImage,
-        }),
+        mapInput: (prev: unknown, ctx: unknown) => {
+          const context = ctx as Record<string, unknown>;
+          return {
+            imageBase64: context.originalImage,
+          };
+        },
       },
       {
         agentUrl: 'http://localhost:3000/api/a2a',
         skillName: 'infer_item_attributes',
-        mapInput: (prev: Record<string, unknown>, ctx: Record<string, unknown>) => ({
-          imageBase64: ctx.originalImage, // Use original, not catalog
-          userPrompt: ctx.userPrompt as string,
-        }),
-        validateOutput: (output: Record<string, unknown>) => {
-          return output.category !== 'uncategorized';
+        mapInput: (prev: unknown, ctx: unknown) => {
+          const context = ctx as Record<string, unknown>;
+          return {
+            imageBase64: context.originalImage as string, // Use original, not catalog
+            userPrompt: context.userPrompt as string,
+          };
+        },
+        validateOutput: (output: unknown) => {
+          const result = output as Record<string, unknown>;
+          return result.category !== 'uncategorized';
         },
       },
     ],
