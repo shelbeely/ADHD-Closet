@@ -184,16 +184,22 @@ curl http://localhost:3000/.well-known/agent-card.json
 
 ### ACP (Agent Client Protocol) 
 
-Enables integration with code editors and IDEs:
+Enables **bidirectional** integration with code editors and IDEs:
 
 - **Editor Integration**: Works with Zed, JetBrains IDEs, and other ACP-compatible editors
-- **Wardrobe Tools**: 6 specialized tools for wardrobe management
+- **Wardrobe Tools**: 7 specialized tools for wardrobe management (including `subscribe_events`)
 - **AI-Powered**: Direct access to catalog generation, outfit suggestions, and more
+- **Bidirectional**: Server can push real-time notifications to editors via Server-Sent Events
+- **Instant Updates**: New items, AI jobs, stats changes appear in editor immediately
 - **JSON-RPC 2.0**: Standard protocol for universal compatibility
 
 **Quick Start:**
 ```bash
+# Tool execution (editor → server)
 curl http://localhost:3000/api/acp/capabilities
+
+# Real-time notifications (server → editor)
+curl -N "http://localhost:3000/api/acp/events?types=item/added"
 ```
 
 **Learn More:**
