@@ -84,14 +84,14 @@ export class ZiitClient {
         );
         
         // Count successes and log failures
-        const successCount = results.filter(r => r.status === 'fulfilled' && r.value).length;
+        const successCount = results.filter(r => r.status === 'fulfilled' && r.value === true).length;
         const failedCount = data.length - successCount;
         
         if (failedCount > 0) {
           console.error(`[Ziit] Failed to send ${failedCount} of ${data.length} heartbeat(s)`);
           // Log details of failed heartbeats for debugging
           results.forEach((result, index) => {
-            if (result.status === 'rejected' || (result.status === 'fulfilled' && !result.value)) {
+            if (result.status === 'rejected' || (result.status === 'fulfilled' && result.value !== true)) {
               const reason = result.status === 'rejected' ? result.reason : 'Unknown failure';
               console.error(`[Ziit] Failed heartbeat for file: ${data[index].file}, reason: ${reason}`);
             }
