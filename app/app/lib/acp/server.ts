@@ -404,3 +404,185 @@ ${recentItems.map((item, idx) =>
 
 // Export singleton instance
 export const acpToolExecutor = new ACPToolExecutor();
+
+  private async subscribeEvents(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    return {
+      content: [{
+        type: 'text',
+        text: 'To subscribe to events, connect to GET /api/acp/events with query parameters: types, categories, itemIds',
+      }],
+    };
+  }
+
+  // CONTROL TOOLS FOR EXTERNAL AGENTS
+
+  private async addItemTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { addItem, AddItemSchema } = await import('./control-tools');
+    try {
+      const validated = AddItemSchema.parse(args);
+      const result = await addItem(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `Item added successfully!\nItem ID: ${result.itemId}\n${result.message}`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to add item: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async updateItemTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { updateItem, UpdateItemSchema } = await import('./control-tools');
+    try {
+      const validated = UpdateItemSchema.parse(args);
+      const result = await updateItem(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `Item updated successfully!\nItem ID: ${result.itemId}`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to update item: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async deleteItemTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { deleteItem, DeleteItemSchema } = await import('./control-tools');
+    try {
+      const validated = DeleteItemSchema.parse(args);
+      const result = await deleteItem(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `Item deleted successfully!\nItem ID: ${result.itemId}`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to delete item: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async triggerAIJobTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { triggerAIJob, TriggerAIJobSchema } = await import('./control-tools');
+    try {
+      const validated = TriggerAIJobSchema.parse(args);
+      const result = await triggerAIJob(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `AI job triggered successfully!\nJob ID: ${result.jobId}\nResult: ${JSON.stringify(result.result, null, 2)}`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to trigger AI job: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async batchOperationsTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { batchOperations, BatchOperationsSchema } = await import('./control-tools');
+    try {
+      const validated = BatchOperationsSchema.parse(args);
+      const result = await batchOperations(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `Batch operations completed!\nOperations: ${result.operations}\nResults: ${JSON.stringify(result.results, null, 2)}`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to execute batch operations: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async importItemsBulkTool(args: Record<string, unknown>): Promise<ACPToolCallResponse> {
+    const { importItemsBulk, ImportItemsBulkSchema } = await import('./control-tools');
+    try {
+      const validated = ImportItemsBulkSchema.parse(args);
+      const result = await importItemsBulk(validated);
+      
+      return {
+        content: [{
+          type: 'text',
+          text: `Bulk import completed!\nImported: ${result.imported} items`,
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to import items: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+
+  private async exportWardrobeTool(): Promise<ACPToolCallResponse> {
+    const { exportWardrobe } = await import('./control-tools');
+    try {
+      const result = await exportWardrobe();
+      
+      return {
+        content: [{
+          type: 'text',
+          text: JSON.stringify(result, null, 2),
+        }],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      return {
+        content: [{
+          type: 'text',
+          text: `Failed to export wardrobe: ${errorMessage}`,
+        }],
+        isError: true,
+      };
+    }
+  }
+}
+
+// Export singleton instance
+export const acpToolExecutor = new ACPToolExecutor();
