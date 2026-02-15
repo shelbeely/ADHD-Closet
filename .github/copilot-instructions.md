@@ -14,6 +14,8 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 
 **ALWAYS use Context7 MCP when you need library/API documentation, code generation, setup or configuration steps without the user having to explicitly ask.**
 
+**IMPORTANT:** All primary tech stack library IDs are documented in `docs/CONTEXT7_LIBRARY_IDS.md`. Check this reference document FIRST before calling `resolve-library-id` to save quota and time.
+
 Context7 provides up-to-date documentation and code examples from official sources. Use it proactively for:
 
 - **Library Documentation**: When working with any library/framework (Next.js, React, Bun.js, Prisma, etc.)
@@ -24,22 +26,28 @@ Context7 provides up-to-date documentation and code examples from official sourc
 
 **How to use Context7:**
 
-1. **Resolve library ID first** (unless user provides it in `/org/project` format):
-   ```
-   context7-resolve-library-id: { libraryName: "bun", query: "How to spawn processes in Bun.js" }
-   ```
+1. **Check if we already know the library ID** by looking in `docs/CONTEXT7_LIBRARY_IDS.md`:
+   - All primary tech stack libraries are documented with their IDs
+   - Includes: Next.js, React, Prisma, BullMQ, Bun.js, Three.js, Zod, Tailwind CSS, and more
+   - Use the library ID directly from the reference document
 
-2. **Query documentation** with the resolved library ID:
+2. **If library ID is known**, query directly:
    ```
    context7-query-docs: { libraryId: "/oven-sh/bun", query: "How to spawn child processes and read their output" }
    ```
 
+3. **If library ID is NOT in the reference**, then resolve it first:
+   ```
+   context7-resolve-library-id: { libraryName: "new-library", query: "What you want to do with it" }
+   ```
+   - After resolving, consider adding it to `docs/CONTEXT7_LIBRARY_IDS.md` for future use
+
 **Examples of when to use Context7 automatically:**
 
-- Writing Bun.js code → Query `/oven-sh/bun` docs for correct APIs
-- Using Next.js features → Query `/vercel/next.js` docs for App Router patterns
-- Implementing Prisma queries → Query `/prisma/prisma` docs for ORM usage
-- Setting up React components → Query `/facebook/react` docs for hooks and patterns
+- Writing Bun.js code → Query `/oven-sh/bun` docs (ID from reference doc)
+- Using Next.js features → Query `/vercel/next.js/v16.1.5` docs (ID from reference doc)
+- Implementing Prisma queries → Query `/prisma/docs` for ORM usage (ID from reference doc)
+- Setting up React components → Query docs for hooks and patterns (use Next.js docs, React integrated)
 
 **Usage Guidelines (1000 requests/month available):**
 
@@ -50,11 +58,13 @@ Use Context7 liberally for:
 - **API migrations**: Verify correct upgrade patterns when updating libraries
 
 **Efficiency Tips:**
+- **Check `docs/CONTEXT7_LIBRARY_IDS.md` first** - All primary stack library IDs are documented
 - Batch related queries in a single question when possible
 - For repetitive patterns (e.g., CRUD operations), query once and apply the pattern
 - Cache frequently-used patterns in memory (store_memory tool)
 - Prioritize queries for unfamiliar libraries or new API versions
 - Skip queries for well-known patterns you've already validated
+- Only call `resolve-library-id` for new libraries not in the reference document
 
 **When to skip Context7:**
 - Simple, well-established patterns you've used before

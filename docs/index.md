@@ -63,6 +63,8 @@ ADHD Closet helps you organize your clothing with AI-powered tools designed spec
 - **[Contributing](CONTRIBUTING.md)** - Contribution guidelines
 - **[API Reference](api/API_DOCUMENTATION.md)** - Complete API docs
 - **[Deployment](deployment/DEPLOYMENT.md)** - Production setup
+- **[Stack Validation](STACK_VALIDATION.md)** - Tech stack validation report (2026-02-15)
+- **[Context7 Library IDs](CONTEXT7_LIBRARY_IDS.md)** - Library ID reference for documentation queries
 
 ## Quick Start
 
