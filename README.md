@@ -164,31 +164,41 @@ For detailed instructions on building native apps, see the Mobile Apps section i
 
 For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
-## 🤝 Agent-to-Agent (A2A) Integration
+## 🤝 Agent Protocol Integration
 
-Twin Style now exposes its AI capabilities as A2A servers, making them discoverable and interoperable with other agent frameworks:
+Twin Style supports multiple agent protocols for maximum interoperability:
+
+### A2A (Agent-to-Agent) Protocol
+
+Enables interoperability with other agent frameworks:
 
 - **Agent Discovery**: Exposes capabilities via `/.well-known/agent-card.json`
 - **Sequential Chaining**: Chain multiple agents together using ADK orchestrator
 - **MCP Integration**: Connect to external data sources via Model Context Protocol
-- **Framework Support**: Works with Google ADK, LangGraph, Microsoft Copilot Studio, and more
+- **Framework Support**: Works with Google ADK, LangGraph, Microsoft Copilot Studio
 
 **Quick Start:**
 ```bash
-# Discover agent capabilities
 curl http://localhost:3000/.well-known/agent-card.json
+```
 
-# Execute a skill
-curl -X POST http://localhost:3000/api/a2a/execute \
-  -H "Content-Type: application/json" \
-  -d '{"taskId": "test", "skillName": "infer_item_attributes", "input": {...}}'
+### ACP (Agent Client Protocol) 
+
+Enables integration with code editors and IDEs:
+
+- **Editor Integration**: Works with Zed, JetBrains IDEs, and other ACP-compatible editors
+- **Wardrobe Tools**: 6 specialized tools for wardrobe management
+- **AI-Powered**: Direct access to catalog generation, outfit suggestions, and more
+- **JSON-RPC 2.0**: Standard protocol for universal compatibility
+
+**Quick Start:**
+```bash
+curl http://localhost:3000/api/acp/capabilities
 ```
 
 **Learn More:**
-- [`app/A2A_README.md`](app/A2A_README.md) - Quick start guide
-- [`docs/developer/A2A_INTEGRATION.md`](docs/developer/A2A_INTEGRATION.md) - Complete documentation
-- [`app/test-a2a.ts`](app/test-a2a.ts) - Test suite
-- [`app/examples-a2a.ts`](app/examples-a2a.ts) - Usage examples
+- **A2A**: [`app/A2A_README.md`](app/A2A_README.md) • [`docs/developer/A2A_INTEGRATION.md`](docs/developer/A2A_INTEGRATION.md)
+- **ACP**: [`app/ACP_README.md`](app/ACP_README.md) • [`docs/developer/ACP_INTEGRATION.md`](docs/developer/ACP_INTEGRATION.md)
 
 ## 🎨 Design Principles
 
