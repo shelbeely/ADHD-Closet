@@ -184,22 +184,42 @@ curl http://localhost:3000/.well-known/agent-card.json
 
 ### ACP (Agent Client Protocol) 
 
-Enables **bidirectional** integration with code editors and IDEs:
+Enables **bidirectional** integration as both **client and server**:
 
-- **Editor Integration**: Works with Zed, JetBrains IDEs, and other ACP-compatible editors
-- **Wardrobe Tools**: 7 specialized tools for wardrobe management (including `subscribe_events`)
-- **AI-Powered**: Direct access to catalog generation, outfit suggestions, and more
-- **Bidirectional**: Server can push real-time notifications to editors via Server-Sent Events
-- **Instant Updates**: New items, AI jobs, stats changes appear in editor immediately
-- **JSON-RPC 2.0**: Standard protocol for universal compatibility
+**As ACP Server (controlled by others):**
+- **Editor Integration**: Zed, JetBrains IDEs, and other ACP-compatible editors
+- **Automation**: OpenClaw, n8n, Zapier, custom scripts
+- **21 Tools**: Read (4), Write (7), Control (7), Client Management (9), Notifications (1)
+- **Real-time Events**: Server-Sent Events for instant updates
 
-**Quick Start:**
+**As ACP Client (controlling others):**
+- **Connect to Agents**: Weather, Calendar, AI, Smart Home
+- **Execute Tools**: Call external agent capabilities
+- **Subscribe to Events**: React to external changes
+- **Templates**: Pre-configured agent integrations
+
+**Quick Start (Server):**
 ```bash
-# Tool execution (editor → server)
+# Tool execution (others → Twin Style)
 curl http://localhost:3000/api/acp/capabilities
 
-# Real-time notifications (server → editor)
+# Real-time notifications (Twin Style → others)
 curl -N "http://localhost:3000/api/acp/events?types=item/added"
+```
+
+**Quick Start (Client):**
+```typescript
+// Connect to external agent (Twin Style → others)
+await acpClient.registerServer({
+  id: 'weather-agent',
+  url: 'http://localhost:3002/api/acp',
+  enabled: true
+});
+
+// Execute external tool
+const forecast = await acpClient.executeToolOnServer(
+  'weather-agent', 'get_forecast', { location: 'SF' }
+);
 ```
 
 **Learn More:**
