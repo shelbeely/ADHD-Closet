@@ -82,7 +82,22 @@ export class ZiitClient {
         const results = await Promise.allSettled(
           data.map(heartbeat => this.heartbeat(heartbeat))
         );
+        
+        // Count successes and log failures
         const successCount = results.filter(r => r.status === 'fulfilled' && r.value).length;
+        const failedCount = data.length - successCount;
+        
+        if (failedCount > 0) {
+          console.error(`[Ziit] Failed to send ${failedCount} of ${data.length} heartbeat(s)`);
+          // Log details of failed heartbeats for debugging
+          results.forEach((result, index) => {
+            if (result.status === 'rejected' || (result.status === 'fulfilled' && !result.value)) {
+              const reason = result.status === 'rejected' ? result.reason : 'Unknown failure';
+              console.error(`[Ziit] Failed heartbeat for file: ${data[index].file}, reason: ${reason}`);
+            }
+          });
+        }
+        
         return successCount === data.length;
       }
 
