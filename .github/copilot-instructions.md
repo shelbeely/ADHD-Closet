@@ -8,6 +8,80 @@ Twin Style is a single-user, self-hosted wardrobe organizer powered by **Google 
 **Size**: ~50k+ lines of code  
 **Primary Languages**: TypeScript (95%), JavaScript (3%), CSS (2%)
 
+## Tools & MCP Servers
+
+### Context7 MCP (Model Context Protocol)
+
+**ALWAYS use Context7 MCP when you need library/API documentation, code generation, setup or configuration steps without the user having to explicitly ask.**
+
+Context7 provides up-to-date documentation and code examples from official sources. Use it proactively for:
+
+- **Library Documentation**: When working with any library/framework (Next.js, React, Bun.js, Prisma, etc.)
+- **API Reference**: When you need to verify correct API usage or parameters
+- **Code Generation**: When implementing features using specific libraries
+- **Setup & Configuration**: When configuring tools, build systems, or deployments
+- **Best Practices**: When you need to verify if you're following current best practices
+
+**How to use Context7:**
+
+1. **Resolve library ID first** (unless user provides it in `/org/project` format):
+   ```
+   context7-resolve-library-id: { libraryName: "bun", query: "How to spawn processes in Bun.js" }
+   ```
+
+2. **Query documentation** with the resolved library ID:
+   ```
+   context7-query-docs: { libraryId: "/oven-sh/bun", query: "How to spawn child processes and read their output" }
+   ```
+
+**Examples of when to use Context7 automatically:**
+
+- Writing Bun.js code → Query `/oven-sh/bun` docs for correct APIs
+- Using Next.js features → Query `/vercel/next.js` docs for App Router patterns
+- Implementing Prisma queries → Query `/prisma/prisma` docs for ORM usage
+- Setting up React components → Query `/facebook/react` docs for hooks and patterns
+
+**Do NOT call Context7 more than 3 times per question.** If you cannot find what you need after 3 calls, use the best information you have.
+
+### Playwright MCP (Browser Automation)
+
+**ALWAYS use Playwright MCP to take screenshots of the web app when making UI changes or verifying web pages.**
+
+Playwright MCP provides browser automation capabilities for testing and validation. Use it automatically for:
+
+- **UI Changes**: After modifying any UI component, page layout, or styling
+- **Visual Verification**: When implementing new features that affect the user interface
+- **Testing Pages**: When you need to verify a page loads correctly
+- **Debugging**: When investigating rendering or display issues
+- **Documentation**: To show the user what the UI looks like
+
+**How to use Playwright:**
+
+1. **Start browser** (if not already running):
+   ```
+   next-devtools-browser_eval: { action: "start", headless: false }
+   ```
+
+2. **Navigate to a page**:
+   ```
+   next-devtools-browser_eval: { action: "navigate", url: "http://localhost:3000/your-page" }
+   ```
+
+3. **Take screenshot** (REQUIRED for UI changes):
+   ```
+   next-devtools-browser_eval: { action: "screenshot", fullPage: true }
+   ```
+
+**When to use Playwright automatically:**
+
+- Changed any React component → Take screenshot of the page
+- Modified CSS/styling → Take screenshot showing the visual changes
+- Added new routes/pages → Navigate and screenshot the new pages
+- Fixed UI bugs → Show before/after screenshots
+- Implemented responsive design → Screenshot at different viewport sizes
+
+**Important:** The dev server must be running (`npm run dev` or `bun dev`) before taking screenshots. Start it first if needed.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript 5.9, Tailwind CSS 4
