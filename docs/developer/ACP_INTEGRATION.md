@@ -350,3 +350,226 @@ curl -X POST http://localhost:3000/api/acp/tools \
 
 **Status**: ✅ Ready for Editor Integration  
 **Last Updated**: 2026-02-15
+
+## Bidirectional Communication
+
+Twin Style now supports **bidirectional ACP communication**, allowing the server to push notifications to editors in real-time.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────┐
+│  Editor/IDE (Zed, JetBrains)                │
+│                                             │
+│  ┌───────────────────────────────────────┐ │
+│  │  Request Tools  ──────────────────────┼─┼──► POST /api/acp/tools
+│  │  (Editor → Server)                    │ │
+│  └───────────────────────────────────────┘ │
+│                                             │
+│  ┌───────────────────────────────────────┐ │
+│  │  Receive Notifications ◄─────────────┼─┼──── GET /api/acp/events
+│  │  (Server → Editor)                    │ │    (Server-Sent Events)
+│  └───────────────────────────────────────┘ │
+└─────────────────────────────────────────────┘
+```
+
+### Server-Sent Events (SSE)
+
+Twin Style uses Server-Sent Events for server-to-client notifications. This works with standard Next.js deployments without requiring custom servers or WebSockets.
+
+**Endpoint**: `GET /api/acp/events`
+
+**Query Parameters:**
+- `types` (optional): Comma-separated event types to subscribe to
+- `categories` (optional): Filter by item categories
+- `itemIds` (optional): Filter by specific item IDs
+
+### Event Types
+
+| Event Type | Description | Data |
+|------------|-------------|------|
+| `item/added` | New item added to wardrobe | `{itemId, title, category}` |
+| `item/updated` | Item metadata updated | `{itemId, title, category}` |
+| `item/deleted` | Item removed from wardrobe | `{itemId}` |
+| `job/completed` | AI job finished successfully | `{jobId, jobType, result}` |
+| `job/failed` | AI job failed | `{jobId, jobType, error}` |
+| `stats/changed` | Wardrobe statistics updated | `{totalItems, changeType}` |
+| `catalog/generated` | Catalog image generated | `{itemId, imageUrl}` |
+| `outfit/generated` | Outfit suggestion created | `{items, reasoning}` |
+
+### Notification Format
+
+All notifications follow JSON-RPC 2.0 format:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "notification",
+  "params": {
+    "type": "item/added",
+    "data": {
+      "itemId": "item-123-abc",
+      "title": "Blue Shirt",
+      "category": "tops"
+    },
+    "timestamp": "2026-02-15T18:00:00Z"
+  }
+}
+```
+
+### Usage Examples
+
+#### Subscribe to All Events
+
+```bash
+curl -N http://localhost:3000/api/acp/events
+```
+
+#### Subscribe to Specific Event Types
+
+```bash
+curl -N "http://localhost:3000/api/acp/events?types=item/added,job/completed"
+```
+
+#### Subscribe with Category Filter
+
+```bash
+curl -N "http://localhost:3000/api/acp/events?types=item/added&categories=tops,bottoms"
+```
+
+### JavaScript Client Example
+
+```javascript
+// Open SSE connection
+const eventSource = new EventSource(
+  'http://localhost:3000/api/acp/events?types=item/added,job/completed'
+);
+
+// Handle notifications
+eventSource.onmessage = (event) => {
+  const notification = JSON.parse(event.data);
+  
+  console.log('Notification:', notification);
+  
+  // Update UI based on notification type
+  switch (notification.params.type) {
+    case 'item/added':
+      showNotification(`New item: ${notification.params.data.title}`);
+      refreshWardrobeList();
+      break;
+      
+    case 'job/completed':
+      showNotification('AI processing complete!');
+      updateItemDisplay(notification.params.data);
+      break;
+      
+    case 'outfit/generated':
+      displayOutfitSuggestion(notification.params.data);
+      break;
+  }
+};
+
+// Handle errors
+eventSource.onerror = (error) => {
+  console.error('SSE error:', error);
+  // Optionally: implement reconnection logic
+};
+
+// Clean up when done
+// eventSource.close();
+```
+
+### Editor Integration
+
+#### Zed Editor
+
+Configure in Zed settings to enable bidirectional communication:
+
+```json
+{
+  "acpServers": {
+    "twin-style": {
+      "url": "http://localhost:3000/api/acp",
+      "eventsUrl": "http://localhost:3000/api/acp/events",
+      "capabilities": {
+        "bidirectional": true,
+        "notifications": true
+      }
+    }
+  }
+}
+```
+
+#### JetBrains IDEs
+
+1. Go to Settings → AI Agents → ACP Servers
+2. Add Twin Style server URL: `http://localhost:3000/api/acp`
+3. Enable notifications: Check "Subscribe to server events"
+4. Events URL: `http://localhost:3000/api/acp/events`
+
+### Use Cases
+
+**Real-time Wardrobe Updates:**
+- User adds item via mobile → Editor shows notification
+- AI finishes catalog generation → Editor displays result
+- Stats change → Editor updates dashboard
+
+**Collaborative Editing:**
+- Multiple clients can receive same notifications
+- All connected editors stay in sync
+- No polling required
+
+**Workflow Automation:**
+- Trigger editor actions based on events
+- Auto-refresh item lists on changes
+- Show progress bars for long AI operations
+
+### Benefits
+
+✅ **Real-time Updates**: No polling, instant notifications  
+✅ **Efficient**: Server push is more efficient than client polling  
+✅ **Standard Protocol**: Uses SSE (EventSource API)  
+✅ **No Custom Server**: Works with standard Next.js deployment  
+✅ **Resilient**: Automatic reconnection on connection loss  
+✅ **Filtered**: Subscribe only to events you care about
+
+### Comparison with WebSocket
+
+| Feature | Server-Sent Events (SSE) | WebSocket |
+|---------|-------------------------|-----------|
+| **Direction** | Server → Client | Bidirectional |
+| **Protocol** | HTTP | WS/WSS |
+| **Setup** | Simple (EventSource) | Complex (custom server) |
+| **Reconnection** | Automatic | Manual |
+| **Next.js Support** | Native | Requires custom server |
+| **Use Case** | Notifications, updates | Full duplex communication |
+
+For ACP's notification needs, SSE is perfect and simpler to deploy.
+
+### Testing Bidirectional Communication
+
+Run the test suite:
+
+```bash
+cd app
+npx tsx test-acp-bidirectional.ts
+```
+
+This demonstrates:
+- Event subscription setup
+- Notification broadcasting
+- Editor integration patterns
+- Real-time update flows
+
+### Future Enhancements
+
+- [ ] WebSocket support for full duplex (optional custom server)
+- [ ] Notification persistence and replay
+- [ ] Event filtering by user preferences
+- [ ] Notification batching for high-frequency events
+- [ ] Delivery acknowledgments
+
+---
+
+**Status**: ✅ Bidirectional ACP Complete with SSE  
+**Last Updated**: 2026-02-15

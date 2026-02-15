@@ -123,6 +123,30 @@ export const acpServerConfig: ACPServerConfig = {
         properties: {},
       },
     },
+    {
+      name: 'subscribe_events',
+      description: 'Subscribe to real-time wardrobe events and notifications via WebSocket. Enables bidirectional communication for instant updates.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          types: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Event types to subscribe to (item/added, item/updated, job/completed, etc.). Omit for all events.',
+          },
+          categories: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Filter events by item category (tops, bottoms, etc.)',
+          },
+          itemIds: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Filter events for specific item IDs',
+          },
+        },
+      },
+    },
   ],
 };
 
