@@ -2,86 +2,110 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/CONTRIBUTING/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/DATABASE_CONNECTION/</loc>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/DATABASE_CONNECTION_RESOLVED/</loc>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/DATABASE_CONNECTION_SUMMARY/</loc>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/DATABASE_SEEDING/</loc>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/DEMO_DATABASE/</loc>
+         <lastmod>2026-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://shelbeely.github.io/ADHD-Closet/UNDERWEAR_BRA_ATTRIBUTES/</loc>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/ai-models-used/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/api/API_DOCUMENTATION/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/deployment/DEPLOYMENT/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/developer/ARCHITECTURE/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/developer/SPEC/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/ADHD_IMPROVEMENTS/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/ADVANCED_OUI_FEATURES/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/ATTRIBUTES/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/BAND_MERCH/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/CATEGORIES/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/IMAGE_GENERATION/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/MODEL_SELECTION/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/NFC_TAG_SUPPORT/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/OUI_GUIDE/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/features/VISION_MODEL_GUIDE/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/mobile/ANDROID_BUILD/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/user-guides/FAQ/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/user-guides/TROUBLESHOOTING/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
     <url>
          <loc>https://shelbeely.github.io/ADHD-Closet/user-guides/TUTORIAL/</loc>
-         <lastmod>2026-02-01</lastmod>
+         <lastmod>2026-02-15</lastmod>
     </url>
 </urlset>
