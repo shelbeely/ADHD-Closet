@@ -223,8 +223,9 @@ const forecast = await acpClient.executeToolOnServer(
 ```
 
 **Learn More:**
+- **🎯 Start Here**: [How Protocols Help Your Wardrobe](docs/user-guides/HOW_PROTOCOLS_HELP_YOUR_WARDROBE.md) - Non-technical guide with real clothing examples
 - **A2A**: [`app/A2A_README.md`](app/A2A_README.md) • [`docs/developer/A2A_INTEGRATION.md`](docs/developer/A2A_INTEGRATION.md)
-- **ACP**: [`app/ACP_README.md`](app/ACP_README.md) • [`docs/developer/ACP_INTEGRATION.md`](docs/developer/ACP_INTEGRATION.md)
+- **ACP**: [`app/ACP_README.md`](app/ACP_README.md) • [`docs/developer/ACP_INTEGRATION.md`](docs/developer/ACP_INTEGRATION.md) • [`docs/developer/ACP_CLIENT_GUIDE.md`](docs/developer/ACP_CLIENT_GUIDE.md)
 
 ## 🎨 Design Principles
 
