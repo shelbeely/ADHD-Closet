@@ -41,7 +41,26 @@ Context7 provides up-to-date documentation and code examples from official sourc
 - Implementing Prisma queries → Query `/prisma/prisma` docs for ORM usage
 - Setting up React components → Query `/facebook/react` docs for hooks and patterns
 
-**Do NOT call Context7 more than 3 times per question.** If you cannot find what you need after 3 calls, use the best information you have.
+**Usage Guidelines (1000 requests/month available):**
+
+Use Context7 liberally for:
+- **Critical code verification**: Validate patterns against official docs before implementing
+- **Complex features**: Query multiple aspects of a library when building complex features
+- **Stack validation**: Comprehensively check entire tech stack implementations
+- **API migrations**: Verify correct upgrade patterns when updating libraries
+
+**Efficiency Tips:**
+- Batch related queries in a single question when possible
+- For repetitive patterns (e.g., CRUD operations), query once and apply the pattern
+- Cache frequently-used patterns in memory (store_memory tool)
+- Prioritize queries for unfamiliar libraries or new API versions
+- Skip queries for well-known patterns you've already validated
+
+**When to skip Context7:**
+- Simple, well-established patterns you've used before
+- Standard JavaScript/TypeScript syntax
+- Basic React patterns already validated in the project
+- Repetitive operations following an already-verified pattern
 
 ### Playwright MCP (Browser Automation)
 
