@@ -4,10 +4,10 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
 
 ## Features
 
-- **Filesystem Monitoring**: Uses Node.js fs.watch() for efficient change detection
-- **Git-Aware**: Only reports files that are actually modified or untracked (verified via `git status`)
+- **Filesystem Monitoring**: Uses `fs.watch()` (Bun-compatible) for efficient change detection
+- **Git-Aware**: Only reports files that are actually modified or untracked (verified via `git status` using `Bun.spawn()`)
 - **Smart Filtering**: Includes only relevant code files, ignores build artifacts and dependencies
-- **Batched Git Checks**: Checks multiple files at once for better performance
+- **Batched Git Checks**: Checks multiple files at once using `Bun.spawn()` for better performance
 - **Debouncing**: Buffers bursts of events to avoid spam (configurable, default 2.5s)
 - **Batch Sending**: Groups heartbeats for efficiency (configurable batch size, default 20)
 - **Resilient**: Retries on network failures with exponential backoff, gracefully handles SIGINT/SIGTERM
@@ -99,13 +99,13 @@ The daemon automatically starts in the background when a Copilot coding agent se
 
 ## How It Works
 
-1. **File Monitoring**: Watches specified directories recursively for file changes using Node.js `fs.watch()`
+1. **File Monitoring**: Watches specified directories recursively using `fs.watch()` (fully supported by Bun.js)
 2. **Filtering**: 
    - Checks if file is in included directories
    - Checks if file extension is in the include list
    - Ignores noisy directories (node_modules, .git, etc.)
    - Deduplicates events within debounce window
-3. **Git Verification**: Runs `git status --porcelain=v1 -- <files...>` to verify files are actually modified or untracked (batched for performance)
+3. **Git Verification**: Runs `git status --porcelain=v1 -- <files...>` via `Bun.spawn()` to verify files are actually modified or untracked (batched for performance)
 4. **Debouncing**: Collects distinct files touched during debounce period (default 2.5s)
 5. **Buffering**: Queues heartbeats in memory with project metadata
 6. **Batching**: Sends heartbeats in batches of 20 (or when buffer is full)
@@ -163,14 +163,14 @@ Run from `app/` directory:
 
 ### Zero Dependencies
 
-This client uses only built-in Bun and Node.js APIs:
-- `fs.watch()` for filesystem monitoring
-- `fs.existsSync()` for file/directory checks
-- `path` module for proper path handling
-- `child_process.spawn()` for git commands
-- `fetch()` for HTTP requests
+This client uses only Bun.js-compatible APIs:
+- `fs.watch()` for filesystem monitoring (Bun-compatible, recursive watching)
+- `fs.statSync()` for file/directory checks
+- `Bun.spawn()` for spawning git processes (Bun-native)
+- `fetch()` for HTTP requests (Bun-native)
+- Custom path manipulation functions (no dependencies)
 
-No external packages required.
+No external packages required. **100% Bun.js compatible.**
 
 ## Troubleshooting
 

@@ -6,7 +6,8 @@
  * that are actually modified (verified via git status).
  * 
  * Features:
- * - Uses Node.js fs.watch() for efficient filesystem monitoring
+ * - Uses Bun.js with fs.watch() (Bun-compatible) for efficient filesystem monitoring
+ * - Uses Bun.spawn() for running git commands
  * - Filters by include dirs and file extensions
  * - Ignores noisy directories (.git, node_modules, etc.)
  * - Verifies files are git modified/untracked before sending (batched for performance)
@@ -18,11 +19,33 @@
  * - Supports dry-run mode for testing
  */
 
-import { watch } from 'fs';
-import { existsSync } from 'fs';
-import { spawn } from 'child_process';
-import { join, relative, resolve } from 'path';
+import { watch, statSync, type FSWatcher } from 'fs';
 import { ZiitClient, type ZiitHeartbeat } from './ziit';
+
+// Bun.js path utilities
+function resolvePathBun(p: string): string {
+  if (p.startsWith('/')) return p;
+  return `${process.cwd()}/${p}`.replace(/\/+/g, '/');
+}
+
+function joinPathBun(...parts: string[]): string {
+  return parts.join('/').replace(/\/+/g, '/');
+}
+
+function relativePathBun(from: string, to: string): string {
+  const fromParts = from.split('/').filter(Boolean);
+  const toParts = to.split('/').filter(Boolean);
+  
+  let i = 0;
+  while (i < fromParts.length && i < toParts.length && fromParts[i] === toParts[i]) {
+    i++;
+  }
+  
+  const upLevels = fromParts.length - i;
+  const remainingPath = toParts.slice(i);
+  
+  return [...Array(upLevels).fill('..'), ...remainingPath].join('/') || '.';
+}
 
 // Configuration from environment variables
 const CONFIG = {
@@ -31,7 +54,7 @@ const CONFIG = {
   debounceMs: parseInt(process.env.ZIIT_DEBOUNCE_MS || '2500', 10),
   batchSize: parseInt(process.env.ZIIT_BATCH_SIZE || '20', 10),
   flushMs: parseInt(process.env.ZIIT_FLUSH_MS || '30000', 10),
-  workdir: resolve(process.env.ZIIT_WORKDIR || process.cwd()),
+  workdir: resolvePathBun(process.env.ZIIT_WORKDIR || process.cwd()),
   editor: process.env.ZIIT_EDITOR || 'github-copilot-agent',
   includeDirs: (process.env.ZIIT_INCLUDE_DIRS || 'app/app,app/scripts,app/prisma,docs').split(',').map(d => d.trim()),
   includeExts: (process.env.ZIIT_INCLUDE_EXTS || 'ts,tsx,js,jsx,py,sql,prisma,css,scss,html,md,yml,yaml,json').split(',').map(e => e.trim()),
@@ -41,7 +64,7 @@ const CONFIG = {
 };
 
 // Validate configuration on startup
-function validateConfig(): string[] {
+async function validateConfig(): Promise<string[]> {
   const errors: string[] = [];
   
   if (!CONFIG.apiKey && !CONFIG.dryRun) {
@@ -60,30 +83,38 @@ function validateConfig(): string[] {
     errors.push('ZIIT_FLUSH_MS must be between 1000 and 300000');
   }
   
-  if (!existsSync(CONFIG.workdir)) {
+  // Check if workdir exists
+  try {
+    statSync(CONFIG.workdir);
+  } catch {
     errors.push(`ZIIT_WORKDIR does not exist: ${CONFIG.workdir}`);
   }
   
   return errors;
 }
 
-// Detect project and branch from environment or git
+// Detect project and branch from environment or git (using Bun.spawn)
 async function detectProject(): Promise<string> {
   // GitHub environment variables
   if (process.env.GITHUB_REPOSITORY) {
     return process.env.GITHUB_REPOSITORY;
   }
 
-  // Fallback to git remote
-  return new Promise((resolve) => {
-    const git = spawn('git', ['remote', 'get-url', 'origin'], { cwd: CONFIG.workdir });
-    let output = '';
-    git.stdout.on('data', (data) => { output += data.toString(); });
-    git.on('close', () => {
-      const match = output.trim().match(/github\.com[:/](.+?)(?:\.git)?$/);
-      resolve(match ? match[1] : 'unknown-project');
+  // Fallback to git remote using Bun.spawn
+  try {
+    const proc = Bun.spawn(['git', 'remote', 'get-url', 'origin'], {
+      cwd: CONFIG.workdir,
+      stdout: 'pipe',
     });
-  });
+    
+    const output = await new Response(proc.stdout).text();
+    await proc.exited;
+    
+    const match = output.trim().match(/github\.com[:/](.+?)(?:\.git)?$/);
+    return match ? match[1] : 'unknown-project';
+  } catch {
+    return 'unknown-project';
+  }
 }
 
 async function detectBranch(): Promise<string | undefined> {
@@ -92,57 +123,63 @@ async function detectBranch(): Promise<string | undefined> {
     return process.env.GITHUB_REF_NAME;
   }
 
-  // Fallback to git branch
-  return new Promise((resolve) => {
-    const git = spawn('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: CONFIG.workdir });
-    let output = '';
-    git.stdout.on('data', (data) => { output += data.toString(); });
-    git.on('close', () => {
-      const branch = output.trim();
-      resolve(branch && branch !== 'HEAD' ? branch : undefined);
+  // Fallback to git branch using Bun.spawn
+  try {
+    const proc = Bun.spawn(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], {
+      cwd: CONFIG.workdir,
+      stdout: 'pipe',
     });
-  });
+    
+    const output = await new Response(proc.stdout).text();
+    await proc.exited;
+    
+    const branch = output.trim();
+    return branch && branch !== 'HEAD' ? branch : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
-// Check if files are git modified or untracked (batched for performance)
+// Check if files are git modified or untracked (batched for performance, using Bun.spawn)
 async function checkGitStatus(filePaths: string[]): Promise<Set<string>> {
   if (filePaths.length === 0) return new Set();
   
-  return new Promise((resolve) => {
-    // Use git status to check all files at once
-    const git = spawn('git', ['status', '--porcelain=v1', '--', ...filePaths], { 
+  try {
+    // Use git status to check all files at once using Bun.spawn
+    const proc = Bun.spawn(['git', 'status', '--porcelain=v1', '--', ...filePaths], {
       cwd: CONFIG.workdir,
-      maxBuffer: 1024 * 1024, // 1MB buffer for large outputs
+      stdout: 'pipe',
+      stderr: 'ignore',
     });
     
-    let output = '';
-    git.stdout.on('data', (data) => { output += data.toString(); });
-    git.on('close', (code) => {
-      if (code !== 0) {
-        resolve(new Set());
-        return;
+    const output = await new Response(proc.stdout).text();
+    await proc.exited;
+    
+    if (proc.exitCode !== 0) {
+      return new Set();
+    }
+    
+    // Parse output to extract modified files
+    const modifiedFiles = new Set<string>();
+    const lines = output.trim().split('\n').filter(l => l.trim());
+    
+    for (const line of lines) {
+      // Format: "XY filename" where X and Y are status codes
+      const match = line.match(/^.{2}\s+(.+)$/);
+      if (match) {
+        const filePath = match[1].trim();
+        // Handle renamed files (old -> new)
+        const actualPath = filePath.includes(' -> ') 
+          ? filePath.split(' -> ')[1] 
+          : filePath;
+        modifiedFiles.add(actualPath);
       }
-      
-      // Parse output to extract modified files
-      const modifiedFiles = new Set<string>();
-      const lines = output.trim().split('\n').filter(l => l.trim());
-      
-      for (const line of lines) {
-        // Format: "XY filename" where X and Y are status codes
-        const match = line.match(/^.{2}\s+(.+)$/);
-        if (match) {
-          const filePath = match[1].trim();
-          // Handle renamed files (old -> new)
-          const actualPath = filePath.includes(' -> ') 
-            ? filePath.split(' -> ')[1] 
-            : filePath;
-          modifiedFiles.add(actualPath);
-        }
-      }
-      
-      resolve(modifiedFiles);
-    });
-  });
+    }
+    
+    return modifiedFiles;
+  } catch {
+    return new Set();
+  }
 }
 
 // Get file extension
@@ -173,11 +210,11 @@ function detectLanguage(filePath: string): string {
   return languageMap[ext] || ext || 'Unknown';
 }
 
-// Normalize path to be relative to workdir
+// Normalize path to be relative to workdir (using Bun-native path utilities)
 function normalizePath(filePath: string): string {
-  const absPath = resolve(filePath);
+  const absPath = resolvePathBun(filePath);
   if (absPath.startsWith(CONFIG.workdir)) {
-    return relative(CONFIG.workdir, absPath);
+    return relativePathBun(CONFIG.workdir, absPath);
   }
   return filePath;
 }
@@ -218,6 +255,7 @@ class ZiitWatcher {
   private branch?: string;
   private isShuttingDown = false;
   private retryCount = 0;
+  private watchers: FSWatcher[] = [];
   private stats = {
     filesProcessed: 0,
     heartbeatsSent: 0,
@@ -276,6 +314,12 @@ class ZiitWatcher {
     this.isShuttingDown = true;
 
     this.log('\nShutting down...');
+
+    // Close all watchers
+    for (const watcher of this.watchers) {
+      watcher.close();
+    }
+    this.watchers = [];
 
     // Cancel timers
     if (this.flushTimer) clearTimeout(this.flushTimer);
@@ -414,28 +458,31 @@ class ZiitWatcher {
   async watch() {
     await this.init();
 
-    // Watch each include directory
+    // Watch each include directory using fs.watch (Bun-compatible)
     for (const dir of CONFIG.includeDirs) {
-      const fullPath = join(CONFIG.workdir, dir);
+      const fullPath = joinPathBun(CONFIG.workdir, dir);
       
       try {
         // Check if directory exists
-        if (!existsSync(fullPath)) {
+        try {
+          statSync(fullPath);
+        } catch {
           this.log(`Warning: Directory does not exist: ${dir}`, 'warn');
           continue;
         }
 
         this.log(`Watching directory: ${dir}`);
 
-        // Use Node.js fs.watch for filesystem monitoring
+        // Use fs.watch (Bun-compatible) for filesystem monitoring
         const watcher = watch(fullPath, { recursive: true }, (eventType, filename) => {
           if (filename) {
-            const fullFilePath = join(fullPath, filename);
+            const fullFilePath = joinPathBun(fullPath, filename);
             this.handleFileChange(fullFilePath);
           }
         });
+        
+        this.watchers.push(watcher);
 
-        // Keep the process running
         watcher.on('error', (error) => {
           this.log(`Watch error for ${dir}: ${error}`, 'error');
         });
@@ -450,15 +497,17 @@ class ZiitWatcher {
 }
 
 // Main execution
-const configErrors = validateConfig();
-if (configErrors.length > 0) {
-  console.error('[Ziit ❌] Configuration errors:');
-  configErrors.forEach(err => console.error(`  - ${err}`));
-  process.exit(1);
-}
+(async () => {
+  const configErrors = await validateConfig();
+  if (configErrors.length > 0) {
+    console.error('[Ziit ❌] Configuration errors:');
+    configErrors.forEach(err => console.error(`  - ${err}`));
+    process.exit(1);
+  }
 
-const watcher = new ZiitWatcher();
-watcher.watch().catch((error) => {
+  const watcher = new ZiitWatcher();
+  await watcher.watch();
+})().catch((error) => {
   console.error('[Ziit ❌] Fatal error:', error);
   process.exit(1);
 });

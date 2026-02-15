@@ -4,11 +4,11 @@
  * 
  * Diagnostic script to verify Ziit daemon setup and configuration.
  * Useful for debugging why the daemon might not be working.
+ * 
+ * Uses Bun.js native APIs exclusively.
  */
 
-import { existsSync } from 'fs';
-import { spawn } from 'child_process';
-import { resolve } from 'path';
+import { statSync } from 'fs';
 
 interface CheckResult {
   name: string;
@@ -22,13 +22,25 @@ function check(name: string, status: 'pass' | 'fail' | 'warn', message: string) 
   results.push({ name, status, message });
 }
 
+function resolvePathBun(p: string): string {
+  if (p.startsWith('/')) return p;
+  return `${process.cwd()}/${p}`.replace(/\/+/g, '/');
+}
+
 async function runGitCommand(args: string[]): Promise<{ stdout: string; code: number }> {
-  return new Promise((resolve) => {
-    const git = spawn('git', args);
-    let stdout = '';
-    git.stdout.on('data', (data) => { stdout += data.toString(); });
-    git.on('close', (code) => resolve({ stdout: stdout.trim(), code: code || 0 }));
-  });
+  try {
+    const proc = Bun.spawn(['git', ...args], {
+      stdout: 'pipe',
+      stderr: 'ignore',
+    });
+    
+    const stdout = await new Response(proc.stdout).text();
+    await proc.exited;
+    
+    return { stdout: stdout.trim(), code: proc.exitCode || 0 };
+  } catch {
+    return { stdout: '', code: 1 };
+  }
 }
 
 async function main() {
@@ -43,10 +55,11 @@ async function main() {
   }
 
   // Check 2: Working directory
-  const workdir = resolve(process.env.ZIIT_WORKDIR || process.cwd());
-  if (existsSync(workdir)) {
+  const workdir = resolvePathBun(process.env.ZIIT_WORKDIR || process.cwd());
+  try {
+    statSync(workdir);
     check('Working Directory', 'pass', workdir);
-  } else {
+  } catch {
     check('Working Directory', 'fail', `Does not exist: ${workdir}`);
   }
 
@@ -62,8 +75,12 @@ async function main() {
   const includeDirs = (process.env.ZIIT_INCLUDE_DIRS || 'app/app,app/scripts,app/prisma,docs').split(',');
   let dirsFound = 0;
   for (const dir of includeDirs) {
-    if (existsSync(resolve(workdir, dir.trim()))) {
+    const dirPath = `${workdir}/${dir.trim()}`;
+    try {
+      statSync(dirPath);
       dirsFound++;
+    } catch {
+      // Directory doesn't exist
     }
   }
   
