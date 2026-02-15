@@ -164,6 +164,32 @@ For detailed instructions on building native apps, see the Mobile Apps section i
 
 For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
+## 🤝 Agent-to-Agent (A2A) Integration
+
+Twin Style now exposes its AI capabilities as A2A servers, making them discoverable and interoperable with other agent frameworks:
+
+- **Agent Discovery**: Exposes capabilities via `/.well-known/agent-card.json`
+- **Sequential Chaining**: Chain multiple agents together using ADK orchestrator
+- **MCP Integration**: Connect to external data sources via Model Context Protocol
+- **Framework Support**: Works with Google ADK, LangGraph, Microsoft Copilot Studio, and more
+
+**Quick Start:**
+```bash
+# Discover agent capabilities
+curl http://localhost:3000/.well-known/agent-card.json
+
+# Execute a skill
+curl -X POST http://localhost:3000/api/a2a/execute \
+  -H "Content-Type: application/json" \
+  -d '{"taskId": "test", "skillName": "infer_item_attributes", "input": {...}}'
+```
+
+**Learn More:**
+- [`app/A2A_README.md`](app/A2A_README.md) - Quick start guide
+- [`docs/developer/A2A_INTEGRATION.md`](docs/developer/A2A_INTEGRATION.md) - Complete documentation
+- [`app/test-a2a.ts`](app/test-a2a.ts) - Test suite
+- [`app/examples-a2a.ts`](app/examples-a2a.ts) - Usage examples
+
 ## 🎨 Design Principles
 
 ### Material Design 3 Expressive
