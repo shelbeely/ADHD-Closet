@@ -58,6 +58,7 @@ export class ZiitClient {
 
   /**
    * Send a batch of heartbeats to Ziit
+   * Falls back to sending individual heartbeats if batch endpoint is unavailable
    */
   async batch(data: ZiitHeartbeat[]): Promise<boolean> {
     if (data.length === 0) {
@@ -73,6 +74,17 @@ export class ZiitClient {
         },
         body: JSON.stringify({ heartbeats: data }),
       });
+
+      // If batch endpoint returns 400, fall back to sending individual heartbeats
+      if (response.status === 400) {
+        console.log(`[Ziit] Batch endpoint unavailable, sending ${data.length} heartbeat(s) individually...`);
+        let successCount = 0;
+        for (const heartbeat of data) {
+          const success = await this.heartbeat(heartbeat);
+          if (success) successCount++;
+        }
+        return successCount === data.length;
+      }
 
       if (!response.ok) {
         const text = await response.text().catch(() => 'Unknown error');
