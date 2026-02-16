@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 10,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 10,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ],
+    "errorOccurred": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/ziit-heartbeat.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "ZIIT_API_KEY": "${ZIIT_API_KEY}",
+          "ZIIT_BASE_URL": "${ZIIT_BASE_URL:-https://ziit.app}",
+          "ZIIT_EDITOR": "${ZIIT_EDITOR:-github-copilot-agent}",
+          "ZIIT_VERBOSE": "${ZIIT_VERBOSE:-false}"
+        }
+      }
+    ]
+  }
+}
