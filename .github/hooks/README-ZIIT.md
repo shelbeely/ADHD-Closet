@@ -79,14 +79,16 @@ Hooks receive environment variables defined in `hooks.json`:
 - **`ZIIT_EDITOR`** (optional): Editor identifier (default: `github-copilot-agent`)
 - **`ZIIT_VERBOSE`** (optional): Enable verbose logging (default: `false`)
 
-### GitHub Repository Secrets
+### GitHub Copilot Environment Secrets
 
-The `ZIIT_API_KEY` must be stored as a repository secret:
+The `ZIIT_API_KEY` must be stored as a **Copilot environment secret** (not a Codespaces secret):
 
-1. Go to **Settings** → **Secrets and variables** → **Codespaces**
+1. Go to **Settings** → **Secrets and variables** → **Copilot**
 2. Click **New repository secret**
 3. Name: `ZIIT_API_KEY`
 4. Value: Your API key from Ziit.app
+
+**Important:** Copilot environment secrets are different from Codespaces secrets. Make sure to configure the secret in the **Copilot** section, not the Codespaces section, for the hooks to receive the API key during Copilot coding agent sessions.
 
 ## Testing Hooks Locally
 

@@ -422,11 +422,14 @@ Stored facts in repository memory:
 
 1. **Merge PR** - Merge `copilot/add-copilot-hook-system` to main
 2. **Verify hooks.json** - Ensure `.github/hooks/hooks.json` is present
-3. **Set environment variables** (optional):
+3. **Configure secrets** (for Ziit tracking):
+   - Go to **Settings** → **Secrets and variables** → **Copilot**
+   - Add `ZIIT_API_KEY` secret (get your API key from https://ziit.app/settings)
+   - **Note:** Use Copilot environment secrets, NOT Codespaces secrets
+4. **Set optional environment variables**:
    - `HOOK_VERBOSE=true` - Enable verbose logging
-   - `ZIIT_API_KEY` - For Ziit tracking
-4. **Test in Copilot session** - Hooks run automatically
-5. **Monitor telemetry** - Check `.github/telemetry/` for session data
+5. **Test in Copilot session** - Hooks run automatically
+6. **Monitor telemetry** - Check `.github/telemetry/` for session data
 
 ### Post-Deployment
 
@@ -513,7 +516,7 @@ Stored facts in repository memory:
 - Verify hooks exit 0 (never block)
 
 **Ziit heartbeats failing:**
-- Verify `ZIIT_API_KEY` is set
+- Verify `ZIIT_API_KEY` is set in Copilot environment secrets (Settings → Secrets → Copilot, NOT Codespaces)
 - Check timestamp format (should be ISO 8601)
 - Test with: `echo '{"timestamp":1708059600000,"cwd":".","source":"new"}' | node .github/hooks/ziit-heartbeat.js`
 
