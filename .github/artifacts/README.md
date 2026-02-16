@@ -13,16 +13,28 @@ Development artifacts serve as historical records of:
 
 ## Contents
 
-- `COPILOT_INSTRUCTIONS_UPDATE.md` - Memory system integration into copilot instructions
+### Repository Organization
+- `REPOSITORY_REORGANIZATION.md` - 2026-02-16 repository structure cleanup
+- `REORGANIZATION_SUMMARY.md` - Earlier documentation reorganization
+- `DOCUMENTATION_INDEX.md` - Documentation structure planning
+
+### Documentation & Writing
 - `DOCS_DEPLOYMENT_SUMMARY.md` - GitHub Pages and Wiki deployment setup
 - `DOCS_SETUP.md` - Documentation infrastructure setup
-- `DOCUMENTATION_INDEX.md` - Documentation structure planning
-- `FINAL_CONSOLIDATION_SUMMARY.md` - Code consolidation summary
-- `MEMORY_SYSTEM_SUMMARY.md` - Repository memory system implementation
 - `MKDOCS_SETUP.md` - MkDocs configuration details
-- `REORGANIZATION_SUMMARY.md` - Documentation reorganization
 - `SCREENSHOT_CATALOG.md` - Screenshot inventory
 - `SCREENSHOT_GUIDE.md` - Screenshot documentation guidelines
+
+### Humanizer Integration (Consolidated from `.github/humanizer/`)
+- `HUMANIZER_INTEGRATION_SUMMARY.md` - Humanizer tool integration history
+- `HUMANIZER_README.md` - Original humanizer directory documentation
+- `HUMANIZER_GUIDE.md` - Simplified guide for avoiding AI writing patterns
+- `HUMANIZER_SKILL_OLD.md` - Old version of humanizer SKILL.md (superseded by `.github/skills/humanizer/SKILL.md`)
+
+### System & Configuration
+- `COPILOT_INSTRUCTIONS_UPDATE.md` - Memory system integration into copilot instructions
+- `MEMORY_SYSTEM_SUMMARY.md` - Repository memory system implementation
+- `FINAL_CONSOLIDATION_SUMMARY.md` - Code consolidation summary
 - `BUNDLE_MANIFEST.json` - Project bundle manifest
 
 ## Note

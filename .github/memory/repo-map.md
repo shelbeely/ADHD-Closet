@@ -29,27 +29,43 @@ Repository Root: /home/runner/work/ADHD-Closet/ADHD-Closet/
 
 ```
 .github/
-├── agents/              # Custom AI agent definitions (e.g., code-reviewer)
-├── artifacts/           # Development session summaries and historical documents
+├── README.md            # Guide to .github directory structure
 ├── copilot-instructions.md   # Copilot agent behavior guidelines
-├── humanizer/           # Documentation humanization tools
-├── memory/              # THIS DIRECTORY - Persistent knowledge base
-├── skills/              # Reusable AI skills (e.g., remotion-best-practices)
-└── workflows/           # GitHub Actions workflows
-    ├── build-android-apk.yml      # Android APK build
-    ├── ci-doctor.md               # Failed CI investigation (agentic workflow)
-    ├── copilot-setup-steps.yml    # Copilot environment setup
-    ├── daily-status.md            # Daily status reports (agentic workflow)
-    ├── deploy-docs.yml            # MkDocs deployment to GitHub Pages
-    ├── issue-triage.md            # Auto-label issues (agentic workflow)
-    └── pr-review.md               # Pull request review (agentic workflow)
+├── agents/              # Custom AI agent definitions (invoke directly)
+│   ├── README.md
+│   ├── humanizer.agent.md
+│   └── remotion.agent.md
+├── skills/              # Agent skills (loaded automatically by context)
+│   ├── README.md
+│   ├── humanizer/
+│   ├── remotion/
+│   └── threejs-fundamentals/
+├── workflows/           # GitHub Actions & agentic workflows
+│   ├── README.md
+│   ├── build-android-apk.yml      # Android APK build
+│   ├── copilot-setup-steps.yml    # Copilot environment setup
+│   ├── deploy-docs.yml            # MkDocs deployment to GitHub Pages
+│   ├── ci-doctor.md               # Failed CI investigation (agentic workflow)
+│   ├── daily-status.md            # Daily status reports (agentic workflow)
+│   ├── issue-triage.md            # Auto-label issues (agentic workflow)
+│   └── pr-review.md               # Pull request review (agentic workflow)
+├── artifacts/           # Development session summaries and historical documents
+│   ├── README.md
+│   └── ... (15 historical summaries, including humanizer integration docs)
+└── memory/              # THIS DIRECTORY - Persistent knowledge base
+    ├── README.md
+    └── ... (7 knowledge files)
 ```
 
 **Key Points:**
-- Agentic workflows (`.md` files) are compiled to `.lock.yml` via `gh aw compile`
+- `README.md` at root of `.github/` provides complete directory guide
+- Each subdirectory has its own README explaining purpose and contents
+- Custom agents (invoke directly) vs agent skills (auto-loaded) distinction
+- Agentic workflows (`.md` files) compiled to `.lock.yml` via `gh aw compile`
 - `copilot-setup-steps.yml` pre-configures dev environment for Copilot agents
-- `memory/` is the authoritative knowledge base for AI agents
+- `memory/` is the authoritative knowledge base for AI agents (READ FIRST)
 - `artifacts/` contains historical summaries from development sessions
+- Humanizer content consolidated: skills in `skills/humanizer/`, agent in `agents/`, historical docs in `artifacts/`
 
 ## `app/` - Main Application
 

@@ -456,12 +456,14 @@ When writing or updating documentation:
 
 ### Use Natural, Clear Language
 
-Follow the humanizer guidelines in `.github/humanizer/README.md` to avoid AI-generated writing patterns:
+Follow the humanizer guidelines to avoid AI-generated writing patterns:
 - Use direct, simple language
 - Replace "serves as" with "is", "boasts" with "has"
 - Avoid AI vocabulary: "crucial", "pivotal", "testament", "landscape" (abstract), "showcase"
 - Be specific instead of vague: cite actual sources, use concrete examples
 - Skip promotional language: "nestled", "vibrant", "stunning"
+
+See `.github/artifacts/HUMANIZER_GUIDE.md` for complete guidelines or use the `humanizer` custom agent in GitHub Copilot.
 
 ### Good Example
 ```markdown
@@ -494,7 +496,7 @@ grep -i "crucial\|pivotal\|testament\|showcase\|serves as\|boasts" your-file.md
 - **Design questions**: Reference `SPEC.md` sections 7.1-7.1.11
 - **Architecture questions**: See `ARCHITECTURE.md`
 - **Technical issues**: Check `TROUBLESHOOTING.md`
-- **Documentation guidelines**: See `.github/humanizer/README.md`
+- **Documentation guidelines**: See `.github/artifacts/HUMANIZER_GUIDE.md` or use the `humanizer` agent
 - **Need help?**: Open a GitHub Discussion
 
 Thank you for contributing! 💜
