@@ -2,6 +2,23 @@
 
 A lightweight, zero-dependency Bun.js client that tracks code file edits and sends activity heartbeats to [Ziit.app](https://ziit.app). Designed specifically for GitHub Copilot coding agent sessions.
 
+## ⚠️ Important: What This Daemon Does NOT Do
+
+**The Ziit daemon is a passive file monitoring tool. It does NOT:**
+
+- ❌ Execute Linux commands like `cd`, `ls`, `mkdir`, etc.
+- ❌ Have a command interface or shell
+- ❌ Run arbitrary user commands
+- ❌ Process or interpret command input
+
+**What it DOES do:**
+
+- ✅ Monitor filesystem changes using `fs.watch()`
+- ✅ Run specific Git commands (`git status`, `git remote`, `git rev-parse`) to verify file modifications
+- ✅ Send file change metadata to Ziit.app API
+
+This is purely a **passive monitoring daemon** that tracks when you edit code files and reports that activity. It has no command execution capabilities beyond the specific Git commands it needs for verification.
+
 ## Features
 
 - **Filesystem Monitoring**: Uses `fs.watch()` (Bun-compatible) for efficient change detection
@@ -242,12 +259,45 @@ If successful, check https://ziit.app/activity to see the heartbeat.
 - Add directories to `ZIIT_INCLUDE_DIRS`
 - Add file extensions to `ZIIT_INCLUDE_EXTS`
 
+## Frequently Asked Questions
+
+### Does the daemon recognize or execute Linux commands like 'cd'?
+
+**No.** The Ziit daemon is a passive file monitoring tool that does NOT execute user commands or have any command interface. It only:
+
+1. Monitors filesystem changes using Node.js `fs.watch()` API
+2. Runs specific Git commands internally (`git status`, `git remote get-url`, `git rev-parse`) to verify which files are modified
+3. Sends file change metadata to Ziit.app API
+
+It cannot and will not execute arbitrary Linux commands, shell scripts, or interpret user command input. It's purely for tracking when you edit code files.
+
+### What commands does it actually run?
+
+The daemon internally runs only these three Git commands via `Bun.spawn()`:
+
+- `git remote get-url origin` - Once at startup to detect project name
+- `git rev-parse --abbrev-ref HEAD` - Once at startup to detect current branch  
+- `git status --porcelain=v1 -- <files>` - Periodically to verify which files are modified
+
+These commands are hard-coded in the daemon implementation and cannot be changed via configuration.
+
+### Can I add custom command execution?
+
+No. The daemon architecture is specifically designed as a passive monitoring tool. Adding command execution would:
+
+- Introduce security risks
+- Violate the single-responsibility principle
+- Conflict with its purpose as a lightweight heartbeat tracker
+
+If you need to execute commands based on file changes, use a dedicated tool like `nodemon`, `watchman`, or custom shell scripts with `inotifywait`.
+
 ## Security Notes
 
 - **Never commit `ZIIT_API_KEY`** to version control
 - Store as a GitHub secret (Codespaces secrets for Copilot agents)
 - The daemon only reads files to check git status—it does not upload file contents
 - Network requests are sent only to `ZIIT_BASE_URL` (default: `https://ziit.app`)
+- The daemon does not execute user commands or have a command interface (security by design)
 
 ## License
 
