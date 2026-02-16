@@ -34,7 +34,7 @@ export class CommandMonitor {
   private lastFileSize: number = 0;
   private lastReadPosition: number = 0;
   private pendingCommands: Map<string, number> = new Map();
-  private debounceTimer: Timer | null = null;
+  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private watcher: any = null;
 
   constructor(config: CommandMonitorConfig) {
@@ -90,7 +90,6 @@ export class CommandMonitor {
 
       // Read only the new content
       const content = readFileSync(this.config.historyFile, 'utf-8');
-      const lines = content.split('\n');
       
       // Calculate which lines are new based on file size
       const newContent = content.slice(this.lastReadPosition);

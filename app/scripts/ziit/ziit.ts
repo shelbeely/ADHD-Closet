@@ -66,7 +66,7 @@ export class ZiitClient {
     }
 
     try {
-      // Official Ziit API expects an array directly, not wrapped in { heartbeats: [...] }
+      // Ziit batch API expects array directly, not wrapped object
       const response = await fetch(`${this.baseUrl}/api/external/batch`, {
         method: 'POST',
         headers: {

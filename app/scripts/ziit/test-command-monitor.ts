@@ -10,7 +10,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 
 // Create a temporary history file
-const testHistoryFile = join(tmpdir(), `test-history-${Date.now()}.txt`);
+const testHistoryFile = join(tmpdir(), `ziit-test-history-${Date.now()}.txt`);
 writeFileSync(testHistoryFile, '# Initial history\n');
 
 console.log('🧪 Testing Command Monitoring');

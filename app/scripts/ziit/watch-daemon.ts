@@ -319,7 +319,7 @@ class ZiitWatcher {
       });
 
       await this.commandMonitor.start((events) => this.handleCommandEvents(events));
-      this.log('Command monitoring enabled 🎯');
+      this.log('🎯 Command monitoring enabled');
     }
 
     // Start flush timer

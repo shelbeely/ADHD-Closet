@@ -209,11 +209,11 @@ When `ZIIT_WATCH_COMMANDS=true`:
 The client sends heartbeats to:
 
 - **Single**: `POST https://ziit.app/api/external/heartbeat` ✅ Working
-- **Batch**: `POST https://ziit.app/api/external/batch` ✅ Fixed (now sends array directly per official API spec)
+- **Batch**: `POST https://ziit.app/api/external/batch` ✅ Working (fixed to match official spec)
 
 Authorization: `Bearer <ZIIT_API_KEY>`
 
-**Note**: The batch endpoint now correctly sends an array of heartbeats directly (not wrapped in `{ heartbeats: [...] }`), matching the official Ziit API specification. The client automatically falls back to sending heartbeats individually if the batch endpoint returns errors.
+**Note**: The batch endpoint now correctly sends an array of heartbeats directly (not wrapped in `{ heartbeats: [...] }`), matching the official Ziit API specification at https://docs.ziit.app/api/batch. The client includes fallback logic to send heartbeats individually if the batch endpoint is unavailable, ensuring reliability.
 
 **Heartbeat payload**:
 ```json
