@@ -79,18 +79,21 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
 
   return (
     <div className="flex flex-col gap-8 p-8 max-w-5xl mx-auto">
-      {items.map((item) => {
+      {items.map((item, index) => {
         const { frontImage, backImage, hasBothSides } = getItemImages(item);
         const primaryColor = getPrimaryColor(item.colorPalette);
+        
+        // Stagger animation class for first 8 items
+        const staggerClass = index < 8 ? `md3-stagger-${Math.min(index + 1, 8)}` : '';
 
         return (
           <Link
             key={item.id}
             href={`/items/${item.id}`}
-            className="group cursor-pointer block"
+            className={`group cursor-pointer block md3-animate-list-item ${staggerClass}`}
           >
-            {/* Material Design 3 Elevated Card with state layer */}
-            <div className="md3-card-elevated md3-state-layer shadow-elevation-1 hover:shadow-elevation-3"
+            {/* Material Design 3 Elevated Card with state layer and ripple */}
+            <div className="md3-card-elevated md3-state-layer md3-ripple md3-surface-tint-1 shadow-elevation-1 hover:shadow-elevation-3"
               style={{
                 backgroundColor: 'var(--md-sys-color-surface-container-low)',
                 borderRadius: 'var(--md-sys-shape-corner-extra-large)',

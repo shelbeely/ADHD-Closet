@@ -36,7 +36,7 @@ export default function CategoryTabs({
         <div className="flex gap-2 p-4 min-w-max">
           <button
             onClick={() => onCategoryChange(null)}
-            className={`md3-chip md3-state-layer px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all min-h-[48px] ${
+            className={`md3-chip md3-state-layer md3-ripple px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all min-h-[48px] ${
               selectedCategory === null
                 ? 'shadow-elevation-1'
                 : ''
@@ -56,7 +56,7 @@ export default function CategoryTabs({
             <button
               key={category.value}
               onClick={() => onCategoryChange(category.value)}
-              className={`md3-chip md3-state-layer px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all flex items-center gap-2 min-h-[48px] ${
+              className={`md3-chip md3-state-layer md3-ripple px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all flex items-center gap-2 min-h-[48px] ${
                 selectedCategory === category.value
                   ? 'shadow-elevation-1'
                   : ''

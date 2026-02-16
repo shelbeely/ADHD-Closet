@@ -724,3 +724,607 @@ body {
   }
 }
 
+/* ============================================
+   Material Design 3 Expressive Animations
+   Complete Animation System
+   ============================================ */
+
+/* Container Transform Animations */
+@keyframes md3-container-transform-expand {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: var(--md-sys-shape-corner-large);
+  }
+}
+
+@keyframes md3-container-transform-collapse {
+  from {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: var(--md-sys-shape-corner-large);
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+  }
+}
+
+/* Shared Element Transitions */
+@keyframes md3-shared-element-enter {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-shared-element-exit {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Page Transitions - Forward Navigation */
+@keyframes md3-page-enter-forward {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-page-exit-forward {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+}
+
+/* Page Transitions - Backward Navigation */
+@keyframes md3-page-enter-backward {
+  from {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-page-exit-backward {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Hierarchical Transitions - Upward */
+@keyframes md3-hierarchy-enter-up {
+  from {
+    transform: translateY(100px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-hierarchy-exit-up {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100px) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* Dialog Animations */
+@keyframes md3-dialog-enter {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-dialog-exit {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes md3-dialog-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom Sheet Animations */
+@keyframes md3-bottom-sheet-enter {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes md3-bottom-sheet-exit {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* FAB Animations */
+@keyframes md3-fab-enter {
+  from {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-fab-exit {
+  from {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes md3-fab-morph-to-sheet {
+  from {
+    transform: scale(1);
+    border-radius: var(--md-sys-shape-corner-large);
+    width: 56px;
+    height: 56px;
+  }
+  to {
+    transform: scale(10);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* List Item Animations - Staggered Entry */
+@keyframes md3-list-item-enter {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-list-item-exit {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* Menu Cascade Animation */
+@keyframes md3-menu-enter {
+  from {
+    transform: scale(0.9) translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-menu-exit {
+  from {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9) translateY(-8px);
+    opacity: 0;
+  }
+}
+
+/* Tooltip Animation */
+@keyframes md3-tooltip-enter {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Snackbar Animation */
+@keyframes md3-snackbar-enter {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-snackbar-exit {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Switch Toggle Animation */
+@keyframes md3-switch-thumb-on {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes md3-switch-thumb-off {
+  from {
+    transform: translateX(20px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Checkbox Check Animation */
+@keyframes md3-checkbox-check {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Radio Select Animation */
+@keyframes md3-radio-dot {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Tab Indicator Slide */
+@keyframes md3-tab-indicator-slide {
+  from {
+    transform: translateX(var(--md3-tab-from, 0));
+  }
+  to {
+    transform: translateX(var(--md3-tab-to, 0));
+  }
+}
+
+/* Elevation Transition */
+@keyframes md3-elevation-rise {
+  from {
+    box-shadow: var(--shadow-elevation-1);
+    transform: translateY(0);
+  }
+  to {
+    box-shadow: var(--shadow-elevation-3);
+    transform: translateY(-4px);
+  }
+}
+
+/* Fade In/Out */
+@keyframes md3-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes md3-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Slide Fade Combo */
+@keyframes md3-slide-fade-in-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-slide-fade-out-down {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   Animation Utility Classes
+   ============================================ */
+
+/* Container Transform */
+.md3-animate-container-expand {
+  animation: md3-container-transform-expand var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-container-collapse {
+  animation: md3-container-transform-collapse var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Shared Element */
+.md3-animate-shared-enter {
+  animation: md3-shared-element-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-shared-exit {
+  animation: md3-shared-element-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Page Transitions */
+.md3-animate-page-enter-forward {
+  animation: md3-page-enter-forward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-page-exit-forward {
+  animation: md3-page-exit-forward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+.md3-animate-page-enter-backward {
+  animation: md3-page-enter-backward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-page-exit-backward {
+  animation: md3-page-exit-backward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Dialog */
+.md3-animate-dialog-enter {
+  animation: md3-dialog-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-dialog-exit {
+  animation: md3-dialog-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+.md3-animate-dialog-backdrop {
+  animation: md3-dialog-backdrop-enter var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Bottom Sheet */
+.md3-animate-bottom-sheet-enter {
+  animation: md3-bottom-sheet-enter var(--md-sys-motion-duration-long1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-bottom-sheet-exit {
+  animation: md3-bottom-sheet-exit var(--md-sys-motion-duration-medium3) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* FAB */
+.md3-animate-fab-enter {
+  animation: md3-fab-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-fab-exit {
+  animation: md3-fab-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* List Items with Stagger */
+.md3-animate-list-item {
+  animation: md3-list-item-enter var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+/* Stagger delay utilities */
+.md3-stagger-1 { animation-delay: 50ms; }
+.md3-stagger-2 { animation-delay: 100ms; }
+.md3-stagger-3 { animation-delay: 150ms; }
+.md3-stagger-4 { animation-delay: 200ms; }
+.md3-stagger-5 { animation-delay: 250ms; }
+.md3-stagger-6 { animation-delay: 300ms; }
+.md3-stagger-7 { animation-delay: 350ms; }
+.md3-stagger-8 { animation-delay: 400ms; }
+
+/* Menu */
+.md3-animate-menu-enter {
+  animation: md3-menu-enter var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-menu-exit {
+  animation: md3-menu-exit var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Tooltip */
+.md3-animate-tooltip {
+  animation: md3-tooltip-enter var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Snackbar */
+.md3-animate-snackbar-enter {
+  animation: md3-snackbar-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-snackbar-exit {
+  animation: md3-snackbar-exit var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Fade utilities */
+.md3-animate-fade-in {
+  animation: md3-fade-in var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+.md3-animate-fade-out {
+  animation: md3-fade-out var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Slide Fade utilities */
+.md3-animate-slide-fade-in-up {
+  animation: md3-slide-fade-in-up var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-slide-fade-out-down {
+  animation: md3-slide-fade-out-down var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* ============================================
+   Performance Optimizations
+   ============================================ */
+
+/* Will-change hints for elements about to animate */
+.md3-will-animate {
+  will-change: transform, opacity;
+}
+
+.md3-will-animate-transform {
+  will-change: transform;
+}
+
+.md3-will-animate-opacity {
+  will-change: opacity;
+}
+
+/* Remove will-change after animation */
+.md3-animated {
+  will-change: auto;
+}
+
+/* ============================================
+   Reduced Motion Overrides
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all expressive animations */
+  .md3-animate-container-expand,
+  .md3-animate-container-collapse,
+  .md3-animate-shared-enter,
+  .md3-animate-shared-exit,
+  .md3-animate-page-enter-forward,
+  .md3-animate-page-exit-forward,
+  .md3-animate-page-enter-backward,
+  .md3-animate-page-exit-backward,
+  .md3-animate-dialog-enter,
+  .md3-animate-dialog-exit,
+  .md3-animate-bottom-sheet-enter,
+  .md3-animate-bottom-sheet-exit,
+  .md3-animate-fab-enter,
+  .md3-animate-fab-exit,
+  .md3-animate-list-item,
+  .md3-animate-menu-enter,
+  .md3-animate-menu-exit,
+  .md3-animate-tooltip,
+  .md3-animate-snackbar-enter,
+  .md3-animate-snackbar-exit,
+  .md3-animate-slide-fade-in-up,
+  .md3-animate-slide-fade-out-down {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Keep fade animations but instant */
+  .md3-animate-fade-in,
+  .md3-animate-fade-out,
+  .md3-animate-dialog-backdrop {
+    animation-duration: 0.01ms !important;
+  }
+  
+  /* Disable stagger delays */
+  .md3-stagger-1,
+  .md3-stagger-2,
+  .md3-stagger-3,
+  .md3-stagger-4,
+  .md3-stagger-5,
+  .md3-stagger-6,
+  .md3-stagger-7,
+  .md3-stagger-8 {
+    animation-delay: 0ms !important;
+  }
+}
+

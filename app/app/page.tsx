@@ -274,7 +274,7 @@ export default function Home() {
               </p>
               <button
                 onClick={() => window.location.href = '/items/new'}
-                className="md3-button-filled md3-state-layer"
+                className="md3-button-filled md3-state-layer md3-ripple"
               >
                 Add your first item
               </button>
@@ -292,7 +292,7 @@ export default function Home() {
               </p>
               <button
                 onClick={() => setSelectedCategory(null)}
-                className="md3-button-tonal md3-state-layer"
+                className="md3-button-tonal md3-state-layer md3-ripple"
               >
                 View all items
               </button>
@@ -332,7 +332,7 @@ export default function Home() {
           {/* 3D Closet Rail Link */}
           <button
             onClick={() => router.push('/closet-rail')}
-            className="md3-button-text md3-state-layer"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="View your closet in 3D"
           >
             <span>🪝</span>
@@ -342,7 +342,7 @@ export default function Home() {
           {/* Outfit Generator Link */}
           <button
             onClick={() => router.push('/outfits/generate')}
-            className="md3-button-text md3-state-layer"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Generate outfits"
           >
             <span>✨</span>
@@ -352,7 +352,7 @@ export default function Home() {
           {/* Guide Link */}
           <button
             onClick={() => router.push('/guide')}
-            className="md3-button-text md3-state-layer"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Fit & Proportion Guide"
           >
             <span>📖</span>
@@ -362,7 +362,7 @@ export default function Home() {
           {/* Settings Link */}
           <button
             onClick={() => router.push('/settings')}
-            className="md3-button-text md3-state-layer"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Export & Import"
           >
             <span>⚙️</span>
@@ -373,7 +373,7 @@ export default function Home() {
           <div className="flex rounded-full p-1" style={{ backgroundColor: 'var(--md-sys-color-surface-variant)' }}>
             <button
               onClick={() => setDesktopView('table')}
-              className={`md3-state-layer px-4 py-2 rounded-full text-label-medium transition-all ${
+              className={`md3-state-layer md3-ripple px-4 py-2 rounded-full text-label-medium transition-all ${
                 desktopView === 'table'
                   ? 'shadow-elevation-1'
                   : ''
@@ -391,7 +391,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setDesktopView('grid')}
-              className={`md3-state-layer px-4 py-2 rounded-full text-label-medium transition-all ${
+              className={`md3-state-layer md3-ripple px-4 py-2 rounded-full text-label-medium transition-all ${
                 desktopView === 'grid'
                   ? 'shadow-elevation-1'
                   : ''
@@ -411,7 +411,7 @@ export default function Home() {
 
           <button
             onClick={() => router.push('/items/new')}
-            className="md3-button-filled md3-state-layer"
+            className="md3-button-filled md3-state-layer md3-ripple"
           >
             Add Item
           </button>
