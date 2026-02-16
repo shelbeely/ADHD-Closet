@@ -147,7 +147,7 @@ Playwright MCP provides browser automation capabilities for testing and validati
 
 **ALWAYS search for relevant skills before implementing new features. Skills are pre-built, tested capabilities that save time and ensure best practices.**
 
-Skills.sh provides a registry of reusable agent skills from the community. The coding agent environment has skills CLI installed and ready to use.
+Skills.sh provides a registry of reusable agent skills from the community. The coding agent environment has Node.js 22 and the **find-skills** capability installed, which teaches agents skill discovery patterns.
 
 **Skill-First Development Policy:**
 
@@ -156,63 +156,96 @@ Skills.sh provides a registry of reusable agent skills from the community. The c
 3. **Install dynamically**: Skills can be installed on-demand during development
 4. **Treat as capabilities**: Installed skills extend the agent's abilities
 
+**When to search for skills (from find-skills capability):**
+
+Search when the user:
+- Asks "how do I do X" where X might be a common task
+- Says "find a skill for X" or "is there a skill for X"
+- Asks "can you do X" where X is a specialized capability
+- Wants to search for tools, templates, or workflows
+- Mentions they wish they had help with a specific domain (design, testing, deployment)
+
 **How to discover skills:**
 
 ```bash
-# Search the registry for relevant skills
-npx skills find <query>
+# Interactive search (fzf-style fuzzy finder)
+npx skills find
 
-# Examples:
-npx skills find "testing"
+# Search by keyword
+npx skills find "react testing"
 npx skills find "API documentation"
 npx skills find "database migration"
-npx skills find "React components"
+npx skills find "pr review"
+
+# Example output shows:
+# Install with npx skills add <owner/repo@skill>
+#
+# vercel-labs/agent-skills@typescript-best-practices
+# https://skills.sh/vercel-labs/agent-skills/typescript-best-practices
 ```
 
-**How to use skills:**
+**How to install and use skills:**
 
 ```bash
-# Install a skill from the registry
-npx skills add <skill-path>
+# Install a specific skill using @syntax
+npx skills add <owner/repo@skill>
 
-# Example:
-npx skills add vercel-labs/skills/find-skills
-npx skills add anthropics/skills/testing
+# Examples:
+npx skills add vercel-labs/agent-skills@frontend-design
+npx skills add vercel-labs/agent-skills@vercel-react-best-practices
+
+# Non-interactive installation (CI/CD friendly)
+npx skills add vercel-labs/agent-skills@frontend-design -y
+
+# Install globally (user-level)
+npx skills add vercel-labs/agent-skills@frontend-design -g -y
+
+# Install to specific agents
+npx skills add vercel-labs/agent-skills -a claude-code -a cursor
+
+# Install all skills from a repo
+npx skills add vercel-labs/agent-skills --all
+
+# List available skills without installing
+npx skills add vercel-labs/agent-skills --list
 ```
 
-**When to search for skills:**
+**Common skill categories to search:**
 
-- Before implementing testing infrastructure → `npx skills find "testing"`
-- Before writing API documentation → `npx skills find "API docs"`
-- Before creating build scripts → `npx skills find "build automation"`
-- Before implementing CI/CD → `npx skills find "deployment"`
-- Before adding monitoring → `npx skills find "observability"`
-- Before implementing auth → `npx skills find "authentication"`
+- **Web Development**: react, nextjs, typescript, css, tailwind
+- **Testing**: testing, jest, playwright, e2e
+- **DevOps**: deploy, docker, kubernetes, ci-cd
+- **Documentation**: docs, readme, changelog, api-docs
+- **Code Quality**: review, lint, refactor, best-practices
+- **Design**: ui, ux, design-system, accessibility
+- **Productivity**: workflow, automation, git
 
 **Skill locations:**
 
 This repository uses both local skills and registry skills:
 
-- **Local skills**: `.github/skills/` - Project-specific skills (humanizer, remotion, threejs)
-- **Registry skills**: Installed via `npx skills add` - Community skills from skills.sh
+- **Local skills**: `.github/skills/` - Project-specific skills (humanizer, remotion, threejs, **find-skills**)
+- **Registry skills**: Installed via `npx skills add` - Community skills from https://skills.sh
 - **Custom agents**: `.github/agents/` - Specialized agents you explicitly invoke
 
 **Check both locations** - Local skills are automatically available, registry skills can be installed on-demand.
 
-**Examples of when to use skills automatically:**
+**Present skills to users:**
 
-- Implementing tests → Search for testing skills
-- Setting up CI/CD → Search for deployment skills
-- Adding documentation → Search for documentation skills
-- Writing scripts → Search for automation skills
+When you find relevant skills, present them with:
+1. The skill name and what it does
+2. The install command they can run
+3. A link to learn more at skills.sh
 
 **Usage Guidelines:**
 
 - Always search the registry before writing significant new code
-- Install skills that match your needs rather than reinventing
-- Skills are non-interactive in CI/CD environments
+- Use specific keywords: "react testing" is better than just "testing"
+- Try alternative terms if first search doesn't work
+- Use `-y` flag for non-interactive installations in CI/CD
 - Skills integrate with the existing tools and MCP servers
 - Update `.github/skills/README.md` if you install useful registry skills for the project
+- Browse the catalog at https://skills.sh
 
 ## Tech Stack
 

@@ -61,16 +61,19 @@ jobs:
       # and persists across all Copilot sessions. Schema updates should be
       # done via `prisma migrate dev` locally and committed to version control.
 
-      - name: Install skills CLI and base skills
+      - name: Install skills CLI and find-skills capability
         run: |
-          echo "Installing skills.sh CLI and base skills..."
-          # Install find-skills capability non-interactively
-          yes "" | npx --yes skills add vercel-labs/skills/find-skills || true
-          echo "Skills CLI installed successfully"
+          echo "Installing skills.sh CLI and find-skills skill..."
+          # Install the find-skills skill which teaches agents how to discover and use skills
+          # This is an agent instruction set, not the CLI itself
+          npx --yes skills add vercel-labs/skills/find-skills -y || true
+          echo "Skills CLI and find-skills capability available"
           echo "### Skills.sh Integration" >> $GITHUB_STEP_SUMMARY
-          echo "- Status: ✅ Installed" >> $GITHUB_STEP_SUMMARY
-          echo "- Base skill: \`vercel-labs/skills/find-skills\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: ✅ Available" >> $GITHUB_STEP_SUMMARY
+          echo "- CLI: \`npx skills\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Find-skills skill: Teaches agents skill discovery patterns" >> $GITHUB_STEP_SUMMARY
           echo "- Usage: \`npx skills find <query>\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Registry: https://skills.sh" >> $GITHUB_STEP_SUMMARY
 
       - name: Start Ziit heartbeat daemon
         working-directory: ./app
