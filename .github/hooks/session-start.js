@@ -14,8 +14,8 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 // Load utilities
-const { detectRuntime } = require('../hooks/runtime-detector');
-const { getSessionId, initSession, addEvent } = require('../hooks/telemetry');
+const { detectRuntime } = require('../../scripts/hooks/runtime-detector');
+const { getSessionId, initSession, addEvent } = require('../../scripts/hooks/telemetry');
 
 const REPO_ROOT = path.join(__dirname, '../..');
 const APP_DIR = path.join(REPO_ROOT, 'app');
