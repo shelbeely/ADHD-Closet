@@ -6,6 +6,81 @@ This directory contains Agent Skills for GitHub Copilot, following the [official
 
 Agent Skills are folders of instructions, scripts, and resources that Copilot can load when relevant to improve its performance in specialized tasks. Agent Skills is an [open standard](https://github.com/agentskills/agentskills), used by a range of different agents.
 
+## Skills.sh Integration
+
+This repository integrates with [skills.sh](https://skills.sh) — a registry of reusable agent skills from the community. The coding agent environment has the skills CLI pre-installed.
+
+### Two Types of Skills
+
+**1. Local Skills (This Directory)**
+- Project-specific skills stored in `.github/skills/`
+- Automatically available to all agents
+- Maintained as part of the repository
+- Examples: humanizer, remotion, threejs-fundamentals
+
+**2. Registry Skills (skills.sh)**
+- Community skills from https://skills.sh
+- Installed on-demand via `npx skills add <skill-path>`
+- Extend agent capabilities dynamically
+- Examples: testing frameworks, deployment scripts, documentation tools
+
+### How Agents Should Use Skills
+
+**Priority Order:**
+1. **Check local skills first** - Browse `.github/skills/` for project-specific capabilities
+2. **Search registry** - Run `npx skills find <query>` to discover community skills
+3. **Install if useful** - Add registry skills that match your needs
+4. **Use the skill** - Follow the skill's instructions and examples
+
+### Discovering Registry Skills
+
+Search the skills.sh registry before implementing new features:
+
+```bash
+# Search for relevant skills
+npx skills find "testing"
+npx skills find "API documentation"
+npx skills find "database migration"
+npx skills find "React components"
+npx skills find "CI/CD automation"
+```
+
+### Installing Registry Skills
+
+Install skills from the registry when they match your needs:
+
+```bash
+# Install a skill
+npx skills add <skill-path>
+
+# Example: Install testing utilities
+npx skills add anthropics/skills/testing
+
+# Example: Already installed - find-skills capability
+# npx skills add vercel-labs/skills/find-skills
+```
+
+**Note:** The `find-skills` capability is pre-installed in the Copilot environment (see `.github/workflows/copilot-setup-steps.yml`).
+
+### When to Search for Skills
+
+Before writing significant new code, search for relevant skills:
+
+- Implementing tests → `npx skills find "testing"`
+- Writing API docs → `npx skills find "API documentation"`
+- Creating build scripts → `npx skills find "build automation"`
+- Adding CI/CD → `npx skills find "deployment"`
+- Setting up monitoring → `npx skills find "observability"`
+- Implementing auth → `npx skills find "authentication"`
+
+### Skill-First Development
+
+Follow this workflow:
+1. **Search first** - Check local skills and registry before coding
+2. **Reuse existing** - Prefer tested skills over custom implementations
+3. **Install dynamically** - Add registry skills during development
+4. **Document useful finds** - Update this README with helpful registry skills
+
 ## Agent Skills vs Custom Agents
 
 This repository uses both concepts, which serve different purposes:
@@ -69,6 +144,7 @@ To create a new skill:
 
 ## Related Resources
 
+- [Skills.sh](https://skills.sh) - Registry of reusable agent skills
 - [GitHub Copilot Agent Skills Documentation](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) - About agent skills
 - [GitHub Custom Agents Documentation](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) - Create custom agents
 - [Agent Skills Open Standard](https://github.com/agentskills/agentskills)
@@ -76,6 +152,27 @@ To create a new skill:
 - [CloudAI-X Three.js Skills](https://github.com/CloudAI-X/threejs-skills) - Three.js skills for Claude Code
 - [Anthropic Skills Repository](https://github.com/anthropics/skills)
 - [GitHub Awesome Copilot Collection](https://github.com/github/awesome-copilot)
+
+## Useful Registry Skills
+
+This section documents useful skills discovered from the registry that have been evaluated for this project.
+
+### Pre-installed Skills
+
+- **vercel-labs/skills/find-skills** - Skill discovery capability (pre-installed in Copilot environment)
+
+### Recommended Skills to Explore
+
+When working on specific features, consider searching for these types of skills:
+
+- **Testing**: `npx skills find "testing"` - Unit tests, integration tests, E2E tests
+- **API Documentation**: `npx skills find "API docs"` - OpenAPI, Swagger, REST documentation
+- **Database**: `npx skills find "database"` - Migrations, seeding, optimization
+- **Deployment**: `npx skills find "deployment"` - CI/CD, Docker, cloud platforms
+- **Security**: `npx skills find "security"` - Authentication, authorization, vulnerability scanning
+- **Performance**: `npx skills find "performance"` - Optimization, profiling, monitoring
+
+**Note:** This section can be expanded as useful skills are discovered and validated for the project.
 
 ## Note on Directory Structure
 

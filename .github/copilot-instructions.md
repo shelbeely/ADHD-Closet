@@ -143,6 +143,77 @@ Playwright MCP provides browser automation capabilities for testing and validati
 
 **Important:** The dev server must be running (`npm run dev` or `bun dev`) before taking screenshots. Start it first if needed.
 
+### Skills.sh (Reusable Agent Skills)
+
+**ALWAYS search for relevant skills before implementing new features. Skills are pre-built, tested capabilities that save time and ensure best practices.**
+
+Skills.sh provides a registry of reusable agent skills from the community. The coding agent environment has skills CLI installed and ready to use.
+
+**Skill-First Development Policy:**
+
+1. **Search before coding**: Before implementing any feature, search for relevant skills
+2. **Prefer skills over custom code**: Use existing skills when available
+3. **Install dynamically**: Skills can be installed on-demand during development
+4. **Treat as capabilities**: Installed skills extend the agent's abilities
+
+**How to discover skills:**
+
+```bash
+# Search the registry for relevant skills
+npx skills find <query>
+
+# Examples:
+npx skills find "testing"
+npx skills find "API documentation"
+npx skills find "database migration"
+npx skills find "React components"
+```
+
+**How to use skills:**
+
+```bash
+# Install a skill from the registry
+npx skills add <skill-path>
+
+# Example:
+npx skills add vercel-labs/skills/find-skills
+npx skills add anthropics/skills/testing
+```
+
+**When to search for skills:**
+
+- Before implementing testing infrastructure → `npx skills find "testing"`
+- Before writing API documentation → `npx skills find "API docs"`
+- Before creating build scripts → `npx skills find "build automation"`
+- Before implementing CI/CD → `npx skills find "deployment"`
+- Before adding monitoring → `npx skills find "observability"`
+- Before implementing auth → `npx skills find "authentication"`
+
+**Skill locations:**
+
+This repository uses both local skills and registry skills:
+
+- **Local skills**: `.github/skills/` - Project-specific skills (humanizer, remotion, threejs)
+- **Registry skills**: Installed via `npx skills add` - Community skills from skills.sh
+- **Custom agents**: `.github/agents/` - Specialized agents you explicitly invoke
+
+**Check both locations** - Local skills are automatically available, registry skills can be installed on-demand.
+
+**Examples of when to use skills automatically:**
+
+- Implementing tests → Search for testing skills
+- Setting up CI/CD → Search for deployment skills
+- Adding documentation → Search for documentation skills
+- Writing scripts → Search for automation skills
+
+**Usage Guidelines:**
+
+- Always search the registry before writing significant new code
+- Install skills that match your needs rather than reinventing
+- Skills are non-interactive in CI/CD environments
+- Skills integrate with the existing tools and MCP servers
+- Update `.github/skills/README.md` if you install useful registry skills for the project
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript 5.9, Tailwind CSS 4

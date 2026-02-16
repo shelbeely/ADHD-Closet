@@ -31,6 +31,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -55,6 +60,17 @@ jobs:
       # is a persistent hosted database (not ephemeral). The schema exists
       # and persists across all Copilot sessions. Schema updates should be
       # done via `prisma migrate dev` locally and committed to version control.
+
+      - name: Install skills CLI and base skills
+        run: |
+          echo "Installing skills.sh CLI and base skills..."
+          # Install find-skills capability non-interactively
+          yes "" | npx --yes skills add vercel-labs/skills/find-skills || true
+          echo "Skills CLI installed successfully"
+          echo "### Skills.sh Integration" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: ✅ Installed" >> $GITHUB_STEP_SUMMARY
+          echo "- Base skill: \`vercel-labs/skills/find-skills\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Usage: \`npx skills find <query>\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Start Ziit heartbeat daemon
         working-directory: ./app
