@@ -20,7 +20,9 @@
  */
 
 import { watch, statSync, type FSWatcher } from 'fs';
+import { homedir } from 'os';
 import { ZiitClient, type ZiitHeartbeat } from './ziit';
+import { CommandMonitor, type CommandEvent } from './command-monitor';
 
 // Bun.js path utilities
 function resolvePathBun(p: string): string {
@@ -61,6 +63,11 @@ const CONFIG = {
   ignoreDirs: (process.env.ZIIT_IGNORE || '.git/,node_modules/,dist/,build/,coverage/,.next/,.turbo/,bun.lockb,package-lock.json').split(',').map(d => d.trim()),
   dryRun: process.env.ZIIT_DRY_RUN === 'true',
   verbose: process.env.ZIIT_VERBOSE === 'true',
+  // Command monitoring configuration
+  watchCommands: process.env.ZIIT_WATCH_COMMANDS === 'true',
+  commandHistoryFile: process.env.ZIIT_COMMAND_HISTORY || `${homedir()}/.bash_history`,
+  includeCommands: (process.env.ZIIT_COMMAND_INCLUDE || '').split(',').map(c => c.trim()).filter(Boolean),
+  ignoreCommands: (process.env.ZIIT_COMMAND_IGNORE || 'cd,ls,pwd,clear,exit,history,echo,cat,less,more,head,tail').split(',').map(c => c.trim()).filter(Boolean),
 };
 
 // Validate configuration on startup
@@ -256,12 +263,14 @@ class ZiitWatcher {
   private isShuttingDown = false;
   private retryCount = 0;
   private watchers: FSWatcher[] = [];
+  private commandMonitor: CommandMonitor | null = null;
   private stats = {
     filesProcessed: 0,
     heartbeatsSent: 0,
     heartbeatsFailed: 0,
     batchesSent: 0,
     lastFlush: 0,
+    commandsProcessed: 0,
   };
 
   constructor() {
@@ -298,6 +307,21 @@ class ZiitWatcher {
       this.log('🧪 DRY RUN MODE - No data will be sent to Ziit', 'warn');
     }
 
+    // Initialize command monitoring if enabled
+    if (CONFIG.watchCommands) {
+      this.commandMonitor = new CommandMonitor({
+        enabled: true,
+        historyFile: CONFIG.commandHistoryFile,
+        includeCommands: CONFIG.includeCommands,
+        ignoreCommands: CONFIG.ignoreCommands,
+        debounceMs: CONFIG.debounceMs,
+        verbose: CONFIG.verbose,
+      });
+
+      await this.commandMonitor.start((events) => this.handleCommandEvents(events));
+      this.log('Command monitoring enabled 🎯');
+    }
+
     // Start flush timer
     this.scheduleFlush();
 
@@ -314,6 +338,11 @@ class ZiitWatcher {
     this.isShuttingDown = true;
 
     this.log('\nShutting down...');
+
+    // Stop command monitoring
+    if (this.commandMonitor) {
+      this.commandMonitor.stop();
+    }
 
     // Close all watchers
     for (const watcher of this.watchers) {
@@ -343,7 +372,30 @@ class ZiitWatcher {
   }
 
   printStats() {
-    this.log(`📊 Stats: ${this.stats.filesProcessed} files processed, ${this.stats.heartbeatsSent} heartbeats sent, ${this.stats.batchesSent} batches, ${this.stats.heartbeatsFailed} failed, ${this.buffer.length} buffered`);
+    const commandStats = CONFIG.watchCommands ? `, ${this.stats.commandsProcessed} commands` : '';
+    this.log(`📊 Stats: ${this.stats.filesProcessed} files processed${commandStats}, ${this.stats.heartbeatsSent} heartbeats sent, ${this.stats.batchesSent} batches, ${this.stats.heartbeatsFailed} failed, ${this.buffer.length} buffered`);
+  }
+
+  handleCommandEvents(events: CommandEvent[]) {
+    this.verbose(`Processing ${events.length} command event(s)`);
+    
+    for (const event of events) {
+      const heartbeat = CommandMonitor.createHeartbeat(
+        event,
+        this.project,
+        CONFIG.editor,
+        this.branch
+      );
+      
+      this.buffer.push(heartbeat);
+      this.stats.commandsProcessed++;
+      this.verbose(`Enqueued heartbeat for command: ${event.command}`);
+    }
+
+    // Flush if buffer is full
+    if (this.buffer.length >= CONFIG.batchSize) {
+      this.flush();
+    }
   }
 
   scheduleFlush() {
