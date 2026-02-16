@@ -15,13 +15,14 @@ Repository Root: /home/runner/work/ADHD-Closet/ADHD-Closet/
 
 ```
 /
-├── .github/              # GitHub configuration and workflows
+├── .github/              # GitHub configuration, workflows, and development artifacts
 ├── app/                  # Main Next.js application (primary codebase)
 ├── docs/                 # MkDocs documentation site
+├── reference/            # Reference materials (screenshots, API examples, scripts)
 ├── docker-compose.yml    # Redis service (PostgreSQL hosted on Supabase)
 ├── mkdocs.yml           # Documentation site configuration
 ├── README.md            # Project overview
-└── scripts/             # Utility scripts (if any)
+└── CONTRIBUTING.md      # Contribution guidelines
 ```
 
 ## `.github/` - GitHub Configuration
@@ -29,6 +30,7 @@ Repository Root: /home/runner/work/ADHD-Closet/ADHD-Closet/
 ```
 .github/
 ├── agents/              # Custom AI agent definitions (e.g., code-reviewer)
+├── artifacts/           # Development session summaries and historical documents
 ├── copilot-instructions.md   # Copilot agent behavior guidelines
 ├── humanizer/           # Documentation humanization tools
 ├── memory/              # THIS DIRECTORY - Persistent knowledge base
@@ -47,6 +49,7 @@ Repository Root: /home/runner/work/ADHD-Closet/ADHD-Closet/
 - Agentic workflows (`.md` files) are compiled to `.lock.yml` via `gh aw compile`
 - `copilot-setup-steps.yml` pre-configures dev environment for Copilot agents
 - `memory/` is the authoritative knowledge base for AI agents
+- `artifacts/` contains historical summaries from development sessions
 
 ## `app/` - Main Application
 
@@ -213,6 +216,33 @@ docs/
 - `CONTEXT7_LIBRARY_IDS.md` is the authoritative reference for Context7 MCP usage
 - `SPEC.md` defines Material Design 3 compliance and ADHD-optimized UX patterns
 - Documentation deployed to GitHub Pages via MkDocs
+
+## `reference/` - Reference Materials
+
+```
+reference/
+├── notebooklm/          # NotebookLM documentation export
+│   ├── 01-PROJECT-OVERVIEW.md
+│   ├── 02-TECHNICAL-ARCHITECTURE.md
+│   ├── 03-DATABASE-SCHEMA.md
+│   └── ... (12 structured guides)
+├── openrouter/          # OpenRouter API reference materials
+│   ├── generate_outfits.schema.json
+│   ├── infer_item.schema.json
+│   └── validation_notes.md
+├── screenshots/         # Application screenshots for documentation
+│   ├── 01-home-page-default.png
+│   ├── 02-desktop-table-view-with-notification.png
+│   └── ... (16+ screenshots)
+├── scripts/             # Helper scripts
+│   └── prepare-wiki.sh  # GitHub Wiki preparation script
+└── README.md            # Reference materials guide
+```
+
+**Key Points:**
+- Not required for building or running the application
+- Used for documentation and development reference
+- Screenshots referenced in README and docs
 
 ## Key File Locations (Quick Reference)
 

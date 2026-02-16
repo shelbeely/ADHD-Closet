@@ -95,12 +95,12 @@ Screenshots are crucial for ADHD users! See [SCREENSHOT_GUIDE.md](SCREENSHOT_GUI
 
 1. **Capture** - Use browser devtools or screen capture
 2. **Optimize** - Keep under 500KB each
-3. **Save** - Put in `docs/screenshots/`
-4. **Use** - Add to markdown: `![Description](../screenshots/filename.png)`
+3. **Save** - Put in `docs/../../reference/screenshots/`
+4. **Use** - Add to markdown: `![Description](../../../reference/screenshots/filename.png)`
 
 ### Current Screenshots
 
-Located in `docs/screenshots/`:
+Located in `docs/../../reference/screenshots/`:
 - guide-page-mobile.png
 - main-desktop-empty.png
 - main-mobile-view.png
@@ -124,7 +124,7 @@ docs/
 ├── features/ (10 files)
 ├── api/ (1 file)
 ├── deployment/ (1 file)
-└── screenshots/ (images)
+└── ../../reference/screenshots/ (images)
 ```
 
 ## MkDocs Configuration
@@ -162,8 +162,8 @@ When adding documentation:
 
 ### Images not loading
 
-- Use relative paths: `![Alt](../screenshots/image.png)`
-- Verify image exists in `docs/screenshots/`
+- Use relative paths: `![Alt](../../../reference/screenshots/image.png)`
+- Verify image exists in `docs/../../reference/screenshots/`
 - Check filename matches exactly (case-sensitive)
 
 ## Resources
