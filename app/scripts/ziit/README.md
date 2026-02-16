@@ -92,7 +92,14 @@ This is purely a **passive monitoring daemon** that tracks your coding activity 
    This sends a single test heartbeat to verify your API key and network connectivity.
    You should see a success message and can check your activity at https://ziit.app/activity
 
-4. **Start in dry-run mode** (optional):
+4. **Test command monitoring** (optional):
+   ```bash
+   bun run ziit:test:commands
+   ```
+   
+   This tests the command monitoring functionality in isolation to verify it works correctly.
+
+5. **Start in dry-run mode** (optional):
    ```bash
    export ZIIT_DRY_RUN=true
    export ZIIT_VERBOSE=true
@@ -101,13 +108,22 @@ This is purely a **passive monitoring daemon** that tracks your coding activity 
    
    This shows what would be sent without actually sending data.
 
-5. **Run the watch daemon for real**:
+6. **Enable command monitoring** (optional):
+   ```bash
+   export ZIIT_WATCH_COMMANDS=true
+   export ZIIT_VERBOSE=true
+   bun run ziit:watch
+   ```
+   
+   This enables tracking of shell commands in addition to file changes.
+
+7. **Run the watch daemon for real**:
    ```bash
    export ZIIT_DRY_RUN=false  # or unset ZIIT_DRY_RUN
    bun run ziit:watch
    ```
 
-6. **Test by editing a file**:
+8. **Test by editing a file**:
    - Edit any TypeScript file in `app/app/`
    - Save the file
    - Check terminal for `[Ziit ✓] Sent X heartbeat(s)` message
@@ -136,6 +152,8 @@ The daemon automatically starts in the background when a Copilot coding agent se
 
 ## How It Works
 
+### File Monitoring Flow
+
 1. **File Monitoring**: Watches specified directories recursively using `fs.watch()` (fully supported by Bun.js)
 2. **Filtering**: 
    - Checks if file is in included directories
@@ -150,16 +168,52 @@ The daemon automatically starts in the background when a Copilot coding agent se
 8. **Retry Logic**: On network failure, keeps heartbeats in buffer and retries with exponential backoff (1s, 2s, 4s, 8s... up to 60s)
 9. **Stats Tracking**: Reports files processed, heartbeats sent, failures every minute
 
+### Command Monitoring Flow (Optional)
+
+When `ZIIT_WATCH_COMMANDS=true`:
+
+1. **History Monitoring**: Watches `~/.bash_history` file for changes using `fs.watch()`
+2. **Command Parsing**: When history file changes:
+   - Reads new content from last read position
+   - Parses new command entries
+   - Extracts base command (first word)
+3. **Filtering**: 
+   - Checks against ignore list (cd, ls, pwd, etc.)
+   - If include list is provided, only tracks specified commands
+   - Otherwise tracks all non-ignored commands
+4. **Language Detection**: Detects language from command:
+   - `git` → Git
+   - `npm`, `yarn`, `bun` → JavaScript
+   - `python`, `python3` → Python
+   - `docker` → Docker
+   - etc.
+5. **Debouncing**: Collects commands within debounce window
+6. **Heartbeat Creation**: Creates heartbeat with format `[command] <full command>`
+7. **Buffering & Sending**: Uses same buffer/batch system as file monitoring
+
+**Example heartbeat for command:**
+```json
+{
+  "timestamp": 1771213890906,
+  "project": "shelbeely/ADHD-Closet",
+  "language": "Git",
+  "editor": "github-copilot-agent",
+  "os": "linux",
+  "file": "[command] git commit -m 'Add feature'",
+  "branch": "main"
+}
+```
+
 ## API Endpoints
 
 The client sends heartbeats to:
 
 - **Single**: `POST https://ziit.app/api/external/heartbeat` ✅ Working
-- **Batch**: `POST https://ziit.app/api/external/batch` ⚠️ Returns 400 errors
+- **Batch**: `POST https://ziit.app/api/external/batch` ✅ Fixed (now sends array directly per official API spec)
 
 Authorization: `Bearer <ZIIT_API_KEY>`
 
-**Note**: As of February 2026, the batch endpoint returns 400 "Invalid Request" errors. The client automatically falls back to sending heartbeats individually via the single endpoint when the batch endpoint is unavailable. This ensures heartbeats are always delivered successfully.
+**Note**: The batch endpoint now correctly sends an array of heartbeats directly (not wrapped in `{ heartbeats: [...] }`), matching the official Ziit API specification. The client automatically falls back to sending heartbeats individually if the batch endpoint returns errors.
 
 **Heartbeat payload**:
 ```json

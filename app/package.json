@@ -21,6 +21,7 @@
     "ziit:watch": "bun run scripts/ziit/watch-daemon.ts",
     "ziit:health": "bun run scripts/ziit/health-check.ts",
     "ziit:test": "bun run scripts/ziit/test-heartbeat.ts",
+    "ziit:test:commands": "bun run scripts/ziit/test-command-monitor.ts",
     "cap:init": "cap init",
     "cap:add:ios": "cap add ios",
     "cap:add:android": "cap add android",
