@@ -2,6 +2,19 @@
 
 This directory contains GitHub Copilot hooks that integrate Ziit.app heartbeat tracking into Copilot coding agent sessions.
 
+## Overview
+
+We upgraded from a background watch daemon to GitHub Copilot's native hook system, using **all 6 available hook types** for comprehensive activity tracking:
+
+- ✅ `sessionStart` - When sessions begin
+- ✅ `sessionEnd` - When sessions end
+- ✅ `userPromptSubmitted` - User interactions
+- ✅ `preToolUse` - Before tool execution
+- ✅ `postToolUse` - After tool execution (with results)
+- ✅ `errorOccurred` - Error tracking
+
+This provides complete coverage of Copilot agent activity without requiring daemon management.
+
 ## Files
 
 - **`hooks.json`** - Hook configuration file that defines which hooks to execute and when
