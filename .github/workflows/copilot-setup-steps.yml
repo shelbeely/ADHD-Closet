@@ -77,6 +77,8 @@ jobs:
 
       - name: Configure Ziit heartbeat hooks
         run: |
+          # ZIIT_API_KEY should be configured in Settings → Secrets and variables → Copilot
+          # (NOT in Codespaces secrets - Copilot environment secrets are different)
           if [ -n "${{ secrets.ZIIT_API_KEY }}" ]; then
             echo "Ziit hooks are configured in .github/hooks/hooks.json"
             echo "### Ziit Heartbeat Hooks" >> $GITHUB_STEP_SUMMARY
@@ -88,6 +90,8 @@ jobs:
             echo "- Hooks: Session start/end, pre-tool-use" >> $GITHUB_STEP_SUMMARY
           else
             echo "ZIIT_API_KEY not set, hooks will be skipped"
+            echo "Configure ZIIT_API_KEY in Settings → Secrets → Copilot (not Codespaces)"
             echo "### Ziit Heartbeat Hooks" >> $GITHUB_STEP_SUMMARY
             echo "- Status: ⏭️ Skipped (ZIIT_API_KEY not configured)" >> $GITHUB_STEP_SUMMARY
+            echo "- Setup: Go to Settings → Secrets and variables → Copilot" >> $GITHUB_STEP_SUMMARY
           fi

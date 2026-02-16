@@ -1,3 +1,6 @@
 
 # MkDocs
 site/
+
+# GitHub Copilot Hook Telemetry
+.github/telemetry/

@@ -4,6 +4,15 @@
     "sessionStart": [
       {
         "type": "command",
+        "bash": ".github/hooks/session-start.js",
+        "cwd": ".",
+        "timeoutSec": 15,
+        "env": {
+          "HOOK_VERBOSE": "${HOOK_VERBOSE:-false}"
+        }
+      },
+      {
+        "type": "command",
         "bash": ".github/hooks/ziit-heartbeat.js",
         "cwd": ".",
         "timeoutSec": 10,
@@ -16,6 +25,15 @@
       }
     ],
     "sessionEnd": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/session-end.js",
+        "cwd": ".",
+        "timeoutSec": 30,
+        "env": {
+          "HOOK_VERBOSE": "${HOOK_VERBOSE:-false}"
+        }
+      },
       {
         "type": "command",
         "bash": ".github/hooks/ziit-heartbeat.js",
@@ -46,6 +64,15 @@
     "preToolUse": [
       {
         "type": "command",
+        "bash": ".github/hooks/pre-tool-use.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "HOOK_VERBOSE": "${HOOK_VERBOSE:-false}"
+        }
+      },
+      {
+        "type": "command",
         "bash": ".github/hooks/ziit-heartbeat.js",
         "cwd": ".",
         "timeoutSec": 5,
@@ -60,6 +87,15 @@
     "postToolUse": [
       {
         "type": "command",
+        "bash": ".github/hooks/post-tool-use.js",
+        "cwd": ".",
+        "timeoutSec": 15,
+        "env": {
+          "HOOK_VERBOSE": "${HOOK_VERBOSE:-false}"
+        }
+      },
+      {
+        "type": "command",
         "bash": ".github/hooks/ziit-heartbeat.js",
         "cwd": ".",
         "timeoutSec": 5,
@@ -72,6 +108,15 @@
       }
     ],
     "errorOccurred": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/error-occurred.js",
+        "cwd": ".",
+        "timeoutSec": 5,
+        "env": {
+          "HOOK_VERBOSE": "${HOOK_VERBOSE:-false}"
+        }
+      },
       {
         "type": "command",
         "bash": ".github/hooks/ziit-heartbeat.js",

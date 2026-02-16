@@ -1,7 +1,48 @@
 # Development Commands
 
-**Last Updated:** 2026-02-15  
+**Last Updated:** 2026-02-16  
 **Purpose:** Build, test, lint, and development commands
+
+## GitHub Copilot Hooks
+
+### Hook System Overview
+
+**Location:** `.github/hooks/`  
+**Purpose:** Automated validation, telemetry, and knowledge maintenance
+
+The repository uses GitHub Copilot hooks for:
+- Session initialization and environment verification
+- Automatic file validation after edits
+- Command execution logging
+- Error tracking
+- Session summary generation
+- Repository knowledge updates
+
+**Documentation:** `.github/hooks/README.md`
+
+### Hook-Related Commands
+
+**Test runtime detection:**
+```bash
+node scripts/hooks/runtime-detector.js
+```
+
+**Test file validation:**
+```bash
+node scripts/hooks/file-validator.js app/components/Test.tsx
+```
+
+**Update knowledge graph manually:**
+```bash
+node scripts/hooks/knowledge-updater.js
+```
+
+**Enable verbose hook logging:**
+```bash
+export HOOK_VERBOSE=true
+```
+
+---
 
 ## Overview
 
