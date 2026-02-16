@@ -126,10 +126,12 @@ The daemon automatically starts in the background when a Copilot coding agent se
 
 The client sends heartbeats to:
 
-- **Single**: `POST https://ziit.app/api/external/heartbeat`
-- **Batch**: `POST https://ziit.app/api/external/batch`
+- **Single**: `POST https://ziit.app/api/external/heartbeat` ✅ Working
+- **Batch**: `POST https://ziit.app/api/external/batch` ⚠️ Returns 400 errors
 
 Authorization: `Bearer <ZIIT_API_KEY>`
+
+**Note**: As of February 2026, the batch endpoint returns 400 "Invalid Request" errors. The client automatically falls back to sending heartbeats individually via the single endpoint when the batch endpoint is unavailable. This ensures heartbeats are always delivered successfully.
 
 **Heartbeat payload**:
 ```json
