@@ -198,9 +198,101 @@ To create a new skill:
 - [Anthropic Skills Repository](https://github.com/anthropics/skills)
 - [GitHub Awesome Copilot Collection](https://github.com/github/awesome-copilot)
 
-## Useful Registry Skills
+## Installed Registry Skills
 
-This section documents useful skills discovered from the registry that have been evaluated for this project.
+This section documents all skills installed from the skills.sh registry for this project.
+
+**Last Updated:** 2026-02-16
+
+### Core Development Skills (14 Installed)
+
+These skills are currently installed and available to all agents:
+
+#### 1. nextjs-react-typescript
+- **Source:** mindrally/skills@nextjs-react-typescript
+- **Purpose:** Next.js + React + TypeScript development patterns
+- **Why:** Core tech stack alignment (Next.js 16, React 19, TypeScript 5.9)
+- **URL:** https://skills.sh/mindrally/skills/nextjs-react-typescript
+
+#### 2. typescript-best-practices
+- **Source:** 0xbigboss/claude-code@typescript-best-practices
+- **Purpose:** TypeScript code quality and strict typing patterns
+- **Why:** Project uses strict TypeScript (no `any` unless necessary)
+- **URL:** https://skills.sh/0xbigboss/claude-code/typescript-best-practices
+
+#### 3. accessibility-a11y
+- **Source:** mindrally/skills@accessibility-a11y
+- **Purpose:** Web accessibility best practices (WCAG compliance)
+- **Why:** CRITICAL for ADHD-optimized UX (keyboard navigation, screen readers, high contrast)
+- **URL:** https://skills.sh/mindrally/skills/accessibility-a11y
+
+#### 4. e2e-testing
+- **Source:** hieutrtr/ai1-skills@e2e-testing
+- **Purpose:** End-to-end testing setup and patterns
+- **Why:** Project lacks automated tests (Phase 8 goal)
+- **URL:** https://skills.sh/hieutrtr/ai1-skills/e2e-testing
+
+#### 5. playwright-local
+- **Source:** jezweb/claude-skills@playwright-local
+- **Purpose:** Playwright testing for local development
+- **Why:** Already uses Playwright MCP for browser automation
+- **URL:** https://skills.sh/jezweb/claude-skills/playwright-local
+
+#### 6. prisma-database-setup
+- **Source:** prisma/skills@prisma-database-setup
+- **Purpose:** Official Prisma ORM best practices
+- **Why:** Uses Prisma ORM 7.3 extensively with Supabase PostgreSQL
+- **URL:** https://skills.sh/prisma/skills/prisma-database-setup
+
+#### 7. ui-ux-pro-max
+- **Source:** kimny1143/claude-code-template@ui-ux-pro-max
+- **Purpose:** Professional UI/UX design patterns
+- **Why:** ADHD-optimized UX is core project requirement
+- **URL:** https://skills.sh/kimny1143/claude-code-template/ui-ux-pro-max
+
+#### 8. tailwind-css
+- **Source:** bobmatnyc/claude-mpm-skills@tailwind-css
+- **Purpose:** Tailwind CSS patterns and utilities
+- **Why:** Uses Tailwind CSS 4 with Material Design 3 tokens
+- **URL:** https://skills.sh/bobmatnyc/claude-mpm-skills/tailwind-css
+
+#### 9. performance
+- **Source:** addyosmani/web-quality-skills@performance
+- **Purpose:** Web performance optimization (from Google Chrome team expert)
+- **Why:** Phase 7 performance goals, PWA optimization
+- **URL:** https://skills.sh/addyosmani/web-quality-skills/performance
+
+#### 10. code-review-excellence
+- **Source:** wshobson/agents@code-review-excellence
+- **Purpose:** High-quality code review patterns
+- **Why:** Maintain code quality across the codebase
+- **URL:** https://skills.sh/wshobson/agents/code-review-excellence
+
+#### 11. pwa-development
+- **Source:** alinaqi/claude-bootstrap@pwa-development
+- **Purpose:** Progressive Web App patterns
+- **Why:** Uses next-pwa with service workers and offline support
+- **URL:** https://skills.sh/alinaqi/claude-bootstrap/pwa-development
+
+#### 12. documentation-lookup
+- **Source:** upstash/context7@documentation-lookup
+- **Purpose:** Context7 documentation integration
+- **Why:** Enhances existing Context7 MCP usage for better library docs
+- **URL:** https://skills.sh/upstash/context7/documentation-lookup
+
+#### 13. material-design-3 ⭐ NEW
+- **Source:** 7spade/black-tortoise@material-design-3
+- **Purpose:** Material Design 3 (Material You) design system with dynamic color, tokens, theming
+- **Why:** PERFECT for this project's MD3 compliance (color roles, elevation, shape, typography)
+- **Covers:** Design tokens, theming APIs, Material You principles, accessibility patterns
+- **URL:** https://skills.sh/7spade/black-tortoise/material-design-3
+
+#### 14. google-material-design ⭐ NEW
+- **Source:** copyleftdev/sk1llz@google-material-design
+- **Purpose:** Google Material Design system fundamentals (material metaphor, elevation, surfaces)
+- **Why:** Comprehensive MD philosophy and principles for building Material interfaces
+- **Covers:** Material metaphor, elevation system, surfaces, bold graphic design, intentional motion
+- **URL:** https://skills.sh/copyleftdev/sk1llz/google-material-design
 
 ### Pre-installed Skills
 
@@ -210,6 +302,52 @@ This section documents useful skills discovered from the registry that have been
   - Includes common skill categories and search tips
   - Source: https://skills.sh/vercel-labs/skills/find-skills
 
+### Additional Skills to Consider
+
+These skills were evaluated but not yet installed. Consider adding them when working on specific features:
+
+#### React Patterns
+- **giuseppe-trisciuoglio/developer-kit@react-patterns** (634 installs)
+- React component patterns and best practices
+- https://skills.sh/giuseppe-trisciuoglio/developer-kit/react-patterns
+
+#### Next.js Optimization
+- **mindrally/skills@optimized-nextjs-typescript** (65 installs)
+- Performance-optimized Next.js patterns
+- https://skills.sh/mindrally/skills/optimized-nextjs-typescript
+
+#### Accessibility Audit
+- **webflow/webflow-skills@accessibility-audit** (62 installs)
+- Automated accessibility audits
+- https://skills.sh/webflow/webflow-skills/accessibility-audit
+
+#### Prisma ORM Patterns
+- **bobmatnyc/claude-mpm-skills@prisma-orm** (83 installs)
+- Advanced Prisma query patterns
+- https://skills.sh/bobmatnyc/claude-mpm-skills/prisma-orm
+
+#### Supabase + Prisma
+- **hopeoverture/worldbuilding-app-skills@supabase-prisma-database-management** (8 installs)
+- Supabase + Prisma integration patterns
+- https://skills.sh/hopeoverture/worldbuilding-app-skills/supabase-prisma-database-management
+
+#### API Documentation
+- **sickn33/antigravity-awesome-skills@api-documentation-generator** (588 installs)
+- Generate API documentation
+- https://skills.sh/sickn33/antigravity-awesome-skills/api-documentation-generator
+
+#### React Performance
+- **nickcrew/claude-ctx-plugin@react-performance-optimization** (191 installs)
+- React-specific performance patterns
+- https://skills.sh/nickcrew/claude-ctx-plugin/react-performance-optimization
+
+#### Code Review (Alternative)
+- **obra/superpowers@requesting-code-review** (7.9K installs)
+- How to request effective code reviews
+- https://skills.sh/obra/superpowers/requesting-code-review
+
+See `RECOMMENDED_SKILLS.md` for the complete evaluation and additional options.
+
 ### Official Skills Repositories
 
 - **vercel-labs/agent-skills** - Official Vercel Labs agent skills collection
@@ -218,9 +356,11 @@ This section documents useful skills discovered from the registry that have been
   - Install all: `npx skills add vercel-labs/agent-skills --all`
   - List available: `npx skills add vercel-labs/agent-skills --list`
 
-### Recommended Skills to Explore
+### Search Examples
 
-When working on specific features, consider searching for these types of skills:
+### Search Examples
+
+When working on specific features, search the registry for relevant skills:
 
 - **React/Next.js**: `npx skills find "react"` or `npx skills find "nextjs"`
   - Example: `vercel-labs/agent-skills@vercel-react-best-practices`
