@@ -142,7 +142,12 @@ async function main() {
     
     const input = JSON.parse(inputData);
 
+    // Convert timestamp to ISO 8601 format (required by Ziit API)
     const timestamp = input.timestamp || Date.now();
+    const timestampISO = typeof timestamp === 'number'
+      ? new Date(timestamp).toISOString()
+      : timestamp; // Already a string (assume ISO format)
+    
     const cwd = input.cwd || process.cwd();
     const editor = process.env.ZIIT_EDITOR || 'github-copilot-agent';
     const os = process.platform;
@@ -179,7 +184,7 @@ async function main() {
     if (input.prompt) {
       // Track user prompts as interaction events
       heartbeat = {
-        timestamp,
+        timestamp: timestampISO,
         project,
         language: 'Interaction',
         editor,
@@ -193,7 +198,7 @@ async function main() {
       const errorMsg = input.error.message || 'Unknown error';
       const errorName = input.error.name || 'Error';
       heartbeat = {
-        timestamp,
+        timestamp: timestampISO,
         project,
         language: 'Error',
         editor,
@@ -224,7 +229,7 @@ async function main() {
         const file = toolArgs.path.replace(cwd + '/', '');
         const prefix = isPostTool ? `[${resultType}] ` : '';
         heartbeat = {
-          timestamp,
+          timestamp: timestampISO,
           project,
           language: detectLanguage(file),
           editor,
@@ -243,7 +248,7 @@ async function main() {
         if (!ignoreCommands.includes(firstWord)) {
           const prefix = isPostTool ? `[${resultType}] ` : '';
           heartbeat = {
-            timestamp,
+            timestamp: timestampISO,
             project,
             language: detectLanguageFromCommand(command),
             editor,
@@ -258,7 +263,7 @@ async function main() {
     else if (input.source || input.reason) {
       const eventType = input.source ? `session-start-${input.source}` : `session-end-${input.reason}`;
       heartbeat = {
-        timestamp,
+        timestamp: timestampISO,
         project,
         language: 'Session',
         editor,
