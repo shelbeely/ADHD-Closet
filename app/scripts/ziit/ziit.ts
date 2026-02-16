@@ -66,13 +66,14 @@ export class ZiitClient {
     }
 
     try {
+      // Ziit batch API expects array directly, not wrapped object
       const response = await fetch(`${this.baseUrl}/api/external/batch`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify({ heartbeats: data }),
+        body: JSON.stringify(data),
       });
 
       // If batch endpoint returns 400, fall back to sending individual heartbeats

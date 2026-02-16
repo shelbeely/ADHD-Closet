@@ -1,17 +1,36 @@
 # Ziit Heartbeat Client
 
-A lightweight, zero-dependency Bun.js client that tracks code file edits and sends activity heartbeats to [Ziit.app](https://ziit.app). Designed specifically for GitHub Copilot coding agent sessions.
+A lightweight, zero-dependency Bun.js client that tracks code file edits **and shell command execution**, sending activity heartbeats to [Ziit.app](https://ziit.app). Designed specifically for GitHub Copilot coding agent sessions.
+
+## ⚠️ Important: What This Daemon Does NOT Do
+
+**The Ziit daemon is a passive monitoring tool. It does NOT:**
+
+- ❌ Execute Linux commands like `cd`, `ls`, `mkdir`, etc.
+- ❌ Have a command interface or shell
+- ❌ Run arbitrary user commands
+- ❌ Process or interpret command input
+
+**What it DOES do:**
+
+- ✅ Monitor filesystem changes using `fs.watch()`
+- ✅ Monitor shell command execution by watching bash history (optional, enabled via `ZIIT_WATCH_COMMANDS=true`)
+- ✅ Run specific Git commands (`git status`, `git remote`, `git rev-parse`) internally to verify file modifications
+- ✅ Send file change and command execution metadata to Ziit.app API
+
+This is purely a **passive monitoring daemon** that tracks your coding activity (file edits and command execution) and reports it. It has no command execution capabilities beyond the specific Git commands it needs for verification.
 
 ## Features
 
 - **Filesystem Monitoring**: Uses `fs.watch()` (Bun-compatible) for efficient change detection
+- **Command Monitoring**: Watches bash history for command execution (optional, configurable)
 - **Git-Aware**: Only reports files that are actually modified or untracked (verified via `git status` using `Bun.spawn()`)
-- **Smart Filtering**: Includes only relevant code files, ignores build artifacts and dependencies
+- **Smart Filtering**: Includes only relevant code files and commands, ignores noise
 - **Batched Git Checks**: Checks multiple files at once using `Bun.spawn()` for better performance
 - **Debouncing**: Buffers bursts of events to avoid spam (configurable, default 2.5s)
 - **Batch Sending**: Groups heartbeats for efficiency (configurable batch size, default 20)
 - **Resilient**: Retries on network failures with exponential backoff, gracefully handles SIGINT/SIGTERM
-- **Observability**: Tracks stats (files processed, heartbeats sent, failures) with periodic reporting
+- **Observability**: Tracks stats (files processed, commands processed, heartbeats sent, failures) with periodic reporting
 - **Minimal Logging**: Clean stdout output with emoji indicators, errors logged but don't crash the daemon
 - **Dry-Run Mode**: Test configuration without sending data (set `ZIIT_DRY_RUN=true`)
 - **Verbose Mode**: Enable detailed logging for debugging (set `ZIIT_VERBOSE=true`)
@@ -40,6 +59,15 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
 | `ZIIT_DRY_RUN` | `false` | If `true`, logs heartbeats without sending to API |
 | `ZIIT_VERBOSE` | `false` | If `true`, enables detailed debug logging |
 
+### Command Monitoring (Optional)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ZIIT_WATCH_COMMANDS` | `false` | Enable command execution monitoring |
+| `ZIIT_COMMAND_HISTORY` | `~/.bash_history` | Path to bash history file to monitor |
+| `ZIIT_COMMAND_INCLUDE` | _(empty)_ | Comma-separated list of commands to track (empty = track all non-ignored) |
+| `ZIIT_COMMAND_IGNORE` | `cd,ls,pwd,clear,exit,history,echo,cat,less,more,head,tail` | Comma-separated list of commands to ignore |
+
 ## Usage
 
 ### Local Development
@@ -64,7 +92,14 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
    This sends a single test heartbeat to verify your API key and network connectivity.
    You should see a success message and can check your activity at https://ziit.app/activity
 
-4. **Start in dry-run mode** (optional):
+4. **Test command monitoring** (optional):
+   ```bash
+   bun run ziit:test:commands
+   ```
+   
+   This tests the command monitoring functionality in isolation to verify it works correctly.
+
+5. **Start in dry-run mode** (optional):
    ```bash
    export ZIIT_DRY_RUN=true
    export ZIIT_VERBOSE=true
@@ -73,13 +108,22 @@ A lightweight, zero-dependency Bun.js client that tracks code file edits and sen
    
    This shows what would be sent without actually sending data.
 
-5. **Run the watch daemon for real**:
+6. **Enable command monitoring** (optional):
+   ```bash
+   export ZIIT_WATCH_COMMANDS=true
+   export ZIIT_VERBOSE=true
+   bun run ziit:watch
+   ```
+   
+   This enables tracking of shell commands in addition to file changes.
+
+7. **Run the watch daemon for real**:
    ```bash
    export ZIIT_DRY_RUN=false  # or unset ZIIT_DRY_RUN
    bun run ziit:watch
    ```
 
-6. **Test by editing a file**:
+8. **Test by editing a file**:
    - Edit any TypeScript file in `app/app/`
    - Save the file
    - Check terminal for `[Ziit ✓] Sent X heartbeat(s)` message
@@ -108,6 +152,8 @@ The daemon automatically starts in the background when a Copilot coding agent se
 
 ## How It Works
 
+### File Monitoring Flow
+
 1. **File Monitoring**: Watches specified directories recursively using `fs.watch()` (fully supported by Bun.js)
 2. **Filtering**: 
    - Checks if file is in included directories
@@ -122,16 +168,52 @@ The daemon automatically starts in the background when a Copilot coding agent se
 8. **Retry Logic**: On network failure, keeps heartbeats in buffer and retries with exponential backoff (1s, 2s, 4s, 8s... up to 60s)
 9. **Stats Tracking**: Reports files processed, heartbeats sent, failures every minute
 
+### Command Monitoring Flow (Optional)
+
+When `ZIIT_WATCH_COMMANDS=true`:
+
+1. **History Monitoring**: Watches `~/.bash_history` file for changes using `fs.watch()`
+2. **Command Parsing**: When history file changes:
+   - Reads new content from last read position
+   - Parses new command entries
+   - Extracts base command (first word)
+3. **Filtering**: 
+   - Checks against ignore list (cd, ls, pwd, etc.)
+   - If include list is provided, only tracks specified commands
+   - Otherwise tracks all non-ignored commands
+4. **Language Detection**: Detects language from command:
+   - `git` → Git
+   - `npm`, `yarn`, `bun` → JavaScript
+   - `python`, `python3` → Python
+   - `docker` → Docker
+   - etc.
+5. **Debouncing**: Collects commands within debounce window
+6. **Heartbeat Creation**: Creates heartbeat with format `[command] <full command>`
+7. **Buffering & Sending**: Uses same buffer/batch system as file monitoring
+
+**Example heartbeat for command:**
+```json
+{
+  "timestamp": 1771213890906,
+  "project": "shelbeely/ADHD-Closet",
+  "language": "Git",
+  "editor": "github-copilot-agent",
+  "os": "linux",
+  "file": "[command] git commit -m 'Add feature'",
+  "branch": "main"
+}
+```
+
 ## API Endpoints
 
 The client sends heartbeats to:
 
 - **Single**: `POST https://ziit.app/api/external/heartbeat` ✅ Working
-- **Batch**: `POST https://ziit.app/api/external/batch` ⚠️ Returns 400 errors
+- **Batch**: `POST https://ziit.app/api/external/batch` ✅ Working (fixed to match official spec)
 
 Authorization: `Bearer <ZIIT_API_KEY>`
 
-**Note**: As of February 2026, the batch endpoint returns 400 "Invalid Request" errors. The client automatically falls back to sending heartbeats individually via the single endpoint when the batch endpoint is unavailable. This ensures heartbeats are always delivered successfully.
+**Note**: The batch endpoint now correctly sends an array of heartbeats directly (not wrapped in `{ heartbeats: [...] }`), matching the official Ziit API specification at https://docs.ziit.app/api/batch. The client includes fallback logic to send heartbeats individually if the batch endpoint is unavailable, ensuring reliability.
 
 **Heartbeat payload**:
 ```json
@@ -242,12 +324,74 @@ If successful, check https://ziit.app/activity to see the heartbeat.
 - Add directories to `ZIIT_INCLUDE_DIRS`
 - Add file extensions to `ZIIT_INCLUDE_EXTS`
 
+## Frequently Asked Questions
+
+### Does the daemon recognize or execute Linux commands like 'cd'?
+
+**No.** The Ziit daemon is a passive monitoring tool that does NOT execute user commands or have any command interface. 
+
+**What it does:**
+1. Monitors filesystem changes using Node.js `fs.watch()` API
+2. **Optionally monitors when YOU run commands** by watching bash history file (enable with `ZIIT_WATCH_COMMANDS=true`)
+3. Runs specific Git commands internally (`git status`, `git remote get-url`, `git rev-parse`) to verify which files are modified
+4. Sends file change and command execution metadata to Ziit.app API
+
+It cannot and will not execute arbitrary Linux commands, shell scripts, or interpret user command input. It's purely for tracking your activity (file edits and command execution).
+
+### How does command monitoring work?
+
+When `ZIIT_WATCH_COMMANDS=true`, the daemon watches `~/.bash_history` for new entries. When you run a command in your shell:
+
+1. Bash appends it to the history file
+2. The daemon detects the file change
+3. Parses the new command
+4. Checks if it should be tracked (based on include/ignore lists)
+5. Sends a heartbeat with the command info
+
+**The daemon does NOT execute the command** - it only sees that you ran it.
+
+### What commands does it actually run internally?
+
+The daemon internally runs only these three Git commands via `Bun.spawn()`:
+
+- `git remote get-url origin` - Once at startup to detect project name
+- `git rev-parse --abbrev-ref HEAD` - Once at startup to detect current branch  
+- `git status --porcelain=v1 -- <files>` - Periodically to verify which files are modified
+
+These commands are hard-coded in the daemon implementation and cannot be changed via configuration.
+
+### What commands are tracked by command monitoring?
+
+By default, command monitoring tracks all commands **except** these common navigation/viewing commands:
+- `cd`, `ls`, `pwd`, `clear`, `exit`, `history`, `echo`, `cat`, `less`, `more`, `head`, `tail`
+
+You can customize this with:
+- `ZIIT_COMMAND_INCLUDE` - Only track specific commands (e.g., `git,npm,docker`)
+- `ZIIT_COMMAND_IGNORE` - Add more commands to ignore
+
+**Examples of tracked commands:**
+- `git commit -m "Fix bug"` → Sends heartbeat with language: Git
+- `npm run build` → Sends heartbeat with language: JavaScript
+- `docker-compose up` → Sends heartbeat with language: Docker
+- `python train.py` → Sends heartbeat with language: Python
+
+### Can I add custom command execution?
+
+No. The daemon architecture is specifically designed as a passive monitoring tool. Adding command execution would:
+
+- Introduce security risks
+- Violate the single-responsibility principle
+- Conflict with its purpose as a lightweight heartbeat tracker
+
+If you need to execute commands based on file changes, use a dedicated tool like `nodemon`, `watchman`, or custom shell scripts with `inotifywait`.
+
 ## Security Notes
 
 - **Never commit `ZIIT_API_KEY`** to version control
 - Store as a GitHub secret (Codespaces secrets for Copilot agents)
 - The daemon only reads files to check git status—it does not upload file contents
 - Network requests are sent only to `ZIIT_BASE_URL` (default: `https://ziit.app`)
+- The daemon does not execute user commands or have a command interface (security by design)
 
 ## License
 
