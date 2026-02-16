@@ -199,9 +199,12 @@ export async function listAllAgentTools() {
 
 /**
  * Connect Predefined Agent Template
+ * 
+ * Note: This is for ACP AGENTS only.
+ * For data sources (weather, calendar), use MCP integration instead.
  */
 export const ConnectPredefinedAgentSchema = z.object({
-  template: z.enum(['weather', 'calendar', 'fashion_ai', 'smart_home']),
+  template: z.enum(['fashion_ai', 'automation_agent']),
   url: z.string().optional(),
   apiKey: z.string().optional(),
 });

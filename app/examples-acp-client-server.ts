@@ -2,6 +2,22 @@
  * ACP Client+Server Examples
  * 
  * Demonstrates Twin Style as both ACP client and server
+ * 
+ * IMPORTANT PROTOCOL CLARIFICATION:
+ * ================================
+ * The examples below are CONCEPTUAL and show the ACP client architecture.
+ * 
+ * However, after user feedback, we've clarified that:
+ * - Weather APIs = DATA SOURCES → Use MCP (not ACP)
+ * - Calendar APIs = DATA SOURCES → Use MCP (not ACP)
+ * - Editors/Agents = AGENTS → Use ACP ✓
+ * 
+ * For production implementations:
+ * - Use MCP for weather/calendar data (see app/lib/a2a/mcp.ts)
+ * - Use ACP only for actual agents (editors, automation tools with agency)
+ * 
+ * These examples remain for educational purposes to show the ACP client
+ * architecture, but real weather/calendar integration should use MCP.
  */
 
 import { acpClient } from './app/lib/acp/client';

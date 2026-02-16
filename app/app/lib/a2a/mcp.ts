@@ -3,6 +3,17 @@
  * 
  * This module provides MCP integration for Twin Style A2A agents,
  * allowing agents to connect to external data sources.
+ * 
+ * MCP is the CORRECT protocol for accessing DATA SOURCES:
+ * - Weather APIs (OpenWeatherMap, Weather.gov) ✅
+ * - Calendar APIs (Google Calendar, Outlook) ✅
+ * - Databases (Prisma, PostgreSQL) ✅
+ * - File systems ✅
+ * 
+ * Do NOT use ACP for data sources. ACP is for AGENTS (editors, automation tools).
+ * 
+ * Current implementation: Wardrobe database via Prisma
+ * To add weather/calendar: Create new MCPDataSource implementations
  */
 
 import { prisma } from '@/app/lib/prisma';

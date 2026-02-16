@@ -309,30 +309,22 @@ export const acpClient = new ACPClient();
 
 /**
  * Predefined Server Templates
+ * 
+ * IMPORTANT: ACP is for connecting to AGENTS (entities with agency).
+ * For DATA SOURCES like weather APIs or calendar APIs, use MCP (Model Context Protocol) instead.
+ * 
+ * Use ACP when:
+ * - Connecting to code editors (Zed, JetBrains)
+ * - Connecting to automation agents (OpenClaw, n8n)
+ * - Connecting to AI agents with decision-making capability
+ * 
+ * Use MCP when:
+ * - Accessing weather data (OpenWeatherMap, Weather.gov)
+ * - Accessing calendar data (Google Calendar, Outlook)
+ * - Querying databases or file systems
+ * - Reading from any data source
  */
 export const SERVER_TEMPLATES = {
-  weather: {
-    id: 'weather-agent',
-    name: 'Weather Agent',
-    url: 'http://localhost:3002/api/acp',
-    eventsUrl: 'http://localhost:3002/api/acp/events',
-    enabled: false,
-    metadata: {
-      category: 'utility',
-      description: 'Provides weather forecasts for outfit recommendations',
-    },
-  },
-  calendar: {
-    id: 'calendar-agent',
-    name: 'Calendar Agent',
-    url: 'http://localhost:3003/api/acp',
-    eventsUrl: 'http://localhost:3003/api/acp/events',
-    enabled: false,
-    metadata: {
-      category: 'productivity',
-      description: 'Integrates with calendar for daily outfit planning',
-    },
-  },
   fashion_ai: {
     id: 'fashion-ai',
     name: 'Fashion AI Assistant',
@@ -341,18 +333,18 @@ export const SERVER_TEMPLATES = {
     enabled: false,
     metadata: {
       category: 'ai',
-      description: 'Advanced fashion and styling recommendations',
+      description: 'Advanced fashion and styling recommendations (ACP agent with decision-making)',
     },
   },
-  smart_home: {
-    id: 'smart-home',
-    name: 'Smart Home Agent',
+  automation_agent: {
+    id: 'automation-agent',
+    name: 'Automation Agent',
     url: 'http://localhost:3005/api/acp',
     eventsUrl: 'http://localhost:3005/api/acp/events',
     enabled: false,
     metadata: {
-      category: 'iot',
-      description: 'Controls lighting and environment for virtual try-on',
+      category: 'automation',
+      description: 'Workflow automation agent (OpenClaw, n8n, etc.)',
     },
   },
 };
