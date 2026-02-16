@@ -148,11 +148,12 @@ export default function Home() {
                     setSearchQuery(query);
                   }
                 }}
-                className="w-12 h-12 hover:bg-surface-variant rounded-full flex items-center justify-center transition-colors"
+                className="md3-touch-target md3-state-layer rounded-full transition-colors"
+                style={{ color: 'var(--md-sys-color-on-surface-variant)' }}
                 aria-label="Search items"
               >
                 <svg
-                  className="w-6 h-6 text-on-surface-variant"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -169,11 +170,12 @@ export default function Home() {
               <div className="relative">
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="w-12 h-12 hover:bg-surface-variant rounded-full flex items-center justify-center transition-colors"
+                  className="md3-touch-target md3-state-layer rounded-full transition-colors"
+                  style={{ color: 'var(--md-sys-color-on-surface-variant)' }}
                   aria-label="Menu"
                 >
                   <svg
-                    className="w-6 h-6 text-on-surface-variant"
+                    className="w-6 h-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -193,18 +195,21 @@ export default function Home() {
                       className="fixed inset-0 z-20" 
                       onClick={() => setMobileMenuOpen(false)}
                     />
-                    <div className="absolute right-0 top-full mt-2 w-56 bg-surface-container rounded-2xl shadow-elevation-3 overflow-hidden z-30">
+                    <div 
+                      className="absolute right-0 top-full mt-2 w-56 rounded-2xl shadow-elevation-3 overflow-hidden z-30"
+                      style={{ backgroundColor: 'var(--md-sys-color-surface-container)' }}
+                    >
                       <button
                         onClick={() => {
                           router.push('/guide');
                           setMobileMenuOpen(false);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container-high transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 md3-state-layer transition-colors text-left"
                       >
                         <span className="text-2xl">📖</span>
                         <div>
-                          <p className="text-body-large text-on-surface">Fit & Proportion Guide</p>
-                          <p className="text-body-small text-on-surface-variant">Learn about styling</p>
+                          <p className="text-body-large" style={{ color: 'var(--md-sys-color-on-surface)' }}>Fit & Proportion Guide</p>
+                          <p className="text-body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>Learn about styling</p>
                         </div>
                       </button>
                       <button
@@ -212,12 +217,12 @@ export default function Home() {
                           router.push('/outfits/generate');
                           setMobileMenuOpen(false);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container-high transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 md3-state-layer transition-colors text-left"
                       >
                         <span className="text-2xl">✨</span>
                         <div>
-                          <p className="text-body-large text-on-surface">Generate Outfits</p>
-                          <p className="text-body-small text-on-surface-variant">AI outfit suggestions</p>
+                          <p className="text-body-large" style={{ color: 'var(--md-sys-color-on-surface)' }}>Generate Outfits</p>
+                          <p className="text-body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>AI outfit suggestions</p>
                         </div>
                       </button>
                       <button
@@ -225,12 +230,12 @@ export default function Home() {
                           router.push('/settings');
                           setMobileMenuOpen(false);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container-high transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 md3-state-layer transition-colors text-left"
                       >
                         <span className="text-2xl">⚙️</span>
                         <div>
-                          <p className="text-body-large text-on-surface">Settings</p>
-                          <p className="text-body-small text-on-surface-variant">Export & Import</p>
+                          <p className="text-body-large" style={{ color: 'var(--md-sys-color-on-surface)' }}>Settings</p>
+                          <p className="text-body-small" style={{ color: 'var(--md-sys-color-on-surface-variant)' }}>Export & Import</p>
                         </div>
                       </button>
                     </div>
@@ -269,7 +274,7 @@ export default function Home() {
               </p>
               <button
                 onClick={() => window.location.href = '/items/new'}
-                className="px-6 py-4 bg-primary text-on-primary rounded-full text-label-large font-medium shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+                className="md3-button-filled md3-state-layer md3-ripple"
               >
                 Add your first item
               </button>
@@ -287,7 +292,7 @@ export default function Home() {
               </p>
               <button
                 onClick={() => setSelectedCategory(null)}
-                className="px-4 py-2 bg-surface-variant text-on-surface-variant rounded-full text-label-large hover:bg-surface-container-high transition-colors"
+                className="md3-button-tonal md3-state-layer md3-ripple"
               >
                 View all items
               </button>
@@ -327,7 +332,7 @@ export default function Home() {
           {/* 3D Closet Rail Link */}
           <button
             onClick={() => router.push('/closet-rail')}
-            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="View your closet in 3D"
           >
             <span>🪝</span>
@@ -337,7 +342,7 @@ export default function Home() {
           {/* Outfit Generator Link */}
           <button
             onClick={() => router.push('/outfits/generate')}
-            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Generate outfits"
           >
             <span>✨</span>
@@ -347,7 +352,7 @@ export default function Home() {
           {/* Guide Link */}
           <button
             onClick={() => router.push('/guide')}
-            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Fit & Proportion Guide"
           >
             <span>📖</span>
@@ -357,7 +362,7 @@ export default function Home() {
           {/* Settings Link */}
           <button
             onClick={() => router.push('/settings')}
-            className="px-4 py-2 bg-surface-variant text-on-surface rounded-full text-label-large hover:bg-surface-container-high transition-all flex items-center gap-2"
+            className="md3-button-text md3-state-layer md3-ripple"
             title="Export & Import"
           >
             <span>⚙️</span>
@@ -365,24 +370,40 @@ export default function Home() {
           </button>
 
           {/* View Toggle */}
-          <div className="flex bg-surface-variant rounded-full p-1">
+          <div className="flex rounded-full p-1" style={{ backgroundColor: 'var(--md-sys-color-surface-variant)' }}>
             <button
               onClick={() => setDesktopView('table')}
-              className={`px-4 py-2 rounded-full text-label-medium transition-all ${
+              className={`md3-state-layer md3-ripple px-4 py-2 rounded-full text-label-medium transition-all ${
                 desktopView === 'table'
-                  ? 'bg-primary text-on-primary shadow-elevation-1'
-                  : 'text-on-surface-variant hover:bg-surface-container'
+                  ? 'shadow-elevation-1'
+                  : ''
               }`}
+              style={{
+                backgroundColor: desktopView === 'table' 
+                  ? 'var(--md-sys-color-primary)' 
+                  : 'transparent',
+                color: desktopView === 'table' 
+                  ? 'var(--md-sys-color-on-primary)' 
+                  : 'var(--md-sys-color-on-surface-variant)',
+              }}
             >
               Table
             </button>
             <button
               onClick={() => setDesktopView('grid')}
-              className={`px-4 py-2 rounded-full text-label-medium transition-all ${
+              className={`md3-state-layer md3-ripple px-4 py-2 rounded-full text-label-medium transition-all ${
                 desktopView === 'grid'
-                  ? 'bg-primary text-on-primary shadow-elevation-1'
-                  : 'text-on-surface-variant hover:bg-surface-container'
+                  ? 'shadow-elevation-1'
+                  : ''
               }`}
+              style={{
+                backgroundColor: desktopView === 'grid' 
+                  ? 'var(--md-sys-color-primary)' 
+                  : 'transparent',
+                color: desktopView === 'grid' 
+                  ? 'var(--md-sys-color-on-primary)' 
+                  : 'var(--md-sys-color-on-surface-variant)',
+              }}
             >
               Grid
             </button>
@@ -390,7 +411,7 @@ export default function Home() {
 
           <button
             onClick={() => router.push('/items/new')}
-            className="px-5 py-2.5 bg-primary text-on-primary rounded-full text-label-large font-medium shadow-elevation-1 hover:shadow-elevation-2 transition-all"
+            className="md3-button-filled md3-state-layer md3-ripple"
           >
             Add Item
           </button>

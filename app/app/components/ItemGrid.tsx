@@ -54,7 +54,7 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="w-full h-96 bg-surface-variant rounded-3xl animate-pulse shadow-elevation-3"
+            className="md3-skeleton w-full h-96 rounded-[28px] shadow-elevation-1"
           />
         ))}
       </div>
@@ -79,18 +79,26 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
 
   return (
     <div className="flex flex-col gap-8 p-8 max-w-5xl mx-auto">
-      {items.map((item) => {
+      {items.map((item, index) => {
         const { frontImage, backImage, hasBothSides } = getItemImages(item);
         const primaryColor = getPrimaryColor(item.colorPalette);
+        
+        // Stagger animation class for first 8 items
+        const staggerClass = index < 8 ? `md3-stagger-${Math.min(index + 1, 8)}` : '';
 
         return (
           <Link
             key={item.id}
             href={`/items/${item.id}`}
-            className="group cursor-pointer block"
+            className={`group cursor-pointer block md3-animate-list-item ${staggerClass}`}
           >
-            {/* Material Design 3 Elevated Card */}
-            <div className="bg-surface-container rounded-[28px] overflow-hidden shadow-elevation-3 border border-outline-variant/20 transition-all duration-300 hover:shadow-elevation-4 hover:scale-[1.01] hover:border-primary/30">
+            {/* Material Design 3 Elevated Card with state layer and ripple */}
+            <div className="md3-card-elevated md3-state-layer md3-ripple md3-surface-tint-1 shadow-elevation-1 hover:shadow-elevation-3"
+              style={{
+                backgroundColor: 'var(--md-sys-color-surface-container-low)',
+                borderRadius: 'var(--md-sys-shape-corner-extra-large)',
+              }}
+            >
               
               {/* Card Media Section - Horizontal layout with image on left, content on right */}
               <div className="flex flex-col md:flex-row">

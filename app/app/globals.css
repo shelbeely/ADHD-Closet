@@ -4,6 +4,7 @@
 :root {
   /* Primary */
   --md-sys-color-primary: #6750A4;
+  --md-sys-color-primary-rgb: 103, 80, 164;
   --md-sys-color-on-primary: #FFFFFF;
   --md-sys-color-primary-container: #EADDFF;
   --md-sys-color-on-primary-container: #21005D;
@@ -28,6 +29,17 @@
   --md-sys-color-surface-container: #F3EDF7;
   --md-sys-color-surface-container-low: #F7F2FA;
   --md-sys-color-surface-container-high: #ECE6F0;
+  --md-sys-color-surface-container-highest: #E6E0E9;
+  
+  /* Outline */
+  --md-sys-color-outline: #79747E;
+  --md-sys-color-outline-variant: #CAC4D0;
+  
+  /* Error */
+  --md-sys-color-error: #B3261E;
+  --md-sys-color-on-error: #FFFFFF;
+  --md-sys-color-error-container: #F9DEDC;
+  --md-sys-color-on-error-container: #410E0B;
   
   /* Inverse */
   --md-sys-color-inverse-surface: #322F35;
@@ -67,6 +79,17 @@
     --md-sys-color-surface-container: #211F26;
     --md-sys-color-surface-container-low: #1D1B20;
     --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-surface-container-highest: #36343B;
+    
+    /* Outline */
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    
+    /* Error */
+    --md-sys-color-error: #F2B8B5;
+    --md-sys-color-on-error: #601410;
+    --md-sys-color-error-container: #8C1D18;
+    --md-sys-color-on-error-container: #F9DEDC;
     
     /* Inverse */
     --md-sys-color-inverse-surface: #E6E0E9;
@@ -106,6 +129,17 @@
   --md-sys-color-surface-container: #211F26;
   --md-sys-color-surface-container-low: #1D1B20;
   --md-sys-color-surface-container-high: #2B2930;
+  --md-sys-color-surface-container-highest: #36343B;
+  
+  /* Outline */
+  --md-sys-color-outline: #938F99;
+  --md-sys-color-outline-variant: #49454F;
+  
+  /* Error */
+  --md-sys-color-error: #F2B8B5;
+  --md-sys-color-on-error: #601410;
+  --md-sys-color-error-container: #8C1D18;
+  --md-sys-color-on-error-container: #F9DEDC;
   
   /* Inverse */
   --md-sys-color-inverse-surface: #E6E0E9;
@@ -259,6 +293,1038 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Material Design 3 Enhancements
+   ============================================ */
+
+/* M3 State Layer Opacities (for hover/press/focus states) */
+:root {
+  --md-sys-state-hover-opacity: 0.08;
+  --md-sys-state-focus-opacity: 0.12;
+  --md-sys-state-pressed-opacity: 0.12;
+  --md-sys-state-dragged-opacity: 0.16;
+  
+  /* M3 Motion Durations */
+  --md-sys-motion-duration-short1: 50ms;
+  --md-sys-motion-duration-short2: 100ms;
+  --md-sys-motion-duration-short3: 150ms;
+  --md-sys-motion-duration-short4: 200ms;
+  --md-sys-motion-duration-medium1: 250ms;
+  --md-sys-motion-duration-medium2: 300ms;
+  --md-sys-motion-duration-medium3: 350ms;
+  --md-sys-motion-duration-medium4: 400ms;
+  --md-sys-motion-duration-long1: 450ms;
+  --md-sys-motion-duration-long2: 500ms;
+  --md-sys-motion-duration-long3: 550ms;
+  --md-sys-motion-duration-long4: 600ms;
+  
+  /* M3 Motion Easing */
+  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --md-sys-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --md-sys-motion-easing-legacy: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* M3 Spacing Scale */
+  --md-sys-spacing-xs: 4px;
+  --md-sys-spacing-sm: 8px;
+  --md-sys-spacing-md: 12px;
+  --md-sys-spacing-lg: 16px;
+  --md-sys-spacing-xl: 24px;
+  --md-sys-spacing-2xl: 32px;
+  --md-sys-spacing-3xl: 48px;
+  
+  /* M3 Shape Scale */
+  --md-sys-shape-corner-none: 0px;
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 9999px;
+}
+
+/* M3 State Layers - Hover */
+.md3-state-layer {
+  position: relative;
+  overflow: hidden;
+}
+
+.md3-state-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+  pointer-events: none;
+}
+
+.md3-state-layer:hover::before {
+  opacity: var(--md-sys-state-hover-opacity);
+}
+
+.md3-state-layer:focus-visible::before {
+  opacity: var(--md-sys-state-focus-opacity);
+}
+
+.md3-state-layer:active::before {
+  opacity: var(--md-sys-state-pressed-opacity);
+}
+
+/* M3 Ripple Effect - Enhanced Implementation */
+@keyframes md3-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
+}
+
+/* Ripple container - must have position relative and overflow hidden */
+.md3-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple effect element */
+.md3-ripple::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* Trigger ripple animation on click */
+.md3-ripple:active::after {
+  animation: md3-ripple 0.6s var(--md-sys-motion-easing-emphasized);
+}
+
+/* Reduced motion: instant feedback without animation */
+@media (prefers-reduced-motion: reduce) {
+  .md3-ripple:active::after {
+    animation: none;
+    opacity: 0.12;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 0.01ms;
+  }
+}
+
+/* M3 Surface Tint for Elevated Components */
+.md3-surface-tint-1 {
+  background-image: linear-gradient(
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.05),
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.05)
+  );
+}
+
+.md3-surface-tint-2 {
+  background-image: linear-gradient(
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.08),
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.08)
+  );
+}
+
+.md3-surface-tint-3 {
+  background-image: linear-gradient(
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.11),
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.11)
+  );
+}
+
+.md3-surface-tint-4 {
+  background-image: linear-gradient(
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.12),
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.12)
+  );
+}
+
+.md3-surface-tint-5 {
+  background-image: linear-gradient(
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.14),
+    rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), 0.14)
+  );
+}
+
+/* M3 Button Variants */
+.md3-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--md-sys-spacing-sm);
+  min-height: 40px;
+  padding: 10px 24px;
+  border: none;
+  cursor: pointer;
+  font: var(--font-size-label-large);
+  font-weight: 500;
+  text-decoration: none;
+  user-select: none;
+  transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+  overflow: hidden;
+}
+
+.md3-button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* Filled Button (Primary) */
+.md3-button-filled {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-radius: var(--md-sys-shape-corner-full);
+  box-shadow: var(--shadow-elevation-1, 0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.md3-button-filled:hover {
+  box-shadow: var(--shadow-elevation-2, 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15));
+}
+
+.md3-button-filled:active {
+  box-shadow: var(--shadow-elevation-1, 0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Outlined Button */
+.md3-button-outlined {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+.md3-button-outlined:hover {
+  background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), var(--md-sys-state-hover-opacity));
+}
+
+/* Text Button */
+.md3-button-text {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border-radius: var(--md-sys-shape-corner-full);
+  padding: 10px 12px;
+}
+
+.md3-button-text:hover {
+  background-color: rgba(var(--md-sys-color-primary-rgb, 103, 80, 164), var(--md-sys-state-hover-opacity));
+}
+
+/* Tonal Button */
+.md3-button-tonal {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+.md3-button-tonal:hover {
+  box-shadow: var(--shadow-elevation-1, 0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* M3 Elevated Card Enhancement */
+.md3-card-elevated {
+  background-color: var(--md-sys-color-surface-container-low);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-emphasized);
+  overflow: hidden;
+}
+
+.md3-card-elevated:hover {
+  box-shadow: var(--shadow-elevation-2, 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15));
+  transform: translateY(-2px);
+}
+
+/* M3 Filled Card */
+.md3-card-filled {
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  overflow: hidden;
+}
+
+/* M3 Outlined Card */
+.md3-card-outlined {
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  overflow: hidden;
+}
+
+/* M3 Chip Variants */
+.md3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--md-sys-spacing-sm);
+  height: 32px;
+  padding: 0 var(--md-sys-spacing-lg);
+  border-radius: var(--md-sys-shape-corner-small);
+  font: var(--font-size-label-large);
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.md3-chip-assist {
+  background-color: transparent;
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface);
+}
+
+.md3-chip-filter {
+  background-color: transparent;
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-chip-filter[data-selected="true"] {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: transparent;
+}
+
+.md3-chip-suggestion {
+  background-color: transparent;
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* M3 Loading Skeleton with Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.md3-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--md-sys-color-surface-variant) 0%,
+    var(--md-sys-color-surface-container-high) 50%,
+    var(--md-sys-color-surface-variant) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: var(--md-sys-shape-corner-medium);
+}
+
+/* M3 Divider */
+.md3-divider {
+  height: 1px;
+  background-color: var(--md-sys-color-outline-variant);
+  border: none;
+}
+
+/* M3 Touch Target (Minimum 48x48dp) */
+.md3-touch-target {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* M3 Progress Indicator */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.md3-circular-progress {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--md-sys-color-primary-container);
+  border-top-color: var(--md-sys-color-primary);
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+/* M3 Badge */
+.md3-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+/* M3 FAB (Floating Action Button) Enhancement */
+.md3-fab {
+  position: fixed;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--md-sys-shape-corner-large);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-elevation-3, 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15));
+  transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-emphasized);
+}
+
+.md3-fab:hover {
+  box-shadow: var(--shadow-elevation-4, 0 2px 3px rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15));
+  transform: scale(1.05);
+}
+
+.md3-fab:active {
+  transform: scale(0.95);
+}
+
+/* M3 Snackbar */
+.md3-snackbar {
+  position: fixed;
+  bottom: var(--md-sys-spacing-xl);
+  left: var(--md-sys-spacing-xl);
+  right: var(--md-sys-spacing-xl);
+  padding: var(--md-sys-spacing-lg);
+  background-color: var(--md-sys-color-inverse-surface);
+  color: var(--md-sys-color-inverse-on-surface);
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  box-shadow: var(--shadow-elevation-3, 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--md-sys-spacing-lg);
+  max-width: 560px;
+}
+
+@media (min-width: 600px) {
+  .md3-snackbar {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================
+   Material Design 3 Expressive Animations
+   Complete Animation System
+   ============================================ */
+
+/* Container Transform Animations */
+@keyframes md3-container-transform-expand {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: var(--md-sys-shape-corner-large);
+  }
+}
+
+@keyframes md3-container-transform-collapse {
+  from {
+    transform: scale(1);
+    opacity: 1;
+    border-radius: var(--md-sys-shape-corner-large);
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+  }
+}
+
+/* Shared Element Transitions */
+@keyframes md3-shared-element-enter {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-shared-element-exit {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Page Transitions - Forward Navigation */
+@keyframes md3-page-enter-forward {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-page-exit-forward {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+}
+
+/* Page Transitions - Backward Navigation */
+@keyframes md3-page-enter-backward {
+  from {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-page-exit-backward {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Hierarchical Transitions - Upward */
+@keyframes md3-hierarchy-enter-up {
+  from {
+    transform: translateY(100px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-hierarchy-exit-up {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100px) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* Dialog Animations */
+@keyframes md3-dialog-enter {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-dialog-exit {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes md3-dialog-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom Sheet Animations */
+@keyframes md3-bottom-sheet-enter {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes md3-bottom-sheet-exit {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* FAB Animations */
+@keyframes md3-fab-enter {
+  from {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-fab-exit {
+  from {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes md3-fab-morph-to-sheet {
+  from {
+    transform: scale(1);
+    border-radius: var(--md-sys-shape-corner-large);
+    width: 56px;
+    height: 56px;
+  }
+  to {
+    transform: scale(10);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* List Item Animations - Staggered Entry */
+@keyframes md3-list-item-enter {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-list-item-exit {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+/* Menu Cascade Animation */
+@keyframes md3-menu-enter {
+  from {
+    transform: scale(0.9) translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-menu-exit {
+  from {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9) translateY(-8px);
+    opacity: 0;
+  }
+}
+
+/* Tooltip Animation */
+@keyframes md3-tooltip-enter {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Snackbar Animation */
+@keyframes md3-snackbar-enter {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-snackbar-exit {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Switch Toggle Animation */
+@keyframes md3-switch-thumb-on {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes md3-switch-thumb-off {
+  from {
+    transform: translateX(20px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Checkbox Check Animation */
+@keyframes md3-checkbox-check {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Radio Select Animation */
+@keyframes md3-radio-dot {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Tab Indicator Slide */
+@keyframes md3-tab-indicator-slide {
+  from {
+    transform: translateX(var(--md3-tab-from, 0));
+  }
+  to {
+    transform: translateX(var(--md3-tab-to, 0));
+  }
+}
+
+/* Elevation Transition */
+@keyframes md3-elevation-rise {
+  from {
+    box-shadow: var(--shadow-elevation-1);
+    transform: translateY(0);
+  }
+  to {
+    box-shadow: var(--shadow-elevation-3);
+    transform: translateY(-4px);
+  }
+}
+
+/* Fade In/Out */
+@keyframes md3-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes md3-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Slide Fade Combo */
+@keyframes md3-slide-fade-in-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes md3-slide-fade-out-down {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   Animation Utility Classes
+   ============================================ */
+
+/* Container Transform */
+.md3-animate-container-expand {
+  animation: md3-container-transform-expand var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-container-collapse {
+  animation: md3-container-transform-collapse var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Shared Element */
+.md3-animate-shared-enter {
+  animation: md3-shared-element-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-shared-exit {
+  animation: md3-shared-element-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Page Transitions */
+.md3-animate-page-enter-forward {
+  animation: md3-page-enter-forward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-page-exit-forward {
+  animation: md3-page-exit-forward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+.md3-animate-page-enter-backward {
+  animation: md3-page-enter-backward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-page-exit-backward {
+  animation: md3-page-exit-backward var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Dialog */
+.md3-animate-dialog-enter {
+  animation: md3-dialog-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-dialog-exit {
+  animation: md3-dialog-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+.md3-animate-dialog-backdrop {
+  animation: md3-dialog-backdrop-enter var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Bottom Sheet */
+.md3-animate-bottom-sheet-enter {
+  animation: md3-bottom-sheet-enter var(--md-sys-motion-duration-long1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-bottom-sheet-exit {
+  animation: md3-bottom-sheet-exit var(--md-sys-motion-duration-medium3) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* FAB */
+.md3-animate-fab-enter {
+  animation: md3-fab-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-fab-exit {
+  animation: md3-fab-exit var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* List Items with Stagger */
+.md3-animate-list-item {
+  animation: md3-list-item-enter var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+/* Stagger delay utilities */
+.md3-stagger-1 { animation-delay: 50ms; }
+.md3-stagger-2 { animation-delay: 100ms; }
+.md3-stagger-3 { animation-delay: 150ms; }
+.md3-stagger-4 { animation-delay: 200ms; }
+.md3-stagger-5 { animation-delay: 250ms; }
+.md3-stagger-6 { animation-delay: 300ms; }
+.md3-stagger-7 { animation-delay: 350ms; }
+.md3-stagger-8 { animation-delay: 400ms; }
+
+/* Menu */
+.md3-animate-menu-enter {
+  animation: md3-menu-enter var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-menu-exit {
+  animation: md3-menu-exit var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Tooltip */
+.md3-animate-tooltip {
+  animation: md3-tooltip-enter var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Snackbar */
+.md3-animate-snackbar-enter {
+  animation: md3-snackbar-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-snackbar-exit {
+  animation: md3-snackbar-exit var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* Fade utilities */
+.md3-animate-fade-in {
+  animation: md3-fade-in var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+.md3-animate-fade-out {
+  animation: md3-fade-out var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard) both;
+}
+
+/* Slide Fade utilities */
+.md3-animate-slide-fade-in-up {
+  animation: md3-slide-fade-in-up var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-decelerate) both;
+}
+
+.md3-animate-slide-fade-out-down {
+  animation: md3-slide-fade-out-down var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-emphasized-accelerate) both;
+}
+
+/* ============================================
+   Performance Optimizations
+   ============================================ */
+
+/* Will-change hints for elements about to animate */
+.md3-will-animate {
+  will-change: transform, opacity;
+}
+
+.md3-will-animate-transform {
+  will-change: transform;
+}
+
+.md3-will-animate-opacity {
+  will-change: opacity;
+}
+
+/* Remove will-change after animation */
+.md3-animated {
+  will-change: auto;
+}
+
+/* ============================================
+   Reduced Motion Overrides
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all expressive animations */
+  .md3-animate-container-expand,
+  .md3-animate-container-collapse,
+  .md3-animate-shared-enter,
+  .md3-animate-shared-exit,
+  .md3-animate-page-enter-forward,
+  .md3-animate-page-exit-forward,
+  .md3-animate-page-enter-backward,
+  .md3-animate-page-exit-backward,
+  .md3-animate-dialog-enter,
+  .md3-animate-dialog-exit,
+  .md3-animate-bottom-sheet-enter,
+  .md3-animate-bottom-sheet-exit,
+  .md3-animate-fab-enter,
+  .md3-animate-fab-exit,
+  .md3-animate-list-item,
+  .md3-animate-menu-enter,
+  .md3-animate-menu-exit,
+  .md3-animate-tooltip,
+  .md3-animate-snackbar-enter,
+  .md3-animate-snackbar-exit,
+  .md3-animate-slide-fade-in-up,
+  .md3-animate-slide-fade-out-down {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Keep fade animations but instant */
+  .md3-animate-fade-in,
+  .md3-animate-fade-out,
+  .md3-animate-dialog-backdrop {
+    animation-duration: 0.01ms !important;
+  }
+  
+  /* Disable stagger delays */
+  .md3-stagger-1,
+  .md3-stagger-2,
+  .md3-stagger-3,
+  .md3-stagger-4,
+  .md3-stagger-5,
+  .md3-stagger-6,
+  .md3-stagger-7,
+  .md3-stagger-8 {
+    animation-delay: 0ms !important;
   }
 }
 
