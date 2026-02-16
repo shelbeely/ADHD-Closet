@@ -28,16 +28,27 @@ export default function CategoryTabs({
   onCategoryChange,
 }: CategoryTabsProps) {
   return (
-    <div className="sticky top-16 z-10 bg-surface-container shadow-elevation-1">
+    <div 
+      className="sticky top-16 z-10 shadow-elevation-1"
+      style={{ backgroundColor: 'var(--md-sys-color-surface-container)' }}
+    >
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex gap-2 p-4 min-w-max">
           <button
             onClick={() => onCategoryChange(null)}
-            className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 min-h-[48px] ${
+            className={`md3-chip md3-state-layer px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all min-h-[48px] ${
               selectedCategory === null
-                ? 'bg-primary text-on-primary shadow-elevation-2'
-                : 'bg-surface-variant text-on-surface-variant hover:shadow-elevation-1'
+                ? 'shadow-elevation-1'
+                : ''
             }`}
+            style={{
+              backgroundColor: selectedCategory === null 
+                ? 'var(--md-sys-color-secondary-container)' 
+                : 'var(--md-sys-color-surface-variant)',
+              color: selectedCategory === null 
+                ? 'var(--md-sys-color-on-secondary-container)' 
+                : 'var(--md-sys-color-on-surface-variant)',
+            }}
           >
             All Items
           </button>
@@ -45,13 +56,23 @@ export default function CategoryTabs({
             <button
               key={category.value}
               onClick={() => onCategoryChange(category.value)}
-              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center gap-2 min-h-[48px] ${
+              className={`md3-chip md3-state-layer px-5 py-3 rounded-full text-label-large font-medium whitespace-nowrap transition-all flex items-center gap-2 min-h-[48px] ${
                 selectedCategory === category.value
-                  ? 'bg-primary text-on-primary shadow-elevation-2'
-                  : 'bg-surface-variant text-on-surface-variant hover:shadow-elevation-1'
+                  ? 'shadow-elevation-1'
+                  : ''
               }`}
+              style={{
+                backgroundColor: selectedCategory === category.value 
+                  ? 'var(--md-sys-color-secondary-container)' 
+                  : 'var(--md-sys-color-surface-variant)',
+                color: selectedCategory === category.value 
+                  ? 'var(--md-sys-color-on-secondary-container)' 
+                  : 'var(--md-sys-color-on-surface-variant)',
+              }}
             >
-              <span className="text-xl">{category.icon}</span>
+              <span className="text-xl" role="img" aria-label={category.label}>
+                {category.icon}
+              </span>
               <span>{category.label}</span>
             </button>
           ))}

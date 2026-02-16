@@ -54,7 +54,7 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="w-full h-96 bg-surface-variant rounded-3xl animate-pulse shadow-elevation-3"
+            className="md3-skeleton w-full h-96 rounded-[28px] shadow-elevation-1"
           />
         ))}
       </div>
@@ -89,8 +89,13 @@ export default function ItemGrid({ items, loading }: ItemGridProps) {
             href={`/items/${item.id}`}
             className="group cursor-pointer block"
           >
-            {/* Material Design 3 Elevated Card */}
-            <div className="bg-surface-container rounded-[28px] overflow-hidden shadow-elevation-3 border border-outline-variant/20 transition-all duration-300 hover:shadow-elevation-4 hover:scale-[1.01] hover:border-primary/30">
+            {/* Material Design 3 Elevated Card with state layer */}
+            <div className="md3-card-elevated md3-state-layer shadow-elevation-1 hover:shadow-elevation-3"
+              style={{
+                backgroundColor: 'var(--md-sys-color-surface-container-low)',
+                borderRadius: 'var(--md-sys-shape-corner-extra-large)',
+              }}
+            >
               
               {/* Card Media Section - Horizontal layout with image on left, content on right */}
               <div className="flex flex-col md:flex-row">
