@@ -1,6 +1,47 @@
 # Ziit Heartbeat Client
 
-A lightweight, zero-dependency Bun.js client that tracks code file edits **and shell command execution**, sending activity heartbeats to [Ziit.app](https://ziit.app). Designed specifically for GitHub Copilot coding agent sessions.
+A lightweight, zero-dependency Bun.js client that tracks code file edits **and shell command execution**, sending activity heartbeats to [Ziit.app](https://ziit.app). Supports two modes:
+
+1. **GitHub Copilot Hooks** (recommended for Copilot sessions) - Event-driven heartbeats via hooks
+2. **Watch Daemon** (for local development) - Continuous filesystem and command monitoring
+
+## GitHub Copilot Hooks vs Watch Daemon
+
+### Hooks Mode (Recommended for Copilot)
+
+**How it works:**
+- Integrates with GitHub Copilot's native hook system
+- Executes `.github/hooks/ziit-heartbeat.js` at key lifecycle events
+- No background process needed
+
+**Advantages:**
+- ✅ Native Copilot integration - no daemon management
+- ✅ More reliable - executed directly by Copilot
+- ✅ Captures exact tool usage (file edits, bash commands)
+- ✅ Lower resource usage - runs only on events
+- ✅ Session-aware - tracks session start/end
+
+**When to use:**
+- GitHub Copilot coding agent sessions
+- Automated CI/CD environments with Copilot
+
+### Watch Daemon Mode (For Local Development)
+
+**How it works:**
+- Background process monitoring filesystem and bash history
+- Uses `fs.watch()` and Git integration
+- Buffers and batches heartbeats for efficiency
+
+**Advantages:**
+- ✅ Works outside Copilot (local editors)
+- ✅ Monitors all file changes, not just Copilot actions
+- ✅ Command history tracking via bash history
+- ✅ Configurable filtering and debouncing
+
+**When to use:**
+- Local development with any editor (VS Code, Vim, etc.)
+- Non-Copilot environments
+- Testing and debugging heartbeat functionality
 
 ## ⚠️ Important: What This Daemon Does NOT Do
 
@@ -130,9 +171,9 @@ This is purely a **passive monitoring daemon** that tracks your coding activity 
 
 7. **Stop the daemon**: Press `Ctrl+C` (it will flush pending heartbeats before exiting)
 
-### GitHub Copilot Agent Sessions
+### GitHub Copilot Agent Sessions (Hooks)
 
-The daemon automatically starts in the background when a Copilot coding agent session begins.
+The Ziit heartbeat system is integrated with GitHub Copilot using **hooks** - custom scripts that execute at key points during agent execution.
 
 **Setup** (already configured in this repository):
 
@@ -141,14 +182,31 @@ The daemon automatically starts in the background when a Copilot coding agent se
    - Name: `ZIIT_API_KEY`
    - Value: Your Ziit API key
 
-2. The workflow `.github/workflows/copilot-setup-steps.yml` automatically:
-   - Starts the daemon in the background
-   - Passes required environment variables
-   - Logs the daemon PID to `GITHUB_STEP_SUMMARY`
+2. Hooks configuration is in `.github/hooks/hooks.json`:
+   - **sessionStart**: Sends a heartbeat when the Copilot session begins
+   - **sessionEnd**: Sends a heartbeat when the session ends
+   - **userPromptSubmitted**: Tracks when users submit prompts to the agent
+   - **preToolUse**: Sends heartbeats before each tool execution (file edits, bash commands, etc.)
+   - **postToolUse**: Sends heartbeats after tool execution completes (tracks success/failure)
+   - **errorOccurred**: Tracks errors during agent execution
 
-**Logs**:
-- Daemon output: `/tmp/ziit-watch.log`
-- View logs: `cat /tmp/ziit-watch.log`
+3. Hook script is `.github/hooks/ziit-heartbeat.js`:
+   - Node.js script that parses hook input and sends heartbeats to Ziit.app
+   - Automatically detects project name, branch, language from context
+   - Filters out noisy commands (cd, ls, pwd, etc.)
+   - Gracefully handles errors without blocking the agent
+
+**How it works**:
+- GitHub Copilot automatically executes hooks at configured lifecycle events
+- No background daemon needed - hooks run on-demand
+- Each tool use (edit, create, bash command) triggers a heartbeat
+- Session start/end events are also tracked
+
+**Environment variables** (passed via hooks.json):
+- `ZIIT_API_KEY`: Your API key (required)
+- `ZIIT_BASE_URL`: API base URL (optional, default: https://ziit.app)
+- `ZIIT_EDITOR`: Editor name (optional, default: github-copilot-agent)
+- `ZIIT_VERBOSE`: Enable verbose logging (optional, default: false)
 
 ## How It Works
 

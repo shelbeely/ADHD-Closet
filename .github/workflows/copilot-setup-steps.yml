@@ -75,27 +75,19 @@ jobs:
           echo "- Usage: \`npx skills find <query>\`" >> $GITHUB_STEP_SUMMARY
           echo "- Registry: https://skills.sh" >> $GITHUB_STEP_SUMMARY
 
-      - name: Start Ziit heartbeat daemon
-        working-directory: ./app
-        env:
-          ZIIT_API_KEY: ${{ secrets.ZIIT_API_KEY }}
-          ZIIT_WORKDIR: ${{ github.workspace }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
+      - name: Configure Ziit heartbeat hooks
         run: |
-          if [ -n "$ZIIT_API_KEY" ]; then
-            echo "Starting Ziit watch daemon..."
-            nohup bun run ziit:watch > /tmp/ziit-watch.log 2>&1 &
-            ZIIT_PID=$!
-            echo "Ziit daemon started with PID: $ZIIT_PID"
-            echo "### Ziit Heartbeat Daemon" >> $GITHUB_STEP_SUMMARY
-            echo "- Status: ✅ Started" >> $GITHUB_STEP_SUMMARY
-            echo "- PID: \`$ZIIT_PID\`" >> $GITHUB_STEP_SUMMARY
-            echo "- Logs: \`/tmp/ziit-watch.log\`" >> $GITHUB_STEP_SUMMARY
-            echo "- Project: \`$GITHUB_REPOSITORY\`" >> $GITHUB_STEP_SUMMARY
-            echo "- Branch: \`$GITHUB_REF_NAME\`" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ secrets.ZIIT_API_KEY }}" ]; then
+            echo "Ziit hooks are configured in .github/hooks/hooks.json"
+            echo "### Ziit Heartbeat Hooks" >> $GITHUB_STEP_SUMMARY
+            echo "- Status: ✅ Configured" >> $GITHUB_STEP_SUMMARY
+            echo "- Configuration: \`.github/hooks/hooks.json\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Script: \`.github/hooks/ziit-heartbeat.js\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Project: \`${{ github.repository }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Hooks: Session start/end, pre-tool-use" >> $GITHUB_STEP_SUMMARY
           else
-            echo "ZIIT_API_KEY not set, skipping Ziit daemon"
-            echo "### Ziit Heartbeat Daemon" >> $GITHUB_STEP_SUMMARY
+            echo "ZIIT_API_KEY not set, hooks will be skipped"
+            echo "### Ziit Heartbeat Hooks" >> $GITHUB_STEP_SUMMARY
             echo "- Status: ⏭️ Skipped (ZIIT_API_KEY not configured)" >> $GITHUB_STEP_SUMMARY
           fi
