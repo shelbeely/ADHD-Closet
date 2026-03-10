@@ -37,6 +37,8 @@ New users start here:
 - [Architecture](docs/developer/ARCHITECTURE.md) - System design
 - [API Docs](docs/api/API_DOCUMENTATION.md) - Complete API reference
 - [Deployment](docs/deployment/DEPLOYMENT.md) - Production setup
+- [Multi-User Analytics](docs/developer/MULTI_USER_ANALYTICS.md) - Data collection strategy and privacy considerations
+- [Analytics Examples](docs/developer/ANALYTICS_EXAMPLES.md) - Concrete use cases and queries
 
 ### ⚙️ Features
 
