@@ -57,7 +57,7 @@ Successfully set up **dual documentation deployment** for ADHD-Closet:
 - Workflow documentation enhanced
 
 **Screenshot Locations**:
-- `docs/screenshots/` - 6 existing images
+- `docs/../../reference/screenshots/` - 6 existing images
 - Tutorial, FAQ, and feature docs updated
 
 ### 4. Enhanced Navigation ✅
@@ -100,8 +100,8 @@ Documentation Access:
 1. Read `SCREENSHOT_GUIDE.md`
 2. Capture screenshots (use browser devtools)
 3. Optimize (keep under 500KB)
-4. Save to `docs/screenshots/`
-5. Add to markdown: `![Description](../screenshots/filename.png)`
+4. Save to `docs/../../reference/screenshots/`
+5. Add to markdown: `![Description](../../../reference/screenshots/filename.png)`
 
 **Update Documentation**:
 1. Edit files in `docs/`

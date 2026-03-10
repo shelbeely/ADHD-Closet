@@ -2,7 +2,7 @@
 
 Welcome to your personal wardrobe organizer! This tutorial will walk you through the main features and workflows.
 
-![Mobile Main View](../screenshots/main-mobile-view.png)
+![Mobile Main View](../../reference/screenshots/main-mobile-view.png)
 *ADHD-friendly mobile interface with category-first navigation*
 
 ## Table of Contents
@@ -17,7 +17,7 @@ Welcome to your personal wardrobe organizer! This tutorial will walk you through
 
 Adding items is fast and easy—just a few taps to get started.
 
-![Desktop Empty State](../screenshots/main-desktop-empty.png)
+![Desktop Empty State](../../reference/screenshots/main-desktop-empty.png)
 *Desktop view when you first start - click the + Add Item button*
 
 ### Step 1: Take a Photo
@@ -115,7 +115,7 @@ After wearing an outfit:
 
 On screens ≥1024px wide, you unlock advanced features.
 
-![Desktop View](../screenshots/outfits-generate-desktop.png)
+![Desktop View](../../reference/screenshots/outfits-generate-desktop.png)
 *Desktop view with filters, bulk editing, and outfit generation*
 
 ### Bulk Edit Table

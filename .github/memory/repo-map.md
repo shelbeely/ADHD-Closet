@@ -15,38 +15,57 @@ Repository Root: /home/runner/work/ADHD-Closet/ADHD-Closet/
 
 ```
 /
-├── .github/              # GitHub configuration and workflows
+├── .github/              # GitHub configuration, workflows, and development artifacts
 ├── app/                  # Main Next.js application (primary codebase)
 ├── docs/                 # MkDocs documentation site
+├── reference/            # Reference materials (screenshots, API examples, scripts)
 ├── docker-compose.yml    # Redis service (PostgreSQL hosted on Supabase)
 ├── mkdocs.yml           # Documentation site configuration
 ├── README.md            # Project overview
-└── scripts/             # Utility scripts (if any)
+└── CONTRIBUTING.md      # Contribution guidelines
 ```
 
 ## `.github/` - GitHub Configuration
 
 ```
 .github/
-├── agents/              # Custom AI agent definitions (e.g., code-reviewer)
+├── README.md            # Guide to .github directory structure
 ├── copilot-instructions.md   # Copilot agent behavior guidelines
-├── humanizer/           # Documentation humanization tools
-├── memory/              # THIS DIRECTORY - Persistent knowledge base
-├── skills/              # Reusable AI skills (e.g., remotion-best-practices)
-└── workflows/           # GitHub Actions workflows
-    ├── build-android-apk.yml      # Android APK build
-    ├── ci-doctor.md               # Failed CI investigation (agentic workflow)
-    ├── copilot-setup-steps.yml    # Copilot environment setup
-    ├── daily-status.md            # Daily status reports (agentic workflow)
-    ├── deploy-docs.yml            # MkDocs deployment to GitHub Pages
-    ├── issue-triage.md            # Auto-label issues (agentic workflow)
-    └── pr-review.md               # Pull request review (agentic workflow)
+├── agents/              # Custom AI agent definitions (invoke directly)
+│   ├── README.md
+│   ├── humanizer.agent.md
+│   └── remotion.agent.md
+├── skills/              # Agent skills (loaded automatically by context)
+│   ├── README.md
+│   ├── humanizer/
+│   ├── remotion/
+│   └── threejs-fundamentals/
+├── workflows/           # GitHub Actions & agentic workflows
+│   ├── README.md
+│   ├── build-android-apk.yml      # Android APK build
+│   ├── copilot-setup-steps.yml    # Copilot environment setup
+│   ├── deploy-docs.yml            # MkDocs deployment to GitHub Pages
+│   ├── ci-doctor.md               # Failed CI investigation (agentic workflow)
+│   ├── daily-status.md            # Daily status reports (agentic workflow)
+│   ├── issue-triage.md            # Auto-label issues (agentic workflow)
+│   └── pr-review.md               # Pull request review (agentic workflow)
+├── artifacts/           # Development session summaries and historical documents
+│   ├── README.md
+│   └── ... (15 historical summaries, including humanizer integration docs)
+└── memory/              # THIS DIRECTORY - Persistent knowledge base
+    ├── README.md
+    └── ... (7 knowledge files)
 ```
 
 **Key Points:**
-- Agentic workflows (`.md` files) are compiled to `.lock.yml` via `gh aw compile`
+- `README.md` at root of `.github/` provides complete directory guide
+- Each subdirectory has its own README explaining purpose and contents
+- Custom agents (invoke directly) vs agent skills (auto-loaded) distinction
+- Agentic workflows (`.md` files) compiled to `.lock.yml` via `gh aw compile`
 - `copilot-setup-steps.yml` pre-configures dev environment for Copilot agents
-- `memory/` is the authoritative knowledge base for AI agents
+- `memory/` is the authoritative knowledge base for AI agents (READ FIRST)
+- `artifacts/` contains historical summaries from development sessions
+- Humanizer content consolidated: skills in `skills/humanizer/`, agent in `agents/`, historical docs in `artifacts/`
 
 ## `app/` - Main Application
 
@@ -213,6 +232,33 @@ docs/
 - `CONTEXT7_LIBRARY_IDS.md` is the authoritative reference for Context7 MCP usage
 - `SPEC.md` defines Material Design 3 compliance and ADHD-optimized UX patterns
 - Documentation deployed to GitHub Pages via MkDocs
+
+## `reference/` - Reference Materials
+
+```
+reference/
+├── notebooklm/          # NotebookLM documentation export
+│   ├── 01-PROJECT-OVERVIEW.md
+│   ├── 02-TECHNICAL-ARCHITECTURE.md
+│   ├── 03-DATABASE-SCHEMA.md
+│   └── ... (12 structured guides)
+├── openrouter/          # OpenRouter API reference materials
+│   ├── generate_outfits.schema.json
+│   ├── infer_item.schema.json
+│   └── validation_notes.md
+├── screenshots/         # Application screenshots for documentation
+│   ├── 01-home-page-default.png
+│   ├── 02-desktop-table-view-with-notification.png
+│   └── ... (16+ screenshots)
+├── scripts/             # Helper scripts
+│   └── prepare-wiki.sh  # GitHub Wiki preparation script
+└── README.md            # Reference materials guide
+```
+
+**Key Points:**
+- Not required for building or running the application
+- Used for documentation and development reference
+- Screenshots referenced in README and docs
 
 ## Key File Locations (Quick Reference)
 

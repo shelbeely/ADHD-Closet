@@ -109,9 +109,9 @@ This document catalogs all screenshots for comprehensive visual documentation of
 - Capture both light and dark themes where applicable
 
 ### Storage Locations
-- Primary: `/screenshots/`
+- Primary: `/../../reference/screenshots/`
 - Documentation: `/notebooklm/images/`
-- Legacy: `/docs/screenshots/` (older screenshots)
+- Legacy: `/docs/../../reference/screenshots/` (older screenshots)
 
 ## Usage in Documentation
 
@@ -147,7 +147,7 @@ Format: `https://raw.githubusercontent.com/shelbeely/ADHD-Closet/main/notebooklm
    - Save with descriptive filename
 
 3. **Post-capture**
-   - Copy to both `/screenshots/` and `/notebooklm/images/`
+   - Copy to both `/../../reference/screenshots/` and `/notebooklm/images/`
    - Update documentation references
    - Verify file sizes are reasonable
    - Commit to repository

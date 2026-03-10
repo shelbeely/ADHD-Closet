@@ -81,9 +81,17 @@ The entire workflow is optimized for Gemini's multimodal capabilities, making it
 
 ## 📁 What's in this repository
 
+### Twin Closet Application
 - **`/app`** — Next.js application (see [app/README.md](app/README.md))
-- **`docker-compose.yml`** — Postgres + Redis setup
-- **`/docs`** — Product spec, API contracts, and implementation guides
+- **`/docs`** — Product documentation, API contracts, and implementation guides
+
+### Build & Infrastructure
+- **`docker-compose.yml`** — Redis service setup (PostgreSQL hosted on Supabase)
+- **`mkdocs.yml`** — Documentation site configuration
+- **`.github/`** — GitHub workflows, agents, and copilot configuration
+
+### Reference Materials
+- **`/reference`** — Screenshots, API examples, and helper scripts (see [reference/README.md](reference/README.md))
 
 ## 🚀 Quick Start
 

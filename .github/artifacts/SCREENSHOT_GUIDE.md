@@ -39,7 +39,7 @@
 
 ### Current Screenshots
 
-Located in `docs/screenshots/`:
+Located in `docs/../../reference/screenshots/`:
 - ✅ guide-page-mobile.png
 - ✅ main-desktop-empty.png
 - ✅ main-mobile-view.png
@@ -113,8 +113,8 @@ convert input.png -resize 1200x output.png
 ### 3. Save to Correct Location
 
 ```bash
-# Save in docs/screenshots/
-docs/screenshots/
+# Save in docs/../../reference/screenshots/
+docs/../../reference/screenshots/
 ├── feature-name-view.png
 ├── feature-name-mobile.png
 ├── feature-name-error.png
@@ -137,19 +137,19 @@ docs/screenshots/
 
 1. Click the "Add Item" button in the top right:
 
-   ![Add Item Button](screenshots/add-item-button.png)
+   ![Add Item Button](../../reference/screenshots/add-item-button.png)
 
 2. Choose your photo source (camera or gallery):
 
-   ![Photo Source Selection](screenshots/photo-source-select.png)
+   ![Photo Source Selection](../../reference/screenshots/photo-source-select.png)
 
 3. Wait for AI to process (usually 30 seconds):
 
-   ![AI Processing](screenshots/ai-processing.png)
+   ![AI Processing](../../reference/screenshots/ai-processing.png)
 
 4. Review and save:
 
-   ![Item Added](screenshots/item-added-success.png)
+   ![Item Added](../../reference/screenshots/item-added-success.png)
 ```
 
 **Tips for good screenshot documentation:**
@@ -171,7 +171,7 @@ For complex screenshots, add arrows/highlights:
 
 **Example with callouts:**
 ```markdown
-![Item Detail with callouts showing: 1) Edit button, 2) AI suggestions, 3) State toggle](screenshots/item-detail-annotated.png)
+![Item Detail with callouts showing: 1) Edit button, 2) AI suggestions, 3) State toggle](../../reference/screenshots/item-detail-annotated.png)
 ```
 
 ## Screenshot Standards
@@ -201,20 +201,20 @@ For complex screenshots, add arrows/highlights:
 MkDocs supports standard Markdown image syntax:
 
 ```markdown
-![Alt text](screenshots/image.png)
+![Alt text](../../reference/screenshots/image.png)
 ```
 
 For more control:
 
 ```markdown
-![Alt text](screenshots/image.png){ width="600" }
+![Alt text](../../reference/screenshots/image.png){ width="600" }
 ```
 
 With captions:
 
 ```markdown
 <figure markdown>
-  ![Item Detail](screenshots/item-detail.png)
+  ![Item Detail](../../reference/screenshots/item-detail.png)
   <figcaption>Item detail view showing AI-detected attributes</figcaption>
 </figure>
 ```

@@ -504,12 +504,14 @@ Example:
 
 ### Documentation Writing Style
 
-Follow humanizer guidelines (`.github/humanizer/README.md`):
+Follow humanizer guidelines to avoid AI-generated writing patterns:
 - Use direct, simple language
 - Replace "serves as" with "is", "boasts" with "has"
 - Avoid AI vocabulary: "crucial", "pivotal", "testament", "landscape" (abstract), "showcase"
 - Be specific instead of vague: cite actual sources, use concrete examples
 - Skip promotional language: "nestled", "vibrant", "stunning"
+
+Complete guide: `.github/artifacts/HUMANIZER_GUIDE.md` or use the `humanizer` custom agent (`.github/agents/humanizer.agent.md`).
 
 ## GitHub Workflows & CI/CD
 
