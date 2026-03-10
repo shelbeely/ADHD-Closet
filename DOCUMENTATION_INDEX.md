@@ -45,6 +45,14 @@ New users start here:
 - [NFC Tags](docs/features/NFC_TAG_SUPPORT.md) - NFC tag support
 - [Deployment](docs/deployment/DEPLOYMENT.md) - Including mobile apps
 
+### 🔬 Research & Future Features
+
+- [**Research Summary**](docs/features/RESEARCH_SUMMARY.md) - Quick overview of fashion AI research (START HERE)
+- [Fashion AI Recommendations](docs/features/AWESOME_FASHION_AI_RECOMMENDATIONS.md) - 50+ papers analyzed, feature priorities
+- [Fashion AI Implementation Strategy](docs/features/FASHION_AI_IMPLEMENTATION_STRATEGY.md) - Complete code & timeline
+
+*Based on deep research of the [awesome-fashion-ai](https://github.com/ayushidalmia/awesome-fashion-ai) repository*
+
 ## Using MkDocs
 
 MkDocs provides a better reading experience with:
@@ -78,5 +86,6 @@ This builds the docs and pushes to `gh-pages` branch for hosting at:
 
 ---
 
-**Last Updated:** 2026-01-31  
-**Documentation Reorganization:** Complete ✅
+**Last Updated:** 2026-02-05  
+**Documentation Reorganization:** Complete ✅  
+**Fashion AI Research:** Complete ✅ (50+ papers analyzed)
