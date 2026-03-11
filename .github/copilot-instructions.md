@@ -309,7 +309,14 @@ When you find relevant skills, present them with:
    # Takes ~3-5 seconds
    ```
 
-7. **Start development server:**
+7. **Seed the database with sample data:**
+   ```bash
+   npm run prisma:seed
+   # Takes ~5-10 seconds
+   # Creates 53 sample items across all categories
+   ```
+
+8. **Start development server:**
    ```bash
    bun dev    # OR: npm run dev
    # Server starts in ~2-3 seconds
@@ -324,6 +331,7 @@ When you find relevant skills, present them with:
 - `npm run lint` - Run ESLint (~5-10s)
 - `npm run prisma:generate` - Generate Prisma Client (~3-5s, REQUIRED after schema changes)
 - `npm run prisma:migrate` - Create/run migrations (~5-10s)
+- `npm run prisma:seed` - Seed database with sample data (~5-10s, creates 53 items)
 - `npm run prisma:studio` - Open Prisma Studio GUI
 
 ### Important Build Notes
