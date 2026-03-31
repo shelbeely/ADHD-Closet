@@ -164,6 +164,76 @@ For detailed instructions on building native apps, see the Mobile Apps section i
 
 For NFC tag functionality, see [NFC_TAG_SUPPORT.md](docs/features/NFC_TAG_SUPPORT.md).
 
+## 🤝 Agent Protocol Integration
+
+Twin Style supports multiple agent protocols for maximum interoperability:
+
+### A2A (Agent-to-Agent) Protocol
+
+Enables interoperability with other agent frameworks:
+
+- **Agent Discovery**: Exposes capabilities via `/.well-known/agent-card.json`
+- **Sequential Chaining**: Chain multiple agents together using ADK orchestrator
+- **MCP Integration**: Connect to external data sources via Model Context Protocol
+- **Framework Support**: Works with Google ADK, LangGraph, Microsoft Copilot Studio
+
+**Quick Start:**
+```bash
+curl http://localhost:3000/.well-known/agent-card.json
+```
+
+### ACP (Agent Client Protocol) 
+
+Enables **bidirectional** integration as both **client and server**:
+
+**As ACP Server (controlled by others):**
+- **Editor Integration**: Zed, JetBrains IDEs, and other ACP-compatible editors
+- **Automation**: OpenClaw, n8n, Zapier, custom scripts
+- **21 Tools**: Read (4), Write (7), Control (7), Client Management (9), Notifications (1)
+- **Real-time Events**: Server-Sent Events for instant updates
+
+**As ACP Client (controlling others):**
+- **Connect to Agents**: Fashion AI, automation tools (with agency)
+- **Execute Tools**: Call external agent capabilities
+- **Subscribe to Events**: React to external changes
+- **Templates**: Pre-configured agent integrations
+- **Note**: For data sources (weather, calendar), use MCP instead
+
+**Quick Start (Server):**
+```bash
+# Tool execution (others → Twin Style)
+curl http://localhost:3000/api/acp/capabilities
+
+# Real-time notifications (Twin Style → others)
+curl -N "http://localhost:3000/api/acp/events?types=item/added"
+```
+
+**Quick Start (Client):**
+```typescript
+// Note: This example is conceptual. In production, use MCP for data sources.
+// ACP is for agents (editors, automation), MCP is for data (weather, calendar).
+// See CODE_CORRECTION_SUMMARY.md for details.
+
+// Connect to external agent (Twin Style → others)
+await acpClient.registerServer({
+  id: 'fashion-ai-agent',
+  url: 'http://localhost:3004/api/acp',
+  enabled: true
+});
+
+// Execute external tool
+const styling = await acpClient.executeToolOnServer(
+  'fashion-ai-agent', 'get_recommendations', { itemId: 'item-123' }
+);
+```
+
+**Learn More:**
+- **🎯 Start Here**: [How Protocols Help Your Wardrobe](docs/user-guides/HOW_PROTOCOLS_HELP_YOUR_WARDROBE.md) - Non-technical guide with real clothing examples
+- **⚠️ Protocol Clarification**: [CODE_CORRECTION_SUMMARY.md](CODE_CORRECTION_SUMMARY.md) - Important: Weather/calendar use MCP, not ACP
+- **Protocol Boundaries**: [docs/developer/PROTOCOL_BOUNDARIES.md](docs/developer/PROTOCOL_BOUNDARIES.md) - When to use which protocol
+- **A2A**: [`app/A2A_README.md`](app/A2A_README.md) • [`docs/developer/A2A_INTEGRATION.md`](docs/developer/A2A_INTEGRATION.md)
+- **ACP**: [`app/ACP_README.md`](app/ACP_README.md) • [`docs/developer/ACP_INTEGRATION.md`](docs/developer/ACP_INTEGRATION.md) • [`docs/developer/ACP_CLIENT_GUIDE.md`](docs/developer/ACP_CLIENT_GUIDE.md)
+
 ## 🎨 Design Principles
 
 ### Material Design 3 Expressive
